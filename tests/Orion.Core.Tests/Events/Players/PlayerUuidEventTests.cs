@@ -24,7 +24,7 @@ namespace Orion.Core.Events.Players {
     public class PlayerUuidEventTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new PlayerUuidEvent(null!, ""));
+            Assert.Throws<ArgumentNullException>(() => new PlayerUuidEvent(null!, "Terraria"));
         }
 
         [Fact]

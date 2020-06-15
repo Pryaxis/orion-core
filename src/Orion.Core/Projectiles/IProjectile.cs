@@ -21,6 +21,9 @@ namespace Orion.Core.Projectiles {
     /// <summary>
     /// Represents a Terraria projectile.
     /// </summary>
+    /// <remarks>
+    /// Implementations are required to be thread-safe: i.e., each operation on the projectile should be atomic.
+    /// </remarks>
     public interface IProjectile : IEntity {
         /// <summary>
         /// Gets the projectile's ID.

@@ -39,7 +39,6 @@ namespace Orion.Core.World.Signs {
         }
 
         public int Index { get; }
-
         public bool IsActive { get; }
 
         public int X {

@@ -24,6 +24,8 @@ namespace Orion.Core.World.Chests {
     /// Represents a chest service. Provides access to chests and publishes chest-related events.
     /// </summary>
     /// <remarks>
+    /// Implementations are required to be thread-safe.
+    /// 
     /// The chest service is responsible for publishing the following chest-related events:
     /// <list type="bullet">
     /// <item><description><see cref="ChestOpenEvent"/></description></item>

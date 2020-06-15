@@ -25,6 +25,8 @@ namespace Orion.Core.Npcs {
     /// Represents an NPC service. Provides access to NPCs and publishes NPC-related events.
     /// </summary>
     /// <remarks>
+    /// Implementations are required to be thread-safe.
+    /// 
     /// The NPC service is responsible for publishing the following NPC-related events:
     /// <list type="bullet">
     /// <item><description><see cref="NpcDefaultsEvent"/></description></item>

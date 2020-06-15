@@ -24,21 +24,21 @@ namespace Orion.Core.Events.Players {
     public class PlayerChatEventTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(null!, "", ""));
+            Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(null!, "Say", "/command test"));
         }
 
         [Fact]
         public void Ctor_NullCommand_ThrowsArgumentNullException() {
             var player = Mock.Of<IPlayer>();
 
-            Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(player, null!, ""));
+            Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(player, null!, "/command test"));
         }
 
         [Fact]
         public void Ctor_NullMessage_ThrowsArgumentNullException() {
             var player = Mock.Of<IPlayer>();
 
-            Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(player, "", null!));
+            Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(player, "Say", null!));
         }
 
         [Fact]

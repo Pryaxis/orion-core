@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using Destructurama.Attributed;
 using Orion.Core.Buffs;
 using Orion.Core.Collections;
@@ -31,7 +32,7 @@ namespace Orion.Core.Players {
     internal sealed class OrionPlayer : OrionEntity<Terraria.Player>, IPlayer {
         private readonly OrionKernel _kernel;
         private readonly ILogger _log;
-        private readonly byte[] _sendBuffer = new byte[ushort.MaxValue];
+        private readonly ThreadLocal<byte[]> _sendBuffer = new ThreadLocal<byte[]>(() => new byte[ushort.MaxValue]);
 
         public OrionPlayer(int playerIndex, Terraria.Player terrariaPlayer, OrionKernel kernel, ILogger log)
                 : base(playerIndex, terrariaPlayer) {
@@ -101,10 +102,12 @@ namespace Orion.Core.Players {
                 return;
             }
 
-            // When writing the packet, we need to use the `Server` context since this packet comes from the server.
-            var packetLength = packet.WriteWithHeader(_sendBuffer, PacketContext.Server);
+            // When writing the packet, we need to use the `Server` context since this packet comes from the server. A
+            // thread-local send buffer is used in case there is some concurrency.
+            var sendBuffer = _sendBuffer.Value;
+            var packetLength = packet.WriteWithHeader(sendBuffer, PacketContext.Server);
             try {
-                terrariaClient.Socket?.AsyncSend(_sendBuffer, 0, packetLength, terrariaClient.ServerWriteCallBack);
+                terrariaClient.Socket.AsyncSend(sendBuffer, 0, packetLength, terrariaClient.ServerWriteCallBack);
             } catch (IOException) { }
         }
 

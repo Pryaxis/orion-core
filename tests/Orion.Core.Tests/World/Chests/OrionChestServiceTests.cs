@@ -81,7 +81,7 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void PacketReceive_ChestOpenEventTriggered() {
+        public void PacketReceive_ChestOpen_EventTriggered() {
             // Set `State` to 10 so that the chest open packet is not ignored by the server.
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
@@ -107,7 +107,7 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void PacketReceive_ChestOpenEventCanceled() {
+        public void PacketReceive_ChestOpen_EventCanceled() {
             // Set `State` to 10 so that the chest open packet is not ignored by the server.
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
@@ -127,7 +127,7 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void PacketReceive_ChestOpenEventNotTriggered() {
+        public void PacketReceive_ChestOpen_EventNotTriggered() {
             // Set `State` to 10 so that the chest open packet is not ignored by the server.
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
@@ -148,7 +148,7 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void PacketReceive_ChestInventoryEventTriggered() {
+        public void PacketReceive_ChestInventory_EventTriggered() {
             // Set `State` to 10 so that the chest inventory packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -177,7 +177,7 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void PacketReceive_ChestInventoryEventCanceled() {
+        public void PacketReceive_ChestInventory_EventCanceled() {
             // Set `State` to 10 so that the chest inventory packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };

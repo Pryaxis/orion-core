@@ -21,6 +21,9 @@ namespace Orion.Core.World.Tiles {
     /// <summary>
     /// Represents a slice of tiles backed by a two-dimensional tile array.
     /// </summary>
+    /// <remarks>
+    /// This class is thread-safe.
+    /// </remarks>
     public sealed class TileSlice : ITileSlice {
         private readonly Tile[,] _tiles;
 
@@ -44,17 +47,15 @@ namespace Orion.Core.World.Tiles {
             }
 
             _tiles = new Tile[width, height];
-            Width = width;
-            Height = height;
         }
 
         /// <inheritdoc/>
         public ref Tile this[int x, int y] => ref _tiles[x, y];
 
         /// <inheritdoc/>
-        public int Width { get; }
+        public int Width => _tiles.GetLength(0);
 
         /// <inheritdoc/>
-        public int Height { get; }
+        public int Height => _tiles.GetLength(1);
     }
 }

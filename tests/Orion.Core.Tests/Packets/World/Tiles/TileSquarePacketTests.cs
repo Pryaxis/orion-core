@@ -25,10 +25,11 @@ namespace Orion.Core.Packets.World.Tiles {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class TileSquarePacketTests {
         public static readonly byte[] Bytes = {
-            63, 0, 20, 3, 0, 158, 8, 56, 1, 5, 0, 0, 0, 2, 0, 12, 0, 2, 0, 255, 0, 12, 0, 2, 0, 255, 0, 12, 0, 2, 0,
-            255, 0, 12, 0, 2, 0, 255, 0, 12, 0, 2, 0, 255, 0, 12, 0, 2, 0, 255, 0, 12, 0, 2, 0, 255, 0, 12, 0, 2, 0,
-            255, 0
+            41, 0, 20, 3, 0, 100, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 4, 0, 1, 0, 2, 0, 4, 0, 1, 0, 8, 0, 255, 1, 0, 4, 1,
+            0, 8, 1, 240, 131, 0, 0
         };
+
+        public static readonly byte[] ExtraDataBytes = { 12, 0, 20, 1, 128, 1, 100, 0, 0, 1, 0, 0 };
 
         [Fact]
         public void X_Set_Get() {
@@ -87,15 +88,33 @@ namespace Orion.Core.Packets.World.Tiles {
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
-            Assert.Equal(2206, packet.X);
-            Assert.Equal(312, packet.Y);
+            Assert.Equal(100, packet.X);
+            Assert.Equal(256, packet.Y);
             Assert.Equal(3, packet.Tiles.Width);
             Assert.Equal(3, packet.Tiles.Height);
         }
 
         [Fact]
+        public void Read_ExtraData() {
+            var packet = new TileSquarePacket();
+            var span = ExtraDataBytes.AsSpan(IPacket.HeaderSize..);
+            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+
+            Assert.Equal(100, packet.X);
+            Assert.Equal(256, packet.Y);
+            Assert.Equal(1, packet.Tiles.Width);
+            Assert.Equal(1, packet.Tiles.Height);
+        }
+
+        [Fact]
         public void RoundTrip() {
             TestUtils.RoundTripPacket<TileSquarePacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+        }
+
+        [Fact]
+        public void RoundTrip_ExtraData() {
+            TestUtils.RoundTripPacket<TileSquarePacket>(
+                ExtraDataBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

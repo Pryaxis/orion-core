@@ -21,7 +21,7 @@ using Serilog.Events;
 
 namespace Orion.Core.Events.Players {
     /// <summary>
-    /// An event that occurs when a player is updating every tick. This event can be canceled.
+    /// An event that occurs when a player tick (update) occurs. This event can be canceled.
     /// </summary>
     [Event("player-tick", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class PlayerTickEvent : PlayerEvent {

@@ -29,6 +29,9 @@ namespace Orion.Core.Players {
     /// <summary>
     /// Represents a Terraria player.
     /// </summary>
+    /// <remarks>
+    /// Implementations are required to be thread-safe: i.e., each operation on the player should be atomic.
+    /// </remarks>
     public interface IPlayer : IEntity {
         /// <summary>
         /// Gets or sets the player's health.

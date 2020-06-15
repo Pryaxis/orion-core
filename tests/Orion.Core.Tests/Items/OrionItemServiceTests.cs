@@ -87,6 +87,25 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
+        public void ItemDefaults_AbstractItemEventTriggered() {
+            var terrariaItem = new Terraria.Item();
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<ItemDefaultsEvent>(evt => {
+                Assert.Same(terrariaItem, ((OrionItem)evt.Item).Wrapped);
+                Assert.Equal(ItemId.Sdmg, evt.Id);
+                isRun = true;
+            }, Logger.None);
+
+            terrariaItem.SetDefaults((int)ItemId.Sdmg);
+
+            Assert.True(isRun);
+            Assert.Equal(ItemId.Sdmg, (ItemId)terrariaItem.type);
+        }
+
+        [Fact]
         public void ItemDefaults_EventModified() {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);

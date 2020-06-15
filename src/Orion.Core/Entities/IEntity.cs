@@ -24,6 +24,8 @@ namespace Orion.Core.Entities {
     /// Represents an annotatable Terraria entity.
     /// </summary>
     /// <remarks>
+    /// Implementations must be thread-safe.
+    /// 
     /// Many Terraria objects are entities and have common properties such as position, velocity, etc. Entities are
     /// annotatable, allowing consumers to easily attach custom state to them.
     /// 

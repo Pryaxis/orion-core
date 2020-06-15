@@ -24,6 +24,14 @@ namespace Orion.Core.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionSignTests {
         [Fact]
+        public void Text_GetNullValue () {
+            var terrariaSign = new Terraria.Sign { x = 256, y = 100, text = null };
+            var sign = new OrionSign(terrariaSign);
+
+            Assert.Equal(string.Empty, sign.Text);
+        }
+
+        [Fact]
         public void Text_Get() {
             var terrariaSign = new Terraria.Sign { x = 256, y = 100, text = "test" };
             var sign = new OrionSign(terrariaSign);

@@ -60,6 +60,8 @@ namespace Orion.Core.World {
         // OTAPI hooks
         //
 
+        // This method cannot be tested easily since loading a world requires external file manipulation.
+        [ExcludeFromCodeCoverage]
         private void PostLoadWorldHandler(bool loadFromCloud) {
             var evt = new WorldLoadedEvent(World);
             Kernel.Raise(evt, Log);
@@ -78,7 +80,6 @@ namespace Orion.Core.World {
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnTileModifyPacket(PacketReceiveEvent<TileModifyPacket> evt) {
-            var player = evt.Sender;
             ref var packet = ref evt.Packet;
 
             Event Raise<TEvent>(TEvent newEvt) where TEvent : Event {
@@ -87,15 +88,16 @@ namespace Orion.Core.World {
             }
 
             Event? RaiseBlockBreak(ref TileModifyPacket packet, bool isItemless) =>
-                packet.IsFailure ? null : Raise(new BlockBreakEvent(World, player, packet.X, packet.Y, isItemless));
+                packet.IsFailure ? null : Raise(new BlockBreakEvent(World, evt.Sender, packet.X, packet.Y, isItemless));
 
             Event? RaiseWallBreak(ref TileModifyPacket packet) =>
-                packet.IsFailure ? null : Raise(new WallBreakEvent(World, player, packet.X, packet.Y));
+                packet.IsFailure ? null : Raise(new WallBreakEvent(World, evt.Sender, packet.X, packet.Y));
 
             var newEvt = packet.Modification switch {
                 TileModification.BreakBlock => RaiseBlockBreak(ref packet, false),
                 TileModification.BreakWall => RaiseWallBreak(ref packet),
                 TileModification.BreakBlockItemless => RaiseBlockBreak(ref packet, true),
+
                 _ => null
             };
             if (newEvt?.IsCanceled == true) {
@@ -107,36 +109,32 @@ namespace Orion.Core.World {
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnTileSquarePacket(PacketReceiveEvent<TileSquarePacket> evt) {
             ref var packet = ref evt.Packet;
-            var player = evt.Sender;
 
-            ForwardEvent(evt, new TileSquareEvent(World, player, packet.X, packet.Y, packet.Tiles));
+            ForwardEvent(evt, new TileSquareEvent(World, evt.Sender, packet.X, packet.Y, packet.Tiles));
         }
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnWireActivatePacket(PacketReceiveEvent<WireActivatePacket> evt) {
             ref var packet = ref evt.Packet;
-            var player = evt.Sender;
 
-            ForwardEvent(evt, new WiringActivateEvent(World, player, packet.X, packet.Y));
+            ForwardEvent(evt, new WiringActivateEvent(World, evt.Sender, packet.X, packet.Y));
         }
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnBlockPaintPacket(PacketReceiveEvent<BlockPaintPacket> evt) {
             ref var packet = ref evt.Packet;
-            var player = evt.Sender;
 
-            ForwardEvent(evt, new BlockPaintEvent(World, player, packet.X, packet.Y, packet.Color));
+            ForwardEvent(evt, new BlockPaintEvent(World, evt.Sender, packet.X, packet.Y, packet.Color));
         }
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnWallPaintPacket(PacketReceiveEvent<WallPaintPacket> evt) {
             ref var packet = ref evt.Packet;
-            var player = evt.Sender;
 
-            ForwardEvent(evt, new WallPaintEvent(World, player, packet.X, packet.Y, packet.Color));
+            ForwardEvent(evt, new WallPaintEvent(World, evt.Sender, packet.X, packet.Y, packet.Color));
         }
 
         // Forwards `evt` as `newEvt`.
@@ -153,6 +151,8 @@ namespace Orion.Core.World {
 
             public unsafe OTAPI.Tile.ITile this[int x, int y] {
                 get => new TileAdapter(ref World[x, y]);
+
+                // TODO: optimize this to not generate garbage.
                 set => this[x, y].CopyFrom(value);
             }
 

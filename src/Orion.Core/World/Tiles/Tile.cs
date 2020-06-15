@@ -22,6 +22,9 @@ namespace Orion.Core.World.Tiles {
     /// <summary>
     /// Represents an optimized Terraria tile.
     /// </summary>
+    /// <remarks>
+    /// This structure is not thread-safe.
+    /// </remarks>
     [StructLayout(LayoutKind.Explicit)]
     public struct Tile {
         // The shifts for the tile header.

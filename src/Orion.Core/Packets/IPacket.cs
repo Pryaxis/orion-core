@@ -31,6 +31,7 @@ namespace Orion.Core.Packets {
         /// <summary>
         /// Gets the packet's ID.
         /// </summary>
+        /// <value>The packet's ID.</value>
         PacketId Id { get; }
 
         /// <summary>

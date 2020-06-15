@@ -25,6 +25,8 @@ namespace Orion.Core.Items {
     /// Represents an item service. Provides access to items and publishes item-related events.
     /// </summary>
     /// <remarks>
+    /// Implementations are required to be thread-safe.
+    /// 
     /// The item service is responsible for publishing the following item-related events:
     /// <list type="bullet">
     /// <item><description><see cref="ItemDefaultsEvent"/></description></item>

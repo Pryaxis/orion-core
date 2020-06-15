@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using Moq;
+using Orion.Core.Events.World;
 using Orion.Core.Events.World.Tiles;
 using Orion.Core.Items;
 using Orion.Core.Packets.World.Tiles;
@@ -27,6 +29,22 @@ namespace Orion.Core.World {
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     public class OrionWorldServiceTests {
+        [Fact]
+        public void Main_tile_Width_Get() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Assert.Equal(Terraria.Main.maxTilesX, Terraria.Main.tile.Width);
+        }
+
+        [Fact]
+        public void Main_tile_Height_Get() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Assert.Equal(Terraria.Main.maxTilesY, Terraria.Main.tile.Height);
+        }
+
         [Fact]
         public void Main_tile_type_Get() {
             using var kernel = new OrionKernel(Logger.None);
@@ -503,7 +521,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentHeader_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentHeader_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { IsBlockActive = true };
@@ -513,7 +531,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentHeader2_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentHeader2_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile {
@@ -529,7 +547,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentBlockIdAndBlockActive_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockIdAndBlockActive_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile {
@@ -545,7 +563,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentBlockIdButNotBlockActive_ReturnsTrue() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockIdButNotBlockActive_ReturnsTrue() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { BlockId = BlockId.Stone };
@@ -555,7 +573,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentBlockFrameXAndHasFrames_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockFrameXAndHasFrames_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile {
@@ -573,7 +591,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentBlockFrameYAndHasFrames_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockFrameYAndHasFrames_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile {
@@ -591,7 +609,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentBlockFramesButNotHasFrames_ReturnsTrue() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockFramesButNotHasFrames_ReturnsTrue() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile {
@@ -611,7 +629,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentWallId_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentWallId_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { WallId = WallId.Stone };
@@ -621,7 +639,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentLiquidAmount_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentLiquidAmount_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { LiquidAmount = 1 };
@@ -631,7 +649,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentWallColor_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentWallColor_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { WallColor = PaintColor.Red };
@@ -641,13 +659,145 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentYellowWire_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentYellowWire_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { HasYellowWire = true };
             worldService.World[0, 1] = new Tile();
 
             Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(Terraria.Main.tile[0, 1]));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentHeader_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile { IsBlockActive = true };
+            var tile = Mock.Of<OTAPI.Tile.ITile>();
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentHeader2_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile {
+                LiquidAmount = 1,
+                _bTileHeader = 1
+            };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(t => t.liquid == 1 && t.bTileHeader == 2);
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentBlockIdAndBlockActive_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile {
+                IsBlockActive = true,
+                BlockId = BlockId.Stone
+            };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(t => t.sTileHeader == 32 && t.type == (ushort)BlockId.Dirt);
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentBlockIdButNotBlockActive_ReturnsTrue() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile { BlockId = BlockId.Stone };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(t => t.type == (ushort)BlockId.Dirt);
+
+            Assert.True(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentBlockFrameXAndHasFrames_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile {
+                IsBlockActive = true,
+                BlockId = BlockId.Torches,
+                BlockFrameX = 1
+            };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(
+                t => t.sTileHeader == 32 && t.type == (ushort)BlockId.Torches && t.frameX == 2);
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentBlockFrameYAndHasFrames_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile {
+                IsBlockActive = true,
+                BlockId = BlockId.Torches,
+                BlockFrameY = 1
+            };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(
+                t => t.sTileHeader == 32 && t.type == (ushort)BlockId.Torches && t.frameY == 2);
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentBlockFramesButNotHasFrames_ReturnsTrue() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile {
+                IsBlockActive = true,
+                BlockId = BlockId.Stone,
+                BlockFrameX = 1,
+                BlockFrameY = 1
+            };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(
+                t => t.sTileHeader == 32 && t.type == (ushort)BlockId.Stone && t.frameX == 2 && t.frameY == 2);
+
+            Assert.True(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentWallId_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile { WallId = WallId.Stone };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(t => t.wall == (ushort)WallId.NaturalDirt);
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentLiquidAmount_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile { LiquidAmount = 1 };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(t => t.liquid == 2);
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentWallColor_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile { WallColor = PaintColor.Red };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(t => t.bTileHeader == 13);
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentYellowWire_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile { HasYellowWire = true };
+            var tile = Mock.Of<OTAPI.Tile.ITile>();
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
         }
 
         [Fact]
@@ -976,7 +1126,40 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockBreakEventTriggered() {
+        public void WorldSave_EventTriggered() {
+            Terraria.IO.WorldFile._tempTime = 0.0;
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            var isRun = false;
+            kernel.RegisterHandler<WorldSaveEvent>(evt => {
+                Assert.Same(worldService.World, evt.World);
+                isRun = true;
+            }, Logger.None);
+
+            Terraria.IO.WorldFile.SaveWorld(false, true);
+
+            Assert.True(isRun);
+            Assert.Equal(13500.0, Terraria.IO.WorldFile._tempTime);
+        }
+
+        [Fact]
+        public void WorldSave_EventCanceled() {
+            Terraria.IO.WorldFile._tempTime = 0.0;
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            kernel.RegisterHandler<WorldSaveEvent>(evt => evt.Cancel(), Logger.None);
+
+            Terraria.IO.WorldFile.SaveWorld(false, true);
+
+            Assert.Equal(0.0, Terraria.IO.WorldFile._tempTime);
+        }
+
+        [Fact]
+        public void PacketReceive_TileModify_BreakBlock_EventTriggered() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1009,7 +1192,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockBreakEventCanceled() {
+        public void PacketReceive_TileModify_BreakBlock_EventCanceled() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1032,7 +1215,28 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WallBreakEventTriggered() {
+        public void PacketReceive_TileModify_BreakBlockFailure_EventNotTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            var isRun = false;
+            kernel.RegisterHandler<BlockBreakEvent>(evt => isRun = true, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakBlockFailureBytes);
+
+            Assert.False(isRun);
+        }
+
+        [Fact]
+        public void PacketReceive_TileModify_BreakWall_EventTriggered() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1063,7 +1267,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WallBreakEventCanceled() {
+        public void PacketReceive_TileModify_BreakWall_EventCanceled() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1085,7 +1289,30 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockBreakEventItemlessTriggered() {
+        public void PacketReceive_TileModify_BreakWallFailure_EventNotTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Terraria.Main.tile[100, 256] = new Terraria.Tile { wall = (ushort)WallId.Stone };
+
+            var isRun = false;
+            kernel.RegisterHandler<WallBreakEvent>(evt => isRun = true, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakWallFailureBytes);
+
+            Assert.False(isRun);
+        }
+
+        [Fact]
+        public void PacketReceive_TileModify_BreakBlockItemless_EventTriggered() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1118,7 +1345,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockBreakEventItemlessCanceled() {
+        public void PacketReceive_TileModify_BreakBlockItemless_EventCanceled() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1141,7 +1368,43 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileSquareEventTriggered() {
+        public void PacketReceive_TileModify_BreakBlockItemlessFailure_EventNotTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            var isRun = false;
+            kernel.RegisterHandler<BlockBreakEvent>(evt => isRun = true, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakBlockItemlessFailureBytes);
+
+            Assert.False(isRun);
+        }
+
+        [Fact]
+        public void PacketReceive_TileModifyInvalidModification() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, new byte[] { 11, 0, 17, 255, 100, 0, 0, 1, 1, 0, 0 });
+        }
+
+        [Fact]
+        public void PacketReceive_TileSquare_EventTriggered() {
             // Set `State` to 10 so that the tile square packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1152,7 +1415,7 @@ namespace Orion.Core.World {
 
             for (var i = 0; i < 3; ++i) {
                 for (var j = 0; j < 3; ++j) {
-                    Terraria.Main.tile[2206 + i, 312 + j] = new Terraria.Tile();
+                    Terraria.Main.tile[100 + i, 256 + j] = new Terraria.Tile();
                 }
             }
 
@@ -1160,20 +1423,20 @@ namespace Orion.Core.World {
             kernel.RegisterHandler<TileSquareEvent>(evt => {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
-                Assert.Equal(2206, evt.X);
-                Assert.Equal(312, evt.Y);
+                Assert.Equal(100, evt.X);
+                Assert.Equal(256, evt.Y);
                 isRun = true;
             }, Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileSquarePacketTests.Bytes);
 
             Assert.True(isRun);
-            Assert.Equal(BlockId.Dirt, worldService.World[2206, 312].BlockId);
-            Assert.True(worldService.World[2206, 312].IsBlockActive);
+            Assert.Equal(BlockId.Dirt, worldService.World[100, 256].BlockId);
+            Assert.False(worldService.World[100, 256].IsBlockActive);
         }
 
         [Fact]
-        public void PacketReceive_TileSquareEventModified() {
+        public void PacketReceive_TileSquare_EventModified() {
             // Set `State` to 10 so that the tile square packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1184,7 +1447,7 @@ namespace Orion.Core.World {
 
             for (var i = 0; i < 3; ++i) {
                 for (var j = 0; j < 3; ++j) {
-                    Terraria.Main.tile[2206 + i, 312 + j] = new Terraria.Tile();
+                    Terraria.Main.tile[100 + i, 256 + j] = new Terraria.Tile();
                 }
             }
 
@@ -1195,12 +1458,12 @@ namespace Orion.Core.World {
 
             TestUtils.FakeReceiveBytes(5, TileSquarePacketTests.Bytes);
 
-            Assert.Equal(BlockId.Stone, worldService.World[2206, 312].BlockId);
-            Assert.True(worldService.World[2206, 312].IsBlockActive);
+            Assert.Equal(BlockId.Stone, worldService.World[100, 256].BlockId);
+            Assert.True(worldService.World[100, 256].IsBlockActive);
         }
 
         [Fact]
-        public void PacketReceive_TileSquareEventCanceled() {
+        public void PacketReceive_TileSquare_EventCanceled() {
             // Set `State` to 10 so that the tile square packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1223,7 +1486,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WiringActivateEventTriggered() {
+        public void PacketReceive_WiringActivate_EventTriggered() {
             // Set `State` to 10 so that the wire activate packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1256,7 +1519,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WiringActivateEventCanceled() {
+        public void PacketReceive_WiringActivate_EventCanceled() {
             // Set `State` to 10 so that the wire activate packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1281,7 +1544,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockPaintEventTriggered() {
+        public void PacketReceive_BlockPaint_EventTriggered() {
             // Set `State` to 10 so that the block paint packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1310,7 +1573,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockPaintEventCanceled() {
+        public void PacketReceive_BlockPaint_EventCanceled() {
             // Set `State` to 10 so that the block paint packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1330,7 +1593,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WallPaintEventTriggered() {
+        public void PacketReceive_WallPaint_EventTriggered() {
             // Set `State` to 10 so that the wall paint packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1358,7 +1621,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WallPaintEventCanceled() {
+        public void PacketReceive_WallPaint_EventCanceled() {
             // Set `State` to 10 so that the wall paint packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };

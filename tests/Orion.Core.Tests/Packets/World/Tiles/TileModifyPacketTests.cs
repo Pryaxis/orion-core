@@ -24,10 +24,13 @@ namespace Orion.Core.Packets.World.Tiles {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class TileModifyPacketTests {
         public static readonly byte[] BreakBlockBytes = { 11, 0, 17, 0, 100, 0, 0, 1, 0, 0, 0 };
+        public static readonly byte[] BreakBlockFailureBytes = { 11, 0, 17, 0, 100, 0, 0, 1, 1, 0, 0 };
         public static readonly byte[] PlaceBlockBytes = { 11, 0, 17, 1, 100, 0, 0, 1, 4, 0, 1 };
         public static readonly byte[] BreakWallBytes = { 11, 0, 17, 2, 100, 0, 0, 1, 0, 0, 0 };
+        public static readonly byte[] BreakWallFailureBytes = { 11, 0, 17, 2, 100, 0, 0, 1, 1, 0, 0 };
         public static readonly byte[] PlaceWallBytes = { 11, 0, 17, 3, 100, 0, 0, 1, 1, 0, 0 };
         public static readonly byte[] BreakBlockItemlessBytes = { 11, 0, 17, 4, 100, 0, 0, 1, 0, 0, 0 };
+        public static readonly byte[] BreakBlockItemlessFailureBytes = { 11, 0, 17, 4, 100, 0, 0, 1, 1, 0, 0 };
         public static readonly byte[] PlaceRedWireBytes = { 11, 0, 17, 5, 100, 0, 0, 1, 0, 0, 0 };
         public static readonly byte[] BreakRedWireBytes = { 11, 0, 17, 6, 100, 0, 0, 1, 0, 0, 0 };
         public static readonly byte[] HammerBlockBytes = { 11, 0, 17, 7, 100, 0, 0, 1, 0, 0, 0 };
@@ -219,6 +222,18 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
+        public void Read_BreakBlockFailure() {
+            var packet = new TileModifyPacket();
+            var span = BreakBlockFailureBytes.AsSpan(IPacket.HeaderSize..);
+            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+
+            Assert.Equal(TileModification.BreakBlock, packet.Modification);
+            Assert.Equal(100, packet.X);
+            Assert.Equal(256, packet.Y);
+            Assert.True(packet.IsFailure);
+        }
+
+        [Fact]
         public void Read_PlaceBlock() {
             var packet = new TileModifyPacket();
             var span = PlaceBlockBytes.AsSpan(IPacket.HeaderSize..);
@@ -244,6 +259,18 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
+        public void Read_BreakWallFailure() {
+            var packet = new TileModifyPacket();
+            var span = BreakWallFailureBytes.AsSpan(IPacket.HeaderSize..);
+            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+
+            Assert.Equal(TileModification.BreakWall, packet.Modification);
+            Assert.Equal(100, packet.X);
+            Assert.Equal(256, packet.Y);
+            Assert.True(packet.IsFailure);
+        }
+
+        [Fact]
         public void Read_PlaceWall() {
             var packet = new TileModifyPacket();
             var span = PlaceWallBytes.AsSpan(IPacket.HeaderSize..);
@@ -265,6 +292,18 @@ namespace Orion.Core.Packets.World.Tiles {
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
             Assert.False(packet.IsFailure);
+        }
+
+        [Fact]
+        public void Read_BreakBlockItemlessFailure() {
+            var packet = new TileModifyPacket();
+            var span = BreakBlockItemlessFailureBytes.AsSpan(IPacket.HeaderSize..);
+            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+
+            Assert.Equal(TileModification.BreakBlockItemless, packet.Modification);
+            Assert.Equal(100, packet.X);
+            Assert.Equal(256, packet.Y);
+            Assert.True(packet.IsFailure);
         }
 
         [Fact]
@@ -489,6 +528,12 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
+        public void RoundTrip_BreakBlockFailure() {
+            TestUtils.RoundTripPacket<TileModifyPacket>(
+                BreakBlockFailureBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+        }
+
+        [Fact]
         public void RoundTrip_PlaceBlock() {
             TestUtils.RoundTripPacket<TileModifyPacket>(
                 PlaceBlockBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
@@ -501,6 +546,12 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
+        public void RoundTrip_BreakWallFailure() {
+            TestUtils.RoundTripPacket<TileModifyPacket>(
+                BreakWallFailureBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+        }
+
+        [Fact]
         public void RoundTrip_PlaceWall() {
             TestUtils.RoundTripPacket<TileModifyPacket>(
                 PlaceWallBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
@@ -510,6 +561,12 @@ namespace Orion.Core.Packets.World.Tiles {
         public void RoundTrip_BreakBlockItemless() {
             TestUtils.RoundTripPacket<TileModifyPacket>(
                 BreakBlockItemlessBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+        }
+
+        [Fact]
+        public void RoundTrip_BreakBlockItemlessFailure() {
+            TestUtils.RoundTripPacket<TileModifyPacket>(
+                BreakBlockItemlessFailureBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
 
         [Fact]

@@ -24,6 +24,14 @@ namespace Orion.Core.World.Chests {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionChestTests {
         [Fact]
+        public void Name_GetNullValue() {
+            var terrariaChest = new Terraria.Chest { x = 256, y = 100, name = null };
+            var chest = new OrionChest(terrariaChest);
+
+            Assert.Equal(string.Empty, chest.Name);
+        }
+
+        [Fact]
         public void Name_Get() {
             var terrariaChest = new Terraria.Chest { x = 256, y = 100, name = "test" };
             var chest = new OrionChest(terrariaChest);

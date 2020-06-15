@@ -23,7 +23,11 @@ namespace Orion.Core.Entities {
     /// Represents an annotatable object. Provides the base class for implementations of interfaces derived from
     /// <see cref="IAnnotatable"/>.
     /// </summary>
+    /// <remarks>
+    /// This class is thread-safe.
+    /// </remarks>
     public class AnnotatableObject : IAnnotatable {
+        private readonly object _lock = new object();
         private readonly IDictionary<string, object> _annotations = new Dictionary<string, object>();
 
         /// <inheritdoc/>
@@ -32,23 +36,25 @@ namespace Orion.Core.Entities {
                 throw new ArgumentNullException(nameof(key));
             }
 
-            if (_annotations.TryGetValue(key, out var boxObj)) {
-                if (!(boxObj is Box<T> box)) {
-                    // Not localized because this string is developer-facing.
-                    var expectedType = boxObj.GetType().GetGenericArguments()[0];
-                    throw new ArgumentException(
-                        $"Invalid annotation type (expected: `{expectedType}`, actual: `{typeof(T)}`)");
-                }
+            lock (_lock) {
+                if (_annotations.TryGetValue(key, out var boxObj)) {
+                    if (!(boxObj is Box<T> box)) {
+                        // Not localized because this string is developer-facing.
+                        var expectedType = boxObj.GetType().GetGenericArguments()[0];
+                        throw new ArgumentException(
+                            $"Invalid annotation type (expected: `{expectedType}`, actual: `{typeof(T)}`)");
+                    }
 
-                return ref box.Value;
-            } else {
-                var box = new Box<T>();
-                if (initializer != null) {
-                    box.Value = initializer();
-                }
+                    return ref box.Value;
+                } else {
+                    var box = new Box<T>();
+                    if (initializer != null) {
+                        box.Value = initializer();
+                    }
 
-                _annotations.Add(key, box);
-                return ref box.Value;
+                    _annotations.Add(key, box);
+                    return ref box.Value;
+                }
             }
         }
 
@@ -58,7 +64,9 @@ namespace Orion.Core.Entities {
                 throw new ArgumentNullException(nameof(key));
             }
 
-            return _annotations.Remove(key);
+            lock (_lock) {
+                return _annotations.Remove(key);
+            }
         }
 
         // Utility class for returning a `ref` to `T`.

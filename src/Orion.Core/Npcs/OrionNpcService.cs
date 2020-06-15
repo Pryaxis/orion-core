@@ -34,6 +34,7 @@ using Serilog;
 namespace Orion.Core.Npcs {
     [Binding("orion-npcs", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
     internal sealed class OrionNpcService : OrionService, INpcService {
+        private readonly object _lock = new object();
         private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();
 
         public OrionNpcService(OrionKernel kernel, ILogger log) : base(kernel, log) {
@@ -69,8 +70,10 @@ namespace Orion.Core.Npcs {
             // Not localized because this string is developer-facing.
             Log.Debug("Spawning {NpcId} at {Position}", id, position);
 
-            var npcIndex = Terraria.NPC.NewNPC((int)position.X, (int)position.Y, (int)id);
-            return npcIndex >= 0 && npcIndex < Npcs.Count ? Npcs[npcIndex] : null;
+            lock (_lock) {
+                var npcIndex = Terraria.NPC.NewNPC((int)position.X, (int)position.Y, (int)id);
+                return npcIndex >= 0 && npcIndex < Npcs.Count ? Npcs[npcIndex] : null;
+            }
         }
 
         // =============================================================================================================
@@ -121,8 +124,7 @@ namespace Orion.Core.Npcs {
         private OTAPI.HookResult PreUpdateHandler(Terraria.NPC terrariaNpc, ref int npcIndex) {
             Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count);
 
-            var npc = Npcs[npcIndex];
-            var evt = new NpcTickEvent(npc);
+            var evt = new NpcTickEvent(Npcs[npcIndex]);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
@@ -175,10 +177,9 @@ namespace Orion.Core.Npcs {
         private void OnNpcBuffPacket(PacketReceiveEvent<NpcBuffPacket> evt) {
             ref var packet = ref evt.Packet;
             var npc = Npcs[packet.NpcIndex];
-            var player = evt.Sender;
             var buff = new Buff(packet.Id, packet.Ticks);
 
-            ForwardEvent(evt, new NpcBuffEvent(npc, player, buff));
+            ForwardEvent(evt, new NpcBuffEvent(npc, evt.Sender, buff));
         }
 
         [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
@@ -186,18 +187,16 @@ namespace Orion.Core.Npcs {
         private void OnNpcCatchPacket(PacketReceiveEvent<NpcCatchPacket> evt) {
             ref var packet = ref evt.Packet;
             var npc = Npcs[packet.NpcIndex];
-            var player = evt.Sender;
 
-            ForwardEvent(evt, new NpcCatchEvent(npc, player));
+            ForwardEvent(evt, new NpcCatchEvent(npc, evt.Sender));
         }
 
         [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnNpcFishPacket(PacketReceiveEvent<NpcFishPacket> evt) {
             ref var packet = ref evt.Packet;
-            var player = evt.Sender;
 
-            ForwardEvent(evt, new NpcFishEvent(player, packet.X, packet.Y, packet.Id));
+            ForwardEvent(evt, new NpcFishEvent(evt.Sender, packet.X, packet.Y, packet.Id));
         }
 
         // Forwards `evt` as `newEvt`.

@@ -27,6 +27,8 @@ using Serilog;
 namespace Orion.Core.Projectiles {
     [Binding("orion-projs", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
     internal sealed class OrionProjectileService : OrionService, IProjectileService {
+        private readonly object _lock = new object();
+
         public OrionProjectileService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             // Construct the `Projectiles` array. Note that the last projectile should be ignored, as it is not a real
             // projectile.
@@ -50,11 +52,13 @@ namespace Orion.Core.Projectiles {
             // Not localized because this string is developer-facing.
             Log.Debug("Spawning {ProjectileId} at {Position}", id, position);
 
-            var projectileIndex = Terraria.Projectile.NewProjectile(
-                position.X, position.Y, velocity.X, velocity.Y, (int)id, damage, knockback);
-            Debug.Assert(projectileIndex >= 0 && projectileIndex < Projectiles.Count);
+            lock (_lock) {
+                var projectileIndex = Terraria.Projectile.NewProjectile(
+                    position.X, position.Y, velocity.X, velocity.Y, (int)id, damage, knockback);
+                Debug.Assert(projectileIndex >= 0 && projectileIndex < Projectiles.Count);
 
-            return Projectiles[projectileIndex];
+                return Projectiles[projectileIndex];
+            }
         }
 
         // =============================================================================================================
@@ -79,8 +83,7 @@ namespace Orion.Core.Projectiles {
         private OTAPI.HookResult PreUpdateHandler(Terraria.Projectile terrariaProjectile, ref int projectileIndex) {
             Debug.Assert(projectileIndex >= 0 && projectileIndex < Projectiles.Count);
 
-            var projectile = Projectiles[projectileIndex];
-            var evt = new ProjectileTickEvent(projectile);
+            var evt = new ProjectileTickEvent(Projectiles[projectileIndex]);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }

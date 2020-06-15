@@ -53,13 +53,13 @@ namespace Orion.Core.World {
                 Debug.Assert(x >= 0 && x < Width);
                 Debug.Assert(y >= 0 && y < Height);
 
-                var offset = y * Width + x;
-                return ref _tiles[offset];
+                return ref _tiles[y * Width + x];
             }
         }
 
         public int Width { get; }
         public int Height { get; }
+
         public string Name { get; }
 
         public void Dispose() {
