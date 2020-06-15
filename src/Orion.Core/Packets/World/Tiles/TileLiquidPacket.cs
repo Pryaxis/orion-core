@@ -39,7 +39,7 @@ namespace Orion.Core.Packets.World.Tiles {
         [field: FieldOffset(2)] public short Y { get; set; }
 
         /// <summary>
-        /// Gets or sets the tile's liquid amount.
+        /// Gets or sets the tile's liquid amount. This ranges from <c>0</c> to <c>255</c>.
         /// </summary>
         /// <value>The tile's liquid amount.</value>
         [field: FieldOffset(4)] public byte LiquidAmount { get; set; }

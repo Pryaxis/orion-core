@@ -1717,7 +1717,56 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WiringActivate_EventTriggered() {
+        public void PacketReceive_TileLiquid_EventTriggered() {
+            // Set `State` to 10 so that the tile liquid packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Terraria.Main.tile[256, 100] = new Terraria.Tile();
+            
+            var isRun = false;
+            kernel.RegisterHandler<TileLiquidEvent>(evt => {
+                Assert.Same(worldService.World, evt.World);
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(256, evt.X);
+                Assert.Equal(100, evt.Y);
+                Assert.Equal(255, evt.LiquidAmount);
+                Assert.Equal(Liquid.Honey, evt.Liquid);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileLiquidPacketTests.Bytes);
+
+            Assert.True(isRun);
+            Assert.Equal(255, worldService.World[256, 100].LiquidAmount);
+            Assert.Equal(Liquid.Honey, worldService.World[256, 100].Liquid);
+        }
+
+        [Fact]
+        public void PacketReceive_TileLiquid_EventCanceled() {
+            // Set `State` to 10 so that the tile liquid packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Terraria.Main.tile[256, 100] = new Terraria.Tile();
+
+            kernel.RegisterHandler<TileLiquidEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileLiquidPacketTests.Bytes);
+
+            Assert.Equal(0, worldService.World[256, 100].LiquidAmount);
+        }
+
+        [Fact]
+        public void PacketReceive_WireActivate_EventTriggered() {
             // Set `State` to 10 so that the wire activate packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1750,7 +1799,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WiringActivate_EventCanceled() {
+        public void PacketReceive_WireActivate_EventCanceled() {
             // Set `State` to 10 so that the wire activate packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };

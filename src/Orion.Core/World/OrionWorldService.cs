@@ -124,6 +124,15 @@ namespace Orion.Core.World {
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
+        private void OnTileLiquidPacket(PacketReceiveEvent<TileLiquidPacket> evt) {
+            ref var packet = ref evt.Packet;
+
+            ForwardEvent(
+                evt, new TileLiquidEvent(World, evt.Sender, packet.X, packet.Y, packet.LiquidAmount, packet.Liquid));
+        }
+
+        [EventHandler("orion-world", Priority = EventPriority.Lowest)]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnWireActivatePacket(PacketReceiveEvent<WireActivatePacket> evt) {
             ref var packet = ref evt.Packet;
 

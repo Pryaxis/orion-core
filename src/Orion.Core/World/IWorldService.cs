@@ -35,6 +35,7 @@ namespace Orion.Core.World {
     /// <item><description><see cref="WallBreakEvent"/></description></item>
     /// <item><description><see cref="WallPlaceEvent"/></description></item>
     /// <item><description><see cref="TileSquareEvent"/></description></item>
+    /// <item><description><see cref="TileLiquidEvent"/></description></item>
     /// <item><description><see cref="WiringActivateEvent"/></description></item>
     /// <item><description><see cref="BlockPaintEvent"/></description></item>
     /// <item><description><see cref="WallPaintEvent"/></description></item>
