@@ -34,7 +34,7 @@ namespace Orion.Core.Events.World.Tiles {
         /// <param name="player">The player painting the block, or <see langword="null"/> for none.</param>
         /// <param name="x">The block's X coordinate.</param>
         /// <param name="y">The block's Y coordinate.</param>
-        /// <param name="color">The block color.</param>
+        /// <param name="color">The block color being painted.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public BlockPaintEvent(IWorld world, IPlayer? player, int x, int y, PaintColor color)
                 : base(world, player, x, y) {
@@ -42,9 +42,9 @@ namespace Orion.Core.Events.World.Tiles {
         }
 
         /// <summary>
-        /// Gets the color being painted.
+        /// Gets the block color being painted.
         /// </summary>
-        /// <value>The color being painted.</value>
+        /// <value>The block color being painted.</value>
         public PaintColor Color { get; }
     }
 }

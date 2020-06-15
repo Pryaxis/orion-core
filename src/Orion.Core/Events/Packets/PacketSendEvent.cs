@@ -29,7 +29,7 @@ namespace Orion.Core.Events.Packets {
     public sealed class PacketSendEvent<TPacket> : PacketEvent<TPacket> where TPacket : struct, IPacket {
         /// <summary>
         /// Initializes a new instance of the <see cref="PacketSendEvent{TPacket}"/> class with the specified
-        /// <paramref name="packet"/> reference and packet <paramref name="receiver"/>.
+        /// <paramref name="packet"/> reference and <paramref name="receiver"/>.
         /// </summary>
         /// <param name="packet">The packet reference being sent. <b>This must be on the stack!</b></param>
         /// <param name="receiver">The packet's receiver.</param>
