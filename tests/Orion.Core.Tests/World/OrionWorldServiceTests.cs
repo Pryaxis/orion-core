@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using Moq;
+using Orion.Core.Events.World;
 using Orion.Core.Events.World.Tiles;
 using Orion.Core.Items;
 using Orion.Core.Packets.World.Tiles;
@@ -1122,6 +1123,39 @@ namespace Orion.Core.World {
             worldService.World[0, 0] = new Tile { Slope = Slope.BottomRight };
 
             Assert.Equal((int)Slope.BottomRight + 1, Terraria.Main.tile[0, 0].blockType());
+        }
+
+        [Fact]
+        public void WorldSave_EventTriggered() {
+            Terraria.IO.WorldFile._tempTime = 0.0;
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            var isRun = false;
+            kernel.RegisterHandler<WorldSaveEvent>(evt => {
+                Assert.Same(worldService.World, evt.World);
+                isRun = true;
+            }, Logger.None);
+
+            Terraria.IO.WorldFile.SaveWorld(false, true);
+
+            Assert.True(isRun);
+            Assert.Equal(13500.0, Terraria.IO.WorldFile._tempTime);
+        }
+
+        [Fact]
+        public void WorldSave_EventCanceled() {
+            Terraria.IO.WorldFile._tempTime = 0.0;
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            kernel.RegisterHandler<WorldSaveEvent>(evt => evt.Cancel(), Logger.None);
+
+            Terraria.IO.WorldFile.SaveWorld(false, true);
+
+            Assert.Equal(0.0, Terraria.IO.WorldFile._tempTime);
         }
 
         [Fact]

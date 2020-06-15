@@ -19,12 +19,14 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Orion.Core.Events;
+using Orion.Core.Events.Server;
 using Orion.Core.Framework;
 using Serilog;
 using Serilog.Core;
 using Xunit;
 
 namespace Orion.Core {
+    [Collection("TerrariaTestsCollection")]
     public class OrionKernelTests {
         [Fact]
         public void Ctor_NullLog_ThrowsArgumentNullException() {

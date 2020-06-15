@@ -60,6 +60,8 @@ namespace Orion.Core.World {
         // OTAPI hooks
         //
 
+        // This method cannot be tested easily since loading a world requires external file manipulation.
+        [ExcludeFromCodeCoverage]
         private void PostLoadWorldHandler(bool loadFromCloud) {
             var evt = new WorldLoadedEvent(World);
             Kernel.Raise(evt, Log);
