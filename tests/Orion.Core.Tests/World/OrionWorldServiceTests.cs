@@ -1381,7 +1381,7 @@ namespace Orion.Core.World {
 
             for (var i = 0; i < 3; ++i) {
                 for (var j = 0; j < 3; ++j) {
-                    Terraria.Main.tile[2206 + i, 312 + j] = new Terraria.Tile();
+                    Terraria.Main.tile[100 + i, 256 + j] = new Terraria.Tile();
                 }
             }
 
@@ -1389,16 +1389,16 @@ namespace Orion.Core.World {
             kernel.RegisterHandler<TileSquareEvent>(evt => {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
-                Assert.Equal(2206, evt.X);
-                Assert.Equal(312, evt.Y);
+                Assert.Equal(100, evt.X);
+                Assert.Equal(256, evt.Y);
                 isRun = true;
             }, Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileSquarePacketTests.Bytes);
 
             Assert.True(isRun);
-            Assert.Equal(BlockId.Dirt, worldService.World[2206, 312].BlockId);
-            Assert.True(worldService.World[2206, 312].IsBlockActive);
+            Assert.Equal(BlockId.Dirt, worldService.World[100, 256].BlockId);
+            Assert.False(worldService.World[100, 256].IsBlockActive);
         }
 
         [Fact]
@@ -1413,7 +1413,7 @@ namespace Orion.Core.World {
 
             for (var i = 0; i < 3; ++i) {
                 for (var j = 0; j < 3; ++j) {
-                    Terraria.Main.tile[2206 + i, 312 + j] = new Terraria.Tile();
+                    Terraria.Main.tile[100 + i, 256 + j] = new Terraria.Tile();
                 }
             }
 
@@ -1424,8 +1424,8 @@ namespace Orion.Core.World {
 
             TestUtils.FakeReceiveBytes(5, TileSquarePacketTests.Bytes);
 
-            Assert.Equal(BlockId.Stone, worldService.World[2206, 312].BlockId);
-            Assert.True(worldService.World[2206, 312].IsBlockActive);
+            Assert.Equal(BlockId.Stone, worldService.World[100, 256].BlockId);
+            Assert.True(worldService.World[100, 256].IsBlockActive);
         }
 
         [Fact]

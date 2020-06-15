@@ -151,13 +151,14 @@ namespace Orion.Core.Players {
             Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
             Debug.Assert(data != null);
             Debug.Assert(offset >= 0 && offset + size <= data.Length);
-            Debug.Assert(size > 0);
+            Debug.Assert(size >= 3);
 
             var span = data.AsSpan((offset + 2)..(offset + size));
             var packetId = span[0];
 
             // The `SendBytes` event is only triggered for non-module packets.
-            (_onSendPacketHandlers[packetId] ?? OnSendPacket<UnknownPacket>)(playerIndex, span);
+            var handler = _onSendPacketHandlers[packetId] ?? OnSendPacket<UnknownPacket>;
+            handler(playerIndex, span);
             return OTAPI.HookResult.Cancel;
         }
 
@@ -166,6 +167,7 @@ namespace Orion.Core.Players {
                 ref Terraria.Net.NetPacket packet) {
             Debug.Assert(socket != null);
             Debug.Assert(packet.Buffer.Data != null);
+            Debug.Assert(packet.Writer.BaseStream.Position >= 5);
 
             // Since we don't have an index, scan through the clients to find the player index.
             var playerIndex = -1;
@@ -182,15 +184,15 @@ namespace Orion.Core.Players {
             var moduleId = Unsafe.ReadUnaligned<ushort>(ref span[1]);
 
             // The `SendBytes` event is only triggered for module packets.
-            (_onSendModuleHandlers[moduleId] ?? OnSendPacket<ModulePacket<UnknownModule>>)(playerIndex, span);
+            var handler = _onSendModuleHandlers[moduleId] ?? OnSendPacket<ModulePacket<UnknownModule>>;
+            handler(playerIndex, span);
             return OTAPI.HookResult.Cancel;
         }
 
         private OTAPI.HookResult PreUpdateHandler(Terraria.Player terrariaPlayer, ref int playerIndex) {
             Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
 
-            var player = Players[playerIndex];
-            var evt = new PlayerTickEvent(player);
+            var evt = new PlayerTickEvent(Players[playerIndex]);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
@@ -204,8 +206,7 @@ namespace Orion.Core.Players {
                 return OTAPI.HookResult.Continue;
             }
 
-            var player = Players[remoteClient.Id];
-            var evt = new PlayerQuitEvent(player);
+            var evt = new PlayerQuitEvent(Players[remoteClient.Id]);
             Kernel.Raise(evt, Log);
             return OTAPI.HookResult.Continue;
         }
@@ -225,13 +226,13 @@ namespace Orion.Core.Players {
             var packetLength = packet.Read(span[1..], PacketContext.Server);
             Debug.Assert(packetLength == span.Length - 1);
 
-            // If `TPacket` is `UnknownPacket`, then we need to set the `Id` property appropriately.
+            // If `TPacket` is `UnknownPacket`, then we need to set the `Id` property appropriately since it's not
+            // available in the `Read` method.
             if (typeof(TPacket) == typeof(UnknownPacket)) {
                 Unsafe.As<TPacket, UnknownPacket>(ref packet).Id = (PacketId)span[0];
             }
 
-            var sender = Players[buffer.whoAmI];
-            var evt = new PacketReceiveEvent<TPacket>(ref packet, sender);
+            var evt = new PacketReceiveEvent<TPacket>(ref packet, Players[buffer.whoAmI]);
             Kernel.Raise(evt, Log);
             if (evt.IsCanceled) {
                 return;
@@ -266,13 +267,13 @@ namespace Orion.Core.Players {
             var packetLength = packet.Read(span[1..], PacketContext.Client);
             Debug.Assert(packetLength == span.Length - 1);
 
-            // If `TPacket` is `UnknownPacket`, then we need to set the `Id` property appropriately.
+            // If `TPacket` is `UnknownPacket`, then we need to set the `Id` property appropriately since it's not
+            // available in the `Read` method.
             if (typeof(TPacket) == typeof(UnknownPacket)) {
                 Unsafe.As<TPacket, UnknownPacket>(ref packet).Id = (PacketId)span[0];
             }
 
-            var receiver = Players[playerIndex];
-            var evt = new PacketSendEvent<TPacket>(ref packet, receiver);
+            var evt = new PacketSendEvent<TPacket>(ref packet, Players[playerIndex]);
             Kernel.Raise(evt, Log);
             if (evt.IsCanceled) {
                 return;

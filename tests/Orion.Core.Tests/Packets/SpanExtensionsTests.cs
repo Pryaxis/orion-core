@@ -36,6 +36,26 @@ namespace Orion.Core.Packets {
             new object[] { NetworkText.Localized("localized {0} {1}", "literal", "literal2") },
         };
 
+        [Fact]
+        public void ReadString_7BitIntegerTooLarge_ThrowsArgumentException() {
+            var bytes = new byte[] { 255, 255, 255, 255, 255, 255 };
+
+            Assert.Throws<ArgumentException>(() => {
+                var span = bytes.AsSpan();
+                return span.Read(Encoding.UTF8, out string _);
+            });
+        }
+
+        [Fact]
+        public void ReadString_Negative7BitInteger_ThrowsArgumentException() {
+            var bytes = new byte[] { 255, 255, 255, 255, 15 };
+
+            Assert.Throws<ArgumentException>(() => {
+                var span = bytes.AsSpan();
+                return span.Read(Encoding.UTF8, out string _);
+            });
+        }
+
         [Theory]
         [MemberData(nameof(StringParams))]
         public void WriteString_ReadString(string str) {
