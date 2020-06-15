@@ -70,7 +70,7 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void ProjectileSetDefaults_EventTriggered() {
+        public void ProjectileDefaults_EventTriggered() {
             Terraria.Main.projectile[0] = new Terraria.Projectile { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
@@ -85,12 +85,32 @@ namespace Orion.Core.Projectiles {
             Terraria.Main.projectile[0].SetDefaults((int)ProjectileId.CrystalBullet);
 
             Assert.True(isRun);
+            Assert.Equal(ProjectileId.CrystalBullet, (ProjectileId)Terraria.Main.projectile[0].type);
+        }
+
+        [Fact]
+        public void ProjectileDefaults_AbstractProjectile_EventTriggered() {
+            var terrariaProjectile = new Terraria.Projectile();
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var projectileService = new OrionProjectileService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<ProjectileDefaultsEvent>(evt => {
+                Assert.Same(terrariaProjectile, ((OrionProjectile)evt.Projectile).Wrapped);
+                Assert.Equal(ProjectileId.CrystalBullet, evt.Id);
+                isRun = true;
+            }, Logger.None);
+
+            terrariaProjectile.SetDefaults((int)ProjectileId.CrystalBullet);
+
+            Assert.True(isRun);
+            Assert.Equal(ProjectileId.CrystalBullet, (ProjectileId)terrariaProjectile.type);
         }
 
         [Theory]
         [InlineData(ProjectileId.CrystalBullet, ProjectileId.WoodenArrow)]
         [InlineData(ProjectileId.CrystalBullet, ProjectileId.None)]
-        public void ProjectileSetDefaults_EventModified(ProjectileId oldId, ProjectileId newId) {
+        public void ProjectileDefaults_EventModified(ProjectileId oldId, ProjectileId newId) {
             Terraria.Main.projectile[0] = new Terraria.Projectile { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
@@ -103,7 +123,7 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void ProjectileSetDefaults_EventCanceled() {
+        public void ProjectileDefaults_EventCanceled() {
             Terraria.Main.projectile[0] = new Terraria.Projectile { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);

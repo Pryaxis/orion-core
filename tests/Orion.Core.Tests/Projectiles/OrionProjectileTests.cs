@@ -20,8 +20,18 @@ using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Orion.Core.Projectiles {
+    // These tests depend on Terraria state.
+    [Collection("TerrariaTestsCollection")]
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionProjectileTests {
+        [Fact]
+        public void Name_Get() {
+            var terrariaProjectile = new Terraria.Projectile { type = (int)ProjectileId.WoodenArrow };
+            var projectile = new OrionProjectile(terrariaProjectile);
+
+            Assert.Equal("Wooden Arrow", projectile.Name);
+        }
+
         [Fact]
         public void Name_SetNullValue_ThrowsArgumentNullException() {
             var terrariaProjectile = new Terraria.Projectile();
@@ -31,7 +41,7 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void Name_Set() {
+        public void Name_Set_Get() {
             var terrariaProjectile = new Terraria.Projectile();
             var projectile = new OrionProjectile(terrariaProjectile);
 

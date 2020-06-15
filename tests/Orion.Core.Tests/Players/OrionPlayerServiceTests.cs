@@ -530,6 +530,27 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
+        public void PacketSend_UnknownPacket_EventTriggered() {
+            var socket = new TestSocket { Connected = true };
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PacketSendEvent<UnknownPacket>>(evt => {
+                Assert.Same(playerService.Players[5], evt.Receiver);
+                Assert.Equal((PacketId)25, evt.Packet.Id);
+                Assert.Equal(0, evt.Packet.Length);
+                isRun = true;
+            }, Logger.None);
+
+            Terraria.NetMessage.SendData(25, 5);
+
+            Assert.True(isRun);
+            Assert.Equal(new byte[] { 3, 0, 25 }, socket.SendData);
+        }
+
+        [Fact]
         public void PacketSend_EventModified() {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
@@ -596,6 +617,29 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
+        public void ModuleSend_UnknownModule_EventTriggered() {
+            var socket = new TestSocket { Connected = true };
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PacketSendEvent<ModulePacket<UnknownModule>>>(evt => {
+                Assert.Same(playerService.Players[5], evt.Receiver);
+                Assert.Equal((ModuleId)65535, evt.Packet.Module.Id);
+                Assert.Equal(4, evt.Packet.Module.Length);
+                isRun = true;
+            }, Logger.None);
+
+            var packet = new Terraria.Net.NetPacket(65535, 10);
+            packet.Writer.Write(1234);
+            Terraria.Net.NetManager.Instance.SendData(socket, packet);
+
+            Assert.True(isRun);
+            Assert.Equal(new byte[] { 9, 0, 82, 255, 255, 210, 4, 0, 0 }, socket.SendData);
+        }
+
+        [Fact]
         public void ModuleSend_EventModified() {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
@@ -633,29 +677,6 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void ModuleSend_UnknownModule_EventTriggered() {
-            var socket = new TestSocket { Connected = true };
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
-
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            var isRun = false;
-            kernel.RegisterHandler<PacketSendEvent<ModulePacket<UnknownModule>>>(evt => {
-                Assert.Same(playerService.Players[5], evt.Receiver);
-                Assert.Equal((ModuleId)65535, evt.Packet.Module.Id);
-                Assert.Equal(4, evt.Packet.Module.Length);
-                isRun = true;
-            }, Logger.None);
-
-            var packet = new Terraria.Net.NetPacket(65535, 10);
-            packet.Writer.Write(1234);
-            Terraria.Net.NetManager.Instance.SendData(socket, packet);
-
-            Assert.True(isRun);
-            Assert.Equal(new byte[] { 9, 0, 82, 255, 255, 210, 4, 0, 0 }, socket.SendData);
-        }
-
-        [Fact]
         public void ModuleSend_ThrowsIOException() {
             var socket = new BuggySocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
@@ -663,7 +684,11 @@ namespace Orion.Core.Players {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
 
-            Terraria.NetMessage.SendData((byte)PacketId.ClientConnect, 5);
+            var packet = new Terraria.Net.NetPacket(1, 16);
+            packet.Writer.Write((byte)1);
+            Terraria.Localization.NetworkText.FromLiteral("test").Serialize(packet.Writer);
+            Terraria.Utils.WriteRGB(packet.Writer, Microsoft.Xna.Framework.Color.White);
+            Terraria.Net.NetManager.Instance.SendData(socket, packet);
         }
 
         private class TestSocket : Terraria.Net.Sockets.ISocket {
