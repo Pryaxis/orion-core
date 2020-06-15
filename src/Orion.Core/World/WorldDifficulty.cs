@@ -15,27 +15,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Core.Entities;
-using Orion.Core.World.Tiles;
-
 namespace Orion.Core.World {
     /// <summary>
-    /// Represents a Terraria world.
+    /// Specifies a world's difficulty.
     /// </summary>
-    /// <remarks>
-    /// Implementations are required to be thread-safe.
-    /// </remarks>
-    public interface IWorld : ITileSlice, IAnnotatable {
+    public enum WorldDifficulty : byte {
         /// <summary>
-        /// Gets the world's name.
+        /// Indicates classic mode.
         /// </summary>
-        /// <value>The world's name.</value>
-        string Name { get; }
+        Classic = 0,
 
         /// <summary>
-        /// Gets or sets the world's difficulty.
+        /// Indicates expert mode.
         /// </summary>
-        /// <value>The world's difficulty.</value>
-        WorldDifficulty Difficulty { get; set; }
+        Expert = 1,
+
+        /// <summary>
+        /// Indicates master mode.
+        /// </summary>
+        Master = 2,
+
+        /// <summary>
+        /// Indicates journey mode.
+        /// </summary>
+        Journey = 3
     }
 }

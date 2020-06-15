@@ -62,6 +62,11 @@ namespace Orion.Core.World {
 
         public string Name { get; }
 
+        public WorldDifficulty Difficulty {
+            get => (WorldDifficulty)Terraria.Main.GameMode;
+            set => Terraria.Main.GameMode = (int)value;
+        }
+
         public void Dispose() {
             Marshal.FreeHGlobal((IntPtr)_tiles);
             GC.SuppressFinalize(this);

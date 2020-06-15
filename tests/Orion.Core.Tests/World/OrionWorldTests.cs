@@ -15,11 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
 using Orion.Core.World.Tiles;
 using Xunit;
 
 namespace Orion.Core.World {
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionWorldTests {
+        [Fact]
+        public void Item_Get_Mutate() {
+            using var world = new OrionWorld(123, 456, "test");
+
+            world[0, 0].BlockId = BlockId.Stone;
+
+            Assert.Equal(BlockId.Stone, world[0, 0].BlockId);
+        }
+
         [Fact]
         public void Width_Get() {
             using var world = new OrionWorld(123, 456, "test");
@@ -42,12 +53,21 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Item_Get_Mutate() {
+        public void Difficulty_Get() {
+            Terraria.Main.GameMode = (int)WorldDifficulty.Master;
+
             using var world = new OrionWorld(123, 456, "test");
 
-            world[0, 0].BlockId = BlockId.Stone;
+            Assert.Equal(WorldDifficulty.Master, world.Difficulty);
+        }
 
-            Assert.Equal(BlockId.Stone, world[0, 0].BlockId);
+        [Fact]
+        public void Difficulty_Set() {
+            using var world = new OrionWorld(123, 456, "test");
+
+            world.Difficulty = WorldDifficulty.Master;
+
+            Assert.Equal(WorldDifficulty.Master, (WorldDifficulty)Terraria.Main.GameMode);
         }
     }
 }
