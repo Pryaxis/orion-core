@@ -73,14 +73,16 @@ namespace Orion.Core.Players {
                     .MakeGenericMethod(packetType)
                     .CreateDelegate(typeof(OnSendPacketHandler), this);
 
-            // Construct the `_onReceivePacketHandlers` and `_onSendPacketHandlers` arrays ahead of time.
+            // Construct the `_onReceivePacketHandlers` and `_onSendPacketHandlers` arrays ahead of time for the valid
+            // `PacketId` instances. The invalid instances are handled by defaulting to `UnknownPacket`.
             foreach (var packetId in (PacketId[])Enum.GetValues(typeof(PacketId))) {
                 var packetType = packetId.Type();
                 _onReceivePacketHandlers[(byte)packetId] = MakeOnReceivePacketHandler(packetType);
                 _onSendPacketHandlers[(byte)packetId] = MakeOnSendPacketHandler(packetType);
             }
 
-            // Construct the `_onReceiveModuleHandlers` and `_onSendModuleHandlers` arrays ahead of time.
+            // Construct the `_onReceiveModuleHandlers` and `_onSendModuleHandlers` arrays ahead of time for the valid
+            // `ModuleId` instances. The invalid instances are handled by defaulting to `UnknownModule`.
             foreach (var moduleId in (ModuleId[])Enum.GetValues(typeof(ModuleId))) {
                 var packetType = typeof(ModulePacket<>).MakeGenericType(moduleId.Type());
                 _onReceiveModuleHandlers[(ushort)moduleId] = MakeOnReceivePacketHandler(packetType);
@@ -89,6 +91,7 @@ namespace Orion.Core.Players {
 
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
             OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
+            OTAPI.Hooks.Net.SendNetData = SendNetDataHandler;
             OTAPI.Hooks.Player.PreUpdate = PreUpdateHandler;
             OTAPI.Hooks.Net.RemoteClient.PreReset = PreResetHandler;
 
@@ -104,6 +107,7 @@ namespace Orion.Core.Players {
 
             OTAPI.Hooks.Net.ReceiveData = null;
             OTAPI.Hooks.Net.SendBytes = null;
+            OTAPI.Hooks.Net.SendNetData = null;
             OTAPI.Hooks.Player.PreUpdate = null;
             OTAPI.Hooks.Net.RemoteClient.PreReset = null;
 
@@ -149,17 +153,36 @@ namespace Orion.Core.Players {
             Debug.Assert(offset >= 0 && offset + size <= data.Length);
             Debug.Assert(size > 0);
 
-            OnSendPacketHandler handler;
             var span = data.AsSpan((offset + 2)..(offset + size));
             var packetId = span[0];
-            if (packetId == (byte)PacketId.Module) {
-                var moduleId = Unsafe.ReadUnaligned<ushort>(ref span[1]);
-                handler = _onSendModuleHandlers[moduleId] ?? OnSendPacket<ModulePacket<UnknownModule>>;
-            } else {
-                handler = _onSendPacketHandlers[packetId] ?? OnSendPacket<UnknownPacket>;
+
+            // The `SendBytes` event is only triggered for non-module packets.
+            (_onSendPacketHandlers[packetId] ?? OnSendPacket<UnknownPacket>)(playerIndex, span);
+            return OTAPI.HookResult.Cancel;
+        }
+
+        private OTAPI.HookResult SendNetDataHandler(
+                Terraria.Net.NetManager manager, Terraria.Net.Sockets.ISocket socket,
+                ref Terraria.Net.NetPacket packet) {
+            Debug.Assert(socket != null);
+            Debug.Assert(packet.Buffer.Data != null);
+
+            // Since we don't have an index, scan through the clients to find the player index.
+            var playerIndex = -1;
+            for (var i = 0; i < Terraria.Netplay.MaxConnections; ++i) {
+                if (Terraria.Netplay.Clients[i].Socket == socket) {
+                    playerIndex = i;
+                    break;
+                }
             }
 
-            handler(playerIndex, span);
+            Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
+
+            var span = packet.Buffer.Data.AsSpan(2..((int)packet.Writer.BaseStream.Position));
+            var moduleId = Unsafe.ReadUnaligned<ushort>(ref span[1]);
+
+            // The `SendBytes` event is only triggered for module packets.
+            (_onSendModuleHandlers[moduleId] ?? OnSendPacket<ModulePacket<UnknownModule>>)(playerIndex, span);
             return OTAPI.HookResult.Cancel;
         }
 
@@ -176,7 +199,7 @@ namespace Orion.Core.Players {
             Debug.Assert(remoteClient != null);
             Debug.Assert(remoteClient.Id >= 0 && remoteClient.Id < Players.Count);
 
-            // Check if the client was active since this gets called when setting up RemoteClient as well.
+            // Check if the client was active since this gets called when setting up `RemoteClient` as well.
             if (!remoteClient.IsActive) {
                 return OTAPI.HookResult.Continue;
             }

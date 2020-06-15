@@ -107,7 +107,7 @@ namespace Orion.Core.Players {
             var sendBuffer = _sendBuffer.Value;
             var packetLength = packet.WriteWithHeader(sendBuffer, PacketContext.Server);
             try {
-                terrariaClient.Socket?.AsyncSend(sendBuffer, 0, packetLength, terrariaClient.ServerWriteCallBack);
+                terrariaClient.Socket.AsyncSend(sendBuffer, 0, packetLength, terrariaClient.ServerWriteCallBack);
             } catch (IOException) { }
         }
 

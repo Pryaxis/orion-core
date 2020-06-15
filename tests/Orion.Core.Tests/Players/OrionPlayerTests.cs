@@ -257,18 +257,6 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void SendPacket_NullSocket() {
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
-
-            using var kernel = new OrionKernel(Logger.None);
-            var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(5, terrariaPlayer, kernel, Logger.None);
-
-            var packet = new TestPacket();
-            player.SendPacket(ref packet);
-        }
-
-        [Fact]
         public void SendPacket_NotConnected() {
             var socket = new TestSocket { Connected = false };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
