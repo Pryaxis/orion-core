@@ -5,6 +5,9 @@
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <Version>0.0.1</Version>
     <Authors>orion-contributors</Authors>
     <RepositoryUrl>https://github.com/Pryaxis/orion-core</RepositoryUrl>
@@ -14,11 +17,13 @@
     <Description>Orion.Core provides the next generation of Terraria Server APIs.</Description>
     <DocumentationFile>bin\$(Configuration)\Orion.xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>COPYING</PackageLicenseFile>
     <PackageTags>terraria;tshock;orion</PackageTags>
+    <IncludeSource>true</IncludeSource>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <None Include="..\..\COPYING">
       <Pack>True</Pack>
