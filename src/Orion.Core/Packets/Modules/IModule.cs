@@ -31,6 +31,7 @@ namespace Orion.Core.Packets.Modules {
         /// <summary>
         /// Gets the module's ID.
         /// </summary>
+        /// <value>The module's ID.</value>
         ModuleId Id { get; }
 
         /// <summary>

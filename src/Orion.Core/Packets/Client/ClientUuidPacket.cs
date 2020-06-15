@@ -17,6 +17,7 @@
 
 using System;
 using System.Text;
+using Destructurama.Attributed;
 
 namespace Orion.Core.Packets.Client {
     /// <summary>
@@ -30,6 +31,7 @@ namespace Orion.Core.Packets.Client {
         /// </summary>
         /// <value>The client's UUID.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
+        [LogMasked]
         public string Uuid {
             get => _uuid ?? string.Empty;
             set => _uuid = value ?? throw new ArgumentNullException(nameof(value));
