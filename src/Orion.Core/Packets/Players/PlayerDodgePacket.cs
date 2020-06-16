@@ -18,53 +18,37 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 
-namespace Orion.Core.Packets.Npcs {
+namespace Orion.Core.Packets.Players {
     /// <summary>
-    /// A packet sent from the client to the server to request an NPC's name or from the server to the client to set an
-    /// NPC's name.
+    /// A packet sent to show a player's dodge.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct NpcNamePacket : IPacket {
-        [field: FieldOffset(8)] private string? _name;
+    public struct PlayerDodgePacket : IPacket {
+        /// <summary>
+        /// Gets or sets the player index.
+        /// </summary>
+        /// <value>The player index.</value>
+        [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the NPC index.
+        /// Gets or sets the player's dodge type.
         /// </summary>
-        /// <value>The NPC index.</value>
-        [field: FieldOffset(0)] public short NpcIndex { get; set; }
+        /// <value>The player's dodge type.</value>
+        [field: FieldOffset(1)] public DodgeType Type { get; set; }
 
-        /// <summary>
-        /// Gets or sets the NPC's name.
-        /// </summary>
-        /// <value>The NPC's name.</value>
-        public string Name {
-            get => _name ?? string.Empty;
-            set => _name = value ?? throw new ArgumentNullException(nameof(value));
-        }
+        PacketId IPacket.Id => PacketId.PlayerDodge;
 
-        PacketId IPacket.Id => PacketId.NpcName;
         /// <inheritdoc/>
         public int Read(Span<byte> span, PacketContext context) {
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 2);
-            if (context == PacketContext.Server) {
-                return 2;
-            }
-
-            var nameBytes = span[2..].Read(Encoding.UTF8, out _name);
-            return 2 + nameBytes;
+            return 2;
         }
 
         /// <inheritdoc/>
         public int Write(Span<byte> span, PacketContext context) {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 2);
-            if (context == PacketContext.Client) {
-                return 2;
-            }
-
-            var nameBytes = span[2..].Write(Name, Encoding.UTF8);
-            return 2 + nameBytes;
+            return 2;
         }
     }
 }
