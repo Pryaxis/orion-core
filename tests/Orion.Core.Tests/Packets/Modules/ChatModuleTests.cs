@@ -127,12 +127,6 @@ namespace Orion.Core.Packets.Modules {
         }
 
         [Fact]
-        public void RoundTrip_AsServer() {
-            TestUtils.RoundTripModule<ChatModule>(
-                ServerBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Server);
-        }
-
-        [Fact]
         public unsafe void Read_AsClient() {
             var module = new ChatModule();
             var span = ClientBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
@@ -141,6 +135,12 @@ namespace Orion.Core.Packets.Modules {
             Assert.Equal(1, module.ServerAuthorIndex);
             Assert.Equal("test", module.ServerMessage);
             Assert.Equal(Color3.White, module.ServerColor);
+        }
+
+        [Fact]
+        public void RoundTrip_AsServer() {
+            TestUtils.RoundTripModule<ChatModule>(
+                ServerBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Server);
         }
 
         [Fact]

@@ -46,6 +46,20 @@ namespace Orion.Core.Packets.Server {
         }
 
         [Fact]
+        public void Text_GetNullValue() {
+            var packet = new ServerCombatTextPacket();
+
+            Assert.Equal(NetworkText.Empty, packet.Text);
+        }
+
+        [Fact]
+        public void Text_SetNullValue_ThrowsArgumentNullException() {
+            var packet = new ServerCombatTextPacket();
+
+            Assert.Throws<ArgumentNullException>(() => packet.Text = null!);
+        }
+
+        [Fact]
         public void Text_Set_Get() {
             var packet = new ServerCombatTextPacket();
 
