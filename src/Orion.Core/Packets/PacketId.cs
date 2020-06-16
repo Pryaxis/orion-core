@@ -58,6 +58,7 @@ namespace Orion.Core.Packets {
         NpcCatch = 70,
         ServerCombatNumber = 81,
         Module = 82,
+        PlayerStealth = 84,
         ServerChat = 107,
         ServerCombatText = 119,
         NpcFish = 130
@@ -94,6 +95,7 @@ namespace Orion.Core.Packets {
             [PacketId.ClientUuid] = typeof(ClientUuidPacket),
             [PacketId.NpcCatch] = typeof(NpcCatchPacket),
             [PacketId.ServerCombatNumber] = typeof(ServerCombatNumberPacket),
+            [PacketId.PlayerStealth] = typeof(PlayerStealthPacket),
             [PacketId.ServerChat] = typeof(ServerChatPacket),
             [PacketId.ServerCombatText] = typeof(ServerCombatTextPacket),
             [PacketId.NpcFish] = typeof(NpcFishPacket)
