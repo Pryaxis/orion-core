@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 
 namespace Orion.Core.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent to activate a wire.
+    /// A packet sent to activate a wire.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public struct WireActivatePacket : IPacket {
