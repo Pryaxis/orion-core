@@ -58,6 +58,7 @@ namespace Orion.Core.Packets {
         NpcCatch = 70,
         Module = 82,
         ServerChat = 107,
+        ServerCombatText = 119,
         NpcFish = 130
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
@@ -92,6 +93,7 @@ namespace Orion.Core.Packets {
             [PacketId.ClientUuid] = typeof(ClientUuidPacket),
             [PacketId.NpcCatch] = typeof(NpcCatchPacket),
             [PacketId.ServerChat] = typeof(ServerChatPacket),
+            [PacketId.ServerCombatText] = typeof(ServerCombatTextPacket),
             [PacketId.NpcFish] = typeof(NpcFishPacket)
         };
 
