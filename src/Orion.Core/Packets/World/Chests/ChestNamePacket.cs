@@ -22,7 +22,7 @@ using System.Text;
 
 namespace Orion.Core.Packets.World.Chests {
     /// <summary>
-    /// A packet sent from the client to the server to request a chest name or from the server to the client to set a
+    /// A packet sent from the client to the server to request a chest's name or from the server to the client to set a
     /// chest's name.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
