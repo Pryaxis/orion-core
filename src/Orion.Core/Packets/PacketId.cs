@@ -56,6 +56,7 @@ namespace Orion.Core.Packets {
         WallPaint = 64,
         ClientUuid = 68,
         NpcCatch = 70,
+        ServerCombatNumber = 81,
         Module = 82,
         ServerChat = 107,
         ServerCombatText = 119,
@@ -92,6 +93,7 @@ namespace Orion.Core.Packets {
             [PacketId.WallPaint] = typeof(WallPaintPacket),
             [PacketId.ClientUuid] = typeof(ClientUuidPacket),
             [PacketId.NpcCatch] = typeof(NpcCatchPacket),
+            [PacketId.ServerCombatNumber] = typeof(ServerCombatNumberPacket),
             [PacketId.ServerChat] = typeof(ServerChatPacket),
             [PacketId.ServerCombatText] = typeof(ServerCombatTextPacket),
             [PacketId.NpcFish] = typeof(NpcFishPacket)

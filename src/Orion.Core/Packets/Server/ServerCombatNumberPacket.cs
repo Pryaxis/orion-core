@@ -18,44 +18,44 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Orion.Core.Buffs;
+using Orion.Core.DataStructures;
 
-namespace Orion.Core.Packets.Players {
+namespace Orion.Core.Packets.Server {
     /// <summary>
-    /// A packet sent to buff a player.
+    /// A packet sent from the server to the client to show a combat number.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct PlayerBuffPacket : IPacket {
+    public struct ServerCombatNumberPacket : IPacket {
         /// <summary>
-        /// Gets or sets the player index.
+        /// Gets or sets the combat number's position.
         /// </summary>
-        /// <value>The player index.</value>
-        [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
+        /// <value>The combat number's position.</value>
+        [field: FieldOffset(0)] public Vector2f Position { get; set; }
 
         /// <summary>
-        /// Gets or sets the buff ID.
+        /// Gets or sets the combat number's color.
         /// </summary>
-        /// <value>The buff ID.</value>
-        [field: FieldOffset(1)] public BuffId Id { get; set; }
+        /// <value>The combat number's color.</value>
+        [field: FieldOffset(8)] public Color3 Color { get; set; }
 
         /// <summary>
-        /// Gets or sets the buff time, in ticks.
+        /// Gets or sets the combat number.
         /// </summary>
-        /// <value>The buff time, in ticks.</value>
-        [field: FieldOffset(3)] public int Ticks { get; set; }
+        /// <value>The combat number.</value>
+        [field: FieldOffset(11)] public int Number { get; set; }
 
-        PacketId IPacket.Id => PacketId.PlayerBuff;
+        PacketId IPacket.Id => PacketId.ServerCombatNumber;
 
         /// <inheritdoc/>
         public int Read(Span<byte> span, PacketContext context) {
-            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 7);
-            return 7;
+            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 15);
+            return 15;
         }
 
         /// <inheritdoc/>
         public int Write(Span<byte> span, PacketContext context) {
-            Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 7);
-            return 7;
+            Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 15);
+            return 15;
         }
     }
 }
