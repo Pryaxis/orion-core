@@ -20,7 +20,7 @@ using System;
 namespace Orion.Core.Framework
 {
     /// <summary>
-    /// Specifies information about a service definition.
+    /// Specifies information about a service interface.
     /// </summary>
     [AttributeUsage(AttributeTargets.Interface, Inherited = false)]
     public sealed class ServiceAttribute : Attribute

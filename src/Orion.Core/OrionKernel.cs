@@ -16,20 +16,16 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Ninject;
 using Orion.Core.Events;
 using Orion.Core.Events.Server;
 using Orion.Core.Framework;
-using Orion.Core.Properties;
 using Serilog;
 
 namespace Orion.Core
 {
     /// <summary>
-    /// Represents Orion's core logic. Provides access to Orion plugins and events and publishes server-related events.
+    /// Represents Orion's core logic. Provides access to Orion extensions and events and publishes server-related
+    /// events.
     /// </summary>
     /// <remarks>
     /// The Orion kernel is responsible for publishing the following server-related events:
@@ -43,12 +39,6 @@ namespace Orion.Core
     public sealed class OrionKernel : IDisposable
     {
         private readonly ILogger _log;
-        private readonly IKernel _kernel = new StandardKernel();
-
-        private readonly ISet<Type> _serviceTypes = new HashSet<Type>();
-        private readonly IDictionary<Type, Type> _serviceBindings = new Dictionary<Type, Type>();
-        private readonly ISet<Type> _pluginTypes = new HashSet<Type>();
-        private readonly Dictionary<string, OrionPlugin> _plugins = new Dictionary<string, OrionPlugin>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OrionKernel"/> class with the specified <paramref name="log"/>.
@@ -64,31 +54,21 @@ namespace Orion.Core
 
             _log = log.ForContext("Name", "orion-kernel");
 
-            // Bind `OrionKernel` to this instance so that services/plugins retrieve this instance.
-            _kernel.Bind<OrionKernel>().ToConstant(this);
-
-            // Bind `ILogger` so that services/plugins retrieve type-specific logs.
-            _kernel
-                .Bind<ILogger>()
-                .ToMethod(ctx =>
-                {
-                    var type = ctx.Request.Target.Member.ReflectedType;
-                    var name =
-                        type.GetCustomAttribute<BindingAttribute?>()?.Name ??
-                        type.GetCustomAttribute<PluginAttribute?>()?.Name ??
-                        type.Name;
-                    return log.ForContext("Name", name);
-                })
-                .InTransientScope();
+            // Load from this assembly so that we load Orion's service interfaces and service bindings.
+            Extensions = new ExtensionManager(this, log);
+            Extensions.Load(typeof(OrionKernel).Assembly);
 
             OTAPI.Hooks.Game.PreInitialize = PreInitializeHandler;
             OTAPI.Hooks.Game.Started = StartedHandler;
             OTAPI.Hooks.Game.PreUpdate = PreUpdateHandler;
             OTAPI.Hooks.Command.Process = ProcessHandler;
-
-            // Load from this assembly so that we get the Orion services and service bindings.
-            LoadFrom(typeof(OrionKernel).Assembly);
         }
+
+        /// <summary>
+        /// Gets the kernel's extension manager.
+        /// </summary>
+        /// <value>The kernel's extension manager.</value>
+        public ExtensionManager Extensions { get; }
 
         /// <summary>
         /// Gets the kernel's event manager.
@@ -97,162 +77,16 @@ namespace Orion.Core
         public EventManager Events { get; } = new EventManager();
 
         /// <summary>
-        /// Gets a read-only mapping from plugin names to plugins.
-        /// </summary>
-        /// <value>A read-only mapping from plugin names to plugins.</value>
-        public IReadOnlyDictionary<string, OrionPlugin> Plugins => _plugins;
-
-        /// <summary>
         /// Disposes the kernel, releasing any resources associated with it.
         /// </summary>
         public void Dispose()
         {
-            _kernel.Dispose();
+            Extensions.Dispose();
 
             OTAPI.Hooks.Game.PreInitialize = null;
             OTAPI.Hooks.Game.Started = null;
             OTAPI.Hooks.Game.PreUpdate = null;
             OTAPI.Hooks.Command.Process = null;
-        }
-
-        // =============================================================================================================
-        // Framework support
-        //
-
-        /// <summary>
-        /// Loads service definitions, service bindings, and plugins from the given <paramref name="assembly"/>.
-        /// </summary>
-        /// <param name="assembly">The assembly.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="assembly"/> is <see langword="null"/>.</exception>
-        public void LoadFrom(Assembly assembly)
-        {
-            if (assembly is null)
-            {
-                throw new ArgumentNullException(nameof(assembly));
-            }
-
-            var types = assembly.DefinedTypes;
-            var exportedTypes = assembly.ExportedTypes;
-            static bool HasAttribute<TAttribute>(Type type) where TAttribute : Attribute =>
-                Attribute.IsDefined(type, typeof(TAttribute));
-
-            // Load all exported service definition types from the assembly.
-            _serviceTypes.UnionWith(exportedTypes.Where(HasAttribute<ServiceAttribute>));
-
-            // Load all service binding types from the assembly.
-            foreach (var thisBindingType in types.Where(HasAttribute<BindingAttribute>))
-            {
-                var thisPriority = thisBindingType.GetCustomAttribute<BindingAttribute>().Priority;
-
-                foreach (var interfaceType in thisBindingType.GetInterfaces().Where(_serviceTypes.Contains))
-                {
-                    if (!_serviceBindings.TryGetValue(interfaceType, out var currentBindingType))
-                    {
-                        // If no binding currently exists, then add this binding.
-                        _serviceBindings[interfaceType] = thisBindingType;
-                    }
-                    else
-                    {
-                        // If this binding has a higher priority than the current binding, then replace the current
-                        // binding with this binding.
-                        var currentPriority = currentBindingType.GetCustomAttribute<BindingAttribute>().Priority;
-                        if (thisPriority > currentPriority)
-                        {
-                            _serviceBindings[interfaceType] = thisBindingType;
-                        }
-                    }
-                }
-            }
-
-            // Load all exported plugin types from the assembly.
-            foreach (var pluginType in exportedTypes.Where(HasAttribute<PluginAttribute>))
-            {
-                _pluginTypes.Add(pluginType);
-
-                var pluginName = pluginType.GetCustomAttribute<PluginAttribute>().Name;
-                _log.Information(Resources.Kernel_LoadedPlugin, pluginName);
-            }
-        }
-
-        /// <summary>
-        /// Initializes the loaded service bindings and plugins.
-        /// </summary>
-        public void Initialize()
-        {
-            // Initialize the service bindings.
-            foreach (var kvp in _serviceBindings)
-            {
-                var serviceType = kvp.Key;
-                var bindingType = kvp.Value;
-                var binding = _kernel.Bind(serviceType).To(bindingType);
-
-                var scope = serviceType.GetCustomAttribute<ServiceAttribute>().Scope;
-                _ = scope switch
-                {
-                    ServiceScope.Singleton => binding.InSingletonScope(),
-                    ServiceScope.Transient => binding.InTransientScope(),
-
-                    // Not localized because this string is developer-facing.
-                    _ => throw new InvalidOperationException("Invalid service scope")
-                };
-
-                // Eagerly request singleton-scoped services so that an instance actually exists.
-                if (scope == ServiceScope.Singleton)
-                {
-                    _kernel.Get(serviceType);
-                }
-            }
-
-            // Initialize the plugin bindings.
-            foreach (var pluginType in _pluginTypes)
-            {
-                _kernel.Bind(pluginType).ToSelf().InSingletonScope();
-            }
-
-            // Initialize the plugins.
-            foreach (var plugin in _pluginTypes.Select(t => (OrionPlugin)_kernel.Get(t)))
-            {
-                plugin.Initialize();
-
-                var pluginType = plugin.GetType();
-                var attribute = pluginType.GetCustomAttribute<PluginAttribute>();
-                var pluginName = attribute.Name;
-                _plugins[pluginName] = plugin;
-
-                var pluginVersion = pluginType.Assembly.GetName().Version;
-                var pluginAuthor = attribute.Author;
-                _log.Information(Resources.Kernel_InitializedPlugin, pluginName, pluginVersion, pluginAuthor);
-            }
-
-            _serviceTypes.Clear();
-            _serviceBindings.Clear();
-            _pluginTypes.Clear();
-        }
-
-        /// <summary>
-        /// Unloads the plugin with the given <paramref name="pluginName"/>. Returns a value indicating success.
-        /// </summary>
-        /// <param name="pluginName">The plugin name.</param>
-        /// <returns><see langword="true"/> if the plugin was unloaded; otherwise, <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="pluginName"/> is <see langword="null"/>.</exception>
-        public bool UnloadPlugin(string pluginName)
-        {
-            if (pluginName is null)
-            {
-                throw new ArgumentNullException(nameof(pluginName));
-            }
-
-            if (!_plugins.TryGetValue(pluginName, out var plugin))
-            {
-                return false;
-            }
-
-            _plugins.Remove(pluginName);
-            plugin.Dispose();
-            _kernel.Unbind(plugin.GetType());
-
-            _log.Information(Resources.Kernel_UnloadedPlugin, pluginName);
-            return true;
         }
 
         // =============================================================================================================

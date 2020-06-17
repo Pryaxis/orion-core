@@ -23,14 +23,14 @@ namespace Orion.Core.Framework
     /// <summary>
     /// Provides the base class for an Orion plugin.
     /// </summary>
-    public abstract class OrionPlugin : OrionService
+    public abstract class OrionPlugin : OrionExtension
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OrionPlugin"/> class with the specified
         /// <paramref name="kernel"/> and <paramref name="log"/>.
         /// </summary>
         /// <param name="kernel">The kernel.</param>
-        /// <param name="log">The plugin-specific log.</param>
+        /// <param name="log">The plugin-specific log to log to.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="kernel"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>

@@ -23,13 +23,13 @@ namespace Orion.Core.Framework
     public enum ServiceScope
     {
         /// <summary>
-        /// Indicates that the service should have singleton scope: i.e., only one object is ever constructed.
+        /// Indicates that the service should have singleton scope: i.e., only one implementation is ever constructed.
         /// </summary>
         Singleton,
 
         /// <summary>
-        /// Indicates that the service should have transient scope: i.e., a new object is constructed each time, and the
-        /// lifetime of the service is not managed.
+        /// Indicates that the service should have transient scope: i.e., a new implementation is constructed each time,
+        /// and the lifetimes of the implementations are not managed.
         /// </summary>
         Transient
     }

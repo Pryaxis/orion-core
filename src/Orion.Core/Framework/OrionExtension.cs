@@ -21,19 +21,40 @@ using Serilog;
 namespace Orion.Core.Framework
 {
     /// <summary>
-    /// Provides the base class for an Orion service.
+    /// Provides the base class for an Orion extension.
     /// </summary>
-    public abstract class OrionService : OrionExtension
+    public abstract class OrionExtension : IDisposable
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrionService"/> class with the specified
+        /// Initializes a new instance of the <see cref="OrionExtension"/> class with the specified
         /// <paramref name="kernel"/> and <paramref name="log"/>.
         /// </summary>
         /// <param name="kernel">The kernel.</param>
-        /// <param name="log">The service-specific log to log to.</param>
+        /// <param name="log">The extension-specific log to log to.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="kernel"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        protected OrionService(OrionKernel kernel, ILogger log) : base(kernel, log) { }
+        protected OrionExtension(OrionKernel kernel, ILogger log)
+        {
+            Kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
+            Log = log ?? throw new ArgumentNullException(nameof(log));
+        }
+
+        /// <summary>
+        /// Gets the kernel.
+        /// </summary>
+        /// <value>The kernel.</value>
+        public OrionKernel Kernel { get; }
+
+        /// <summary>
+        /// Gets the extension-specific log.
+        /// </summary>
+        /// <value>The extension-specific log.</value>
+        public ILogger Log { get; }
+
+        /// <summary>
+        /// Disposes the extension, releasing any resources associated with it.
+        /// </summary>
+        public virtual void Dispose() { }
     }
 }

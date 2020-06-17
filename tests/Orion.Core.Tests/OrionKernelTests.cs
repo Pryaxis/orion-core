@@ -16,9 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Reflection;
-using Orion.Core.Framework;
-using Serilog;
 using Serilog.Core;
 using Xunit;
 
@@ -28,96 +25,25 @@ namespace Orion.Core
     public class OrionKernelTests
     {
         [Fact]
-        public void Events_Get()
-        {
-            using var kernel = new OrionKernel(Logger.None);
-
-            Assert.NotNull(kernel.Events);
-        }
-
-        [Fact]
         public void Ctor_NullLog_ThrowsArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(() => new OrionKernel(null!));
         }
 
         [Fact]
-        public void LoadFrom_NullAssembly_ThrowsArgumentNullException()
+        public void Extensions_Get()
         {
             using var kernel = new OrionKernel(Logger.None);
 
-            Assert.Throws<ArgumentNullException>(() => kernel.LoadFrom(null!));
+            Assert.NotNull(kernel.Extensions);
         }
 
         [Fact]
-        public void UnloadPlugin_NullPluginName_ThrowsArgumentNullException()
+        public void Events_Get()
         {
             using var kernel = new OrionKernel(Logger.None);
 
-            Assert.Throws<ArgumentNullException>(() => kernel.UnloadPlugin(null!));
+            Assert.NotNull(kernel.Events);
         }
-
-        [Fact]
-        public void UnloadPlugin_NotLoaded_ReturnsFalse()
-        {
-            using var kernel = new OrionKernel(Logger.None);
-
-            Assert.False(kernel.UnloadPlugin("test"));
-        }
-
-        [Fact]
-        public void LoadFrom_Initialize()
-        {
-            using var kernel = new OrionKernel(Logger.None);
-            kernel.LoadFrom(Assembly.GetExecutingAssembly());
-
-            kernel.Initialize();
-
-            Assert.IsType<TestService>(TestOrionPlugin.SingletonService);
-            Assert.IsType<TestService2>(TestOrionPlugin.TransientService);
-
-            Assert.Equal(100, TestOrionPlugin.Value);
-            Assert.Collection(kernel.Plugins, kvp =>
-            {
-                Assert.Equal("test-plugin", kvp.Key);
-                Assert.IsType<TestOrionPlugin>(kvp.Value);
-            });
-
-            Assert.True(kernel.UnloadPlugin("test-plugin"));
-
-            Assert.Equal(-100, TestOrionPlugin.Value);
-        }
-    }
-
-    [Service(ServiceScope.Singleton)]
-    public interface ITestSingletonService { }
-
-    [Service(ServiceScope.Transient)]
-    public interface ITestTransientService { }
-
-    [Binding("test-service")]
-    internal class TestService : ITestSingletonService, ITestTransientService { }
-
-    [Binding("test-service-2", Priority = BindingPriority.Highest)]
-    internal class TestService2 : ITestTransientService { }
-
-    [Plugin("test-plugin")]
-    public class TestOrionPlugin : OrionPlugin
-    {
-        public TestOrionPlugin(
-                OrionKernel kernel, ILogger log,
-                ITestSingletonService singletonService,
-                ITestTransientService transientService) : base(kernel, log)
-        {
-            SingletonService = singletonService;
-            TransientService = transientService;
-        }
-
-        public static ITestSingletonService SingletonService { get; private set; } = null!;
-        public static ITestTransientService TransientService { get; private set; } = null!;
-        public static int Value { get; set; }
-
-        public override void Initialize() => Value = 100;
-        public override void Dispose() => Value = -100;
     }
 }

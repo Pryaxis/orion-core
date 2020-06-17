@@ -18,7 +18,7 @@
 namespace Orion.Core.Framework
 {
     /// <summary>
-    /// Specifies the priority of a service binding. Service bindings with higher priorities will take precedence over
+    /// Controls the priority of a service binding. Service bindings with higher priorities will take precedence over
     /// service bindings with lower priorities.
     /// </summary>
     public enum BindingPriority
