@@ -38,19 +38,8 @@ namespace Orion.Core.Framework
             Assert.Throws<ArgumentNullException>(() => new TestOrionPlugin(kernel, null!));
         }
 
-        [Fact]
-        public void Kernel_Get()
-        {
-            using var kernel = new OrionKernel(Logger.None);
-            using var plugin = new TestOrionPlugin(kernel, Logger.None);
-
-            Assert.Same(kernel, plugin.Kernel);
-        }
-
         private class TestOrionPlugin : OrionPlugin
         {
-            public new OrionKernel Kernel => base.Kernel;
-
             public TestOrionPlugin(OrionKernel kernel, ILogger log) : base(kernel, log) { }
 
             public override void Initialize() => throw new NotImplementedException();

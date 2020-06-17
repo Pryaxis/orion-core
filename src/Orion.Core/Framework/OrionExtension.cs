@@ -34,7 +34,7 @@ namespace Orion.Core.Framework
         /// <exception cref="ArgumentNullException">
         /// <paramref name="kernel"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        protected OrionExtension(OrionKernel kernel, ILogger log)
+        private protected OrionExtension(OrionKernel kernel, ILogger log)
         {
             Kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
             Log = log ?? throw new ArgumentNullException(nameof(log));
