@@ -20,22 +20,27 @@ using Moq;
 using Orion.Core.Npcs;
 using Xunit;
 
-namespace Orion.Core.Events.Npcs {
-    public class NpcEventTests {
+namespace Orion.Core.Events.Npcs
+{
+    public class NpcEventTests
+    {
         [Fact]
-        public void Ctor_NullNpc_ThrowsArgumentNullException() {
+        public void Ctor_NullNpc_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new TestNpcEvent(null!));
         }
 
         [Fact]
-        public void Npc_Get() {
+        public void Npc_Get()
+        {
             var npc = Mock.Of<INpc>();
             var evt = new TestNpcEvent(npc);
 
             Assert.Same(npc, evt.Npc);
         }
 
-        private class TestNpcEvent : NpcEvent {
+        private class TestNpcEvent : NpcEvent
+        {
             public TestNpcEvent(INpc npc) : base(npc) { }
         }
     }

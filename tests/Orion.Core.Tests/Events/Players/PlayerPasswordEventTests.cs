@@ -20,22 +20,27 @@ using Moq;
 using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Core.Events.Players {
-    public class PlayerPasswordEventTests {
+namespace Orion.Core.Events.Players
+{
+    public class PlayerPasswordEventTests
+    {
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new PlayerPasswordEvent(null!, "Terraria"));
         }
 
         [Fact]
-        public void Ctor_NullPassword_ThrowsArgumentNullException() {
+        public void Ctor_NullPassword_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new PlayerPasswordEvent(player, null!));
         }
 
         [Fact]
-        public void Password_Get() {
+        public void Password_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var evt = new PlayerPasswordEvent(player, "Terraria");
 

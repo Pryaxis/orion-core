@@ -18,11 +18,13 @@
 using System;
 using Serilog;
 
-namespace Orion.Core.Framework {
+namespace Orion.Core.Framework
+{
     /// <summary>
     /// Provides the base class for an Orion service.
     /// </summary>
-    public abstract class OrionService : IDisposable {
+    public abstract class OrionService : IDisposable
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="OrionService"/> class with the specified
         /// <paramref name="kernel"/> and <paramref name="log"/>.
@@ -32,7 +34,8 @@ namespace Orion.Core.Framework {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="kernel"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        protected OrionService(OrionKernel kernel, ILogger log) {
+        protected OrionService(OrionKernel kernel, ILogger log)
+        {
             Kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
             Log = log ?? throw new ArgumentNullException(nameof(log));
         }

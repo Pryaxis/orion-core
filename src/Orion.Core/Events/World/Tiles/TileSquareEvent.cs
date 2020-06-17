@@ -21,12 +21,14 @@ using Orion.Core.Players;
 using Orion.Core.World;
 using Orion.Core.World.Tiles;
 
-namespace Orion.Core.Events.World.Tiles {
+namespace Orion.Core.Events.World.Tiles
+{
     /// <summary>
     /// An event that occurs when a player is sending a square of tiles. This event can be canceled.
     /// </summary>
     [Event("tile-square")]
-    public sealed class TileSquareEvent : WorldEvent {
+    public sealed class TileSquareEvent : WorldEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="TileSquareEvent"/> class with the specified
         /// <paramref name="world"/>, <paramref name="player"/>, top-left tile coordinates, and
@@ -41,12 +43,15 @@ namespace Orion.Core.Events.World.Tiles {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="world"/>, <paramref name="player"/>, or <paramref name="tiles"/> are <see langword="null"/>.
         /// </exception>
-        public TileSquareEvent(IWorld world, IPlayer player, int x, int y, ITileSlice tiles) : base(world) {
-            if (tiles is null) {
+        public TileSquareEvent(IWorld world, IPlayer player, int x, int y, ITileSlice tiles) : base(world)
+        {
+            if (tiles is null)
+            {
                 throw new ArgumentNullException(nameof(tiles));
             }
 
-            if (tiles.Width != tiles.Height) {
+            if (tiles.Width != tiles.Height)
+            {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentException("Tiles is not a square", nameof(tiles));
             }

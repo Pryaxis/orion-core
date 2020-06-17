@@ -24,13 +24,16 @@ using Orion.Core.Packets;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Core.Players {
+namespace Orion.Core.Players
+{
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class OrionPlayerTests {
+    public class OrionPlayerTests
+    {
         [Fact]
-        public void Name_Get() {
+        public void Name_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player { name = "test" };
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -39,7 +42,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Name_SetNullValue_ThrowsArgumentNullException() {
+        public void Name_SetNullValue_ThrowsArgumentNullException()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -48,7 +52,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Name_Set() {
+        public void Name_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -59,7 +64,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Health_Get() {
+        public void Health_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player { statLife = 100 };
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -68,7 +74,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Health_Set() {
+        public void Health_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -79,7 +86,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void MaxHealth_Get() {
+        public void MaxHealth_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player { statLifeMax = 500 };
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -88,7 +96,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void MaxHealth_Set() {
+        public void MaxHealth_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -99,7 +108,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Mana_Get() {
+        public void Mana_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player { statMana = 100 };
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -108,7 +118,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Mana_Set() {
+        public void Mana_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -119,7 +130,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void MaxMana_Get() {
+        public void MaxMana_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player { statManaMax = 200 };
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -128,7 +140,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void MaxMana_Set() {
+        public void MaxMana_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -141,7 +154,8 @@ namespace Orion.Core.Players {
         [Theory]
         [InlineData(-1)]
         [InlineData(100)]
-        public void Buffs_Get_Index_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Buffs_Get_Index_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index)
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -150,7 +164,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Buffs_Get_Index_Get() {
+        public void Buffs_Get_Index_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             terrariaPlayer.buffType[0] = (int)BuffId.ObsidianSkin;
@@ -163,7 +178,8 @@ namespace Orion.Core.Players {
         [Theory]
         [InlineData(-1)]
         [InlineData(0)]
-        public void Buffs_Get_Index_InvalidTime_Get(int buffTime) {
+        public void Buffs_Get_Index_InvalidTime_Get(int buffTime)
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             terrariaPlayer.buffType[0] = (int)BuffId.ObsidianSkin;
@@ -176,7 +192,8 @@ namespace Orion.Core.Players {
         [Theory]
         [InlineData(-1)]
         [InlineData(100)]
-        public void Buffs_Get_Index_SetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Buffs_Get_Index_SetInvalidIndex_ThrowsIndexOutOfRangeException(int index)
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -185,7 +202,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Buffs_Get_Index_Set() {
+        public void Buffs_Get_Index_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -197,7 +215,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Difficulty_Get() {
+        public void Difficulty_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player { difficulty = (byte)CharacterDifficulty.Journey };
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -206,7 +225,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Difficulty_Set() {
+        public void Difficulty_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -217,7 +237,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void IsInPvp_Get() {
+        public void IsInPvp_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player { hostile = true };
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -226,7 +247,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void IsInPvp_Set() {
+        public void IsInPvp_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -237,7 +259,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Team_Get() {
+        public void Team_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player { team = 1 };
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -246,7 +269,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Team_Set() {
+        public void Team_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -257,7 +281,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void SendPacket_NotConnected() {
+        public void SendPacket_NotConnected()
+        {
             var socket = new TestSocket { Connected = false };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
@@ -272,7 +297,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void SendPacket_EventCanceled() {
+        public void SendPacket_EventCanceled()
+        {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
@@ -288,7 +314,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void SendPacket() {
+        public void SendPacket()
+        {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
@@ -303,7 +330,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void SendPacket_ThrowsIOException() {
+        public void SendPacket_ThrowsIOException()
+        {
             var socket = new BuggySocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
@@ -315,7 +343,8 @@ namespace Orion.Core.Players {
             player.SendPacket(ref packet);
         }
 
-        private class TestSocket : Terraria.Net.Sockets.ISocket {
+        private class TestSocket : Terraria.Net.Sockets.ISocket
+        {
             public bool Connected { get; set; }
             public byte[] SendData { get; private set; } = Array.Empty<byte>();
 
@@ -338,7 +367,8 @@ namespace Orion.Core.Players {
             public void StopListening() => throw new NotImplementedException();
         }
 
-        private class BuggySocket : Terraria.Net.Sockets.ISocket {
+        private class BuggySocket : Terraria.Net.Sockets.ISocket
+        {
             public bool Connected { get; set; }
 
             public void AsyncReceive(
@@ -360,14 +390,16 @@ namespace Orion.Core.Players {
             public void StopListening() => throw new NotImplementedException();
         }
 
-        private struct TestPacket : IPacket {
+        private struct TestPacket : IPacket
+        {
             public PacketId Id => (PacketId)255;
 
             public byte Value;
 
             public int Read(Span<byte> span, PacketContext context) => throw new NotImplementedException();
 
-            public int Write(Span<byte> span, PacketContext context) {
+            public int Write(Span<byte> span, PacketContext context)
+            {
                 span[0] = Value;
                 return 1;
             }

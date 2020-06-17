@@ -20,12 +20,14 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace Orion.Core.Events.Server {
+namespace Orion.Core.Events.Server
+{
     /// <summary>
     /// An event that occurs when the server arguments are processed.
     /// </summary>
     [Event("server-args")]
-    public sealed class ServerArgsEvent : Event {
+    public sealed class ServerArgsEvent : Event
+    {
         private readonly ISet<string> _bools = new HashSet<string>();
         private readonly IDictionary<string, string> _values = new Dictionary<string, string>();
 
@@ -35,28 +37,39 @@ namespace Orion.Core.Events.Server {
         /// <param name="args">The arguments.</param>
         /// <exception cref="ArgumentException"><paramref name="args"/> contains <see langword="null"/>.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="args"/> is <see langword="null"/>.</exception>
-        public ServerArgsEvent(params string[] args) {
-            if (args is null) {
+        public ServerArgsEvent(params string[] args)
+        {
+            if (args is null)
+            {
                 throw new ArgumentNullException(nameof(args));
             }
 
-            if (args.Any(a => a == null)) {
+            if (args.Any(a => a == null))
+            {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentException("Arguments contains null", nameof(args));
             }
 
             // Preprocess the arguments.
-            foreach (var arg in args) {
-                if (arg.StartsWith("--", StringComparison.Ordinal)) {
+            foreach (var arg in args)
+            {
+                if (arg.StartsWith("--", StringComparison.Ordinal))
+                {
                     var equals = arg.IndexOf('=', StringComparison.Ordinal);
-                    if (equals < 0) {
+                    if (equals < 0)
+                    {
                         _bools.Add(arg[2..]);
-                    } else {
+                    }
+                    else
+                    {
                         _values[arg[2..equals]] = arg[(equals + 1)..];
                     }
-                } else if (arg.StartsWith("-", StringComparison.Ordinal)) {
+                }
+                else if (arg.StartsWith("-", StringComparison.Ordinal))
+                {
                     // Add the args' characters as flags.
-                    foreach (var c in arg[1..]) {
+                    foreach (var c in arg[1..])
+                    {
                         _bools.Add(c.ToString());
                     }
                 }
@@ -71,8 +84,10 @@ namespace Orion.Core.Events.Server {
         /// <exception cref="ArgumentException">
         /// <paramref name="name"/> is <see langword="null"/> or whitespace.
         /// </exception>
-        public bool GetBool(string name) {
-            if (string.IsNullOrWhiteSpace(name)) {
+        public bool GetBool(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentException("Parameter cannot be null or whitespace", nameof(name));
             }
@@ -90,8 +105,10 @@ namespace Orion.Core.Events.Server {
         /// <exception cref="ArgumentException">
         /// <paramref name="name"/> is <see langword="null"/> or whitespace.
         /// </exception>
-        public bool TryGetValue(string name, [NotNullWhen(true)] out string? value) {
-            if (string.IsNullOrWhiteSpace(name)) {
+        public bool TryGetValue(string name, [NotNullWhen(true)] out string? value)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentException("Parameter cannot be null or whitespace", nameof(name));
             }

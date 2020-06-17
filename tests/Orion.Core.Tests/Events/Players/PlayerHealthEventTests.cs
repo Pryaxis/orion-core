@@ -20,15 +20,19 @@ using Moq;
 using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Core.Events.Players {
-    public class PlayerHealthEventTests {
+namespace Orion.Core.Events.Players
+{
+    public class PlayerHealthEventTests
+    {
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new PlayerHealthEvent(null!, 0, 0));
         }
 
         [Fact]
-        public void Health_Get() {
+        public void Health_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var evt = new PlayerHealthEvent(player, 100, 500);
 
@@ -36,7 +40,8 @@ namespace Orion.Core.Events.Players {
         }
 
         [Fact]
-        public void MaxHealth_Get() {
+        public void MaxHealth_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var evt = new PlayerHealthEvent(player, 100, 500);
 

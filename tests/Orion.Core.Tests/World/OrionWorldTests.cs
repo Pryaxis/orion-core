@@ -19,11 +19,14 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.World.Tiles;
 using Xunit;
 
-namespace Orion.Core.World {
+namespace Orion.Core.World
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class OrionWorldTests {
+    public class OrionWorldTests
+    {
         [Fact]
-        public void Item_Get_Mutate() {
+        public void Item_Get_Mutate()
+        {
             using var world = new OrionWorld(123, 456, "test");
 
             world[0, 0].BlockId = BlockId.Stone;
@@ -32,28 +35,32 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Width_Get() {
+        public void Width_Get()
+        {
             using var world = new OrionWorld(123, 456, "test");
 
             Assert.Equal(123, world.Width);
         }
 
         [Fact]
-        public void Height_Get() {
+        public void Height_Get()
+        {
             using var world = new OrionWorld(123, 456, "test");
 
             Assert.Equal(456, world.Height);
         }
 
         [Fact]
-        public void Name_Get() {
+        public void Name_Get()
+        {
             using var world = new OrionWorld(123, 456, "test");
 
             Assert.Equal("test", world.Name);
         }
 
         [Fact]
-        public void Difficulty_Get() {
+        public void Difficulty_Get()
+        {
             Terraria.Main.GameMode = (int)WorldDifficulty.Master;
 
             using var world = new OrionWorld(123, 456, "test");
@@ -62,7 +69,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Difficulty_Set() {
+        public void Difficulty_Set()
+        {
             using var world = new OrionWorld(123, 456, "test");
 
             world.Difficulty = WorldDifficulty.Master;

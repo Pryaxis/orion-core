@@ -20,12 +20,14 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Orion.Core.DataStructures;
 
-namespace Orion.Core.Packets.Server {
+namespace Orion.Core.Packets.Server
+{
     /// <summary>
     /// A packet sent from the server to the client to show a combat number.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct ServerCombatNumberPacket : IPacket {
+    public struct ServerCombatNumberPacket : IPacket
+    {
         /// <summary>
         /// Gets or sets the combat number's position.
         /// </summary>
@@ -47,13 +49,15 @@ namespace Orion.Core.Packets.Server {
         PacketId IPacket.Id => PacketId.ServerCombatNumber;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 15);
             return 15;
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 15);
             return 15;
         }

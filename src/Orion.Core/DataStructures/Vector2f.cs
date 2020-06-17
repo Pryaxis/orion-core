@@ -20,12 +20,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 
-namespace Orion.Core.DataStructures {
+namespace Orion.Core.DataStructures
+{
     /// <summary>
     /// Represents a two float component vector.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public readonly struct Vector2f : IEquatable<Vector2f> {
+    public readonly struct Vector2f : IEquatable<Vector2f>
+    {
         /// <summary>
         /// Gets the zero vector.
         /// </summary>
@@ -47,7 +49,8 @@ namespace Orion.Core.DataStructures {
         /// </summary>
         /// <param name="x">The X component.</param>
         /// <param name="y">The Y component.</param>
-        public Vector2f(float x, float y) {
+        public Vector2f(float x, float y)
+        {
             X = x;
             Y = y;
         }

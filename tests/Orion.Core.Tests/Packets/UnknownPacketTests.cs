@@ -19,14 +19,17 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets {
+namespace Orion.Core.Packets
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class UnknownPacketTests {
+    public class UnknownPacketTests
+    {
         public static readonly byte[] Bytes = { 11, 0, 255, 0, 1, 2, 3, 4, 5, 6, 7 };
         public static readonly byte[] EmptyBytes = { 3, 0, 255 };
 
         [Fact]
-        public void Length_Set_Get() {
+        public void Length_Set_Get()
+        {
             var packet = new UnknownPacket();
 
             packet.Length = 8;
@@ -35,7 +38,8 @@ namespace Orion.Core.Packets {
         }
 
         [Fact]
-        public void Id_Set_Get() {
+        public void Id_Set_Get()
+        {
             var packet = new UnknownPacket();
 
             packet.Id = (PacketId)255;
@@ -44,7 +48,8 @@ namespace Orion.Core.Packets {
         }
 
         [Fact]
-        public void Data() {
+        public void Data()
+        {
             var packet = new UnknownPacket();
 
             packet.Data(0) = 123;
@@ -53,19 +58,22 @@ namespace Orion.Core.Packets {
         }
 
         [Fact]
-        public unsafe void Read() {
+        public unsafe void Read()
+        {
             var packet = new UnknownPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(8, packet.Length);
-            for (var i = 0; i < 8; ++i) {
+            for (var i = 0; i < 8; ++i)
+            {
                 Assert.Equal(i, packet.Data(i));
             }
         }
 
         [Fact]
-        public unsafe void Read_Empty() {
+        public unsafe void Read_Empty()
+        {
             var packet = new UnknownPacket();
             var span = EmptyBytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -74,12 +82,14 @@ namespace Orion.Core.Packets {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<UnknownPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
 
         [Fact]
-        public void RoundTrip_Empty() {
+        public void RoundTrip_Empty()
+        {
             TestUtils.RoundTripPacket<UnknownPacket>(EmptyBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

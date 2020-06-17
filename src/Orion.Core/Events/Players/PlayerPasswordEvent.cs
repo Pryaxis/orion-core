@@ -19,12 +19,14 @@ using System;
 using Destructurama.Attributed;
 using Orion.Core.Players;
 
-namespace Orion.Core.Events.Players {
+namespace Orion.Core.Events.Players
+{
     /// <summary>
     /// An event that occurs when a player is sending their password. This event can be canceled.
     /// </summary>
     [Event("player-password")]
-    public sealed class PlayerPasswordEvent : PlayerEvent {
+    public sealed class PlayerPasswordEvent : PlayerEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerPasswordEvent"/> class with the specified
         /// <paramref name="player"/> and <paramref name="password"/>.
@@ -34,7 +36,8 @@ namespace Orion.Core.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="password"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerPasswordEvent(IPlayer player, string password) : base(player) {
+        public PlayerPasswordEvent(IPlayer player, string password) : base(player)
+        {
             Password = password ?? throw new ArgumentNullException(nameof(password));
         }
 

@@ -20,22 +20,27 @@ using Moq;
 using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Core.Events.Players {
-    public class PlayerUuidEventTests {
+namespace Orion.Core.Events.Players
+{
+    public class PlayerUuidEventTests
+    {
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new PlayerUuidEvent(null!, "Terraria"));
         }
 
         [Fact]
-        public void Ctor_NullUuid_ThrowsArgumentNullException() {
+        public void Ctor_NullUuid_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new PlayerUuidEvent(player, null!));
         }
 
         [Fact]
-        public void Uuid_Get() {
+        public void Uuid_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var evt = new PlayerUuidEvent(player, "Terraria");
 

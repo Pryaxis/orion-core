@@ -19,7 +19,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 
-namespace Orion.Core.Items {
+namespace Orion.Core.Items
+{
     /// <summary>
     /// Represents a stack of items in an inventory of some sort.
     /// </summary>
@@ -27,7 +28,8 @@ namespace Orion.Core.Items {
     /// An item stack instance fully describes an inventory slot. It is composed of an <see cref="ItemId"/>, the item
     /// stack size, and an <see cref="ItemPrefix"/>.
     /// </remarks>
-    public readonly struct ItemStack : IEquatable<ItemStack> {
+    public readonly struct ItemStack : IEquatable<ItemStack>
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemStack"/> structure with the specified item
         /// <paramref name="id"/> and optional <paramref name="stackSize"/> and <paramref name="prefix"/>.
@@ -35,7 +37,8 @@ namespace Orion.Core.Items {
         /// <param name="id">The item ID.</param>
         /// <param name="stackSize">The item stack size.</param>
         /// <param name="prefix">The item prefix.</param>
-        public ItemStack(ItemId id, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None) {
+        public ItemStack(ItemId id, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None)
+        {
             Id = id;
             StackSize = stackSize;
             Prefix = prefix;

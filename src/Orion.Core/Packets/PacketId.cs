@@ -26,11 +26,13 @@ using Orion.Core.Packets.World.Chests;
 using Orion.Core.Packets.World.Signs;
 using Orion.Core.Packets.World.Tiles;
 
-namespace Orion.Core.Packets {
+namespace Orion.Core.Packets
+{
     /// <summary>
     /// Specifies a packet ID.
     /// </summary>
-    public enum PacketId : byte {
+    public enum PacketId : byte
+    {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         ClientConnect = 1,
         ServerDisconnect = 2,
@@ -73,8 +75,10 @@ namespace Orion.Core.Packets {
     /// <summary>
     /// Provides extensions for the <see cref="PacketId"/> enumeration.
     /// </summary>
-    public static class PacketIdExtensions {
-        private static readonly IDictionary<PacketId, Type> _types = new Dictionary<PacketId, Type> {
+    public static class PacketIdExtensions
+    {
+        private static readonly IDictionary<PacketId, Type> _types = new Dictionary<PacketId, Type>
+        {
             [PacketId.ClientConnect] = typeof(ClientConnectPacket),
             [PacketId.ServerDisconnect] = typeof(ServerDisconnectPacket),
             [PacketId.ServerIndex] = typeof(ServerIndexPacket),

@@ -19,13 +19,16 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.Players {
+namespace Orion.Core.Packets.Players
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerTeleportItemPacketTests {
+    public class PlayerTeleportItemPacketTests
+    {
         public static readonly byte[] Bytes = { 4, 0, 73, 2 };
 
         [Fact]
-        public void Item_Set_Get() {
+        public void Item_Set_Get()
+        {
             var packet = new PlayerTeleportItemPacket();
 
             packet.Item = TeleportItem.DemonConch;
@@ -34,7 +37,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new PlayerTeleportItemPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -43,7 +47,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<PlayerTeleportItemPacket>(
                 Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }

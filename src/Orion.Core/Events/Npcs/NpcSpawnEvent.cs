@@ -18,12 +18,14 @@
 using System;
 using Orion.Core.Npcs;
 
-namespace Orion.Core.Events.Npcs {
+namespace Orion.Core.Events.Npcs
+{
     /// <summary>
     /// An event that occurs when an NPC is spawning. This event can be canceled.
     /// </summary>
     [Event("npc-spawn")]
-    public sealed class NpcSpawnEvent : NpcEvent {
+    public sealed class NpcSpawnEvent : NpcEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcSpawnEvent"/> class with the specified
         /// <paramref name="npc"/>.

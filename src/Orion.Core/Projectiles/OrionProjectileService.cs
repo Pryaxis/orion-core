@@ -24,12 +24,15 @@ using Orion.Core.Events.Projectiles;
 using Orion.Core.Framework;
 using Serilog;
 
-namespace Orion.Core.Projectiles {
+namespace Orion.Core.Projectiles
+{
     [Binding("orion-projs", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
-    internal sealed class OrionProjectileService : OrionService, IProjectileService {
+    internal sealed class OrionProjectileService : OrionService, IProjectileService
+    {
         private readonly object _lock = new object();
 
-        public OrionProjectileService(OrionKernel kernel, ILogger log) : base(kernel, log) {
+        public OrionProjectileService(OrionKernel kernel, ILogger log) : base(kernel, log)
+        {
             // Construct the `Projectiles` array. Note that the last projectile should be ignored, as it is not a real
             // projectile.
             Projectiles = new WrappedReadOnlyList<OrionProjectile, Terraria.Projectile>(
@@ -42,17 +45,20 @@ namespace Orion.Core.Projectiles {
 
         public IReadOnlyList<IProjectile> Projectiles { get; }
 
-        public override void Dispose() {
+        public override void Dispose()
+        {
             OTAPI.Hooks.Projectile.PreSetDefaultsById = null;
             OTAPI.Hooks.Projectile.PreUpdate = null;
         }
 
         public IProjectile SpawnProjectile(
-                ProjectileId id, Vector2f position, Vector2f velocity, int damage, float knockback) {
+                ProjectileId id, Vector2f position, Vector2f velocity, int damage, float knockback)
+        {
             // Not localized because this string is developer-facing.
             Log.Debug("Spawning {ProjectileId} at {Position}", id, position);
 
-            lock (_lock) {
+            lock (_lock)
+            {
                 var projectileIndex = Terraria.Projectile.NewProjectile(
                     position.X, position.Y, velocity.X, velocity.Y, (int)id, damage, knockback);
                 Debug.Assert(projectileIndex >= 0 && projectileIndex < Projectiles.Count);
@@ -66,13 +72,15 @@ namespace Orion.Core.Projectiles {
         //
 
         private OTAPI.HookResult PreSetDefaultsByIdHandler(
-                Terraria.Projectile terrariaProjectile, ref int projectileId) {
+                Terraria.Projectile terrariaProjectile, ref int projectileId)
+        {
             Debug.Assert(terrariaProjectile != null);
 
             var projectile = GetProjectile(terrariaProjectile);
             var evt = new ProjectileDefaultsEvent(projectile) { Id = (ProjectileId)projectileId };
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled) {
+            if (evt.IsCanceled)
+            {
                 return OTAPI.HookResult.Cancel;
             }
 
@@ -80,7 +88,8 @@ namespace Orion.Core.Projectiles {
             return OTAPI.HookResult.Continue;
         }
 
-        private OTAPI.HookResult PreUpdateHandler(Terraria.Projectile terrariaProjectile, ref int projectileIndex) {
+        private OTAPI.HookResult PreUpdateHandler(Terraria.Projectile terrariaProjectile, ref int projectileIndex)
+        {
             Debug.Assert(projectileIndex >= 0 && projectileIndex < Projectiles.Count);
 
             var evt = new ProjectileTickEvent(Projectiles[projectileIndex]);
@@ -90,7 +99,8 @@ namespace Orion.Core.Projectiles {
 
         // Gets an `IProjectile` which corresponds to the given Terraria projectile. Retrieves the `IProjectile` from
         // the `Projectiles` array, if possible.
-        private IProjectile GetProjectile(Terraria.Projectile terrariaProjectile) {
+        private IProjectile GetProjectile(Terraria.Projectile terrariaProjectile)
+        {
             Debug.Assert(terrariaProjectile != null);
 
             var projectileIndex = terrariaProjectile.whoAmI;

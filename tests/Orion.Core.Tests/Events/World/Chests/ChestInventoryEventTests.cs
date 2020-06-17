@@ -22,10 +22,13 @@ using Orion.Core.Players;
 using Orion.Core.World.Chests;
 using Xunit;
 
-namespace Orion.Core.Events.World.Chests {
-    public class ChestInventoryEventTests {
+namespace Orion.Core.Events.World.Chests
+{
+    public class ChestInventoryEventTests
+    {
         [Fact]
-        public void Ctor_NullChest_ThrowsArgumentNullException() {
+        public void Ctor_NullChest_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(
@@ -33,7 +36,8 @@ namespace Orion.Core.Events.World.Chests {
         }
 
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             var chest = Mock.Of<IChest>();
 
             Assert.Throws<ArgumentNullException>(
@@ -41,7 +45,8 @@ namespace Orion.Core.Events.World.Chests {
         }
 
         [Fact]
-        public void Player_Get() {
+        public void Player_Get()
+        {
             var chest = Mock.Of<IChest>();
             var player = Mock.Of<IPlayer>();
             var evt = new ChestInventoryEvent(chest, player, 1, new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal));
@@ -50,7 +55,8 @@ namespace Orion.Core.Events.World.Chests {
         }
 
         [Fact]
-        public void Slot_Get() {
+        public void Slot_Get()
+        {
             var chest = Mock.Of<IChest>();
             var player = Mock.Of<IPlayer>();
             var evt = new ChestInventoryEvent(chest, player, 1, new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal));
@@ -59,7 +65,8 @@ namespace Orion.Core.Events.World.Chests {
         }
 
         [Fact]
-        public void ItemStack_Get() {
+        public void ItemStack_Get()
+        {
             var chest = Mock.Of<IChest>();
             var player = Mock.Of<IPlayer>();
             var evt = new ChestInventoryEvent(chest, player, 1, new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal));

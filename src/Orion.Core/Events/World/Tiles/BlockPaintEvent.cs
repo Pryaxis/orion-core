@@ -20,12 +20,14 @@ using Orion.Core.Players;
 using Orion.Core.World;
 using Orion.Core.World.Tiles;
 
-namespace Orion.Core.Events.World.Tiles {
+namespace Orion.Core.Events.World.Tiles
+{
     /// <summary>
     /// An event that occurs when a block is being painted. This event can be canceled.
     /// </summary>
     [Event("block-paint")]
-    public sealed class BlockPaintEvent : TileEvent {
+    public sealed class BlockPaintEvent : TileEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockPaintEvent"/> class with the specified
         /// <paramref name="world"/>, <paramref name="player"/>, coordinates, and block <paramref name="color"/>.
@@ -37,7 +39,8 @@ namespace Orion.Core.Events.World.Tiles {
         /// <param name="color">The block color being painted.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public BlockPaintEvent(IWorld world, IPlayer? player, int x, int y, PaintColor color)
-                : base(world, player, x, y) {
+                : base(world, player, x, y)
+        {
             Color = color;
         }
 

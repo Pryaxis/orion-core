@@ -18,12 +18,14 @@
 using System;
 using Orion.Core.Players;
 
-namespace Orion.Core.Events.Players {
+namespace Orion.Core.Events.Players
+{
     /// <summary>
     /// An event that occurs when a player is sending their PvP status. This event can be canceled.
     /// </summary>
     [Event("player-pvp")]
-    public sealed class PlayerPvpEvent : PlayerEvent {
+    public sealed class PlayerPvpEvent : PlayerEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerPvpEvent"/> class with the specified
         /// <paramref name="player"/> and PvP status.
@@ -31,7 +33,8 @@ namespace Orion.Core.Events.Players {
         /// <param name="player">The player sending their PvP status.</param>
         /// <param name="isInPvp">Whether the player is in PvP.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerPvpEvent(IPlayer player, bool isInPvp) : base(player) {
+        public PlayerPvpEvent(IPlayer player, bool isInPvp) : base(player)
+        {
             IsInPvp = isInPvp;
         }
 

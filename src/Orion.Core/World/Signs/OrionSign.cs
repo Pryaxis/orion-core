@@ -22,10 +22,13 @@ using Destructurama.Attributed;
 using Orion.Core.Entities;
 using Orion.Core.World.TileEntities;
 
-namespace Orion.Core.World.Signs {
+namespace Orion.Core.World.Signs
+{
     [LogAsScalar]
-    internal sealed class OrionSign : AnnotatableObject, ISign, IWrapping<Terraria.Sign> {
-        public OrionSign(int signIndex, Terraria.Sign? terrariaSign) {
+    internal sealed class OrionSign : AnnotatableObject, ISign, IWrapping<Terraria.Sign>
+    {
+        public OrionSign(int signIndex, Terraria.Sign? terrariaSign)
+        {
             Index = signIndex;
             IsActive = terrariaSign != null;
             Wrapped = terrariaSign ?? new Terraria.Sign();
@@ -33,7 +36,8 @@ namespace Orion.Core.World.Signs {
 
         public OrionSign(Terraria.Sign? terrariaSign) : this(-1, terrariaSign) { }
 
-        public string Text {
+        public string Text
+        {
             get => Wrapped.text ?? string.Empty;
             set => Wrapped.text = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -41,12 +45,14 @@ namespace Orion.Core.World.Signs {
         public int Index { get; }
         public bool IsActive { get; }
 
-        public int X {
+        public int X
+        {
             get => Wrapped.x;
             set => Wrapped.x = value;
         }
 
-        public int Y {
+        public int Y
+        {
             get => Wrapped.y;
             set => Wrapped.y = value;
         }

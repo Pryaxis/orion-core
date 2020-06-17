@@ -18,15 +18,19 @@
 using System;
 using Xunit;
 
-namespace Orion.Core.Events.Server {
-    public class ServerCommandEventTests {
+namespace Orion.Core.Events.Server
+{
+    public class ServerCommandEventTests
+    {
         [Fact]
-        public void Ctor_NullInput_ThrowsArgumentNullException() {
+        public void Ctor_NullInput_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new ServerCommandEvent(null!));
         }
 
         [Fact]
-        public void Input_Get() {
+        public void Input_Get()
+        {
             var evt = new ServerCommandEvent("test");
 
             Assert.Equal("test", evt.Input);

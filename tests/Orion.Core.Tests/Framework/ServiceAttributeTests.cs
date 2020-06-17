@@ -17,10 +17,13 @@
 
 using Xunit;
 
-namespace Orion.Core.Framework {
-    public class ServiceAttributeTests {
+namespace Orion.Core.Framework
+{
+    public class ServiceAttributeTests
+    {
         [Fact]
-        public void Scope_Get() {
+        public void Scope_Get()
+        {
             var attribute = new ServiceAttribute(ServiceScope.Singleton);
 
             Assert.Equal(ServiceScope.Singleton, attribute.Scope);

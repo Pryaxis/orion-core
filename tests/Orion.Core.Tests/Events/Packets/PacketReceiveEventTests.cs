@@ -21,17 +21,21 @@ using Orion.Core.Packets;
 using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Core.Events.Packets {
-    public class PacketReceiveEventTests {
+namespace Orion.Core.Events.Packets
+{
+    public class PacketReceiveEventTests
+    {
         [Fact]
-        public void Ctor_NullSender_ThrowsArgumentNullException() {
+        public void Ctor_NullSender_ThrowsArgumentNullException()
+        {
             var packet = new TestPacket();
 
             Assert.Throws<ArgumentNullException>(() => new PacketReceiveEvent<TestPacket>(ref packet, null!));
         }
 
         [Fact]
-        public void Sender_Get() {
+        public void Sender_Get()
+        {
             var packet = new TestPacket();
             var sender = Mock.Of<IPlayer>();
             var evt = new PacketReceiveEvent<TestPacket>(ref packet, sender);
@@ -39,7 +43,8 @@ namespace Orion.Core.Events.Packets {
             Assert.Same(sender, evt.Sender);
         }
 
-        private struct TestPacket : IPacket {
+        private struct TestPacket : IPacket
+        {
             public PacketId Id => throw new NotImplementedException();
             public int Read(Span<byte> span, PacketContext context) => throw new NotImplementedException();
             public int Write(Span<byte> span, PacketContext context) => throw new NotImplementedException();

@@ -19,13 +19,16 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.Npcs {
+namespace Orion.Core.Packets.Npcs
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class NpcCatchPacketTests {
+    public class NpcCatchPacketTests
+    {
         public static readonly byte[] Bytes = { 6, 0, 70, 1, 0, 5 };
 
         [Fact]
-        public void NpcIndex_Set_Get() {
+        public void NpcIndex_Set_Get()
+        {
             var packet = new NpcCatchPacket();
 
             packet.NpcIndex = 1;
@@ -34,7 +37,8 @@ namespace Orion.Core.Packets.Npcs {
         }
 
         [Fact]
-        public void PlayerIndex_Set_Get() {
+        public void PlayerIndex_Set_Get()
+        {
             var packet = new NpcCatchPacket();
 
             packet.PlayerIndex = 5;
@@ -43,7 +47,8 @@ namespace Orion.Core.Packets.Npcs {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new NpcCatchPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -53,7 +58,8 @@ namespace Orion.Core.Packets.Npcs {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<NpcCatchPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

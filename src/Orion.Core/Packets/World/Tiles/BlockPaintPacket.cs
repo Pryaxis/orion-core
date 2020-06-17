@@ -20,12 +20,14 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Orion.Core.World.Tiles;
 
-namespace Orion.Core.Packets.World.Tiles {
+namespace Orion.Core.Packets.World.Tiles
+{
     /// <summary>
     /// A packet sent to paint a block.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct BlockPaintPacket : IPacket {
+    public struct BlockPaintPacket : IPacket
+    {
         /// <summary>
         /// Gets or sets the block's X coordinate.
         /// </summary>
@@ -47,13 +49,15 @@ namespace Orion.Core.Packets.World.Tiles {
         PacketId IPacket.Id => PacketId.BlockPaint;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 5);
             return 5;
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 5);
             return 5;
         }

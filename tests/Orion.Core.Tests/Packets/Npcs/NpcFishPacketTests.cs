@@ -20,13 +20,16 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.Npcs;
 using Xunit;
 
-namespace Orion.Core.Packets.Npcs {
+namespace Orion.Core.Packets.Npcs
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class NpcFishPacketTests {
+    public class NpcFishPacketTests
+    {
         public static readonly byte[] Bytes = { 9, 0, 130, 100, 0, 0, 1, 108, 2 };
 
         [Fact]
-        public void X_Set_Get() {
+        public void X_Set_Get()
+        {
             var packet = new NpcFishPacket();
 
             packet.X = 100;
@@ -35,7 +38,8 @@ namespace Orion.Core.Packets.Npcs {
         }
 
         [Fact]
-        public void Y_Set_Get() {
+        public void Y_Set_Get()
+        {
             var packet = new NpcFishPacket();
 
             packet.Y = 256;
@@ -44,7 +48,8 @@ namespace Orion.Core.Packets.Npcs {
         }
 
         [Fact]
-        public void Id_Set_Get() {
+        public void Id_Set_Get()
+        {
             var packet = new NpcFishPacket();
 
             packet.Id = NpcId.HemogoblinShark;
@@ -53,7 +58,8 @@ namespace Orion.Core.Packets.Npcs {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new NpcFishPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -64,7 +70,8 @@ namespace Orion.Core.Packets.Npcs {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<NpcFishPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

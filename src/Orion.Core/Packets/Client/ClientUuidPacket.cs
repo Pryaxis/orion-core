@@ -19,11 +19,13 @@ using System;
 using System.Text;
 using Destructurama.Attributed;
 
-namespace Orion.Core.Packets.Client {
+namespace Orion.Core.Packets.Client
+{
     /// <summary>
     /// A packet sent from the client to the server to inform the server of its UUID.
     /// </summary>
-    public struct ClientUuidPacket : IPacket {
+    public struct ClientUuidPacket : IPacket
+    {
         private string? _uuid;
 
         /// <summary>
@@ -32,7 +34,8 @@ namespace Orion.Core.Packets.Client {
         /// <value>The client's UUID.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         [LogMasked]
-        public string Uuid {
+        public string Uuid
+        {
             get => _uuid ?? string.Empty;
             set => _uuid = value ?? throw new ArgumentNullException(nameof(value));
         }

@@ -18,17 +18,20 @@
 using System;
 using Orion.Core.Npcs;
 
-namespace Orion.Core.Events.Npcs {
+namespace Orion.Core.Events.Npcs
+{
     /// <summary>
     /// Provides the base class for an NPC-related event.
     /// </summary>
-    public abstract class NpcEvent : Event {
+    public abstract class NpcEvent : Event
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcEvent"/> class with the specified <paramref name="npc"/>.
         /// </summary>
         /// <param name="npc">The NPC involved in the event.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
-        protected NpcEvent(INpc npc) {
+        protected NpcEvent(INpc npc)
+        {
             Npc = npc ?? throw new ArgumentNullException(nameof(npc));
         }
 

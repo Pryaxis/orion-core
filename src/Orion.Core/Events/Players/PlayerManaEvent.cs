@@ -18,12 +18,14 @@
 using System;
 using Orion.Core.Players;
 
-namespace Orion.Core.Events.Players {
+namespace Orion.Core.Events.Players
+{
     /// <summary>
     /// An event that occurs when a player is sending their mana information. This event can be canceled.
     /// </summary>
     [Event("player-mp")]
-    public sealed class PlayerManaEvent : PlayerEvent {
+    public sealed class PlayerManaEvent : PlayerEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerManaEvent"/> class with the specified
         /// <paramref name="player"/>, <paramref name="mana"/>, and <paramref name="maxMana"/>.
@@ -32,7 +34,8 @@ namespace Orion.Core.Events.Players {
         /// <param name="mana">The player's mana.</param>
         /// <param name="maxMana">The player's maximum mana.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerManaEvent(IPlayer player, int mana, int maxMana) : base(player) {
+        public PlayerManaEvent(IPlayer player, int mana, int maxMana) : base(player)
+        {
             Mana = mana;
             MaxMana = maxMana;
         }

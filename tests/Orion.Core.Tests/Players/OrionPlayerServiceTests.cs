@@ -28,13 +28,16 @@ using Orion.Core.Packets.Players;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Core.Players {
+namespace Orion.Core.Players
+{
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
-    public class OrionPlayerServiceTests {
+    public class OrionPlayerServiceTests
+    {
         private static readonly byte[] _serverConnectBytes;
 
-        static OrionPlayerServiceTests() {
+        static OrionPlayerServiceTests()
+        {
             var bytes = new byte[100];
             var packet = new ClientConnectPacket { Version = "Terraria" + Terraria.Main.curRelease };
             var packetLength = packet.WriteWithHeader(bytes, PacketContext.Client);
@@ -45,7 +48,8 @@ namespace Orion.Core.Players {
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
-        public void Players_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Players_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index)
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
 
@@ -53,7 +57,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Players_Item_Get() {
+        public void Players_Item_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
 
@@ -64,7 +69,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Players_Item_GetMultipleTimes_ReturnsSameInstance() {
+        public void Players_Item_GetMultipleTimes_ReturnsSameInstance()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
 
@@ -75,23 +81,27 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Players_GetEnumerator() {
+        public void Players_GetEnumerator()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
 
             var players = playerService.Players.ToList();
 
-            for (var i = 0; i < players.Count; ++i) {
+            for (var i = 0; i < players.Count; ++i)
+            {
                 Assert.Equal(Terraria.Main.player[i], ((OrionPlayer)players[i]).Wrapped);
             }
         }
 
         [Fact]
-        public void PlayerTick_EventTriggered() {
+        public void PlayerTick_EventTriggered()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerTickEvent>(evt => {
+            kernel.RegisterHandler<PlayerTickEvent>(evt =>
+            {
                 Assert.Same(Terraria.Main.player[0], ((OrionPlayer)evt.Player).Wrapped);
                 isRun = true;
             }, Logger.None);
@@ -102,7 +112,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PlayerTick_EventCanceled() {
+        public void PlayerTick_EventCanceled()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             kernel.RegisterHandler<PlayerTickEvent>(evt => evt.Cancel(), Logger.None);
@@ -111,13 +122,15 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void ResetClient_PlayerQuitEventTriggered() {
+        public void ResetClient_PlayerQuitEventTriggered()
+        {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, IsActive = true };
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerQuitEvent>(evt => {
+            kernel.RegisterHandler<PlayerQuitEvent>(evt =>
+            {
                 Assert.Same(playerService.Players[5], evt.Player);
                 isRun = true;
             }, Logger.None);
@@ -128,7 +141,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void ResetClient_PlayerQuitEventNotTriggered() {
+        public void ResetClient_PlayerQuitEventNotTriggered()
+        {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
 
             using var kernel = new OrionKernel(Logger.None);
@@ -142,14 +156,16 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_EventTriggered() {
+        public void PacketReceive_EventTriggered()
+        {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
             Terraria.Netplay.ServerPassword = string.Empty;
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketReceiveEvent<ClientConnectPacket>>(evt => {
+            kernel.RegisterHandler<PacketReceiveEvent<ClientConnectPacket>>(evt =>
+            {
                 Assert.Same(playerService.Players[5], evt.Sender);
                 Assert.Equal("Terraria" + Terraria.Main.curRelease, evt.Packet.Version);
                 isRun = true;
@@ -162,7 +178,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_EventModified() {
+        public void PacketReceive_EventModified()
+        {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
             Terraria.Netplay.ServerPassword = string.Empty;
 
@@ -177,7 +194,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_EventCanceled() {
+        public void PacketReceive_EventCanceled()
+        {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
             Terraria.Netplay.ServerPassword = string.Empty;
 
@@ -191,11 +209,13 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_UnknownPacket() {
+        public void PacketReceive_UnknownPacket()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketReceiveEvent<UnknownPacket>>(evt => {
+            kernel.RegisterHandler<PacketReceiveEvent<UnknownPacket>>(evt =>
+            {
                 ref var packet = ref evt.Packet;
                 Assert.Equal((PacketId)255, packet.Id);
                 Assert.Equal(0, packet.Length);
@@ -208,11 +228,13 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_UnknownModule() {
+        public void PacketReceive_UnknownModule()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketReceiveEvent<ModulePacket<UnknownModule>>>(evt => {
+            kernel.RegisterHandler<PacketReceiveEvent<ModulePacket<UnknownModule>>>(evt =>
+            {
                 ref var module = ref evt.Packet.Module;
                 Assert.Equal((ModuleId)65535, module.Id);
                 Assert.Equal(0, module.Length);
@@ -225,7 +247,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerJoin_EventTriggered() {
+        public void PacketReceive_PlayerJoin_EventTriggered()
+        {
             // Set `State` to 1 so that the join packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 1 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -233,7 +256,8 @@ namespace Orion.Core.Players {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerJoinEvent>(evt => {
+            kernel.RegisterHandler<PlayerJoinEvent>(evt =>
+            {
                 Assert.Same(playerService.Players[5], evt.Player);
                 isRun = true;
             }, Logger.None);
@@ -245,7 +269,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerJoin_EventCanceled() {
+        public void PacketReceive_PlayerJoin_EventCanceled()
+        {
             // Set `State` to 1 so that the join packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 1 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -260,7 +285,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerHealth_EventTriggered() {
+        public void PacketReceive_PlayerHealth_EventTriggered()
+        {
             // Set `State` to 10 so that the health packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -268,7 +294,8 @@ namespace Orion.Core.Players {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerHealthEvent>(evt => {
+            kernel.RegisterHandler<PlayerHealthEvent>(evt =>
+            {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(100, evt.Health);
                 Assert.Equal(500, evt.MaxHealth);
@@ -283,7 +310,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerHealth_EventCanceled() {
+        public void PacketReceive_PlayerHealth_EventCanceled()
+        {
             // Set `State` to 10 so that the health packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -299,7 +327,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerPvp_EventTriggered() {
+        public void PacketReceive_PlayerPvp_EventTriggered()
+        {
             // Set `State` to 10 so that the PvP packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -307,7 +336,8 @@ namespace Orion.Core.Players {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerPvpEvent>(evt => {
+            kernel.RegisterHandler<PlayerPvpEvent>(evt =>
+            {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.True(evt.IsInPvp);
                 isRun = true;
@@ -320,7 +350,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerPvp_EventCanceled() {
+        public void PacketReceive_PlayerPvp_EventCanceled()
+        {
             // Set `State` to 10 so that the PvP packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -335,7 +366,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerPassword_EventTriggered() {
+        public void PacketReceive_PlayerPassword_EventTriggered()
+        {
             // Set `State` to -1 so that the password packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = -1 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -344,7 +376,8 @@ namespace Orion.Core.Players {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerPasswordEvent>(evt => {
+            kernel.RegisterHandler<PlayerPasswordEvent>(evt =>
+            {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal("Terraria", evt.Password);
                 isRun = true;
@@ -357,7 +390,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerPassword_EventCanceled() {
+        public void PacketReceive_PlayerPassword_EventCanceled()
+        {
             // Set `State` to -1 so that the password packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = -1 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -373,7 +407,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerMana_EventTriggered() {
+        public void PacketReceive_PlayerMana_EventTriggered()
+        {
             // Set `State` to 10 so that the mana packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -381,7 +416,8 @@ namespace Orion.Core.Players {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerManaEvent>(evt => {
+            kernel.RegisterHandler<PlayerManaEvent>(evt =>
+            {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(100, evt.Mana);
                 Assert.Equal(200, evt.MaxMana);
@@ -396,7 +432,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerMana_EventCanceled() {
+        public void PacketReceive_PlayerMana_EventCanceled()
+        {
             // Set `State` to 10 so that the mana packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -412,7 +449,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerTeam_EventTriggered() {
+        public void PacketReceive_PlayerTeam_EventTriggered()
+        {
             // Set `State` to 10 so that the team packet is not ignored by the server. The socket must be set so that
             // the team message doesn't fail.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = new TestSocket() };
@@ -421,7 +459,8 @@ namespace Orion.Core.Players {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerTeamEvent>(evt => {
+            kernel.RegisterHandler<PlayerTeamEvent>(evt =>
+            {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(PlayerTeam.Red, evt.Team);
                 isRun = true;
@@ -434,7 +473,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerTeam_EventCanceled() {
+        public void PacketReceive_PlayerTeam_EventCanceled()
+        {
             // Set `State` to 10 so that the team packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -449,11 +489,13 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_ClientUuid_EventTriggered() {
+        public void PacketReceive_ClientUuid_EventTriggered()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerUuidEvent>(evt => {
+            kernel.RegisterHandler<PlayerUuidEvent>(evt =>
+            {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal("Terraria", evt.Uuid);
                 isRun = true;
@@ -465,7 +507,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_ChatModule_EventTriggered() {
+        public void PacketReceive_ChatModule_EventTriggered()
+        {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
 
             // Set up another player for the chat to be broadcast to.
@@ -476,7 +519,8 @@ namespace Orion.Core.Players {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerChatEvent>(evt => {
+            kernel.RegisterHandler<PlayerChatEvent>(evt =>
+            {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal("Say", evt.Command);
                 Assert.Equal("/command test", evt.Message);
@@ -490,7 +534,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_ChatModule_EventCanceled() {
+        public void PacketReceive_ChatModule_EventCanceled()
+        {
             // Set `State` to 10 so that the chat packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -510,14 +555,16 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketSend_EventTriggered() {
+        public void PacketSend_EventTriggered()
+        {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketSendEvent<ClientConnectPacket>>(evt => {
+            kernel.RegisterHandler<PacketSendEvent<ClientConnectPacket>>(evt =>
+            {
                 Assert.Same(playerService.Players[5], evt.Receiver);
                 Assert.Equal("Terraria" + Terraria.Main.curRelease, evt.Packet.Version);
                 isRun = true;
@@ -530,14 +577,16 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketSend_UnknownPacket_EventTriggered() {
+        public void PacketSend_UnknownPacket_EventTriggered()
+        {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketSendEvent<UnknownPacket>>(evt => {
+            kernel.RegisterHandler<PacketSendEvent<UnknownPacket>>(evt =>
+            {
                 Assert.Same(playerService.Players[5], evt.Receiver);
                 Assert.Equal((PacketId)25, evt.Packet.Id);
                 Assert.Equal(0, evt.Packet.Length);
@@ -551,7 +600,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketSend_EventModified() {
+        public void PacketSend_EventModified()
+        {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
@@ -566,7 +616,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketSend_EventCanceled() {
+        public void PacketSend_EventCanceled()
+        {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
@@ -580,7 +631,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketSend_ThrowsIOException() {
+        public void PacketSend_ThrowsIOException()
+        {
             var socket = new BuggySocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
@@ -591,14 +643,16 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void ModuleSend_EventTriggered() {
+        public void ModuleSend_EventTriggered()
+        {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketSendEvent<ModulePacket<ChatModule>>>(evt => {
+            kernel.RegisterHandler<PacketSendEvent<ModulePacket<ChatModule>>>(evt =>
+            {
                 Assert.Same(playerService.Players[5], evt.Receiver);
                 Assert.Equal(1, evt.Packet.Module.ServerAuthorIndex);
                 Assert.Equal("test", evt.Packet.Module.ServerMessage);
@@ -617,14 +671,16 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void ModuleSend_UnknownModule_EventTriggered() {
+        public void ModuleSend_UnknownModule_EventTriggered()
+        {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketSendEvent<ModulePacket<UnknownModule>>>(evt => {
+            kernel.RegisterHandler<PacketSendEvent<ModulePacket<UnknownModule>>>(evt =>
+            {
                 Assert.Same(playerService.Players[5], evt.Receiver);
                 Assert.Equal((ModuleId)65535, evt.Packet.Module.Id);
                 Assert.Equal(4, evt.Packet.Module.Length);
@@ -640,7 +696,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void ModuleSend_EventModified() {
+        public void ModuleSend_EventModified()
+        {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
@@ -659,7 +716,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void ModuleSend_EventCanceled() {
+        public void ModuleSend_EventCanceled()
+        {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
@@ -677,7 +735,8 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void ModuleSend_ThrowsIOException() {
+        public void ModuleSend_ThrowsIOException()
+        {
             var socket = new BuggySocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
@@ -691,7 +750,8 @@ namespace Orion.Core.Players {
             Terraria.Net.NetManager.Instance.SendData(socket, packet);
         }
 
-        private class TestSocket : Terraria.Net.Sockets.ISocket {
+        private class TestSocket : Terraria.Net.Sockets.ISocket
+        {
             public bool Connected { get; set; }
             public byte[] SendData { get; private set; } = Array.Empty<byte>();
 
@@ -714,7 +774,8 @@ namespace Orion.Core.Players {
             public void StopListening() => throw new NotImplementedException();
         }
 
-        private class BuggySocket : Terraria.Net.Sockets.ISocket {
+        private class BuggySocket : Terraria.Net.Sockets.ISocket
+        {
             public bool Connected { get; set; }
 
             public void AsyncReceive(

@@ -25,10 +25,13 @@ using Orion.Core.Entities;
 using Orion.Core.Items;
 using Orion.Core.World.TileEntities;
 
-namespace Orion.Core.World.Chests {
+namespace Orion.Core.World.Chests
+{
     [LogAsScalar]
-    internal sealed class OrionChest : AnnotatableObject, IChest, IWrapping<Terraria.Chest> {
-        public OrionChest(int chestIndex, Terraria.Chest? terrariaChest) {
+    internal sealed class OrionChest : AnnotatableObject, IChest, IWrapping<Terraria.Chest>
+    {
+        public OrionChest(int chestIndex, Terraria.Chest? terrariaChest)
+        {
             Index = chestIndex;
             IsActive = terrariaChest != null;
             Wrapped = terrariaChest ?? new Terraria.Chest();
@@ -37,7 +40,8 @@ namespace Orion.Core.World.Chests {
 
         public OrionChest(Terraria.Chest? terrariaChest) : this(-1, terrariaChest) { }
 
-        public string Name {
+        public string Name
+        {
             get => Wrapped.name ?? string.Empty;
             set => Wrapped.name = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -47,12 +51,14 @@ namespace Orion.Core.World.Chests {
         public int Index { get; }
         public bool IsActive { get; }
 
-        public int X {
+        public int X
+        {
             get => Wrapped.x;
             set => Wrapped.x = value;
         }
 
-        public int Y {
+        public int Y
+        {
             get => Wrapped.y;
             set => Wrapped.y = value;
         }
@@ -63,23 +69,29 @@ namespace Orion.Core.World.Chests {
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => this.IsConcrete() ? $"(index: {Index})" : "<abstract instance>";
 
-        private sealed class ItemArray : IArray<ItemStack> {
+        private sealed class ItemArray : IArray<ItemStack>
+        {
             private readonly object _lock = new object();
             private readonly Terraria.Item[] _items;
 
-            public ItemArray(Terraria.Item?[] items) {
+            public ItemArray(Terraria.Item?[] items)
+            {
                 Debug.Assert(items != null);
 
                 // Initialize the entire array ahead of time so that there are no `null` elements.
-                for (var i = 0; i < items.Length; ++i) {
+                for (var i = 0; i < items.Length; ++i)
+                {
                     items[i] ??= new Terraria.Item();
                 }
                 _items = items!;
             }
 
-            public ItemStack this[int index] {
-                get {
-                    if (index < 0 || index >= Count) {
+            public ItemStack this[int index]
+            {
+                get
+                {
+                    if (index < 0 || index >= Count)
+                    {
                         // Not localized because this string is developer-facing.
                         throw new IndexOutOfRangeException($"Index out of range (expected: 0 to {Count - 1})");
                     }
@@ -87,13 +99,16 @@ namespace Orion.Core.World.Chests {
                     var item = _items[index];
 
                     // This operation requires a lock since `ItemStack` construction won't be atomic otherwise.
-                    lock (_lock) {
+                    lock (_lock)
+                    {
                         return new ItemStack((ItemId)item.type, item.stack, (ItemPrefix)item.prefix);
                     }
                 }
 
-                set {
-                    if (index < 0 || index >= Count) {
+                set
+                {
+                    if (index < 0 || index >= Count)
+                    {
                         // Not localized because this string is developer-facing.
                         throw new IndexOutOfRangeException($"Index out of range (expected: 0 to {Count - 1})");
                     }
@@ -101,7 +116,8 @@ namespace Orion.Core.World.Chests {
                     var item = _items[index];
 
                     // This operation requires a lock since `ItemStack` assignment won't be atomic otherwise.
-                    lock (_lock) {
+                    lock (_lock)
+                    {
                         item.type = (int)value.Id;
                         item.stack = value.StackSize;
                         item.prefix = (byte)value.Prefix;

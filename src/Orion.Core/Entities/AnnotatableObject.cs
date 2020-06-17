@@ -18,7 +18,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace Orion.Core.Entities {
+namespace Orion.Core.Entities
+{
     /// <summary>
     /// Represents an annotatable object. Provides the base class for implementations of interfaces derived from
     /// <see cref="IAnnotatable"/>.
@@ -26,19 +27,25 @@ namespace Orion.Core.Entities {
     /// <remarks>
     /// This class is thread-safe.
     /// </remarks>
-    public class AnnotatableObject : IAnnotatable {
+    public class AnnotatableObject : IAnnotatable
+    {
         private readonly object _lock = new object();
         private readonly IDictionary<string, object> _annotations = new Dictionary<string, object>();
 
         /// <inheritdoc/>
-        public ref T GetAnnotation<T>(string key, Func<T>? initializer = null) {
-            if (key is null) {
+        public ref T GetAnnotation<T>(string key, Func<T>? initializer = null)
+        {
+            if (key is null)
+            {
                 throw new ArgumentNullException(nameof(key));
             }
 
-            lock (_lock) {
-                if (_annotations.TryGetValue(key, out var boxObj)) {
-                    if (!(boxObj is Box<T> box)) {
+            lock (_lock)
+            {
+                if (_annotations.TryGetValue(key, out var boxObj))
+                {
+                    if (!(boxObj is Box<T> box))
+                    {
                         // Not localized because this string is developer-facing.
                         var expectedType = boxObj.GetType().GetGenericArguments()[0];
                         throw new ArgumentException(
@@ -46,9 +53,12 @@ namespace Orion.Core.Entities {
                     }
 
                     return ref box.Value;
-                } else {
+                }
+                else
+                {
                     var box = new Box<T>();
-                    if (initializer != null) {
+                    if (initializer != null)
+                    {
                         box.Value = initializer();
                     }
 
@@ -59,18 +69,22 @@ namespace Orion.Core.Entities {
         }
 
         /// <inheritdoc/>
-        public bool RemoveAnnotation(string key) {
-            if (key is null) {
+        public bool RemoveAnnotation(string key)
+        {
+            if (key is null)
+            {
                 throw new ArgumentNullException(nameof(key));
             }
 
-            lock (_lock) {
+            lock (_lock)
+            {
                 return _annotations.Remove(key);
             }
         }
 
         // Utility class for returning a `ref` to `T`.
-        private class Box<T> {
+        private class Box<T>
+        {
             public T Value = default!;
         }
     }

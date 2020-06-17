@@ -19,13 +19,16 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.Players {
+namespace Orion.Core.Packets.Players
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerHealthPacketTests {
+    public class PlayerHealthPacketTests
+    {
         public static readonly byte[] Bytes = { 8, 0, 16, 5, 100, 0, 244, 1 };
 
         [Fact]
-        public void PlayerIndex_Set_Get() {
+        public void PlayerIndex_Set_Get()
+        {
             var packet = new PlayerHealthPacket();
 
             packet.PlayerIndex = 5;
@@ -34,7 +37,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void Health_Set_Get() {
+        public void Health_Set_Get()
+        {
             var packet = new PlayerHealthPacket();
 
             packet.Health = 100;
@@ -43,7 +47,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void MaxHealth_Set_Get() {
+        public void MaxHealth_Set_Get()
+        {
             var packet = new PlayerHealthPacket();
 
             packet.MaxHealth = 500;
@@ -52,7 +57,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new PlayerHealthPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -63,7 +69,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<PlayerHealthPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

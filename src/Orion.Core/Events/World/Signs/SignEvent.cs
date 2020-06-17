@@ -18,17 +18,20 @@
 using System;
 using Orion.Core.World.Signs;
 
-namespace Orion.Core.Events.World.Signs {
+namespace Orion.Core.Events.World.Signs
+{
     /// <summary>
     /// Provides the base class for a sign-related event.
     /// </summary>
-    public abstract class SignEvent : Event {
+    public abstract class SignEvent : Event
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="SignEvent"/> class with the specified <paramref name="sign"/>.
         /// </summary>
         /// <param name="sign">The sign involved in the event.</param>
         /// <exception cref="ArgumentNullException"><paramref name="sign"/> is <see langword="null"/>.</exception>
-        protected SignEvent(ISign sign) {
+        protected SignEvent(ISign sign)
+        {
             Sign = sign ?? throw new ArgumentNullException(nameof(sign));
         }
 

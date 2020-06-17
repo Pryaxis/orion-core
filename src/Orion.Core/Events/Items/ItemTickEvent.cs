@@ -19,12 +19,14 @@ using System;
 using Orion.Core.Items;
 using Serilog.Events;
 
-namespace Orion.Core.Events.Items {
+namespace Orion.Core.Events.Items
+{
     /// <summary>
     /// An event that occurs when an item tick (update) occurs. This event can be canceled.
     /// </summary>
     [Event("item-tick", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class ItemTickEvent : ItemEvent {
+    public sealed class ItemTickEvent : ItemEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemTickEvent"/> class with the specified
         /// <paramref name="item"/>.

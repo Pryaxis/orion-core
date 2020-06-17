@@ -20,17 +20,21 @@ using System.Runtime.CompilerServices;
 using Orion.Core.Packets;
 using Xunit;
 
-namespace Orion.Core.Events.Packets {
-    public class PacketEventTests {
+namespace Orion.Core.Events.Packets
+{
+    public class PacketEventTests
+    {
         [Fact]
-        public void Packet_Get() {
+        public void Packet_Get()
+        {
             var packet = new TestPacket();
             var evt = new TestPacketEvent<TestPacket>(ref packet);
 
             Assert.True(Unsafe.AreSame(ref packet, ref evt.Packet));
         }
 
-        public struct TestPacket : IPacket {
+        public struct TestPacket : IPacket
+        {
             public int Value;
 
             public PacketId Id => throw new NotImplementedException();
@@ -38,7 +42,8 @@ namespace Orion.Core.Events.Packets {
             public int Write(Span<byte> span, PacketContext context) => throw new NotImplementedException();
         }
 
-        private class TestPacketEvent<TPacket> : PacketEvent<TPacket> where TPacket : struct, IPacket {
+        private class TestPacketEvent<TPacket> : PacketEvent<TPacket> where TPacket : struct, IPacket
+        {
             public TestPacketEvent(ref TPacket packet) : base(ref packet) { }
         }
     }

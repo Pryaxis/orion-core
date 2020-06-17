@@ -17,11 +17,13 @@
 
 using System;
 
-namespace Orion.Core.Packets.Server {
+namespace Orion.Core.Packets.Server
+{
     /// <summary>
     /// A packet sent from the server to the client to indicate that the server is passworded.
     /// </summary>
-    public struct ServerPasswordedPacket : IPacket {
+    public struct ServerPasswordedPacket : IPacket
+    {
         PacketId IPacket.Id => PacketId.ServerPassworded;
 
         /// <inheritdoc/>

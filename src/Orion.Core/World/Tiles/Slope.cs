@@ -15,11 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.World.Tiles {
+namespace Orion.Core.World.Tiles
+{
     /// <summary>
     /// Specifies a block's slope.
     /// </summary>
-    public enum Slope : byte {
+    public enum Slope : byte
+    {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         None = 0,
         TopRight = 1,

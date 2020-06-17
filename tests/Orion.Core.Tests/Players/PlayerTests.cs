@@ -24,19 +24,23 @@ using Orion.Core.Packets.World.Tiles;
 using Orion.Core.World.Tiles;
 using Xunit;
 
-namespace Orion.Core.Players {
-    public class PlayerTests {
+namespace Orion.Core.Players
+{
+    public class PlayerTests
+    {
         private delegate void ServerDisconnectCallback(ref ServerDisconnectPacket packet);
         private delegate void ServerChatCallback(ref ServerChatPacket packet);
         private delegate void TileSquareCallback(ref TileSquarePacket packet);
 
         [Fact]
-        public void SendPacket_NullPlayer_ThrowsArgumentNullException() {
+        public void SendPacket_NullPlayer_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => PlayerExtensions.SendPacket(null!, new TestPacket()));
         }
 
         [Fact]
-        public void SendPacket() {
+        public void SendPacket()
+        {
             var mockPlayer = new Mock<IPlayer>();
 
             mockPlayer.Object.SendPacket(new TestPacket());
@@ -45,23 +49,27 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void Disconnect_NullPlayer_ThrowsArgumentNullException() {
+        public void Disconnect_NullPlayer_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => PlayerExtensions.Disconnect(null!, "test"));
         }
 
         [Fact]
-        public void Disconnect_NullReason_ThrowsArgumentNullException() {
+        public void Disconnect_NullReason_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => player.Disconnect(null!));
         }
 
         [Fact]
-        public void Disconnect() {
+        public void Disconnect()
+        {
             var mockPlayer = new Mock<IPlayer>();
             mockPlayer
                 .Setup(p => p.SendPacket(ref It.Ref<ServerDisconnectPacket>.IsAny))
-                .Callback((ServerDisconnectCallback)((ref ServerDisconnectPacket packet) => {
+                .Callback((ServerDisconnectCallback)((ref ServerDisconnectPacket packet) =>
+                {
                     Assert.Equal("test", packet.Reason);
                 }));
 
@@ -71,23 +79,27 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void SendMessage_NullPlayer_ThrowsArgumentNullException() {
+        public void SendMessage_NullPlayer_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => PlayerExtensions.SendMessage(null!, "test", Color3.White));
         }
 
         [Fact]
-        public void SendMessage_NullReason_ThrowsArgumentNullException() {
+        public void SendMessage_NullReason_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => player.SendMessage(null!, Color3.White));
         }
 
         [Fact]
-        public void SendMessage() {
+        public void SendMessage()
+        {
             var mockPlayer = new Mock<IPlayer>();
             mockPlayer
                 .Setup(p => p.SendPacket(ref It.Ref<ServerChatPacket>.IsAny))
-                .Callback((ServerChatCallback)((ref ServerChatPacket packet) => {
+                .Callback((ServerChatCallback)((ref ServerChatPacket packet) =>
+                {
                     Assert.Equal("test", packet.Message);
                     Assert.Equal(Color3.White, packet.Color);
                     Assert.Equal(-1, packet.LineWidth);
@@ -99,21 +111,24 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void SendTiles_NullPlayer_ThrowsArgumentNullException() {
+        public void SendTiles_NullPlayer_ThrowsArgumentNullException()
+        {
             var tiles = Mock.Of<ITileSlice>();
 
             Assert.Throws<ArgumentNullException>(() => PlayerExtensions.SendTiles(null!, 123, 456, tiles));
         }
 
         [Fact]
-        public void SendTiles_NullTiles_ThrowsArgumentNullException() {
+        public void SendTiles_NullTiles_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => player.SendTiles(123, 456, null!));
         }
 
         [Fact]
-        public void SendTiles_NonSquareTiles_ThrowsNotSupportedException() {
+        public void SendTiles_NonSquareTiles_ThrowsNotSupportedException()
+        {
             var player = Mock.Of<IPlayer>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 2);
 
@@ -121,12 +136,14 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void SendTiles() {
+        public void SendTiles()
+        {
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
             var mockPlayer = new Mock<IPlayer>();
             mockPlayer
                 .Setup(p => p.SendPacket(ref It.Ref<TileSquarePacket>.IsAny))
-                .Callback((TileSquareCallback)((ref TileSquarePacket packet) => {
+                .Callback((TileSquareCallback)((ref TileSquarePacket packet) =>
+                {
                     Assert.Equal(123, packet.X);
                     Assert.Equal(456, packet.Y);
                     Assert.Same(tiles, packet.Tiles);
@@ -137,7 +154,8 @@ namespace Orion.Core.Players {
             mockPlayer.Verify(p => p.SendPacket(ref It.Ref<TileSquarePacket>.IsAny));
         }
 
-        private struct TestPacket : IPacket {
+        private struct TestPacket : IPacket
+        {
             public PacketId Id => throw new NotImplementedException();
             public int Read(Span<byte> span, PacketContext context) => throw new NotImplementedException();
             public int Write(Span<byte> span, PacketContext context) => throw new NotImplementedException();

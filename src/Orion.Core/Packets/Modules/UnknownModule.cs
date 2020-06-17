@@ -18,11 +18,13 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Orion.Core.Packets.Modules {
+namespace Orion.Core.Packets.Modules
+{
     /// <summary>
     /// An unknown module.
     /// </summary>
-    public struct UnknownModule : IModule {
+    public struct UnknownModule : IModule
+    {
         private unsafe fixed byte _data[ushort.MaxValue - IPacket.HeaderSize - IModule.HeaderSize];
 
         /// <summary>
@@ -45,9 +47,11 @@ namespace Orion.Core.Packets.Modules {
         public unsafe ref byte Data(int index) => ref _data[index];
 
         /// <inheritdoc/>
-        public unsafe int Read(Span<byte> span, PacketContext context) {
+        public unsafe int Read(Span<byte> span, PacketContext context)
+        {
             Length = (ushort)span.Length;
-            if (Length == 0) {
+            if (Length == 0)
+            {
                 return 0;
             }
 
@@ -56,8 +60,10 @@ namespace Orion.Core.Packets.Modules {
         }
 
         /// <inheritdoc/>
-        public unsafe int Write(Span<byte> span, PacketContext context) {
-            if (Length == 0) {
+        public unsafe int Write(Span<byte> span, PacketContext context)
+        {
+            if (Length == 0)
+            {
                 return 0;
             }
 

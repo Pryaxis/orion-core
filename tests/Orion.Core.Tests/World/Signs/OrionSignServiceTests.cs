@@ -24,14 +24,17 @@ using Orion.Core.World.Tiles;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Core.World.Signs {
+namespace Orion.Core.World.Signs
+{
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
-    public class OrionSignServiceTests {
+    public class OrionSignServiceTests
+    {
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
-        public void Signs_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Signs_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index)
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var signService = new OrionSignService(kernel, Logger.None);
 
@@ -39,7 +42,8 @@ namespace Orion.Core.World.Signs {
         }
 
         [Fact]
-        public void Signs_Item_Get() {
+        public void Signs_Item_Get()
+        {
             Terraria.Main.sign[1] = new Terraria.Sign();
 
             using var kernel = new OrionKernel(Logger.None);
@@ -51,7 +55,8 @@ namespace Orion.Core.World.Signs {
         }
 
         [Fact]
-        public void Signs_Item_GetMultipleTimes_ReturnsSameInstance() {
+        public void Signs_Item_GetMultipleTimes_ReturnsSameInstance()
+        {
             Terraria.Main.sign[0] = new Terraria.Sign();
 
             using var kernel = new OrionKernel(Logger.None);
@@ -64,8 +69,10 @@ namespace Orion.Core.World.Signs {
         }
 
         [Fact]
-        public void Signs_GetEnumerator() {
-            for (var i = 0; i < Terraria.Sign.maxSigns; ++i) {
+        public void Signs_GetEnumerator()
+        {
+            for (var i = 0; i < Terraria.Sign.maxSigns; ++i)
+            {
                 Terraria.Main.sign[i] = new Terraria.Sign();
             }
 
@@ -74,13 +81,15 @@ namespace Orion.Core.World.Signs {
 
             var signs = signService.Signs.ToList();
 
-            for (var i = 0; i < signs.Count; ++i) {
+            for (var i = 0; i < signs.Count; ++i)
+            {
                 Assert.Same(Terraria.Main.sign[i], ((OrionSign)signs[i]).Wrapped);
             }
         }
 
         [Fact]
-        public void PacketReceive_SignRead_EventTriggered() {
+        public void PacketReceive_SignRead_EventTriggered()
+        {
             // Set `State` to 10 so that the sign read packet is not ignored by the server.
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
@@ -93,7 +102,8 @@ namespace Orion.Core.World.Signs {
             using var signService = new OrionSignService(kernel, Logger.None);
 
             var isRun = false;
-            kernel.RegisterHandler<SignReadEvent>(evt => {
+            kernel.RegisterHandler<SignReadEvent>(evt =>
+            {
                 Assert.Same(signService.Signs[0], evt.Sign);
                 Assert.Same(playerService.Players[5], evt.Player);
                 isRun = true;
@@ -106,7 +116,8 @@ namespace Orion.Core.World.Signs {
         }
 
         [Fact]
-        public void PacketReceive_SignRead_EventCanceled() {
+        public void PacketReceive_SignRead_EventCanceled()
+        {
             // Set `State` to 10 so that the sign read packet is not ignored by the server.
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
@@ -127,7 +138,8 @@ namespace Orion.Core.World.Signs {
         }
 
         [Fact]
-        public void PacketReceive_SignRead_EventNotTriggered() {
+        public void PacketReceive_SignRead_EventNotTriggered()
+        {
             // Set `State` to 10 so that the sign read packet is not ignored by the server.
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
@@ -147,7 +159,8 @@ namespace Orion.Core.World.Signs {
             Assert.False(isRun);
         }
 
-        private class TestSocket : Terraria.Net.Sockets.ISocket {
+        private class TestSocket : Terraria.Net.Sockets.ISocket
+        {
             public bool Connected { get; set; }
             public byte[] SendData { get; private set; } = Array.Empty<byte>();
 

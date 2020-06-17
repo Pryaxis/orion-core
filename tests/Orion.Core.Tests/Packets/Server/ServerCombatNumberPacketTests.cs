@@ -20,15 +20,18 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.DataStructures;
 using Xunit;
 
-namespace Orion.Core.Packets.Server {
+namespace Orion.Core.Packets.Server
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ServerCombatNumberPacketTests {
+    public class ServerCombatNumberPacketTests
+    {
         public static readonly byte[] Bytes = new byte[] {
             18, 0, 81, 0, 0, 200, 66, 0, 0, 128, 67, 255, 255, 255, 210, 4, 0, 0
         };
 
         [Fact]
-        public void Position_Set_Get() {
+        public void Position_Set_Get()
+        {
             var packet = new ServerCombatNumberPacket();
 
             packet.Position = new Vector2f(100, 256);
@@ -37,7 +40,8 @@ namespace Orion.Core.Packets.Server {
         }
 
         [Fact]
-        public void Color_Set_Get() {
+        public void Color_Set_Get()
+        {
             var packet = new ServerCombatNumberPacket();
 
             packet.Color = Color3.White;
@@ -46,7 +50,8 @@ namespace Orion.Core.Packets.Server {
         }
 
         [Fact]
-        public void Number_Set_Get() {
+        public void Number_Set_Get()
+        {
             var packet = new ServerCombatNumberPacket();
 
             packet.Number = 1234;
@@ -55,7 +60,8 @@ namespace Orion.Core.Packets.Server {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new ServerCombatNumberPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -66,7 +72,8 @@ namespace Orion.Core.Packets.Server {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<ServerCombatNumberPacket>(
                 Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }

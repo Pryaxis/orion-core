@@ -17,11 +17,14 @@
 
 using System;
 
-namespace Orion.Core {
-    public class TerrariaTestsFixture : IDisposable {
+namespace Orion.Core
+{
+    public class TerrariaTestsFixture : IDisposable
+    {
         private readonly Terraria.Main _main;
 
-        public TerrariaTestsFixture() {
+        public TerrariaTestsFixture()
+        {
             _main = new Terraria.Main();
 
             Terraria.Localization.LanguageManager.Instance.SetLanguage("en-US");
@@ -29,7 +32,8 @@ namespace Orion.Core {
             _main.Initialize();
         }
 
-        public void Dispose() {
+        public void Dispose()
+        {
             _main.Dispose();
         }
     }

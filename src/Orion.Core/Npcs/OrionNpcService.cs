@@ -31,13 +31,16 @@ using Orion.Core.Items;
 using Orion.Core.Packets.Npcs;
 using Serilog;
 
-namespace Orion.Core.Npcs {
+namespace Orion.Core.Npcs
+{
     [Binding("orion-npcs", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
-    internal sealed class OrionNpcService : OrionService, INpcService {
+    internal sealed class OrionNpcService : OrionService, INpcService
+    {
         private readonly object _lock = new object();
         private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();
 
-        public OrionNpcService(OrionKernel kernel, ILogger log) : base(kernel, log) {
+        public OrionNpcService(OrionKernel kernel, ILogger log) : base(kernel, log)
+        {
             // Construct the `Npcs` array. Note that the last NPC should be ignored, as it is not a real NPC.
             Npcs = new WrappedReadOnlyList<OrionNpc, Terraria.NPC>(
                 Terraria.Main.npc.AsMemory(..^1),
@@ -54,7 +57,8 @@ namespace Orion.Core.Npcs {
 
         public IReadOnlyList<INpc> Npcs { get; }
 
-        public override void Dispose() {
+        public override void Dispose()
+        {
             _setDefaultsToIgnore.Dispose();
 
             OTAPI.Hooks.Npc.PreSetDefaultsById = null;
@@ -66,11 +70,13 @@ namespace Orion.Core.Npcs {
             Kernel.DeregisterHandlers(this, Log);
         }
 
-        public INpc? SpawnNpc(NpcId id, Vector2f position) {
+        public INpc? SpawnNpc(NpcId id, Vector2f position)
+        {
             // Not localized because this string is developer-facing.
             Log.Debug("Spawning {NpcId} at {Position}", id, position);
 
-            lock (_lock) {
+            lock (_lock)
+            {
                 var npcIndex = Terraria.NPC.NewNPC((int)position.X, (int)position.Y, (int)id);
                 return npcIndex >= 0 && npcIndex < Npcs.Count ? Npcs[npcIndex] : null;
             }
@@ -81,12 +87,14 @@ namespace Orion.Core.Npcs {
         //
 
         private OTAPI.HookResult PreSetDefaultsByIdHandler(
-                Terraria.NPC terrariaNpc, ref int npcId, ref Terraria.NPCSpawnParams spawnParams) {
+                Terraria.NPC terrariaNpc, ref int npcId, ref Terraria.NPCSpawnParams spawnParams)
+        {
             Debug.Assert(terrariaNpc != null);
 
             // Check `_setDefaultsToIgnore` to ignore spurious calls if `SetDefaultsById()` is called with a negative
             // ID. A thread-local value is used in case there is some concurrency.
-            if (_setDefaultsToIgnore.Value > 0) {
+            if (_setDefaultsToIgnore.Value > 0)
+            {
                 --_setDefaultsToIgnore.Value;
                 return OTAPI.HookResult.Continue;
             }
@@ -94,24 +102,28 @@ namespace Orion.Core.Npcs {
             var npc = GetNpc(terrariaNpc);
             var evt = new NpcDefaultsEvent(npc) { Id = (NpcId)npcId };
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled) {
+            if (evt.IsCanceled)
+            {
                 return OTAPI.HookResult.Cancel;
             }
 
             npcId = (int)evt.Id;
-            if (npcId < 0) {
+            if (npcId < 0)
+            {
                 _setDefaultsToIgnore.Value = 2;
             }
             return OTAPI.HookResult.Continue;
         }
 
-        private OTAPI.HookResult SpawnHandler(ref int npcIndex) {
+        private OTAPI.HookResult SpawnHandler(ref int npcIndex)
+        {
             Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count);
 
             var npc = Npcs[npcIndex];
             var evt = new NpcSpawnEvent(npc);
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled) {
+            if (evt.IsCanceled)
+            {
                 // To cancel the event, remove the NPC and return the failure index.
                 npc.IsActive = false;
                 npcIndex = Npcs.Count;
@@ -121,7 +133,8 @@ namespace Orion.Core.Npcs {
             return OTAPI.HookResult.Continue;
         }
 
-        private OTAPI.HookResult PreUpdateHandler(Terraria.NPC terrariaNpc, ref int npcIndex) {
+        private OTAPI.HookResult PreUpdateHandler(Terraria.NPC terrariaNpc, ref int npcIndex)
+        {
             Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count);
 
             var evt = new NpcTickEvent(Npcs[npcIndex]);
@@ -129,7 +142,8 @@ namespace Orion.Core.Npcs {
             return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
-        private void KilledHandler(Terraria.NPC terrariaNpc) {
+        private void KilledHandler(Terraria.NPC terrariaNpc)
+        {
             Debug.Assert(terrariaNpc != null);
 
             var npc = GetNpc(terrariaNpc);
@@ -140,13 +154,15 @@ namespace Orion.Core.Npcs {
         private OTAPI.HookResult PreDropLootHandler(
                 Terraria.NPC terrariaNpc, ref int itemIndex, ref int x, ref int y, ref int width, ref int height,
                 ref int itemId, ref int stackSize, ref bool noBroadcast, ref int prefix, ref bool noGrabDelay,
-                ref bool reverseIndex) {
+                ref bool reverseIndex)
+        {
             Debug.Assert(terrariaNpc != null);
 
             var npc = GetNpc(terrariaNpc);
             var evt = new NpcLootEvent(npc) { Id = (ItemId)itemId, StackSize = stackSize, Prefix = (ItemPrefix)prefix };
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled) {
+            if (evt.IsCanceled)
+            {
                 return OTAPI.HookResult.Cancel;
             }
 
@@ -158,7 +174,8 @@ namespace Orion.Core.Npcs {
 
         // Gets an `INpc` which corresponds to the given Terraria NPC. Retrieves the `INpc` from the `Npcs` array, if
         // possible.
-        private INpc GetNpc(Terraria.NPC terrariaNpc) {
+        private INpc GetNpc(Terraria.NPC terrariaNpc)
+        {
             Debug.Assert(terrariaNpc != null);
 
             var npcIndex = terrariaNpc.whoAmI;
@@ -174,7 +191,8 @@ namespace Orion.Core.Npcs {
 
         [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnNpcBuffPacket(PacketReceiveEvent<NpcBuffPacket> evt) {
+        private void OnNpcBuffPacket(PacketReceiveEvent<NpcBuffPacket> evt)
+        {
             ref var packet = ref evt.Packet;
             var npc = Npcs[packet.NpcIndex];
             var buff = new Buff(packet.Id, packet.Ticks);
@@ -184,7 +202,8 @@ namespace Orion.Core.Npcs {
 
         [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnNpcCatchPacket(PacketReceiveEvent<NpcCatchPacket> evt) {
+        private void OnNpcCatchPacket(PacketReceiveEvent<NpcCatchPacket> evt)
+        {
             ref var packet = ref evt.Packet;
             var npc = Npcs[packet.NpcIndex];
 
@@ -193,16 +212,19 @@ namespace Orion.Core.Npcs {
 
         [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnNpcFishPacket(PacketReceiveEvent<NpcFishPacket> evt) {
+        private void OnNpcFishPacket(PacketReceiveEvent<NpcFishPacket> evt)
+        {
             ref var packet = ref evt.Packet;
 
             ForwardEvent(evt, new NpcFishEvent(evt.Sender, packet.X, packet.Y, packet.Id));
         }
 
         // Forwards `evt` as `newEvt`.
-        private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event {
+        private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event
+        {
             Kernel.Raise(newEvt, Log);
-            if (newEvt.IsCanceled) {
+            if (newEvt.IsCanceled)
+            {
                 evt.Cancel(newEvt.CancellationReason);
             }
         }

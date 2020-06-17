@@ -19,12 +19,14 @@ using System;
 using Orion.Core.Projectiles;
 using Serilog.Events;
 
-namespace Orion.Core.Events.Projectiles {
+namespace Orion.Core.Events.Projectiles
+{
     /// <summary>
     /// An event that occurs when a projectile tick (update) occurs. This event can be canceled.
     /// </summary>
     [Event("proj-tick", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class ProjectileTickEvent : ProjectileEvent {
+    public sealed class ProjectileTickEvent : ProjectileEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectileTickEvent"/> class with the specified
         /// <paramref name="projectile"/>.

@@ -18,12 +18,14 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Orion.Core.Packets.Modules {
+namespace Orion.Core.Packets.Modules
+{
     /// <summary>
     /// A packet sent in the form of a module.
     /// </summary>
     /// <typeparam name="TModule">The type of module.</typeparam>
-    public struct ModulePacket<TModule> : IPacket where TModule : struct, IModule {
+    public struct ModulePacket<TModule> : IPacket where TModule : struct, IModule
+    {
         /// <summary>
         /// The module.
         /// </summary>
@@ -32,9 +34,11 @@ namespace Orion.Core.Packets.Modules {
         PacketId IPacket.Id => PacketId.Module;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
             // If `TModule` is `UnknownModule`, then we need to set the `Id` property appropriately.
-            if (typeof(TModule) == typeof(UnknownModule)) {
+            if (typeof(TModule) == typeof(UnknownModule))
+            {
                 Unsafe.As<TModule, UnknownModule>(ref Module).Id = Unsafe.ReadUnaligned<ModuleId>(ref span[0]);
             }
 

@@ -19,12 +19,14 @@ using System;
 using Orion.Core.Players;
 using Orion.Core.World;
 
-namespace Orion.Core.Events.World.Tiles {
+namespace Orion.Core.Events.World.Tiles
+{
     /// <summary>
     /// An event that occurs when a wall is being broken. This event can be canceled.
     /// </summary>
     [Event("wall-break")]
-    public sealed class WallBreakEvent : TileEvent {
+    public sealed class WallBreakEvent : TileEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="WallBreakEvent"/> class with the specified
         /// <paramref name="world"/>, <paramref name="player"/>, and coordinates.

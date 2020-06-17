@@ -19,11 +19,14 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Npcs {
+namespace Orion.Core.Npcs
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class OrionNpcTests {
+    public class OrionNpcTests
+    {
         [Fact]
-        public void Name_Get() {
+        public void Name_Get()
+        {
             var terrariaNpc = new Terraria.NPC { _givenName = "test" };
             var npc = new OrionNpc(terrariaNpc);
 
@@ -31,7 +34,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void Name_SetNullValue_ThrowsArgumentNullException() {
+        public void Name_SetNullValue_ThrowsArgumentNullException()
+        {
             var terrariaNpc = new Terraria.NPC();
             var npc = new OrionNpc(terrariaNpc);
 
@@ -39,7 +43,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void Name_Set() {
+        public void Name_Set()
+        {
             var terrariaNpc = new Terraria.NPC();
             var npc = new OrionNpc(terrariaNpc);
 
@@ -49,7 +54,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void Id_Get() {
+        public void Id_Get()
+        {
             var terrariaNpc = new Terraria.NPC { netID = (int)NpcId.BlueSlime };
             var npc = new OrionNpc(terrariaNpc);
 
@@ -57,7 +63,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void SetId() {
+        public void SetId()
+        {
             var terrariaNpc = new Terraria.NPC();
             var npc = new OrionNpc(terrariaNpc);
 

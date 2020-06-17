@@ -18,10 +18,13 @@
 using System;
 using Xunit;
 
-namespace Orion.Core.Events.Npcs {
-    public class NpcTickEventTests {
+namespace Orion.Core.Events.Npcs
+{
+    public class NpcTickEventTests
+    {
         [Fact]
-        public void Ctor_NullNpc_ThrowsArgumentNullException() {
+        public void Ctor_NullNpc_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new NpcTickEvent(null!));
         }
     }

@@ -26,7 +26,8 @@ using Orion.Core.Framework;
 using Orion.Core.Properties;
 using Serilog;
 
-namespace Orion.Core {
+namespace Orion.Core
+{
     /// <summary>
     /// Represents Orion's core logic. Provides access to Orion plugins and events and publishes server-related events.
     /// </summary>
@@ -39,7 +40,8 @@ namespace Orion.Core {
     /// <item><description><see cref="ServerCommandEvent"/></description></item>
     /// </list>
     /// </remarks>
-    public sealed class OrionKernel : IDisposable {
+    public sealed class OrionKernel : IDisposable
+    {
         private static readonly MethodInfo _registerHandler =
             typeof(OrionKernel).GetMethod(nameof(RegisterHandler));
         private static readonly MethodInfo _deregisterHandler =
@@ -63,8 +65,10 @@ namespace Orion.Core {
         /// </summary>
         /// <param name="log">The log.</param>
         /// <exception cref="ArgumentNullException"><paramref name="log"/> is <see langword="null"/>.</exception>
-        public OrionKernel(ILogger log) {
-            if (log is null) {
+        public OrionKernel(ILogger log)
+        {
+            if (log is null)
+            {
                 throw new ArgumentNullException(nameof(log));
             }
 
@@ -76,7 +80,8 @@ namespace Orion.Core {
             // Bind `ILogger` so that services/plugins retrieve type-specific logs.
             _kernel
                 .Bind<ILogger>()
-                .ToMethod(ctx => {
+                .ToMethod(ctx =>
+                {
                     var type = ctx.Request.Target.Member.ReflectedType;
                     var name =
                         type.GetCustomAttribute<BindingAttribute?>()?.Name ??
@@ -104,7 +109,8 @@ namespace Orion.Core {
         /// <summary>
         /// Disposes the kernel, releasing any resources associated with it.
         /// </summary>
-        public void Dispose() {
+        public void Dispose()
+        {
             _kernel.Dispose();
 
             OTAPI.Hooks.Game.PreInitialize = null;
@@ -122,8 +128,10 @@ namespace Orion.Core {
         /// </summary>
         /// <param name="assembly">The assembly.</param>
         /// <exception cref="ArgumentNullException"><paramref name="assembly"/> is <see langword="null"/>.</exception>
-        public void LoadFrom(Assembly assembly) {
-            if (assembly is null) {
+        public void LoadFrom(Assembly assembly)
+        {
+            if (assembly is null)
+            {
                 throw new ArgumentNullException(nameof(assembly));
             }
 
@@ -136,18 +144,24 @@ namespace Orion.Core {
             _serviceTypes.UnionWith(exportedTypes.Where(HasAttribute<ServiceAttribute>));
 
             // Load all service binding types from the assembly.
-            foreach (var thisBindingType in types.Where(HasAttribute<BindingAttribute>)) {
+            foreach (var thisBindingType in types.Where(HasAttribute<BindingAttribute>))
+            {
                 var thisPriority = thisBindingType.GetCustomAttribute<BindingAttribute>().Priority;
 
-                foreach (var interfaceType in thisBindingType.GetInterfaces().Where(_serviceTypes.Contains)) {
-                    if (!_serviceBindings.TryGetValue(interfaceType, out var currentBindingType)) {
+                foreach (var interfaceType in thisBindingType.GetInterfaces().Where(_serviceTypes.Contains))
+                {
+                    if (!_serviceBindings.TryGetValue(interfaceType, out var currentBindingType))
+                    {
                         // If no binding currently exists, then add this binding.
                         _serviceBindings[interfaceType] = thisBindingType;
-                    } else {
+                    }
+                    else
+                    {
                         // If this binding has a higher priority than the current binding, then replace the current
                         // binding with this binding.
                         var currentPriority = currentBindingType.GetCustomAttribute<BindingAttribute>().Priority;
-                        if (thisPriority > currentPriority) {
+                        if (thisPriority > currentPriority)
+                        {
                             _serviceBindings[interfaceType] = thisBindingType;
                         }
                     }
@@ -155,7 +169,8 @@ namespace Orion.Core {
             }
 
             // Load all exported plugin types from the assembly.
-            foreach (var pluginType in exportedTypes.Where(HasAttribute<PluginAttribute>)) {
+            foreach (var pluginType in exportedTypes.Where(HasAttribute<PluginAttribute>))
+            {
                 _pluginTypes.Add(pluginType);
 
                 var pluginName = pluginType.GetCustomAttribute<PluginAttribute>().Name;
@@ -166,15 +181,18 @@ namespace Orion.Core {
         /// <summary>
         /// Initializes the loaded service bindings and plugins.
         /// </summary>
-        public void Initialize() {
+        public void Initialize()
+        {
             // Initialize the service bindings.
-            foreach (var kvp in _serviceBindings) {
+            foreach (var kvp in _serviceBindings)
+            {
                 var serviceType = kvp.Key;
                 var bindingType = kvp.Value;
                 var binding = _kernel.Bind(serviceType).To(bindingType);
 
                 var scope = serviceType.GetCustomAttribute<ServiceAttribute>().Scope;
-                _ = scope switch {
+                _ = scope switch
+                {
                     ServiceScope.Singleton => binding.InSingletonScope(),
                     ServiceScope.Transient => binding.InTransientScope(),
 
@@ -183,18 +201,21 @@ namespace Orion.Core {
                 };
 
                 // Eagerly request singleton-scoped services so that an instance actually exists.
-                if (scope == ServiceScope.Singleton) {
+                if (scope == ServiceScope.Singleton)
+                {
                     _kernel.Get(serviceType);
                 }
             }
 
             // Initialize the plugin bindings.
-            foreach (var pluginType in _pluginTypes) {
+            foreach (var pluginType in _pluginTypes)
+            {
                 _kernel.Bind(pluginType).ToSelf().InSingletonScope();
             }
 
             // Initialize the plugins.
-            foreach (var plugin in _pluginTypes.Select(t => (OrionPlugin)_kernel.Get(t))) {
+            foreach (var plugin in _pluginTypes.Select(t => (OrionPlugin)_kernel.Get(t)))
+            {
                 plugin.Initialize();
 
                 var pluginType = plugin.GetType();
@@ -218,12 +239,15 @@ namespace Orion.Core {
         /// <param name="pluginName">The plugin name.</param>
         /// <returns><see langword="true"/> if the plugin was unloaded; otherwise, <see langword="false"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="pluginName"/> is <see langword="null"/>.</exception>
-        public bool UnloadPlugin(string pluginName) {
-            if (pluginName is null) {
+        public bool UnloadPlugin(string pluginName)
+        {
+            if (pluginName is null)
+            {
                 throw new ArgumentNullException(nameof(pluginName));
             }
 
-            if (!_plugins.TryGetValue(pluginName, out var plugin)) {
+            if (!_plugins.TryGetValue(pluginName, out var plugin))
+            {
                 return false;
             }
 
@@ -248,12 +272,15 @@ namespace Orion.Core {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="handler"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        public void RegisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event {
-            if (handler is null) {
+        public void RegisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event
+        {
+            if (handler is null)
+            {
                 throw new ArgumentNullException(nameof(handler));
             }
 
-            if (log is null) {
+            if (log is null)
+            {
                 throw new ArgumentNullException(nameof(log));
             }
 
@@ -273,32 +300,39 @@ namespace Orion.Core {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="handlerObject"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        public void RegisterHandlers(object handlerObject, ILogger log) {
-            if (handlerObject is null) {
+        public void RegisterHandlers(object handlerObject, ILogger log)
+        {
+            if (handlerObject is null)
+            {
                 throw new ArgumentNullException(nameof(handlerObject));
             }
 
-            if (log is null) {
+            if (log is null)
+            {
                 throw new ArgumentNullException(nameof(log));
             }
 
             var registrations = _handlerRegistrations[handlerObject] = new List<(Type eventType, object handler)>();
             foreach (var method in handlerObject
                     .GetType()
-                    .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
-                if (method.GetCustomAttribute<EventHandlerAttribute>() is null) {
+                    .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+            {
+                if (method.GetCustomAttribute<EventHandlerAttribute>() is null)
+                {
                     continue;
                 }
 
                 var parameters = method.GetParameters();
-                if (parameters.Length != 1) {
+                if (parameters.Length != 1)
+                {
                     // Not localized because this string is developer-facing.
                     throw new ArgumentException(
                         $"Method `{method.Name}` does not have exactly one argument", nameof(handlerObject));
                 }
 
                 var eventType = parameters[0].ParameterType;
-                if (!eventType.IsSubclassOf(typeof(Event))) {
+                if (!eventType.IsSubclassOf(typeof(Event)))
+                {
                     // Not localized because this string is developer-facing.
                     throw new ArgumentException(
                         $"Method `{method.Name}` does not have an argument of type derived from `Event`",
@@ -326,12 +360,15 @@ namespace Orion.Core {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="handler"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        public bool DeregisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event {
-            if (handler is null) {
+        public bool DeregisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event
+        {
+            if (handler is null)
+            {
                 throw new ArgumentNullException(nameof(handler));
             }
 
-            if (log is null) {
+            if (log is null)
+            {
                 throw new ArgumentNullException(nameof(log));
             }
 
@@ -351,21 +388,26 @@ namespace Orion.Core {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="handlerObject"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        public bool DeregisterHandlers(object handlerObject, ILogger log) {
-            if (handlerObject is null) {
+        public bool DeregisterHandlers(object handlerObject, ILogger log)
+        {
+            if (handlerObject is null)
+            {
                 throw new ArgumentNullException(nameof(handlerObject));
             }
 
-            if (log is null) {
+            if (log is null)
+            {
                 throw new ArgumentNullException(nameof(log));
             }
 
-            if (!_handlerRegistrations.TryGetValue(handlerObject, out var registrations)) {
+            if (!_handlerRegistrations.TryGetValue(handlerObject, out var registrations))
+            {
                 return false;
             }
 
             _handlerRegistrations.Remove(handlerObject);
-            foreach (var (eventType, handler) in registrations) {
+            foreach (var (eventType, handler) in registrations)
+            {
                 _deregisterHandler.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
             }
             return true;
@@ -380,12 +422,15 @@ namespace Orion.Core {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="evt"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        public void Raise<TEvent>(TEvent evt, ILogger log) where TEvent : Event {
-            if (evt is null) {
+        public void Raise<TEvent>(TEvent evt, ILogger log) where TEvent : Event
+        {
+            if (evt is null)
+            {
                 throw new ArgumentNullException(nameof(evt));
             }
 
-            if (log is null) {
+            if (log is null)
+            {
                 throw new ArgumentNullException(nameof(log));
             }
 
@@ -393,9 +438,11 @@ namespace Orion.Core {
         }
 
         // Helper method for retrieving an `EventHandlerCollection<TEvent>`.
-        private EventHandlerCollection<TEvent> GetEventHandlerCollection<TEvent>() where TEvent : Event {
+        private EventHandlerCollection<TEvent> GetEventHandlerCollection<TEvent>() where TEvent : Event
+        {
             var type = typeof(TEvent);
-            if (!_eventHandlerCollections.TryGetValue(type, out var collection)) {
+            if (!_eventHandlerCollections.TryGetValue(type, out var collection))
+            {
                 collection = new EventHandlerCollection<TEvent>();
                 _eventHandlerCollections[type] = collection;
             }
@@ -407,22 +454,26 @@ namespace Orion.Core {
         // OTAPI hooks
         //
 
-        private void PreInitializeHandler() {
+        private void PreInitializeHandler()
+        {
             var evt = new ServerInitializeEvent();
             Raise(evt, _log);
         }
 
-        private void StartedHandler() {
+        private void StartedHandler()
+        {
             var evt = new ServerStartEvent();
             Raise(evt, _log);
         }
 
-        private void PreUpdateHandler(ref Microsoft.Xna.Framework.GameTime gameTime) {
+        private void PreUpdateHandler(ref Microsoft.Xna.Framework.GameTime gameTime)
+        {
             var evt = new ServerTickEvent();
             Raise(evt, _log);
         }
 
-        private OTAPI.HookResult ProcessHandler(string lowered, string input) {
+        private OTAPI.HookResult ProcessHandler(string lowered, string input)
+        {
             var evt = new ServerCommandEvent(input);
             Raise(evt, _log);
             return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;

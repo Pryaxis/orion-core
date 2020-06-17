@@ -19,13 +19,16 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.Server {
+namespace Orion.Core.Packets.Server
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ServerIndexPacketTests {
+    public class ServerIndexPacketTests
+    {
         public static readonly byte[] Bytes = { 4, 0, 3, 5 };
 
         [Fact]
-        public void Index_Set_Get() {
+        public void Index_Set_Get()
+        {
             var packet = new ServerIndexPacket();
 
             packet.Index = 5;
@@ -34,7 +37,8 @@ namespace Orion.Core.Packets.Server {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new ServerIndexPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -43,7 +47,8 @@ namespace Orion.Core.Packets.Server {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<ServerIndexPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

@@ -22,16 +22,20 @@ using Orion.Core.Npcs;
 using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Core.Events.Npcs {
+namespace Orion.Core.Events.Npcs
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class NpcFishEventTests {
+    public class NpcFishEventTests
+    {
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new NpcFishEvent(null!, 100, 256, NpcId.HemogoblinShark));
         }
 
         [Fact]
-        public void X_Get() {
+        public void X_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var evt = new NpcFishEvent(player, 100, 256, NpcId.HemogoblinShark);
 
@@ -39,7 +43,8 @@ namespace Orion.Core.Events.Npcs {
         }
 
         [Fact]
-        public void Y_Get() {
+        public void Y_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var evt = new NpcFishEvent(player, 100, 256, NpcId.HemogoblinShark);
 
@@ -47,7 +52,8 @@ namespace Orion.Core.Events.Npcs {
         }
 
         [Fact]
-        public void Id_Get() {
+        public void Id_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var evt = new NpcFishEvent(player, 100, 256, NpcId.HemogoblinShark);
 

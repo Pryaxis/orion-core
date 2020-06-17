@@ -21,22 +21,27 @@ using Serilog;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Core.Framework {
-    public class OrionServiceTests {
+namespace Orion.Core.Framework
+{
+    public class OrionServiceTests
+    {
         [Fact]
-        public void Ctor_NullKernel_ThrowsArgumentNullException() {
+        public void Ctor_NullKernel_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new TestService(null!, Logger.None));
         }
 
         [Fact]
-        public void Ctor_NullLog_ThrowsArgumentNullException() {
+        public void Ctor_NullLog_ThrowsArgumentNullException()
+        {
             using var kernel = new OrionKernel(Logger.None);
 
             Assert.Throws<ArgumentNullException>(() => new TestService(kernel, null!));
         }
 
         [Fact]
-        public void Log_Get() {
+        public void Log_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             var log = Mock.Of<ILogger>();
             using var service = new TestService(kernel, log);
@@ -44,7 +49,8 @@ namespace Orion.Core.Framework {
             Assert.Same(log, service.Log);
         }
 
-        public class TestService : OrionService {
+        public class TestService : OrionService
+        {
             public new ILogger Log => base.Log;
 
             public TestService(OrionKernel kernel, ILogger log) : base(kernel, log) { }

@@ -20,22 +20,27 @@ using Moq;
 using Orion.Core.World.Chests;
 using Xunit;
 
-namespace Orion.Core.Events.World.Chests {
-    public class ChestEventTests {
+namespace Orion.Core.Events.World.Chests
+{
+    public class ChestEventTests
+    {
         [Fact]
-        public void Ctor_NullChest_ThrowsArgumentNullException() {
+        public void Ctor_NullChest_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new TestChestEvent(null!));
         }
 
         [Fact]
-        public void Chest_Get() {
+        public void Chest_Get()
+        {
             var chest = Mock.Of<IChest>();
             var evt = new TestChestEvent(chest);
 
             Assert.Same(chest, evt.Chest);
         }
 
-        private class TestChestEvent : ChestEvent {
+        private class TestChestEvent : ChestEvent
+        {
             public TestChestEvent(IChest chest) : base(chest) { }
         }
     }

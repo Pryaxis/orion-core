@@ -18,31 +18,37 @@
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.DataStructures {
-    public class Color3Tests {
+namespace Orion.Core.DataStructures
+{
+    public class Color3Tests
+    {
         [Fact]
-        public void R_Get() {
+        public void R_Get()
+        {
             var color = new Color3(1, 2, 3);
 
             Assert.Equal(1, color.R);
         }
 
         [Fact]
-        public void G_Get() {
+        public void G_Get()
+        {
             var color = new Color3(1, 2, 3);
 
             Assert.Equal(2, color.G);
         }
 
         [Fact]
-        public void B_Get() {
+        public void B_Get()
+        {
             var color = new Color3(1, 2, 3);
 
             Assert.Equal(3, color.B);
         }
 
         [Fact]
-        public void Equals_ReturnsTrue() {
+        public void Equals_ReturnsTrue()
+        {
             var color = new Color3(11, 22, 33);
             var color2 = new Color3(11, 22, 33);
 
@@ -51,7 +57,8 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
-        public void Equals_ReturnsFalse() {
+        public void Equals_ReturnsFalse()
+        {
             var color = new Color3(255, 255, 255);
             var color2 = new Color3(255, 255, 0);
             var color3 = new Color3(255, 0, 255);
@@ -67,7 +74,8 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
-        public void GetHashCode_Equals_AreEqual() {
+        public void GetHashCode_Equals_AreEqual()
+        {
             var color = new Color3(11, 22, 33);
             var color2 = new Color3(11, 22, 33);
 
@@ -76,7 +84,8 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Equality_ReturnsTrue() {
+        public void op_Equality_ReturnsTrue()
+        {
             var color = new Color3(11, 22, 33);
             var color2 = new Color3(11, 22, 33);
 
@@ -85,7 +94,8 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Equality_ReturnsFalse() {
+        public void op_Equality_ReturnsFalse()
+        {
             var color = new Color3(255, 255, 255);
             var color2 = new Color3(255, 255, 0);
             var color3 = new Color3(255, 0, 255);
@@ -98,7 +108,8 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Inequality_ReturnsTrue() {
+        public void op_Inequality_ReturnsTrue()
+        {
             var color = new Color3(255, 255, 255);
             var color2 = new Color3(255, 255, 0);
             var color3 = new Color3(255, 0, 255);
@@ -111,7 +122,8 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Inequality_ReturnsFalse() {
+        public void op_Inequality_ReturnsFalse()
+        {
             var color = new Color3(11, 22, 33);
             var color2 = new Color3(11, 22, 33);
 

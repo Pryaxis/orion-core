@@ -20,7 +20,8 @@ using Orion.Core.DataStructures;
 using Orion.Core.Events.Npcs;
 using Orion.Core.Framework;
 
-namespace Orion.Core.Npcs {
+namespace Orion.Core.Npcs
+{
     /// <summary>
     /// Represents an NPC service. Provides access to NPCs and publishes NPC-related events.
     /// </summary>
@@ -40,7 +41,8 @@ namespace Orion.Core.Npcs {
     /// </list>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
-    public interface INpcService {
+    public interface INpcService
+    {
         /// <summary>
         /// Gets the NPCs.
         /// </summary>

@@ -19,22 +19,27 @@ using System;
 using Moq;
 using Xunit;
 
-namespace Orion.Core.World.TileEntities {
-    public class TileEntityTests {
+namespace Orion.Core.World.TileEntities
+{
+    public class TileEntityTests
+    {
         [Fact]
-        public void IsConcrete_NullTileEntity_ThrowsArgumentNullException() {
+        public void IsConcrete_NullTileEntity_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => TileEntityExtensions.IsConcrete(null!));
         }
 
         [Fact]
-        public void IsConcrete_ReturnsTrue() {
+        public void IsConcrete_ReturnsTrue()
+        {
             var tileEntity = Mock.Of<ITileEntity>(te => te.Index == 1);
 
             Assert.True(tileEntity.IsConcrete());
         }
 
         [Fact]
-        public void IsConcrete_ReturnsFalse() {
+        public void IsConcrete_ReturnsFalse()
+        {
             var tileEntity = Mock.Of<ITileEntity>(te => te.Index == -1);
 
             Assert.False(tileEntity.IsConcrete());

@@ -21,16 +21,20 @@ using Moq;
 using Orion.Core.Projectiles;
 using Xunit;
 
-namespace Orion.Core.Events.Projectiles {
+namespace Orion.Core.Events.Projectiles
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ProjectileDefaultsEventTests {
+    public class ProjectileDefaultsEventTests
+    {
         [Fact]
-        public void Ctor_NullProjectile_ThrowsArgumentNullException() {
+        public void Ctor_NullProjectile_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new ProjectileDefaultsEvent(null!));
         }
 
         [Fact]
-        public void Id_Set_Get() {
+        public void Id_Set_Get()
+        {
             var projectile = Mock.Of<IProjectile>();
             var evt = new ProjectileDefaultsEvent(projectile);
 

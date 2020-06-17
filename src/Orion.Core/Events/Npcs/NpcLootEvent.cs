@@ -19,12 +19,14 @@ using System;
 using Orion.Core.Items;
 using Orion.Core.Npcs;
 
-namespace Orion.Core.Events.Npcs {
+namespace Orion.Core.Events.Npcs
+{
     /// <summary>
     /// An event that occurs when an NPC is dropping loot. This event can be canceled.
     /// </summary>
     [Event("npc-loot")]
-    public sealed class NpcLootEvent : NpcEvent {
+    public sealed class NpcLootEvent : NpcEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcLootEvent"/> class with the specified
         /// <paramref name="npc"/>.

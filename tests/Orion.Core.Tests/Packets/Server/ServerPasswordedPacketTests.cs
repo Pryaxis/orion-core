@@ -18,19 +18,23 @@
 using System;
 using Xunit;
 
-namespace Orion.Core.Packets.Server {
-    public class ServerPasswordedPacketTests {
+namespace Orion.Core.Packets.Server
+{
+    public class ServerPasswordedPacketTests
+    {
         public static readonly byte[] Bytes = { 3, 0, 37 };
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new ServerPasswordedPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<ServerPasswordedPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

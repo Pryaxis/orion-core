@@ -15,11 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.World {
+namespace Orion.Core.World
+{
     /// <summary>
     /// Specifies a world's difficulty.
     /// </summary>
-    public enum WorldDifficulty : byte {
+    public enum WorldDifficulty : byte
+    {
         /// <summary>
         /// Indicates classic mode.
         /// </summary>

@@ -22,17 +22,21 @@ using Orion.Core.World;
 using Orion.Core.World.Tiles;
 using Xunit;
 
-namespace Orion.Core.Events.World.Tiles {
-    public class BlockPaintEventTests {
+namespace Orion.Core.Events.World.Tiles
+{
+    public class BlockPaintEventTests
+    {
         [Fact]
-        public void Ctor_NullWorld_ThrowsArgumentNullException() {
+        public void Ctor_NullWorld_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new BlockPaintEvent(null!, player, 256, 100, PaintColor.Red));
         }
 
         [Fact]
-        public void Color_Get() {
+        public void Color_Get()
+        {
             var world = Mock.Of<IWorld>();
             var player = Mock.Of<IPlayer>();
             var evt = new BlockPaintEvent(world, player, 256, 100, PaintColor.Red);

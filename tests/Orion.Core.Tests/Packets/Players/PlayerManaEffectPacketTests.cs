@@ -19,13 +19,16 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.Players {
+namespace Orion.Core.Packets.Players
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerManaEffectPacketTests {
+    public class PlayerManaEffectPacketTests
+    {
         public static readonly byte[] Bytes = { 6, 0, 43, 5, 100, 0 };
 
         [Fact]
-        public void PlayerIndex_Set_Get() {
+        public void PlayerIndex_Set_Get()
+        {
             var packet = new PlayerManaEffectPacket();
 
             packet.PlayerIndex = 5;
@@ -34,7 +37,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void Amount_Set_Get() {
+        public void Amount_Set_Get()
+        {
             var packet = new PlayerManaEffectPacket();
 
             packet.Amount = 100;
@@ -43,7 +47,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new PlayerManaEffectPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -53,7 +58,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<PlayerManaEffectPacket>(
                 Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }

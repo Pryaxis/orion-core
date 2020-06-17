@@ -18,11 +18,13 @@
 using System.Runtime.CompilerServices;
 using Orion.Core.Packets;
 
-namespace Orion.Core.Events.Packets {
+namespace Orion.Core.Events.Packets
+{
     /// <summary>
     /// Provides the base class for a packet-related event.
     /// </summary>
-    public abstract unsafe class PacketEvent<TPacket> : Event where TPacket : struct, IPacket {
+    public abstract unsafe class PacketEvent<TPacket> : Event where TPacket : struct, IPacket
+    {
         // Store a pointer to the packet. This is quite unsafe and requires callers to ensure that the `TPacket` is
         // stored on the stack. However, this lets us save on a struct copy.
         private readonly void* _packetPtr;
@@ -32,7 +34,8 @@ namespace Orion.Core.Events.Packets {
         /// <paramref name="packet"/> reference.
         /// </summary>
         /// <param name="packet">The packet reference. <b>This must be on the stack!</b></param>
-        public PacketEvent(ref TPacket packet) {
+        public PacketEvent(ref TPacket packet)
+        {
             _packetPtr = Unsafe.AsPointer(ref packet);
         }
 

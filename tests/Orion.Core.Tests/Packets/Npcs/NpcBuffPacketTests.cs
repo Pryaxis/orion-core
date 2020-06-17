@@ -20,13 +20,16 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.Buffs;
 using Xunit;
 
-namespace Orion.Core.Packets.Npcs {
+namespace Orion.Core.Packets.Npcs
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class NpcBuffPacketTests {
+    public class NpcBuffPacketTests
+    {
         public static readonly byte[] Bytes = { 9, 0, 53, 1, 0, 20, 0, 60, 0 };
 
         [Fact]
-        public void NpcIndex_Set_Get() {
+        public void NpcIndex_Set_Get()
+        {
             var packet = new NpcBuffPacket();
 
             packet.NpcIndex = 1;
@@ -35,7 +38,8 @@ namespace Orion.Core.Packets.Npcs {
         }
 
         [Fact]
-        public void Id_Set_Get() {
+        public void Id_Set_Get()
+        {
             var packet = new NpcBuffPacket();
 
             packet.Id = BuffId.Poisoned;
@@ -44,7 +48,8 @@ namespace Orion.Core.Packets.Npcs {
         }
 
         [Fact]
-        public void Ticks_Set_Get() {
+        public void Ticks_Set_Get()
+        {
             var packet = new NpcBuffPacket();
 
             packet.Ticks = 60;
@@ -53,7 +58,8 @@ namespace Orion.Core.Packets.Npcs {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new NpcBuffPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -64,7 +70,8 @@ namespace Orion.Core.Packets.Npcs {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<NpcBuffPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

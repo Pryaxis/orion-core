@@ -27,10 +27,13 @@ using Orion.Core.Items;
 using Orion.Core.Packets.World.Chests;
 using Serilog;
 
-namespace Orion.Core.World.Chests {
+namespace Orion.Core.World.Chests
+{
     [Binding("orion-chests", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
-    internal sealed class OrionChestService : OrionService, IChestService {
-        public OrionChestService(OrionKernel kernel, ILogger log) : base(kernel, log) {
+    internal sealed class OrionChestService : OrionService, IChestService
+    {
+        public OrionChestService(OrionKernel kernel, ILogger log) : base(kernel, log)
+        {
             // Construct the `Chests` array.
             Chests = new WrappedReadOnlyList<OrionChest, Terraria.Chest?>(
                 Terraria.Main.chest, (chestIndex, terrariaChest) => new OrionChest(chestIndex, terrariaChest));
@@ -40,7 +43,8 @@ namespace Orion.Core.World.Chests {
 
         public IReadOnlyList<IChest> Chests { get; }
 
-        public override void Dispose() {
+        public override void Dispose()
+        {
             Kernel.DeregisterHandlers(this, Log);
         }
 
@@ -52,10 +56,12 @@ namespace Orion.Core.World.Chests {
 
         [EventHandler("orion-chests", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnChestOpenPacket(PacketReceiveEvent<ChestOpenPacket> evt) {
+        private void OnChestOpenPacket(PacketReceiveEvent<ChestOpenPacket> evt)
+        {
             ref var packet = ref evt.Packet;
             var chest = FindChest(packet.X, packet.Y);
-            if (chest is null) {
+            if (chest is null)
+            {
                 return;
             }
 
@@ -64,7 +70,8 @@ namespace Orion.Core.World.Chests {
 
         [EventHandler("orion-chests", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnChestInventoryPacket(PacketReceiveEvent<ChestInventoryPacket> evt) {
+        private void OnChestInventoryPacket(PacketReceiveEvent<ChestInventoryPacket> evt)
+        {
             ref var packet = ref evt.Packet;
             var chest = Chests[packet.ChestIndex];
             var itemStack = new ItemStack(packet.Id, packet.StackSize, packet.Prefix);
@@ -73,9 +80,11 @@ namespace Orion.Core.World.Chests {
         }
 
         // Forwards `evt` as `newEvt`.
-        private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event {
+        private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event
+        {
             Kernel.Raise(newEvt, Log);
-            if (newEvt.IsCanceled) {
+            if (newEvt.IsCanceled)
+            {
                 evt.Cancel(newEvt.CancellationReason);
             }
         }

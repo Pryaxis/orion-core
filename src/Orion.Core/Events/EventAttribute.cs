@@ -18,19 +18,22 @@
 using System;
 using Serilog.Events;
 
-namespace Orion.Core.Events {
+namespace Orion.Core.Events
+{
     /// <summary>
     /// Specifies information about an event.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public sealed class EventAttribute : Attribute {
+    public sealed class EventAttribute : Attribute
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="EventAttribute"/> class with the specified
         /// <paramref name="name"/>.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
-        public EventAttribute(string name) {
+        public EventAttribute(string name)
+        {
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 

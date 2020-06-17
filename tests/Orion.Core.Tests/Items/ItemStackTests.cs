@@ -18,31 +18,37 @@
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Items {
-    public class ItemStackTests {
+namespace Orion.Core.Items
+{
+    public class ItemStackTests
+    {
         [Fact]
-        public void Id_Get() {
+        public void Id_Get()
+        {
             var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
 
             Assert.Equal(ItemId.Sdmg, itemStack.Id);
         }
 
         [Fact]
-        public void StackSize_Get() {
+        public void StackSize_Get()
+        {
             var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
 
             Assert.Equal(1, itemStack.StackSize);
         }
 
         [Fact]
-        public void Prefix_Get() {
+        public void Prefix_Get()
+        {
             var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
 
             Assert.Equal(ItemPrefix.Unreal, itemStack.Prefix);
         }
 
         [Fact]
-        public void Equals_ReturnsTrue() {
+        public void Equals_ReturnsTrue()
+        {
             var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
             var itemStack2 = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
 
@@ -51,7 +57,8 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void Equals_ReturnsFalse() {
+        public void Equals_ReturnsFalse()
+        {
             var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
             var itemStack2 = new ItemStack(ItemId.Sdmg, 1);
             var itemStack3 = new ItemStack(ItemId.Sdmg, 2);
@@ -67,7 +74,8 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void GetHashCode_Equals_AreEqual() {
+        public void GetHashCode_Equals_AreEqual()
+        {
             var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
             var itemStack2 = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
 
@@ -76,7 +84,8 @@ namespace Orion.Core.Items {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Equality_ReturnsTrue() {
+        public void op_Equality_ReturnsTrue()
+        {
             var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
             var itemStack2 = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
 
@@ -85,7 +94,8 @@ namespace Orion.Core.Items {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Equality_ReturnsFalse() {
+        public void op_Equality_ReturnsFalse()
+        {
             var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
             var itemStack2 = new ItemStack(ItemId.Sdmg, 1);
             var itemStack3 = new ItemStack(ItemId.Sdmg, 2);
@@ -98,7 +108,8 @@ namespace Orion.Core.Items {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Inequality_ReturnsTrue() {
+        public void op_Inequality_ReturnsTrue()
+        {
             var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
             var itemStack2 = new ItemStack(ItemId.Sdmg, 1);
             var itemStack3 = new ItemStack(ItemId.Sdmg, 2);
@@ -111,7 +122,8 @@ namespace Orion.Core.Items {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Inequality_ReturnsFalse() {
+        public void op_Inequality_ReturnsFalse()
+        {
             var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
             var itemStack2 = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
 

@@ -26,17 +26,23 @@ using Orion.Core.Packets.World.Tiles;
 using Orion.Core.World.Tiles;
 using Serilog;
 
-namespace Orion.Core.World {
+namespace Orion.Core.World
+{
     [Binding("orion-world", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
-    internal sealed class OrionWorldService : OrionService, IWorldService {
+    internal sealed class OrionWorldService : OrionService, IWorldService
+    {
         private readonly TileCollection _tileCollection;
 
-        public OrionWorldService(OrionKernel kernel, ILogger log) : base(kernel, log) {
+        public OrionWorldService(OrionKernel kernel, ILogger log) : base(kernel, log)
+        {
             // Check if `Terraria.Main.tile` is already a `TileCollection`. This is only useful in tests, where
             // multiple `OrionWorldService` instances may be constructed.
-            if (Terraria.Main.tile is TileCollection tileCollection) {
+            if (Terraria.Main.tile is TileCollection tileCollection)
+            {
                 _tileCollection = tileCollection;
-            } else {
+            }
+            else
+            {
                 _tileCollection = new TileCollection();
                 Terraria.Main.tile = _tileCollection;
             }
@@ -49,7 +55,8 @@ namespace Orion.Core.World {
 
         public IWorld World => _tileCollection.World;
 
-        public override void Dispose() {
+        public override void Dispose()
+        {
             OTAPI.Hooks.World.IO.PostLoadWorld = null;
             OTAPI.Hooks.World.IO.PreSaveWorld = null;
 
@@ -60,12 +67,14 @@ namespace Orion.Core.World {
         // OTAPI hooks
         //
 
-        private void PostLoadWorldHandler(bool loadFromCloud) {
+        private void PostLoadWorldHandler(bool loadFromCloud)
+        {
             var evt = new WorldLoadedEvent(World);
             Kernel.Raise(evt, Log);
         }
 
-        private OTAPI.HookResult PreSaveWorldHandler(ref bool useCloudSaving, ref bool resetTime) {
+        private OTAPI.HookResult PreSaveWorldHandler(ref bool useCloudSaving, ref bool resetTime)
+        {
             var evt = new WorldSaveEvent(World);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
@@ -77,10 +86,12 @@ namespace Orion.Core.World {
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnTileModifyPacket(PacketReceiveEvent<TileModifyPacket> evt) {
+        private void OnTileModifyPacket(PacketReceiveEvent<TileModifyPacket> evt)
+        {
             ref var packet = ref evt.Packet;
 
-            Event Raise<TEvent>(TEvent newEvt) where TEvent : Event {
+            Event Raise<TEvent>(TEvent newEvt) where TEvent : Event
+            {
                 Kernel.Raise(newEvt, Log);
                 return newEvt;
             }
@@ -98,7 +109,8 @@ namespace Orion.Core.World {
             Event RaiseWallPlace(ref TileModifyPacket packet, bool isReplacement) =>
                 Raise(new WallPlaceEvent(World, evt.Sender, packet.X, packet.Y, packet.WallId, isReplacement));
 
-            var newEvt = packet.Modification switch {
+            var newEvt = packet.Modification switch
+            {
                 TileModification.BreakBlock => RaiseBlockBreak(ref packet, false),
                 TileModification.PlaceBlock => RaiseBlockPlace(ref packet, false),
                 TileModification.BreakWall => RaiseWallBreak(ref packet),
@@ -109,14 +121,16 @@ namespace Orion.Core.World {
 
                 _ => null
             };
-            if (newEvt?.IsCanceled == true) {
+            if (newEvt?.IsCanceled == true)
+            {
                 evt.Cancel(newEvt.CancellationReason);
             }
         }
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnTileSquarePacket(PacketReceiveEvent<TileSquarePacket> evt) {
+        private void OnTileSquarePacket(PacketReceiveEvent<TileSquarePacket> evt)
+        {
             ref var packet = ref evt.Packet;
 
             ForwardEvent(evt, new TileSquareEvent(World, evt.Sender, packet.X, packet.Y, packet.Tiles));
@@ -124,7 +138,8 @@ namespace Orion.Core.World {
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnTileLiquidPacket(PacketReceiveEvent<TileLiquidPacket> evt) {
+        private void OnTileLiquidPacket(PacketReceiveEvent<TileLiquidPacket> evt)
+        {
             ref var packet = ref evt.Packet;
 
             ForwardEvent(
@@ -133,7 +148,8 @@ namespace Orion.Core.World {
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnWireActivatePacket(PacketReceiveEvent<WireActivatePacket> evt) {
+        private void OnWireActivatePacket(PacketReceiveEvent<WireActivatePacket> evt)
+        {
             ref var packet = ref evt.Packet;
 
             ForwardEvent(evt, new WiringActivateEvent(World, evt.Sender, packet.X, packet.Y));
@@ -141,7 +157,8 @@ namespace Orion.Core.World {
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnBlockPaintPacket(PacketReceiveEvent<BlockPaintPacket> evt) {
+        private void OnBlockPaintPacket(PacketReceiveEvent<BlockPaintPacket> evt)
+        {
             ref var packet = ref evt.Packet;
 
             ForwardEvent(evt, new BlockPaintEvent(World, evt.Sender, packet.X, packet.Y, packet.Color));
@@ -149,25 +166,30 @@ namespace Orion.Core.World {
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnWallPaintPacket(PacketReceiveEvent<WallPaintPacket> evt) {
+        private void OnWallPaintPacket(PacketReceiveEvent<WallPaintPacket> evt)
+        {
             ref var packet = ref evt.Packet;
 
             ForwardEvent(evt, new WallPaintEvent(World, evt.Sender, packet.X, packet.Y, packet.Color));
         }
 
         // Forwards `evt` as `newEvt`.
-        private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event {
+        private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event
+        {
             Kernel.Raise(newEvt, Log);
-            if (newEvt.IsCanceled) {
+            if (newEvt.IsCanceled)
+            {
                 evt.Cancel(newEvt.CancellationReason);
             }
         }
 
         // This class does not implement `IDisposable` as it is a static replacement.
-        private class TileCollection : OTAPI.Tile.ITileCollection {
+        private class TileCollection : OTAPI.Tile.ITileCollection
+        {
             private IWorld? _world;
 
-            public unsafe OTAPI.Tile.ITile this[int x, int y] {
+            public unsafe OTAPI.Tile.ITile this[int x, int y]
+            {
                 get => new TileAdapter(ref World[x, y]);
 
                 // TODO: optimize this to not generate garbage.
@@ -177,10 +199,13 @@ namespace Orion.Core.World {
             public int Width => Terraria.Main.maxTilesX;
             public int Height => Terraria.Main.maxTilesY;
 
-            public IWorld World {
-                get {
+            public IWorld World
+            {
+                get
+                {
                     // Lazily initialize the world so that a world of minimum size can be created.
-                    if (_world is null) {
+                    if (_world is null)
+                    {
                         _world = new OrionWorld(
                             Terraria.Main.maxTilesX, Terraria.Main.maxTilesY, Terraria.Main.worldName ?? string.Empty);
                     }
@@ -192,49 +217,59 @@ namespace Orion.Core.World {
 
         // An adapter class to make a `Tile` reference compatible with `OTAPI.Tile.ITile`. Unfortunately, this means we
         // generate a lot of garbage, but this is the best we can really do.
-        private sealed unsafe class TileAdapter : OTAPI.Tile.ITile {
+        private sealed unsafe class TileAdapter : OTAPI.Tile.ITile
+        {
             private readonly Tile* _tile;
 
-            public TileAdapter(ref Tile tile) {
+            public TileAdapter(ref Tile tile)
+            {
                 _tile = (Tile*)Unsafe.AsPointer(ref tile);
             }
 
-            public ushort type {
+            public ushort type
+            {
                 get => (ushort)_tile->BlockId;
                 set => _tile->BlockId = (BlockId)value;
             }
 
-            public ushort wall {
+            public ushort wall
+            {
                 get => (ushort)_tile->WallId;
                 set => _tile->WallId = (WallId)value;
             }
 
-            public byte liquid {
+            public byte liquid
+            {
                 get => _tile->LiquidAmount;
                 set => _tile->LiquidAmount = value;
             }
 
-            public short frameX {
+            public short frameX
+            {
                 get => _tile->BlockFrameX;
                 set => _tile->BlockFrameX = value;
             }
 
-            public short frameY {
+            public short frameY
+            {
                 get => _tile->BlockFrameY;
                 set => _tile->BlockFrameY = value;
             }
 
-            public short sTileHeader {
+            public short sTileHeader
+            {
                 get => _tile->_sTileHeader;
                 set => _tile->_sTileHeader = value;
             }
 
-            public byte bTileHeader {
+            public byte bTileHeader
+            {
                 get => _tile->_bTileHeader;
                 set => _tile->_bTileHeader = value;
             }
 
-            public byte bTileHeader3 {
+            public byte bTileHeader3
+            {
                 get => _tile->_bTileHeader3;
                 set => _tile->_bTileHeader3 = value;
             }
@@ -243,9 +278,12 @@ namespace Orion.Core.World {
             [ExcludeFromCodeCoverage]
             public int collisionType => 0;
 
-            public byte bTileHeader2 {
-                [ExcludeFromCodeCoverage] get => 0;
-                [ExcludeFromCodeCoverage] set { }
+            public byte bTileHeader2
+            {
+                [ExcludeFromCodeCoverage]
+                get => 0;
+                [ExcludeFromCodeCoverage]
+                set { }
             }
 
             public byte color() => (byte)_tile->BlockColor;
@@ -273,20 +311,28 @@ namespace Orion.Core.World {
             public void wallColor(byte wallColor) => _tile->WallColor = (PaintColor)wallColor;
             public bool lava() => (_tile->_bTileHeader & 0x20) == 0x20;
 
-            public void lava(bool lava) {
-                if (lava) {
+            public void lava(bool lava)
+            {
+                if (lava)
+                {
                     _tile->_bTileHeader = (byte)((_tile->_bTileHeader & 0x9F) | 0x20);
-                } else {
+                }
+                else
+                {
                     _tile->_bTileHeader &= 223;
                 }
             }
 
             public bool honey() => (_tile->_bTileHeader & 0x40) == 0x40;
 
-            public void honey(bool honey) {
-                if (honey) {
+            public void honey(bool honey)
+            {
+                if (honey)
+                {
                     _tile->_bTileHeader = (byte)((_tile->_bTileHeader & 0x9F) | 0x40);
-                } else {
+                }
+                else
+                {
                     _tile->_bTileHeader &= 191;
                 }
             }
@@ -303,15 +349,20 @@ namespace Orion.Core.World {
             public bool skipLiquid() => _tile->ShouldSkipLiquid;
             public void skipLiquid(bool skipLiquid) => _tile->ShouldSkipLiquid = skipLiquid;
 
-            public void CopyFrom(OTAPI.Tile.ITile from) {
-                if (from is null) {
+            public void CopyFrom(OTAPI.Tile.ITile from)
+            {
+                if (from is null)
+                {
                     ClearEverything();
                     return;
                 }
 
-                if (from is TileAdapter adapter) {
+                if (from is TileAdapter adapter)
+                {
                     Unsafe.CopyBlockUnaligned(_tile, adapter._tile, 13);
-                } else {
+                }
+                else
+                {
                     type = from.type;
                     wall = from.wall;
                     liquid = from.liquid;
@@ -323,60 +374,80 @@ namespace Orion.Core.World {
                 }
             }
 
-            public bool isTheSameAs(OTAPI.Tile.ITile compTile) {
-                if (compTile is null) {
+            public bool isTheSameAs(OTAPI.Tile.ITile compTile)
+            {
+                if (compTile is null)
+                {
                     return false;
                 }
 
-                if (compTile is TileAdapter adapter) {
+                if (compTile is TileAdapter adapter)
+                {
                     const uint bottomMask = 0b_00000000_11111111_11111111_11111111;
                     var mask = _tile->LiquidAmount == 0 ? bottomMask : bottomMask | ~Tile.LiquidMask;
-                    if ((_tile->_header & mask) != (adapter._tile->_header & mask)) {
+                    if ((_tile->_header & mask) != (adapter._tile->_header & mask))
+                    {
                         return false;
                     }
 
-                    if (_tile->IsBlockActive) {
-                        if (_tile->BlockId != adapter._tile->BlockId) {
+                    if (_tile->IsBlockActive)
+                    {
+                        if (_tile->BlockId != adapter._tile->BlockId)
+                        {
                             return false;
                         }
 
-                        if (_tile->BlockId.HasFrames() && _tile->_blockFrames != adapter._tile->_blockFrames) {
+                        if (_tile->BlockId.HasFrames() && _tile->_blockFrames != adapter._tile->_blockFrames)
+                        {
                             return false;
                         }
                     }
 
-                    if (_tile->WallId != adapter._tile->WallId || _tile->LiquidAmount != adapter._tile->LiquidAmount) {
+                    if (_tile->WallId != adapter._tile->WallId || _tile->LiquidAmount != adapter._tile->LiquidAmount)
+                    {
                         return false;
                     }
-                } else {
-                    if (_tile->_sTileHeader != compTile.sTileHeader) {
+                }
+                else
+                {
+                    if (_tile->_sTileHeader != compTile.sTileHeader)
+                    {
                         return false;
                     }
 
-                    if (active()) {
-                        if (_tile->BlockId != (BlockId)compTile.type) {
+                    if (active())
+                    {
+                        if (_tile->BlockId != (BlockId)compTile.type)
+                        {
                             return false;
                         }
 
                         if (_tile->BlockId.HasFrames() &&
-                                (_tile->BlockFrameX != compTile.frameX || _tile->BlockFrameY != compTile.frameY)) {
+                                (_tile->BlockFrameX != compTile.frameX || _tile->BlockFrameY != compTile.frameY))
+                        {
                             return false;
                         }
                     }
 
-                    if (_tile->WallId != (WallId)compTile.wall || _tile->LiquidAmount != compTile.liquid) {
+                    if (_tile->WallId != (WallId)compTile.wall || _tile->LiquidAmount != compTile.liquid)
+                    {
                         return false;
                     }
 
-                    if (_tile->LiquidAmount == 0) {
-                        if (_tile->WallColor != (PaintColor)compTile.wallColor()) {
+                    if (_tile->LiquidAmount == 0)
+                    {
+                        if (_tile->WallColor != (PaintColor)compTile.wallColor())
+                        {
                             return false;
                         }
 
-                        if (_tile->HasYellowWire != compTile.wire4()) {
+                        if (_tile->HasYellowWire != compTile.wire4())
+                        {
                             return false;
                         }
-                    } else if (_tile->_bTileHeader != compTile.bTileHeader) {
+                    }
+                    else if (_tile->_bTileHeader != compTile.bTileHeader)
+                    {
                         return false;
                     }
                 }
@@ -387,54 +458,65 @@ namespace Orion.Core.World {
             public void ClearEverything() => Unsafe.InitBlockUnaligned(_tile, 0, 13);
             public void ClearMetadata() => Unsafe.InitBlockUnaligned(((byte*)_tile) + 4, 0, 9);
 
-            public void ClearTile() {
+            public void ClearTile()
+            {
                 var mask = Tile.SlopeMask | Tile.IsBlockHalvedMask | Tile.IsBlockActiveMask | Tile.IsBlockActuatedMask;
                 _tile->_header &= ~mask;
             }
 
-            public void Clear(Terraria.DataStructures.TileDataType types) {
-                if ((types & Terraria.DataStructures.TileDataType.Tile) != 0) {
+            public void Clear(Terraria.DataStructures.TileDataType types)
+            {
+                if ((types & Terraria.DataStructures.TileDataType.Tile) != 0)
+                {
                     _tile->BlockId = BlockId.Dirt;
                     _tile->IsBlockActive = false;
                     _tile->_blockFrames = 0;
                 }
 
-                if ((types & Terraria.DataStructures.TileDataType.TilePaint) != 0) {
+                if ((types & Terraria.DataStructures.TileDataType.TilePaint) != 0)
+                {
                     _tile->BlockColor = PaintColor.None;
                 }
 
-                if ((types & Terraria.DataStructures.TileDataType.Wall) != 0) {
+                if ((types & Terraria.DataStructures.TileDataType.Wall) != 0)
+                {
                     _tile->WallId = WallId.None;
                 }
 
-                if ((types & Terraria.DataStructures.TileDataType.WallPaint) != 0) {
+                if ((types & Terraria.DataStructures.TileDataType.WallPaint) != 0)
+                {
                     _tile->WallColor = PaintColor.None;
                 }
 
-                if ((types & Terraria.DataStructures.TileDataType.Liquid) != 0) {
+                if ((types & Terraria.DataStructures.TileDataType.Liquid) != 0)
+                {
                     var mask = Tile.LiquidMask | Tile.IsCheckingLiquidMask;
                     _tile->LiquidAmount = 0;
                     _tile->_header &= ~mask;
                 }
 
-                if ((types & Terraria.DataStructures.TileDataType.Wiring) != 0) {
+                if ((types & Terraria.DataStructures.TileDataType.Wiring) != 0)
+                {
                     var mask =
                         Tile.HasRedWireMask | Tile.HasBlueWireMask | Tile.HasGreenWireMask | Tile.HasYellowWireMask;
                     _tile->_header &= ~mask;
                 }
 
-                if ((types & Terraria.DataStructures.TileDataType.Actuator) != 0) {
+                if ((types & Terraria.DataStructures.TileDataType.Actuator) != 0)
+                {
                     var mask = Tile.HasActuatorMask | Tile.IsBlockActuatedMask;
                     _tile->_header &= ~mask;
                 }
 
-                if ((types & Terraria.DataStructures.TileDataType.Slope) != 0) {
+                if ((types & Terraria.DataStructures.TileDataType.Slope) != 0)
+                {
                     var mask = Tile.SlopeMask | Tile.IsBlockHalvedMask;
                     _tile->_header &= ~mask;
                 }
             }
 
-            public void ResetToType(ushort type) {
+            public void ResetToType(ushort type)
+            {
                 ClearMetadata();
                 this.type = type;
                 _tile->IsBlockActive = true;
@@ -448,8 +530,10 @@ namespace Orion.Core.World {
             public bool HasSameSlope(OTAPI.Tile.ITile tile) =>
                 (_tile->_sTileHeader & 29696) == (tile.sTileHeader & 29696);
 
-            public int blockType() {
-                if (halfBrick()) {
+            public int blockType()
+            {
+                if (halfBrick())
+                {
                     return 1;
                 }
 
@@ -474,7 +558,8 @@ namespace Orion.Core.World {
             [ExcludeFromCodeCoverage] public int wallFrameY() => 0;
             [ExcludeFromCodeCoverage] public void wallFrameY(int wallFrameY) { }
 
-            private bool IsSlope(Slope slope1, Slope slope2) {
+            private bool IsSlope(Slope slope1, Slope slope2)
+            {
                 var slope = (Slope)this.slope();
                 return slope == slope1 || slope == slope2;
             }

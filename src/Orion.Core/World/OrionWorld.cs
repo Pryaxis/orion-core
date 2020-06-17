@@ -24,12 +24,15 @@ using Destructurama.Attributed;
 using Orion.Core.Entities;
 using Orion.Core.World.Tiles;
 
-namespace Orion.Core.World {
+namespace Orion.Core.World
+{
     [LogAsScalar]
-    internal sealed unsafe class OrionWorld : AnnotatableObject, IDisposable, IWorld {
+    internal sealed unsafe class OrionWorld : AnnotatableObject, IDisposable, IWorld
+    {
         private readonly unsafe Tile* _tiles;
 
-        public OrionWorld(int width, int height, string name) {
+        public OrionWorld(int width, int height, string name)
+        {
             Debug.Assert(width > 0);
             Debug.Assert(height > 0);
             Debug.Assert(name != null);
@@ -43,13 +46,16 @@ namespace Orion.Core.World {
         }
 
         [ExcludeFromCodeCoverage]
-        ~OrionWorld() {
+        ~OrionWorld()
+        {
             Marshal.FreeHGlobal((IntPtr)_tiles);
         }
 
-        public ref Tile this[int x, int y] {
+        public ref Tile this[int x, int y]
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get {
+            get
+            {
                 Debug.Assert(x >= 0 && x < Width);
                 Debug.Assert(y >= 0 && y < Height);
 
@@ -62,12 +68,14 @@ namespace Orion.Core.World {
 
         public string Name { get; }
 
-        public WorldDifficulty Difficulty {
+        public WorldDifficulty Difficulty
+        {
             get => (WorldDifficulty)Terraria.Main.GameMode;
             set => Terraria.Main.GameMode = (int)value;
         }
 
-        public void Dispose() {
+        public void Dispose()
+        {
             Marshal.FreeHGlobal((IntPtr)_tiles);
             GC.SuppressFinalize(this);
         }

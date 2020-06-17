@@ -19,9 +19,11 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.World.Chests {
+namespace Orion.Core.Packets.World.Chests
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ChestNamePacketTests {
+    public class ChestNamePacketTests
+    {
         public static readonly byte[] ServerBytes = { 9, 0, 69, 5, 0, 0, 1, 100, 0 };
 
         public static readonly byte[] ClientBytes = {
@@ -29,7 +31,8 @@ namespace Orion.Core.Packets.World.Chests {
         };
 
         [Fact]
-        public void ChestIndex_Set_Get() {
+        public void ChestIndex_Set_Get()
+        {
             var packet = new ChestNamePacket();
 
             packet.ChestIndex = 5;
@@ -38,7 +41,8 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         [Fact]
-        public void X_Set_Get() {
+        public void X_Set_Get()
+        {
             var packet = new ChestNamePacket();
 
             packet.X = 256;
@@ -47,7 +51,8 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         [Fact]
-        public void Y_Set_Get() {
+        public void Y_Set_Get()
+        {
             var packet = new ChestNamePacket();
 
             packet.Y = 100;
@@ -56,21 +61,24 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         [Fact]
-        public void Name_GetNullValue() {
+        public void Name_GetNullValue()
+        {
             var packet = new ChestNamePacket();
 
             Assert.Equal(string.Empty, packet.Name);
         }
 
         [Fact]
-        public void Name_SetNullValue_ThrowsArgumentNullException() {
+        public void Name_SetNullValue_ThrowsArgumentNullException()
+        {
             var packet = new ChestNamePacket();
 
             Assert.Throws<ArgumentNullException>(() => packet.Name = null!);
         }
 
         [Fact]
-        public void Name_Set_Get() {
+        public void Name_Set_Get()
+        {
             var packet = new ChestNamePacket();
 
             packet.Name = "Terraria";
@@ -79,7 +87,8 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         [Fact]
-        public void Read_AsServer() {
+        public void Read_AsServer()
+        {
             var packet = new ChestNamePacket();
             var span = ServerBytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -90,7 +99,8 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         [Fact]
-        public void Read_AsClient() {
+        public void Read_AsClient()
+        {
             var packet = new ChestNamePacket();
             var span = ClientBytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Client));
@@ -102,12 +112,14 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         [Fact]
-        public void RoundTrip_AsServer() {
+        public void RoundTrip_AsServer()
+        {
             TestUtils.RoundTripPacket<ChestNamePacket>(ServerBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
 
         [Fact]
-        public void RoundTrip_AsClient() {
+        public void RoundTrip_AsClient()
+        {
             TestUtils.RoundTripPacket<ChestNamePacket>(ClientBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Client);
         }
     }

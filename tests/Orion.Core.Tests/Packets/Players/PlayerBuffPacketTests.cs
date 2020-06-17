@@ -20,13 +20,16 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.Buffs;
 using Xunit;
 
-namespace Orion.Core.Packets.Players {
+namespace Orion.Core.Packets.Players
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerBuffPacketTests {
+    public class PlayerBuffPacketTests
+    {
         public static readonly byte[] Bytes = { 10, 0, 55, 5, 1, 0, 60, 0, 0, 0 };
 
         [Fact]
-        public void PlayerIndex_Set_Get() {
+        public void PlayerIndex_Set_Get()
+        {
             var packet = new PlayerBuffPacket();
 
             packet.PlayerIndex = 5;
@@ -35,7 +38,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void Id_Set_Get() {
+        public void Id_Set_Get()
+        {
             var packet = new PlayerBuffPacket();
 
             packet.Id = BuffId.ObsidianSkin;
@@ -44,7 +48,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void Ticks_Set_Get() {
+        public void Ticks_Set_Get()
+        {
             var packet = new PlayerBuffPacket();
 
             packet.Ticks = 60;
@@ -53,7 +58,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new PlayerBuffPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -64,7 +70,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<PlayerBuffPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

@@ -19,11 +19,14 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Items {
+namespace Orion.Core.Items
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class OrionItemTests {
+    public class OrionItemTests
+    {
         [Fact]
-        public void Name_Get() {
+        public void Name_Get()
+        {
             var terrariaItem = new Terraria.Item { _nameOverride = "test" };
             var item = new OrionItem(terrariaItem);
 
@@ -31,7 +34,8 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void Name_SetNullValue_ThrowsArgumentNullException() {
+        public void Name_SetNullValue_ThrowsArgumentNullException()
+        {
             var terrariaItem = new Terraria.Item();
             var item = new OrionItem(terrariaItem);
 
@@ -39,7 +43,8 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void Name_Set() {
+        public void Name_Set()
+        {
             var terrariaItem = new Terraria.Item();
             var item = new OrionItem(terrariaItem);
 
@@ -49,7 +54,8 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void Type_Get() {
+        public void Type_Get()
+        {
             var terrariaItem = new Terraria.Item { type = (int)ItemId.Sdmg };
             var item = new OrionItem(terrariaItem);
 
@@ -57,7 +63,8 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void StackSize_Get() {
+        public void StackSize_Get()
+        {
             var terrariaItem = new Terraria.Item { type = (int)ItemId.DirtBlock, stack = 123 };
             var item = new OrionItem(terrariaItem);
 
@@ -65,7 +72,8 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void StackSize_Set() {
+        public void StackSize_Set()
+        {
             var terrariaItem = new Terraria.Item { type = (int)ItemId.DirtBlock };
             var item = new OrionItem(terrariaItem);
 
@@ -75,7 +83,8 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void Prefix_Get() {
+        public void Prefix_Get()
+        {
             var terrariaItem = new Terraria.Item { type = (int)ItemId.Sdmg, prefix = (int)ItemPrefix.Unreal };
             var item = new OrionItem(terrariaItem);
 
@@ -83,7 +92,8 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void SetId() {
+        public void SetId()
+        {
             var terrariaItem = new Terraria.Item();
             var item = new OrionItem(terrariaItem);
 
@@ -93,7 +103,8 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void SetPrefix() {
+        public void SetPrefix()
+        {
             var terrariaItem = new Terraria.Item();
             terrariaItem.SetDefaults((int)ItemId.Sdmg);
             var item = new OrionItem(terrariaItem);

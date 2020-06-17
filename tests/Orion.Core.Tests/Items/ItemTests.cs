@@ -19,15 +19,19 @@ using System;
 using Moq;
 using Xunit;
 
-namespace Orion.Core.Items {
-    public class ItemTests {
+namespace Orion.Core.Items
+{
+    public class ItemTests
+    {
         [Fact]
-        public void AsItemStack_NullItem_ThrowsArgumentNullException() {
+        public void AsItemStack_NullItem_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => ItemExtensions.AsItemStack(null!));
         }
 
         [Fact]
-        public void AsItemStack() {
+        public void AsItemStack()
+        {
             var item = Mock.Of<IItem>(i => i.Id == ItemId.Sdmg && i.StackSize == 1 && i.Prefix == ItemPrefix.Unreal);
 
             Assert.Equal(new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal), item.AsItemStack());

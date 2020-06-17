@@ -18,14 +18,16 @@
 using System;
 using Orion.Core.World.TileEntities;
 
-namespace Orion.Core.World.Signs {
+namespace Orion.Core.World.Signs
+{
     /// <summary>
     /// Represents a Terraria sign.
     /// </summary>
     /// <remarks>
     /// Implementations are required to be thread-safe: i.e., each operation on the sign should be atomic.
     /// </remarks>
-    public interface ISign : ITileEntity {
+    public interface ISign : ITileEntity
+    {
         /// <summary>
         /// Gets or sets the sign's text.
         /// </summary>

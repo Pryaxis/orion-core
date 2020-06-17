@@ -20,12 +20,14 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Orion.Core.World.Tiles;
 
-namespace Orion.Core.Packets.World.Tiles {
+namespace Orion.Core.Packets.World.Tiles
+{
     /// <summary>
     /// A packet sent to set a square of tiles.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct TileSquarePacket : IPacket {
+    public struct TileSquarePacket : IPacket
+    {
         // The shifts for the tile header.
         private const int SlopeShift = 12;
 
@@ -68,15 +70,19 @@ namespace Orion.Core.Packets.World.Tiles {
         /// <value>The square of tiles.</value>
         /// <exception cref="ArgumentException"><paramref name="value"/> is not a square.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public ITileSlice Tiles {
+        public ITileSlice Tiles
+        {
             get => _tiles ?? _emptyTiles;
 
-            set {
-                if (value is null) {
+            set
+            {
+                if (value is null)
+                {
                     throw new ArgumentNullException(nameof(value));
                 }
 
-                if (value.Width != value.Height) {
+                if (value.Width != value.Height)
+                {
                     // Not localized because this string is developer-facing.
                     throw new ArgumentException("Value is not a square", nameof(value));
                 }
@@ -88,10 +94,12 @@ namespace Orion.Core.Packets.World.Tiles {
         PacketId IPacket.Id => PacketId.TileSquare;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
             var index = 2;
             var size = Unsafe.ReadUnaligned<short>(ref span[0]);
-            if (size < 0) {
+            if (size < 0)
+            {
                 _data = span[index++];
                 size &= short.MaxValue;
             }
@@ -100,8 +108,10 @@ namespace Orion.Core.Packets.World.Tiles {
             index += 4;
 
             _tiles = new TileSlice(size, size);
-            for (var i = 0; i < size; ++i) {
-                for (var j = 0; j < size; ++j) {
+            for (var i = 0; i < size; ++i)
+            {
+                for (var j = 0; j < size; ++j)
+                {
                     index += ReadTile(span[index..], ref _tiles[i, j]);
                 }
             }
@@ -109,12 +119,14 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context)
+        {
             var tiles = Tiles;
 
             var index = 2;
             var size = (short)tiles.Width;
-            if (_data > 0) {
+            if (_data > 0)
+            {
                 span[index++] = _data;
                 size |= ~short.MaxValue;
             }
@@ -123,15 +135,18 @@ namespace Orion.Core.Packets.World.Tiles {
             Unsafe.CopyBlockUnaligned(ref span[index], ref this.AsRefByte(1), 4);
             index += 4;
 
-            for (var i = 0; i < tiles.Width; ++i) {
-                for (var j = 0; j < tiles.Height; ++j) {
+            for (var i = 0; i < tiles.Width; ++i)
+            {
+                for (var j = 0; j < tiles.Height; ++j)
+                {
                     index += WriteTile(span[index..], ref tiles[i, j]);
                 }
             }
             return index;
         }
 
-        private int ReadTile(Span<byte> span, ref Tile tile) {
+        private int ReadTile(Span<byte> span, ref Tile tile)
+        {
             var index = 2;
             var header = Unsafe.ReadUnaligned<ushort>(ref span[0]);
 
@@ -148,19 +163,23 @@ namespace Orion.Core.Packets.World.Tiles {
             var hasWallColor          /* */ = (header & HasWallColorMask) != 0;
             tile.HasYellowWire        /* */ = (header & HasYellowWireMask) != 0;
 
-            if (hasBlockColor) {
+            if (hasBlockColor)
+            {
                 tile.BlockColor = (PaintColor)span[index++];
             }
 
-            if (hasWallColor) {
+            if (hasWallColor)
+            {
                 tile.WallColor = (PaintColor)span[index++];
             }
 
-            if (tile.IsBlockActive) {
+            if (tile.IsBlockActive)
+            {
                 tile.BlockId = Unsafe.ReadUnaligned<BlockId>(ref span[index]);
                 index += 2;
 
-                if (tile.BlockId.HasFrames()) {
+                if (tile.BlockId.HasFrames())
+                {
                     Unsafe.CopyBlockUnaligned(ref tile.AsRefByte(5), ref span[index], 4);
                     index += 4;
                 }
@@ -168,12 +187,14 @@ namespace Orion.Core.Packets.World.Tiles {
                 tile.Slope = (Slope)((header & SlopeMask) >> SlopeShift);
             }
 
-            if (hasWall) {
+            if (hasWall)
+            {
                 tile.WallId = Unsafe.ReadUnaligned<WallId>(ref span[index]);
                 index += 2;
             }
 
-            if (hasLiquid) {
+            if (hasLiquid)
+            {
                 tile.LiquidAmount = span[index++];
                 tile.Liquid = (Liquid)span[index++];
             }
@@ -181,7 +202,8 @@ namespace Orion.Core.Packets.World.Tiles {
             return index;
         }
 
-        private int WriteTile(Span<byte> span, ref Tile tile) {
+        private int WriteTile(Span<byte> span, ref Tile tile)
+        {
             var hasWall = tile.WallId != WallId.None;
             var hasLiquid = tile.LiquidAmount != 0;
             var hasBlockColor = tile.BlockColor != PaintColor.None;
@@ -203,19 +225,23 @@ namespace Orion.Core.Packets.World.Tiles {
             if (hasWallColor)         /* */ header |= HasWallColorMask;
             if (tile.HasYellowWire)   /* */ header |= HasYellowWireMask;
 
-            if (hasBlockColor) {
+            if (hasBlockColor)
+            {
                 span[index++] = (byte)tile.BlockColor;
             }
 
-            if (hasWallColor) {
+            if (hasWallColor)
+            {
                 span[index++] = (byte)tile.WallColor;
             }
 
-            if (tile.IsBlockActive) {
+            if (tile.IsBlockActive)
+            {
                 Unsafe.WriteUnaligned(ref span[index], tile.BlockId);
                 index += 2;
 
-                if (tile.BlockId.HasFrames()) {
+                if (tile.BlockId.HasFrames())
+                {
                     Unsafe.CopyBlockUnaligned(ref span[index], ref tile.AsRefByte(5), 4);
                     index += 4;
                 }
@@ -223,12 +249,14 @@ namespace Orion.Core.Packets.World.Tiles {
                 header |= (ushort)((int)(tile.Slope) << SlopeShift);
             }
 
-            if (hasWall) {
+            if (hasWall)
+            {
                 Unsafe.WriteUnaligned(ref span[index], tile.WallId);
                 index += 2;
             }
 
-            if (hasLiquid) {
+            if (hasLiquid)
+            {
                 span[index++] = tile.LiquidAmount;
                 span[index++] = (byte)tile.Liquid;
             }

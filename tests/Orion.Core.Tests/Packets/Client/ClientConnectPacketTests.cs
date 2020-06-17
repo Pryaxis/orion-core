@@ -19,27 +19,32 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.Client {
+namespace Orion.Core.Packets.Client
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ClientConnectPacketTests {
+    public class ClientConnectPacketTests
+    {
         public static readonly byte[] Bytes = { 15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52 };
 
         [Fact]
-        public void Version_Get_Default() {
+        public void Version_Get_Default()
+        {
             var packet = new ClientConnectPacket();
 
             Assert.Equal(string.Empty, packet.Version);
         }
 
         [Fact]
-        public void Version_SetNullValue_ThrowsArgumentNullException() {
+        public void Version_SetNullValue_ThrowsArgumentNullException()
+        {
             var packet = new ClientConnectPacket();
 
             Assert.Throws<ArgumentNullException>(() => packet.Version = null!);
         }
 
         [Fact]
-        public void Version_Set_Get() {
+        public void Version_Set_Get()
+        {
             var packet = new ClientConnectPacket();
 
             packet.Version = "Terraria194";
@@ -48,7 +53,8 @@ namespace Orion.Core.Packets.Client {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new ClientConnectPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -57,7 +63,8 @@ namespace Orion.Core.Packets.Client {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<ClientConnectPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

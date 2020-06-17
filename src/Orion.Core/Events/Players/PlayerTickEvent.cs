@@ -19,12 +19,14 @@ using System;
 using Orion.Core.Players;
 using Serilog.Events;
 
-namespace Orion.Core.Events.Players {
+namespace Orion.Core.Events.Players
+{
     /// <summary>
     /// An event that occurs when a player tick (update) occurs. This event can be canceled.
     /// </summary>
     [Event("player-tick", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class PlayerTickEvent : PlayerEvent {
+    public sealed class PlayerTickEvent : PlayerEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerTickEvent"/> class with the specified
         /// <paramref name="player"/>.

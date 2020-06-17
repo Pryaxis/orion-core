@@ -19,11 +19,13 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Orion.Core.DataStructures;
 
-namespace Orion.Core.Players {
+namespace Orion.Core.Players
+{
     /// <summary>
     /// Specifies a player's team.
     /// </summary>
-    public enum PlayerTeam : byte {
+    public enum PlayerTeam : byte
+    {
         /// <summary>
         /// Indicates no team.
         /// </summary>
@@ -58,8 +60,10 @@ namespace Orion.Core.Players {
     /// <summary>
     /// Provides extensions for the <see cref="PlayerTeam"/> enumeration.
     /// </summary>
-    public static class PlayerTeamExtensions {
-        private static readonly IDictionary<PlayerTeam, Color3> _colors = new Dictionary<PlayerTeam, Color3> {
+    public static class PlayerTeamExtensions
+    {
+        private static readonly IDictionary<PlayerTeam, Color3> _colors = new Dictionary<PlayerTeam, Color3>
+        {
             [PlayerTeam.Red] = new Color3(0xda, 0x3b, 0x3b),
             [PlayerTeam.Green] = new Color3(0x3b, 0xda, 0x55),
             [PlayerTeam.Blue] = new Color3(0x3b, 0x95, 0xda),

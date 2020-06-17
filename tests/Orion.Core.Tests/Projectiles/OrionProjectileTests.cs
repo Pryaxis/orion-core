@@ -19,13 +19,16 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Projectiles {
+namespace Orion.Core.Projectiles
+{
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class OrionProjectileTests {
+    public class OrionProjectileTests
+    {
         [Fact]
-        public void Name_Get() {
+        public void Name_Get()
+        {
             var terrariaProjectile = new Terraria.Projectile { type = (int)ProjectileId.WoodenArrow };
             var projectile = new OrionProjectile(terrariaProjectile);
 
@@ -33,7 +36,8 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void Name_SetNullValue_ThrowsArgumentNullException() {
+        public void Name_SetNullValue_ThrowsArgumentNullException()
+        {
             var terrariaProjectile = new Terraria.Projectile();
             var projectile = new OrionProjectile(terrariaProjectile);
 
@@ -41,7 +45,8 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void Name_Set_Get() {
+        public void Name_Set_Get()
+        {
             var terrariaProjectile = new Terraria.Projectile();
             var projectile = new OrionProjectile(terrariaProjectile);
 
@@ -51,7 +56,8 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void Id_Get() {
+        public void Id_Get()
+        {
             var terrariaProjectile = new Terraria.Projectile { type = (int)ProjectileId.CrystalBullet };
             var projectile = new OrionProjectile(terrariaProjectile);
 
@@ -59,7 +65,8 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void SetId() {
+        public void SetId()
+        {
             var terrariaProjectile = new Terraria.Projectile();
             var projectile = new OrionProjectile(terrariaProjectile);
 

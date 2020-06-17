@@ -20,12 +20,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 
-namespace Orion.Core.DataStructures {
+namespace Orion.Core.DataStructures
+{
     /// <summary>
     /// Represents a three byte component color.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public readonly struct Color3 : IEquatable<Color3> {
+    public readonly struct Color3 : IEquatable<Color3>
+    {
         /// <summary>
         /// Gets the color black.
         /// </summary>
@@ -62,7 +64,8 @@ namespace Orion.Core.DataStructures {
         /// <param name="r">The red component.</param>
         /// <param name="g">The green component.</param>
         /// <param name="b">The blue component.</param>
-        public Color3(byte r, byte g, byte b) {
+        public Color3(byte r, byte g, byte b)
+        {
             R = r;
             G = g;
             B = b;

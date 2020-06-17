@@ -17,12 +17,14 @@
 
 using System;
 
-namespace Orion.Core.Framework {
+namespace Orion.Core.Framework
+{
     /// <summary>
     /// Specifies information about a service binding.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public sealed class BindingAttribute : Attribute {
+    public sealed class BindingAttribute : Attribute
+    {
         private string _author = "Anonymous";
 
         /// <summary>
@@ -31,7 +33,8 @@ namespace Orion.Core.Framework {
         /// </summary>
         /// <param name="name">The binding name.</param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
-        public BindingAttribute(string name) {
+        public BindingAttribute(string name)
+        {
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
@@ -47,7 +50,8 @@ namespace Orion.Core.Framework {
         /// </summary>
         /// <value>The binding's author. The default value is <c>Anonymous</c>.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string Author {
+        public string Author
+        {
             get => _author;
             set => _author = value ?? throw new ArgumentNullException(nameof(value));
         }

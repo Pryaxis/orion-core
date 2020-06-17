@@ -17,11 +17,13 @@
 
 using System;
 
-namespace Orion.Core.Packets.Players {
+namespace Orion.Core.Packets.Players
+{
     /// <summary>
     /// A packet sent from the client to the server to join the server.
     /// </summary>
-    public struct PlayerJoinPacket : IPacket {
+    public struct PlayerJoinPacket : IPacket
+    {
         PacketId IPacket.Id => PacketId.PlayerJoin;
 
         /// <inheritdoc/>

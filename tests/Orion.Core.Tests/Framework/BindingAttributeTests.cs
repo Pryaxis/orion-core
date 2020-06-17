@@ -19,30 +19,36 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Framework {
+namespace Orion.Core.Framework
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class BindingAttributeTests {
+    public class BindingAttributeTests
+    {
         [Fact]
-        public void Ctor_NullName_ThrowsArgumentNullException() {
+        public void Ctor_NullName_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new BindingAttribute(null!));
         }
 
         [Fact]
-        public void Name_Get() {
+        public void Name_Get()
+        {
             var attribute = new BindingAttribute("test");
 
             Assert.Equal("test", attribute.Name);
         }
 
         [Fact]
-        public void Author_SetNullValue_ThrowsArgumentNullException() {
+        public void Author_SetNullValue_ThrowsArgumentNullException()
+        {
             var attribute = new BindingAttribute("test");
 
             Assert.Throws<ArgumentNullException>(() => attribute.Author = null!);
         }
 
         [Fact]
-        public void Author_Set_Get() {
+        public void Author_Set_Get()
+        {
             var attribute = new BindingAttribute("test");
 
             attribute.Author = "test";
@@ -51,7 +57,8 @@ namespace Orion.Core.Framework {
         }
 
         [Fact]
-        public void Priority_Set_Get() {
+        public void Priority_Set_Get()
+        {
             var attribute = new BindingAttribute("test");
 
             attribute.Priority = BindingPriority.High;

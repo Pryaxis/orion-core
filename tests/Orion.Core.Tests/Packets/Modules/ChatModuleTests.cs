@@ -20,9 +20,11 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.DataStructures;
 using Xunit;
 
-namespace Orion.Core.Packets.Modules {
+namespace Orion.Core.Packets.Modules
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ChatModuleTests {
+    public class ChatModuleTests
+    {
         public static readonly byte[] ServerBytes = {
             23, 0, 82, 1, 0, 3, 83, 97, 121, 13, 47, 99, 111, 109, 109, 97, 110, 100, 32, 116, 101, 115, 116
         };
@@ -30,21 +32,24 @@ namespace Orion.Core.Packets.Modules {
         public static readonly byte[] ClientBytes = { 15, 0, 82, 1, 0, 1, 0, 4, 116, 101, 115, 116, 255, 255, 255 };
 
         [Fact]
-        public void ClientCommand_Get_Default() {
+        public void ClientCommand_Get_Default()
+        {
             var module = new ChatModule();
 
             Assert.Equal(string.Empty, module.ClientCommand);
         }
 
         [Fact]
-        public void ClientCommand_SetNullValue_ThrowsArgumentNullException() {
+        public void ClientCommand_SetNullValue_ThrowsArgumentNullException()
+        {
             var module = new ChatModule();
 
             Assert.Throws<ArgumentNullException>(() => module.ClientCommand = null!);
         }
 
         [Fact]
-        public void ClientCommand_Set_Get() {
+        public void ClientCommand_Set_Get()
+        {
             var module = new ChatModule();
 
             module.ClientCommand = "Say";
@@ -53,21 +58,24 @@ namespace Orion.Core.Packets.Modules {
         }
 
         [Fact]
-        public void ClientMessage_Get_Default() {
+        public void ClientMessage_Get_Default()
+        {
             var module = new ChatModule();
 
             Assert.Equal(string.Empty, module.ClientMessage);
         }
 
         [Fact]
-        public void ClientMessage_SetNullValue_ThrowsArgumentNullException() {
+        public void ClientMessage_SetNullValue_ThrowsArgumentNullException()
+        {
             var module = new ChatModule();
 
             Assert.Throws<ArgumentNullException>(() => module.ClientMessage = null!);
         }
 
         [Fact]
-        public void ClientMessage_Set_Get() {
+        public void ClientMessage_Set_Get()
+        {
             var module = new ChatModule();
 
             module.ClientMessage = "/command test";
@@ -76,7 +84,8 @@ namespace Orion.Core.Packets.Modules {
         }
 
         [Fact]
-        public void ServerAuthorIndex_Set_Get() {
+        public void ServerAuthorIndex_Set_Get()
+        {
             var module = new ChatModule();
 
             module.ServerAuthorIndex = 1;
@@ -85,21 +94,24 @@ namespace Orion.Core.Packets.Modules {
         }
 
         [Fact]
-        public void ServerMessage_SetNullValue_ThrowsArgumentNullException() {
+        public void ServerMessage_SetNullValue_ThrowsArgumentNullException()
+        {
             var module = new ChatModule();
 
             Assert.Throws<ArgumentNullException>(() => module.ServerMessage = null!);
         }
 
         [Fact]
-        public void ServerMessage_Get_Default() {
+        public void ServerMessage_Get_Default()
+        {
             var module = new ChatModule();
 
             Assert.Equal(NetworkText.Empty, module.ServerMessage);
         }
 
         [Fact]
-        public void ServerMessage_Set_Get() {
+        public void ServerMessage_Set_Get()
+        {
             var module = new ChatModule();
 
             module.ServerMessage = "test";
@@ -108,7 +120,8 @@ namespace Orion.Core.Packets.Modules {
         }
 
         [Fact]
-        public void ServerColor_Set_Get() {
+        public void ServerColor_Set_Get()
+        {
             var module = new ChatModule();
 
             module.ServerColor = Color3.White;
@@ -117,7 +130,8 @@ namespace Orion.Core.Packets.Modules {
         }
 
         [Fact]
-        public unsafe void Read_AsServer() {
+        public unsafe void Read_AsServer()
+        {
             var module = new ChatModule();
             var span = ServerBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
             Assert.Equal(span.Length, module.Read(span, PacketContext.Server));
@@ -127,7 +141,8 @@ namespace Orion.Core.Packets.Modules {
         }
 
         [Fact]
-        public unsafe void Read_AsClient() {
+        public unsafe void Read_AsClient()
+        {
             var module = new ChatModule();
             var span = ClientBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
             Assert.Equal(span.Length, module.Read(span, PacketContext.Client));
@@ -138,13 +153,15 @@ namespace Orion.Core.Packets.Modules {
         }
 
         [Fact]
-        public void RoundTrip_AsServer() {
+        public void RoundTrip_AsServer()
+        {
             TestUtils.RoundTripModule<ChatModule>(
                 ServerBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Server);
         }
 
         [Fact]
-        public void RoundTrip_AsClient() {
+        public void RoundTrip_AsClient()
+        {
             TestUtils.RoundTripModule<ChatModule>(
                 ClientBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Client);
         }

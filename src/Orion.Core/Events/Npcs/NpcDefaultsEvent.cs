@@ -19,13 +19,15 @@ using System;
 using Orion.Core.Npcs;
 using Serilog.Events;
 
-namespace Orion.Core.Events.Npcs {
+namespace Orion.Core.Events.Npcs
+{
     /// <summary>
     /// An event that occurs when an NPC's defaults are being set: i.e., when an NPC's stats are being initialized. This
     /// event can be canceled.
     /// </summary>
     [Event("npc-defaults", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class NpcDefaultsEvent : NpcEvent {
+    public sealed class NpcDefaultsEvent : NpcEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcDefaultsEvent"/> class with the specified
         /// <paramref name="npc"/>.

@@ -17,13 +17,17 @@
 
 using Xunit;
 
-namespace Orion.Core.Players {
+namespace Orion.Core.Players
+{
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
-    public class PlayerTeamTests {
+    public class PlayerTeamTests
+    {
         [Fact]
-        public void Color() {
-            for (var i = 0; i < 6; ++i) {
+        public void Color()
+        {
+            for (var i = 0; i < 6; ++i)
+            {
                 var color = ((PlayerTeam)i).Color();
 
                 Assert.Equal(Terraria.Main.teamColor[i].R, color.R);

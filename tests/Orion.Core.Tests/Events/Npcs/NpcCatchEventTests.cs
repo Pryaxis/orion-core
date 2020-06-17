@@ -21,24 +21,29 @@ using Orion.Core.Npcs;
 using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Core.Events.Npcs {
-    public class NpcCatchEventTests {
+namespace Orion.Core.Events.Npcs
+{
+    public class NpcCatchEventTests
+    {
         [Fact]
-        public void Ctor_NullNpc_ThrowsArgumentNullException() {
+        public void Ctor_NullNpc_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new NpcCatchEvent(null!, player));
         }
 
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             var npc = Mock.Of<INpc>();
 
             Assert.Throws<ArgumentNullException>(() => new NpcCatchEvent(npc, null!));
         }
 
         [Fact]
-        public void Player_Get() {
+        public void Player_Get()
+        {
             var npc = Mock.Of<INpc>();
             var player = Mock.Of<IPlayer>();
             var evt = new NpcCatchEvent(npc, player);

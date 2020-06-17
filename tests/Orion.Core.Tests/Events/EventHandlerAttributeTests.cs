@@ -19,16 +19,20 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Events {
+namespace Orion.Core.Events
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class EventHandlerAttributeTests {
+    public class EventHandlerAttributeTests
+    {
         [Fact]
-        public void Ctor_NullName_ThrowsArgumentNullException() {
+        public void Ctor_NullName_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new EventHandlerAttribute(null!));
         }
 
         [Fact]
-        public void Priority_Set_Get() {
+        public void Priority_Set_Get()
+        {
             var attribute = new EventHandlerAttribute("test");
 
             attribute.Priority = EventPriority.Highest;
@@ -37,14 +41,16 @@ namespace Orion.Core.Events {
         }
 
         [Fact]
-        public void Name_Get() {
+        public void Name_Get()
+        {
             var attribute = new EventHandlerAttribute("test");
 
             Assert.Equal("test", attribute.Name);
         }
 
         [Fact]
-        public void IgnoreCanceled_Set_Get() {
+        public void IgnoreCanceled_Set_Get()
+        {
             var attribute = new EventHandlerAttribute("test");
 
             attribute.IgnoreCanceled = false;

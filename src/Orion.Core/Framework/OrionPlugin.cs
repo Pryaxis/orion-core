@@ -18,11 +18,13 @@
 using System;
 using Serilog;
 
-namespace Orion.Core.Framework {
+namespace Orion.Core.Framework
+{
     /// <summary>
     /// Provides the base class for an Orion plugin.
     /// </summary>
-    public abstract class OrionPlugin : OrionService {
+    public abstract class OrionPlugin : OrionService
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="OrionPlugin"/> class with the specified
         /// <paramref name="kernel"/> and <paramref name="log"/>.

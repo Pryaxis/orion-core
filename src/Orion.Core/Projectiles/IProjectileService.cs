@@ -20,7 +20,8 @@ using Orion.Core.DataStructures;
 using Orion.Core.Events.Projectiles;
 using Orion.Core.Framework;
 
-namespace Orion.Core.Projectiles {
+namespace Orion.Core.Projectiles
+{
     /// <summary>
     /// Represents a projectile service. Provides access to projectiles and publishes projectile-related events.
     /// </summary>
@@ -34,7 +35,8 @@ namespace Orion.Core.Projectiles {
     /// </list>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
-    public interface IProjectileService {
+    public interface IProjectileService
+    {
         /// <summary>
         /// Gets the projectiles.
         /// </summary>

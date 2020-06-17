@@ -20,9 +20,12 @@ using System.Diagnostics;
 using System.Text;
 using Orion.Core.DataStructures;
 
-namespace Orion.Core.Packets {
-    internal static class SpanExtensions {
-        public static int Read(this Span<byte> span, Encoding encoding, out string value) {
+namespace Orion.Core.Packets
+{
+    internal static class SpanExtensions
+    {
+        public static int Read(this Span<byte> span, Encoding encoding, out string value)
+        {
             Debug.Assert(encoding != null);
 
             var index = Read7BitEncodedInt(span, out var length);
@@ -30,7 +33,8 @@ namespace Orion.Core.Packets {
             return index + length;
         }
 
-        public static int Read(this Span<byte> span, Encoding encoding, out NetworkText value) {
+        public static int Read(this Span<byte> span, Encoding encoding, out NetworkText value)
+        {
             Debug.Assert(encoding != null);
 
             var index = 0;
@@ -39,19 +43,22 @@ namespace Orion.Core.Packets {
             var substitutions = Array.Empty<NetworkText>();
 
             byte numSubstitutions = 0;
-            if (mode != NetworkText.Mode.Literal) {
+            if (mode != NetworkText.Mode.Literal)
+            {
                 numSubstitutions = span[index++];
                 substitutions = new NetworkText[numSubstitutions];
             }
 
-            for (var i = 0; i < numSubstitutions; ++i) {
+            for (var i = 0; i < numSubstitutions; ++i)
+            {
                 index += Read(span[index..], encoding, out substitutions[i]);
             }
             value = new NetworkText(mode, text, substitutions);
             return index;
         }
 
-        public static int Write(this Span<byte> span, string value, Encoding encoding) {
+        public static int Write(this Span<byte> span, string value, Encoding encoding)
+        {
             Debug.Assert(value != null);
             Debug.Assert(encoding != null);
 
@@ -61,7 +68,8 @@ namespace Orion.Core.Packets {
             return index + length;
         }
 
-        public static int Write(this Span<byte> span, NetworkText value, Encoding encoding) {
+        public static int Write(this Span<byte> span, NetworkText value, Encoding encoding)
+        {
             Debug.Assert(value != null);
             Debug.Assert(encoding != null);
 
@@ -70,24 +78,29 @@ namespace Orion.Core.Packets {
             index += span[index..].Write(value._format, encoding);
 
             byte numSubstitutions = 0;
-            if (value._mode != NetworkText.Mode.Literal) {
+            if (value._mode != NetworkText.Mode.Literal)
+            {
                 numSubstitutions = (byte)value._args.Length;
                 span[index++] = numSubstitutions;
             }
 
-            for (var i = 0; i < numSubstitutions; ++i) {
+            for (var i = 0; i < numSubstitutions; ++i)
+            {
                 index += span[index..].Write(value._args[i], encoding);
             }
             return index;
         }
 
-        private static int Read7BitEncodedInt(Span<byte> span, out int value) {
+        private static int Read7BitEncodedInt(Span<byte> span, out int value)
+        {
             value = 0;
             var shift = 0;
             var index = 0;
             byte b;
-            do {
-                if (shift == 5 * 7) {
+            do
+            {
+                if (shift == 5 * 7)
+                {
                     // Not localized because this string is developer-facing.
                     throw new ArgumentException("Invalid 7-bit encoded integer (too large)", nameof(span));
                 }
@@ -97,7 +110,8 @@ namespace Orion.Core.Packets {
                 shift += 7;
             } while (b >= 0x80);
 
-            if (value < 0) {
+            if (value < 0)
+            {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentException("Invalid 7-bit encoded integer (negative)", nameof(span));
             }
@@ -105,9 +119,11 @@ namespace Orion.Core.Packets {
             return index;
         }
 
-        private static int Write7BitEncodedInt(Span<byte> span, int value) {
+        private static int Write7BitEncodedInt(Span<byte> span, int value)
+        {
             var index = 0;
-            while (value >= 0x80) {
+            while (value >= 0x80)
+            {
                 span[index++] = (byte)(value | 0x80);
                 value >>= 7;
             }

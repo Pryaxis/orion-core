@@ -18,12 +18,14 @@
 using Orion.Core.Players;
 using Orion.Core.World;
 
-namespace Orion.Core.Events.World.Tiles {
+namespace Orion.Core.Events.World.Tiles
+{
     /// <summary>
     /// An event that occurs when wiring is being activated. This event can be canceled.
     /// </summary>
     [Event("wiring-activate")]
-    public sealed class WiringActivateEvent : TileEvent {
+    public sealed class WiringActivateEvent : TileEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="WiringActivateEvent"/> class with the specified
         /// <paramref name="world"/>, <paramref name="player"/>, and wiring coordinates.

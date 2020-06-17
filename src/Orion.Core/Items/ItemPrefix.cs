@@ -15,11 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.Items {
+namespace Orion.Core.Items
+{
     /// <summary>
     /// Specifies an item prefix.
     /// </summary>
-    public enum ItemPrefix : sbyte {
+    public enum ItemPrefix : sbyte
+    {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         Reforge = -2,
         Random = -1,

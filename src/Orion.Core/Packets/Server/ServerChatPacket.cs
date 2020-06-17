@@ -21,12 +21,14 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Orion.Core.DataStructures;
 
-namespace Orion.Core.Packets.Server {
+namespace Orion.Core.Packets.Server
+{
     /// <summary>
     /// A packet sent from the server to the client to show chat.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct ServerChatPacket : IPacket {
+    public struct ServerChatPacket : IPacket
+    {
         [FieldOffset(8)] private NetworkText _text;
 
         /// <summary>
@@ -40,7 +42,8 @@ namespace Orion.Core.Packets.Server {
         /// </summary>
         /// <value>The message.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public NetworkText Message {
+        public NetworkText Message
+        {
             get => _text ?? NetworkText.Empty;
             set => _text = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -54,7 +57,8 @@ namespace Orion.Core.Packets.Server {
         PacketId IPacket.Id => PacketId.ServerChat;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 3);
             var numMessageBytes = span[3..].Read(Encoding.UTF8, out _text);
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(3), ref span[3 + numMessageBytes], 2);
@@ -62,7 +66,8 @@ namespace Orion.Core.Packets.Server {
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 3);
             var numMessageBytes = span[3..].Write(Message, Encoding.UTF8);
             Unsafe.CopyBlockUnaligned(ref span[3 + numMessageBytes], ref this.AsRefByte(3), 2);

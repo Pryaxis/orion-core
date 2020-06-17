@@ -18,11 +18,13 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Orion.Core.Packets {
+namespace Orion.Core.Packets
+{
     /// <summary>
     /// Represents a packet, the main form of communication between the server and its clients.
     /// </summary>
-    public interface IPacket {
+    public interface IPacket
+    {
         /// <summary>
         /// The packet header size.
         /// </summary>
@@ -57,7 +59,8 @@ namespace Orion.Core.Packets {
     /// <summary>
     /// Provides extensions for the <see cref="IPacket"/> interface.
     /// </summary>
-    public static class PacketExtensions {
+    public static class PacketExtensions
+    {
         /// <summary>
         /// Writes the <paramref name="packet"/> reference to the given <paramref name="span"/> with the specified
         /// packet <paramref name="context"/>, including the packet header. Returns the number of bytes written to the
@@ -69,7 +72,8 @@ namespace Orion.Core.Packets {
         /// <param name="context">The packet context to use when writing.</param>
         /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
         public static int WriteWithHeader<TPacket>(ref this TPacket packet, Span<byte> span, PacketContext context)
-                where TPacket : struct, IPacket {
+                where TPacket : struct, IPacket
+        {
             var packetLength = IPacket.HeaderSize + packet.Write(span[IPacket.HeaderSize..], context);
             Unsafe.WriteUnaligned(ref span[0], (ushort)packetLength);
             span[2] = (byte)packet.Id;

@@ -19,27 +19,32 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.Client {
+namespace Orion.Core.Packets.Client
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ClientUuidPacketTests {
+    public class ClientUuidPacketTests
+    {
         public static readonly byte[] Bytes = { 12, 0, 68, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
 
         [Fact]
-        public void Uuid_Get_Default() {
+        public void Uuid_Get_Default()
+        {
             var packet = new ClientUuidPacket();
 
             Assert.Equal(string.Empty, packet.Uuid);
         }
 
         [Fact]
-        public void Uuid_SetNullValue_ThrowsArgumentNullException() {
+        public void Uuid_SetNullValue_ThrowsArgumentNullException()
+        {
             var packet = new ClientUuidPacket();
 
             Assert.Throws<ArgumentNullException>(() => packet.Uuid = null!);
         }
 
         [Fact]
-        public void Uuid_Set_Get() {
+        public void Uuid_Set_Get()
+        {
             var packet = new ClientUuidPacket();
 
             packet.Uuid = "Terraria";
@@ -48,7 +53,8 @@ namespace Orion.Core.Packets.Client {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new ClientUuidPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -57,7 +63,8 @@ namespace Orion.Core.Packets.Client {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<ClientUuidPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

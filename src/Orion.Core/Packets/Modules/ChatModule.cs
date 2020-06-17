@@ -21,12 +21,14 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Orion.Core.DataStructures;
 
-namespace Orion.Core.Packets.Modules {
+namespace Orion.Core.Packets.Modules
+{
     /// <summary>
     /// A module sent for chat.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct ChatModule : IModule {
+    public struct ChatModule : IModule
+    {
         [FieldOffset(0)] private string? _clientCommand;
         [FieldOffset(8)] private string? _clientMessage;
         [FieldOffset(24)] private NetworkText? _serverMessage;
@@ -37,7 +39,8 @@ namespace Orion.Core.Packets.Modules {
         /// </summary>
         /// <value>The command.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string ClientCommand {
+        public string ClientCommand
+        {
             get => _clientCommand ?? string.Empty;
             set => _clientCommand = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -48,7 +51,8 @@ namespace Orion.Core.Packets.Modules {
         /// </summary>
         /// <value>The message.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string ClientMessage {
+        public string ClientMessage
+        {
             get => _clientMessage ?? string.Empty;
             set => _clientMessage = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -66,7 +70,8 @@ namespace Orion.Core.Packets.Modules {
         /// </summary>
         /// <value>The message.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public NetworkText ServerMessage {
+        public NetworkText ServerMessage
+        {
             get => _serverMessage ?? NetworkText.Empty;
             set => _serverMessage = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -81,12 +86,16 @@ namespace Orion.Core.Packets.Modules {
         ModuleId IModule.Id => ModuleId.Chat;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
-            if (context == PacketContext.Server) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
+            if (context == PacketContext.Server)
+            {
                 var numCommandBytes = span.Read(Encoding.UTF8, out _clientCommand);
                 var numMessageBytes = span[numCommandBytes..].Read(Encoding.UTF8, out _clientMessage);
                 return numCommandBytes + numMessageBytes;
-            } else {
+            }
+            else
+            {
                 ServerAuthorIndex = span[0];
                 var numMessageBytes = span[1..].Read(Encoding.UTF8, out _serverMessage);
                 Unsafe.CopyBlockUnaligned(ref this.AsRefByte(17), ref span[1 + numMessageBytes], 3);
@@ -95,12 +104,16 @@ namespace Orion.Core.Packets.Modules {
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
-            if (context == PacketContext.Client) {
+        public int Write(Span<byte> span, PacketContext context)
+        {
+            if (context == PacketContext.Client)
+            {
                 var numCommandBytes = span.Write(ClientCommand, Encoding.UTF8);
                 var numMessageBytes = span[numCommandBytes..].Write(ClientMessage, Encoding.UTF8);
                 return numCommandBytes + numMessageBytes;
-            } else {
+            }
+            else
+            {
                 span[0] = ServerAuthorIndex;
                 var numMessageBytes = span[1..].Write(ServerMessage, Encoding.UTF8);
                 Unsafe.CopyBlockUnaligned(ref span[1 + numMessageBytes], ref this.AsRefByte(17), 3);

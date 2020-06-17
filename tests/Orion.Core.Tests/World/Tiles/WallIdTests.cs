@@ -19,10 +19,13 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Orion.Core.World.Tiles {
-    public class WallIdTests {
+namespace Orion.Core.World.Tiles
+{
+    public class WallIdTests
+    {
         [Fact]
-        public void AllWallIdsCovered() {
+        public void AllWallIdsCovered()
+        {
             var maxId = Enum.GetValues(typeof(WallId)).Cast<WallId>().Max();
             Assert.Equal((WallId)(Terraria.ID.WallID.Count - 1), maxId);
         }

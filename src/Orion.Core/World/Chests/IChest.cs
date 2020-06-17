@@ -20,14 +20,16 @@ using Orion.Core.Collections;
 using Orion.Core.Items;
 using Orion.Core.World.TileEntities;
 
-namespace Orion.Core.World.Chests {
+namespace Orion.Core.World.Chests
+{
     /// <summary>
     /// Represents a Terraria chest.
     /// </summary>
     /// <remarks>
     /// Implementations are required to be thread-safe: i.e., each operation on the chest should be atomic.
     /// </remarks>
-    public interface IChest : ITileEntity {
+    public interface IChest : ITileEntity
+    {
         /// <summary>
         /// Gets or sets the chest's name.
         /// </summary>

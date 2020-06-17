@@ -20,22 +20,27 @@ using Moq;
 using Orion.Core.World;
 using Xunit;
 
-namespace Orion.Core.Events.World {
-    public class WorldEventTests {
+namespace Orion.Core.Events.World
+{
+    public class WorldEventTests
+    {
         [Fact]
-        public void Ctor_NullWorld_ThrowsArgumentNullException() {
+        public void Ctor_NullWorld_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new TestWorldEvent(null!));
         }
 
         [Fact]
-        public void World_Get() {
+        public void World_Get()
+        {
             var world = Mock.Of<IWorld>();
             var evt = new TestWorldEvent(world);
 
             Assert.Same(world, evt.World);
         }
 
-        private class TestWorldEvent : WorldEvent {
+        private class TestWorldEvent : WorldEvent
+        {
             public TestWorldEvent(IWorld world) : base(world) { }
         }
     }

@@ -19,12 +19,14 @@ using System;
 using Destructurama.Attributed;
 using Orion.Core.Players;
 
-namespace Orion.Core.Events.Players {
+namespace Orion.Core.Events.Players
+{
     /// <summary>
     /// An event that occurs when a player is sending their UUID. This event can be canceled.
     /// </summary>
     [Event("player-uuid")]
-    public sealed class PlayerUuidEvent : PlayerEvent {
+    public sealed class PlayerUuidEvent : PlayerEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerUuidEvent"/> class with the specified
         /// <paramref name="player"/> and <paramref name="uuid"/>.
@@ -34,7 +36,8 @@ namespace Orion.Core.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="uuid"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerUuidEvent(IPlayer player, string uuid) : base(player) {
+        public PlayerUuidEvent(IPlayer player, string uuid) : base(player)
+        {
             Uuid = uuid ?? throw new ArgumentNullException(nameof(uuid));
         }
 

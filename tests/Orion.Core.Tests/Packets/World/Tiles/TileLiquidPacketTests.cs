@@ -20,13 +20,16 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.World.Tiles;
 using Xunit;
 
-namespace Orion.Core.Packets.World.Tiles {
+namespace Orion.Core.Packets.World.Tiles
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class TileLiquidPacketTests {
+    public class TileLiquidPacketTests
+    {
         public static readonly byte[] Bytes = { 9, 0, 48, 0, 1, 100, 0, 255, 2 };
 
         [Fact]
-        public void X_Set_Get() {
+        public void X_Set_Get()
+        {
             var packet = new TileLiquidPacket();
 
             packet.X = 256;
@@ -35,7 +38,8 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
-        public void Y_Set_Get() {
+        public void Y_Set_Get()
+        {
             var packet = new TileLiquidPacket();
 
             packet.Y = 100;
@@ -44,7 +48,8 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
-        public void LiquidAmount_Set_Get() {
+        public void LiquidAmount_Set_Get()
+        {
             var packet = new TileLiquidPacket();
 
             packet.LiquidAmount = 255;
@@ -53,7 +58,8 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
-        public void Liquid_Set_Get() {
+        public void Liquid_Set_Get()
+        {
             var packet = new TileLiquidPacket();
 
             packet.Liquid = Liquid.Honey;
@@ -62,7 +68,8 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new TileLiquidPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -74,7 +81,8 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<TileLiquidPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

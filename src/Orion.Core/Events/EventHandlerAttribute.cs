@@ -17,19 +17,22 @@
 
 using System;
 
-namespace Orion.Core.Events {
+namespace Orion.Core.Events
+{
     /// <summary>
     /// Marks a method as an event handler and specifies information about it.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    public sealed class EventHandlerAttribute : Attribute {
+    public sealed class EventHandlerAttribute : Attribute
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlerAttribute"/> class with the specified
         /// <paramref name="name"/>.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
-        public EventHandlerAttribute(string name) {
+        public EventHandlerAttribute(string name)
+        {
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 

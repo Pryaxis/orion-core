@@ -26,10 +26,13 @@ using Orion.Core.Framework;
 using Orion.Core.Packets.World.Signs;
 using Serilog;
 
-namespace Orion.Core.World.Signs {
+namespace Orion.Core.World.Signs
+{
     [Binding("orion-signs", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
-    internal sealed class OrionSignService : OrionService, ISignService {
-        public OrionSignService(OrionKernel kernel, ILogger log) : base(kernel, log) {
+    internal sealed class OrionSignService : OrionService, ISignService
+    {
+        public OrionSignService(OrionKernel kernel, ILogger log) : base(kernel, log)
+        {
             // Construct the `Signs` array.
             Signs = new WrappedReadOnlyList<OrionSign, Terraria.Sign?>(
                 Terraria.Main.sign, (signIndex, terrariaSign) => new OrionSign(signIndex, terrariaSign));
@@ -39,7 +42,8 @@ namespace Orion.Core.World.Signs {
 
         public IReadOnlyList<ISign> Signs { get; }
 
-        public override void Dispose() {
+        public override void Dispose()
+        {
             Kernel.DeregisterHandlers(this, Log);
         }
 
@@ -51,10 +55,12 @@ namespace Orion.Core.World.Signs {
 
         [EventHandler("orion-signs", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnSignReadPacket(PacketReceiveEvent<SignReadPacket> evt) {
+        private void OnSignReadPacket(PacketReceiveEvent<SignReadPacket> evt)
+        {
             ref var packet = ref evt.Packet;
             var sign = FindSign(packet.X, packet.Y);
-            if (sign is null) {
+            if (sign is null)
+            {
                 return;
             }
 
@@ -62,9 +68,11 @@ namespace Orion.Core.World.Signs {
         }
 
         // Forwards `evt` as `newEvt`.
-        private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event {
+        private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event
+        {
             Kernel.Raise(newEvt, Log);
-            if (newEvt.IsCanceled) {
+            if (newEvt.IsCanceled)
+            {
                 evt.Cancel(newEvt.CancellationReason);
             }
         }

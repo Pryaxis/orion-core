@@ -20,10 +20,13 @@ using Moq;
 using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Core.Events.World.Tiles {
-    public class WiringActivateEventTests {
+namespace Orion.Core.Events.World.Tiles
+{
+    public class WiringActivateEventTests
+    {
         [Fact]
-        public void Ctor_NullWorld_ThrowsArgumentNullException() {
+        public void Ctor_NullWorld_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new WiringActivateEvent(null!, player, 256, 100));

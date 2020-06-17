@@ -19,7 +19,8 @@ using System;
 using System.Diagnostics.Contracts;
 using Orion.Core.Entities;
 
-namespace Orion.Core.World.TileEntities {
+namespace Orion.Core.World.TileEntities
+{
     /// <summary>
     /// Represents an annotatable Terraria tile entity.
     /// </summary>
@@ -47,7 +48,8 @@ namespace Orion.Core.World.TileEntities {
     /// These types can be differentiated using the <see cref="TileEntityExtensions.IsConcrete"/> extension method and
     /// the <see cref="IsActive"/> property.
     /// </remarks>
-    public interface ITileEntity : IAnnotatable {
+    public interface ITileEntity : IAnnotatable
+    {
         /// <summary>
         /// Gets the tile entity's index. A negative value indicates that the tile entity is abstract.
         /// </summary>
@@ -77,7 +79,8 @@ namespace Orion.Core.World.TileEntities {
     /// <summary>
     /// Provides extensions for the <see cref="ITileEntity"/> interface.
     /// </summary>
-    public static class TileEntityExtensions {
+    public static class TileEntityExtensions
+    {
         /// <summary>
         /// Returns a value indicating whether the <paramref name="tileEntity"/> is concrete: i.e., whether the tile
         /// entity <i>can</i> exist in the world.
@@ -88,8 +91,10 @@ namespace Orion.Core.World.TileEntities {
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="tileEntity"/> is <see langword="null"/>.</exception>
         [Pure]
-        public static bool IsConcrete(this ITileEntity tileEntity) {
-            if (tileEntity is null) {
+        public static bool IsConcrete(this ITileEntity tileEntity)
+        {
+            if (tileEntity is null)
+            {
                 throw new ArgumentNullException(nameof(tileEntity));
             }
 

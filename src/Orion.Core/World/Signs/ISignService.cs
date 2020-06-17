@@ -19,7 +19,8 @@ using System.Collections.Generic;
 using Orion.Core.Events.World.Signs;
 using Orion.Core.Framework;
 
-namespace Orion.Core.World.Signs {
+namespace Orion.Core.World.Signs
+{
     /// <summary>
     /// Represents a sign service. Provides access to signs and publishes sign-related events.
     /// </summary>
@@ -32,7 +33,8 @@ namespace Orion.Core.World.Signs {
     /// </list>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
-    public interface ISignService {
+    public interface ISignService
+    {
         /// <summary>
         /// Gets the signs.
         /// </summary>

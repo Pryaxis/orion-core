@@ -18,12 +18,14 @@
 using System;
 using Orion.Core.Players;
 
-namespace Orion.Core.Events.Players {
+namespace Orion.Core.Events.Players
+{
     /// <summary>
     /// An event that occurs when a player is chatting. This event can be canceled.
     /// </summary>
     [Event("player-chat")]
-    public sealed class PlayerChatEvent : PlayerEvent {
+    public sealed class PlayerChatEvent : PlayerEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerChatEvent"/> class with the specified
         /// <paramref name="player"/>, <paramref name="command"/>, and <paramref name="message"/>.
@@ -35,7 +37,8 @@ namespace Orion.Core.Events.Players {
         /// <paramref name="player"/>, <paramref name="command"/>, or <paramref name="message"/> are
         /// <see langword="null"/>.
         /// </exception>
-        public PlayerChatEvent(IPlayer player, string command, string message) : base(player) {
+        public PlayerChatEvent(IPlayer player, string command, string message) : base(player)
+        {
             Command = command ?? throw new ArgumentNullException(nameof(command));
             Message = message ?? throw new ArgumentNullException(nameof(message));
         }

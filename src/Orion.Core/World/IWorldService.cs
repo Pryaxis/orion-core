@@ -19,7 +19,8 @@ using Orion.Core.Events.World;
 using Orion.Core.Events.World.Tiles;
 using Orion.Core.Framework;
 
-namespace Orion.Core.World {
+namespace Orion.Core.World
+{
     /// <summary>
     /// Represents a world service. Provides access to the world and publishes world and tile-related events.
     /// </summary>
@@ -42,7 +43,8 @@ namespace Orion.Core.World {
     /// </list>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
-    public interface IWorldService {
+    public interface IWorldService
+    {
         /// <summary>
         /// Gets the world.
         /// </summary>

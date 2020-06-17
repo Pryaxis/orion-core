@@ -19,12 +19,14 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Orion.Core.Packets.Players {
+namespace Orion.Core.Packets.Players
+{
     /// <summary>
     /// A packet sent to set a player's PvP status.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct PlayerPvpPacket : IPacket {
+    public struct PlayerPvpPacket : IPacket
+    {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -40,13 +42,15 @@ namespace Orion.Core.Packets.Players {
         PacketId IPacket.Id => PacketId.PlayerPvp;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 2);
             return 2;
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 2);
             return 2;
         }

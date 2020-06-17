@@ -19,22 +19,27 @@ using System;
 using Moq;
 using Xunit;
 
-namespace Orion.Core.Entities {
-    public class EntityTests {
+namespace Orion.Core.Entities
+{
+    public class EntityTests
+    {
         [Fact]
-        public void IsConcrete_NullEntity_ThrowsArgumentNullException() {
+        public void IsConcrete_NullEntity_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => EntityExtensions.IsConcrete(null!));
         }
 
         [Fact]
-        public void IsConcrete_ReturnsTrue() {
+        public void IsConcrete_ReturnsTrue()
+        {
             var entity = Mock.Of<IEntity>(e => e.Index == 1);
 
             Assert.True(entity.IsConcrete());
         }
 
         [Fact]
-        public void IsConcrete_ReturnsFalse() {
+        public void IsConcrete_ReturnsFalse()
+        {
             var entity = Mock.Of<IEntity>(e => e.Index == -1);
 
             Assert.False(entity.IsConcrete());

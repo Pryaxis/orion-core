@@ -19,27 +19,32 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.Client {
+namespace Orion.Core.Packets.Client
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ClientPasswordPacketTests {
+    public class ClientPasswordPacketTests
+    {
         public static readonly byte[] Bytes = { 12, 0, 38, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
 
         [Fact]
-        public void Password_Get_Default() {
+        public void Password_Get_Default()
+        {
             var packet = new ClientPasswordPacket();
 
             Assert.Equal(string.Empty, packet.Password);
         }
 
         [Fact]
-        public void Password_SetNullValue_ThrowsArgumentNullException() {
+        public void Password_SetNullValue_ThrowsArgumentNullException()
+        {
             var packet = new ClientPasswordPacket();
 
             Assert.Throws<ArgumentNullException>(() => packet.Password = null!);
         }
 
         [Fact]
-        public void Password_Set_Get() {
+        public void Password_Set_Get()
+        {
             var packet = new ClientPasswordPacket();
 
             packet.Password = "Terraria";
@@ -48,7 +53,8 @@ namespace Orion.Core.Packets.Client {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new ClientPasswordPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -57,7 +63,8 @@ namespace Orion.Core.Packets.Client {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<ClientPasswordPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

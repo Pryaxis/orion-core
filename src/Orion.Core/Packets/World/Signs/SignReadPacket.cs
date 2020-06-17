@@ -19,12 +19,14 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Orion.Core.Packets.World.Signs {
+namespace Orion.Core.Packets.World.Signs
+{
     /// <summary>
     /// A packet sent from the client to the server to read a sign.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct SignReadPacket : IPacket {
+    public struct SignReadPacket : IPacket
+    {
         /// <summary>
         /// Gets or sets the sign's X coordinate.
         /// </summary>
@@ -40,13 +42,15 @@ namespace Orion.Core.Packets.World.Signs {
         PacketId IPacket.Id => PacketId.SignRead;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 4);
             return 4;
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 4);
             return 4;
         }

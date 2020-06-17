@@ -20,13 +20,16 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Core.Packets.Players {
+namespace Orion.Core.Packets.Players
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerTeamPacketTests {
+    public class PlayerTeamPacketTests
+    {
         public static readonly byte[] Bytes = { 5, 0, 45, 5, 1 };
 
         [Fact]
-        public void PlayerIndex_Set_Get() {
+        public void PlayerIndex_Set_Get()
+        {
             var packet = new PlayerTeamPacket();
 
             packet.PlayerIndex = 5;
@@ -35,7 +38,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void Team_Set_Get() {
+        public void Team_Set_Get()
+        {
             var packet = new PlayerTeamPacket();
 
             packet.Team = PlayerTeam.Red;
@@ -44,7 +48,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new PlayerTeamPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -54,7 +59,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<PlayerTeamPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

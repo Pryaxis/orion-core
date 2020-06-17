@@ -19,7 +19,8 @@ using System;
 using System.Diagnostics.Contracts;
 using Orion.Core.DataStructures;
 
-namespace Orion.Core.Entities {
+namespace Orion.Core.Entities
+{
     /// <summary>
     /// Represents an annotatable Terraria entity.
     /// </summary>
@@ -47,7 +48,8 @@ namespace Orion.Core.Entities {
     /// These types can be differentiated using the <see cref="EntityExtensions.IsConcrete"/> extension method and the
     /// <see cref="IsActive"/> property.
     /// </remarks>
-    public interface IEntity : IAnnotatable {
+    public interface IEntity : IAnnotatable
+    {
         /// <summary>
         /// Gets the entity's index. A negative value indicates that the entity is abstract.
         /// </summary>
@@ -89,7 +91,8 @@ namespace Orion.Core.Entities {
     /// <summary>
     /// Provides extensions for the <see cref="IEntity"/> interface.
     /// </summary>
-    public static class EntityExtensions {
+    public static class EntityExtensions
+    {
         /// <summary>
         /// Returns a value indicating whether the <paramref name="entity"/> is concrete: i.e., whether the entity
         /// <i>can</i> exist in the world.
@@ -100,8 +103,10 @@ namespace Orion.Core.Entities {
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="entity"/> is <see langword="null"/>.</exception>
         [Pure]
-        public static bool IsConcrete(this IEntity entity) {
-            if (entity is null) {
+        public static bool IsConcrete(this IEntity entity)
+        {
+            if (entity is null)
+            {
                 throw new ArgumentNullException(nameof(entity));
             }
 

@@ -22,10 +22,13 @@ using Orion.Core.Npcs;
 using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Core.Events.Npcs {
-    public class NpcBuffEventTests {
+namespace Orion.Core.Events.Npcs
+{
+    public class NpcBuffEventTests
+    {
         [Fact]
-        public void Ctor_NullNpc_ThrowsArgumentNullException() {
+        public void Ctor_NullNpc_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
             var buff = new Buff(BuffId.Poisoned, 60);
 
@@ -33,7 +36,8 @@ namespace Orion.Core.Events.Npcs {
         }
 
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             var npc = Mock.Of<INpc>();
             var buff = new Buff(BuffId.Poisoned, 60);
 
@@ -41,7 +45,8 @@ namespace Orion.Core.Events.Npcs {
         }
 
         [Fact]
-        public void Player_Get() {
+        public void Player_Get()
+        {
             var npc = Mock.Of<INpc>();
             var player = Mock.Of<IPlayer>();
             var buff = new Buff(BuffId.Poisoned, 60);
@@ -51,7 +56,8 @@ namespace Orion.Core.Events.Npcs {
         }
 
         [Fact]
-        public void Buff_Get() {
+        public void Buff_Get()
+        {
             var npc = Mock.Of<INpc>();
             var player = Mock.Of<IPlayer>();
             var buff = new Buff(BuffId.Poisoned, 60);

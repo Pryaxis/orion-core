@@ -17,12 +17,14 @@
 
 using System;
 
-namespace Orion.Core.Framework {
+namespace Orion.Core.Framework
+{
     /// <summary>
     /// Specifies information about a plugin.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public sealed class PluginAttribute : Attribute {
+    public sealed class PluginAttribute : Attribute
+    {
         private string _author = "Anonymous";
 
         /// <summary>
@@ -31,7 +33,8 @@ namespace Orion.Core.Framework {
         /// </summary>
         /// <param name="name">The plugin name.</param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
-        public PluginAttribute(string name) {
+        public PluginAttribute(string name)
+        {
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
@@ -47,7 +50,8 @@ namespace Orion.Core.Framework {
         /// </summary>
         /// <value>The plugin's author. The default value is <c>Anonymous</c>.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string Author {
+        public string Author
+        {
             get => _author;
             set => _author = value ?? throw new ArgumentNullException(nameof(value));
         }

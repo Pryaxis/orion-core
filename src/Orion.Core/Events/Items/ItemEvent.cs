@@ -18,17 +18,20 @@
 using System;
 using Orion.Core.Items;
 
-namespace Orion.Core.Events.Items {
+namespace Orion.Core.Events.Items
+{
     /// <summary>
     /// Provides the base class for an item-related event.
     /// </summary>
-    public abstract class ItemEvent : Event {
+    public abstract class ItemEvent : Event
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemEvent"/> class with the specified <paramref name="item"/>.
         /// </summary>
         /// <param name="item">The item involved in the event.</param>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
-        protected ItemEvent(IItem item) {
+        protected ItemEvent(IItem item)
+        {
             Item = item ?? throw new ArgumentNullException(nameof(item));
         }
 

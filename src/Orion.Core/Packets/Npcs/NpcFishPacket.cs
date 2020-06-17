@@ -20,12 +20,14 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Orion.Core.Npcs;
 
-namespace Orion.Core.Packets.Npcs {
+namespace Orion.Core.Packets.Npcs
+{
     /// <summary>
     /// A packet sent from the client to the server to fish an NPC.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct NpcFishPacket : IPacket {
+    public struct NpcFishPacket : IPacket
+    {
         /// <summary>
         /// Gets or sets the NPC's X coordinate.
         /// </summary>
@@ -47,13 +49,15 @@ namespace Orion.Core.Packets.Npcs {
         PacketId IPacket.Id => PacketId.NpcFish;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 6);
             return 6;
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 6);
             return 6;
         }

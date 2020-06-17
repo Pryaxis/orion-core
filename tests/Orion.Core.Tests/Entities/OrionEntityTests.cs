@@ -19,11 +19,14 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.DataStructures;
 using Xunit;
 
-namespace Orion.Core.Entities {
+namespace Orion.Core.Entities
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class OrionEntityTests {
+    public class OrionEntityTests
+    {
         [Fact]
-        public void Index_Get() {
+        public void Index_Get()
+        {
             var terrariaEntity = new TestTerrariaEntity();
             var entity = new TestOrionEntity(100, terrariaEntity);
 
@@ -33,7 +36,8 @@ namespace Orion.Core.Entities {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsActive_Get(bool isActive) {
+        public void IsActive_Get(bool isActive)
+        {
             var terrariaEntity = new TestTerrariaEntity { active = isActive };
             var entity = new TestOrionEntity(terrariaEntity);
 
@@ -43,7 +47,8 @@ namespace Orion.Core.Entities {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsActive_Set(bool isActive) {
+        public void IsActive_Set(bool isActive)
+        {
             var terrariaEntity = new TestTerrariaEntity();
             var entity = new TestOrionEntity(terrariaEntity);
 
@@ -53,7 +58,8 @@ namespace Orion.Core.Entities {
         }
 
         [Fact]
-        public void Position_Get() {
+        public void Position_Get()
+        {
             var terrariaEntity = new TestTerrariaEntity { position = new Microsoft.Xna.Framework.Vector2(100, 100) };
             var entity = new TestOrionEntity(terrariaEntity);
 
@@ -61,7 +67,8 @@ namespace Orion.Core.Entities {
         }
 
         [Fact]
-        public void Position_Set() {
+        public void Position_Set()
+        {
             var terrariaEntity = new TestTerrariaEntity();
             var entity = new TestOrionEntity(terrariaEntity);
 
@@ -71,7 +78,8 @@ namespace Orion.Core.Entities {
         }
 
         [Fact]
-        public void Velocity_Get() {
+        public void Velocity_Get()
+        {
             var terrariaEntity = new TestTerrariaEntity { velocity = new Microsoft.Xna.Framework.Vector2(100, 100) };
             var entity = new TestOrionEntity(terrariaEntity);
 
@@ -79,7 +87,8 @@ namespace Orion.Core.Entities {
         }
 
         [Fact]
-        public void Velocity_Set() {
+        public void Velocity_Set()
+        {
             var terrariaEntity = new TestTerrariaEntity();
             var entity = new TestOrionEntity(terrariaEntity);
 
@@ -89,7 +98,8 @@ namespace Orion.Core.Entities {
         }
 
         [Fact]
-        public void Size_Get() {
+        public void Size_Get()
+        {
             var terrariaEntity = new TestTerrariaEntity { Size = new Microsoft.Xna.Framework.Vector2(100, 100) };
             var entity = new TestOrionEntity(terrariaEntity);
 
@@ -97,7 +107,8 @@ namespace Orion.Core.Entities {
         }
 
         [Fact]
-        public void Size_Set() {
+        public void Size_Set()
+        {
             var terrariaEntity = new TestTerrariaEntity();
             var entity = new TestOrionEntity(terrariaEntity);
 
@@ -106,7 +117,8 @@ namespace Orion.Core.Entities {
             Assert.Equal(new Microsoft.Xna.Framework.Vector2(100, 100), terrariaEntity.Size);
         }
 
-        private class TestOrionEntity : OrionEntity<TestTerrariaEntity> {
+        private class TestOrionEntity : OrionEntity<TestTerrariaEntity>
+        {
             public override string Name { get; set; } = "test";
 
             public TestOrionEntity(TestTerrariaEntity terrariaEntity) : this(-1, terrariaEntity) { }

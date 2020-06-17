@@ -17,14 +17,16 @@
 
 using Orion.Core.Entities;
 
-namespace Orion.Core.Npcs {
+namespace Orion.Core.Npcs
+{
     /// <summary>
     /// Represents a Terraria NPC.
     /// </summary>
     /// <remarks>
     /// Implementations are required to be thread-safe: i.e., each operation on the NPC should be atomic.
     /// </remarks>
-    public interface INpc : IEntity {
+    public interface INpc : IEntity
+    {
         /// <summary>
         /// Gets the NPC's ID.
         /// </summary>

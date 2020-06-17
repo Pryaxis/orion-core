@@ -20,12 +20,14 @@ using Orion.Core.Players;
 using Orion.Core.World;
 using Orion.Core.World.Tiles;
 
-namespace Orion.Core.Events.World.Tiles {
+namespace Orion.Core.Events.World.Tiles
+{
     /// <summary>
     /// An event that occurs when a wall is being painted. This event can be canceled.
     /// </summary>
     [Event("wall-paint")]
-    public sealed class WallPaintEvent : TileEvent {
+    public sealed class WallPaintEvent : TileEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="WallPaintEvent"/> class with the specified
         /// <paramref name="world"/>, <paramref name="player"/>, coordinates, and wall <paramref name="color"/>.
@@ -37,7 +39,8 @@ namespace Orion.Core.Events.World.Tiles {
         /// <param name="color">The wall color being painted.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public WallPaintEvent(IWorld world, IPlayer? player, int x, int y, PaintColor color)
-                : base(world, player, x, y) {
+                : base(world, player, x, y)
+        {
             Color = color;
         }
 

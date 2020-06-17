@@ -17,19 +17,22 @@
 
 using System;
 
-namespace Orion.Core.Events.Server {
+namespace Orion.Core.Events.Server
+{
     /// <summary>
     /// An event that occurs when the server is executing a command via the CLI. This event can be canceled.
     /// </summary>
     [Event("server-cmd")]
-    public sealed class ServerCommandEvent : Event {
+    public sealed class ServerCommandEvent : Event
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="ServerCommandEvent"/> class with the specified command
         /// <paramref name="input"/>.
         /// </summary>
         /// <param name="input">The command input.</param>
         /// <exception cref="ArgumentNullException"><paramref name="input"/> is <see langword="null"/>.</exception>
-        public ServerCommandEvent(string input) {
+        public ServerCommandEvent(string input)
+        {
             Input = input ?? throw new ArgumentNullException(nameof(input));
         }
 

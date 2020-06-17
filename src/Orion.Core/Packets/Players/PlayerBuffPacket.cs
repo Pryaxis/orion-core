@@ -20,12 +20,14 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Orion.Core.Buffs;
 
-namespace Orion.Core.Packets.Players {
+namespace Orion.Core.Packets.Players
+{
     /// <summary>
     /// A packet sent to buff a player.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct PlayerBuffPacket : IPacket {
+    public struct PlayerBuffPacket : IPacket
+    {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -47,13 +49,15 @@ namespace Orion.Core.Packets.Players {
         PacketId IPacket.Id => PacketId.PlayerBuff;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 7);
             return 7;
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 7);
             return 7;
         }

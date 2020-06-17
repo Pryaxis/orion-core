@@ -19,14 +19,16 @@ using System;
 using System.Diagnostics.Contracts;
 using Orion.Core.Entities;
 
-namespace Orion.Core.Items {
+namespace Orion.Core.Items
+{
     /// <summary>
     /// Represents a Terraria item.
     /// </summary>
     /// <remarks>
     /// Implementations are required to be thread-safe: i.e., each operation on the item should be atomic.
     /// </remarks>
-    public interface IItem : IEntity {
+    public interface IItem : IEntity
+    {
         /// <summary>
         /// Gets the item's ID.
         /// </summary>
@@ -61,7 +63,8 @@ namespace Orion.Core.Items {
     /// <summary>
     /// Provides extensions for the <see cref="IItem"/> interface.
     /// </summary>
-    public static class ItemExtensions {
+    public static class ItemExtensions
+    {
         /// <summary>
         /// Returns the <paramref name="item"/> as an item stack instance.
         /// </summary>
@@ -69,8 +72,10 @@ namespace Orion.Core.Items {
         /// <returns>The <paramref name="item"/> as an item stack instance.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
         [Pure]
-        public static ItemStack AsItemStack(this IItem item) {
-            if (item is null) {
+        public static ItemStack AsItemStack(this IItem item)
+        {
+            if (item is null)
+            {
                 throw new ArgumentNullException(nameof(item));
             }
 

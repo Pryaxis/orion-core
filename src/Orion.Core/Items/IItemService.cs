@@ -20,7 +20,8 @@ using Orion.Core.DataStructures;
 using Orion.Core.Events.Items;
 using Orion.Core.Framework;
 
-namespace Orion.Core.Items {
+namespace Orion.Core.Items
+{
     /// <summary>
     /// Represents an item service. Provides access to items and publishes item-related events.
     /// </summary>
@@ -34,7 +35,8 @@ namespace Orion.Core.Items {
     /// </list>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
-    public interface IItemService {
+    public interface IItemService
+    {
         /// <summary>
         /// Gets the items.
         /// </summary>

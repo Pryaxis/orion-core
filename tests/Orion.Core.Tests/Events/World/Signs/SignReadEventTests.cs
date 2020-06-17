@@ -21,24 +21,29 @@ using Orion.Core.Players;
 using Orion.Core.World.Signs;
 using Xunit;
 
-namespace Orion.Core.Events.World.Signs {
-    public class SignReadEventTests {
+namespace Orion.Core.Events.World.Signs
+{
+    public class SignReadEventTests
+    {
         [Fact]
-        public void Ctor_NullSign_ThrowsArgumentNullException() {
+        public void Ctor_NullSign_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new SignReadEvent(null!, player));
         }
 
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             var sign = Mock.Of<ISign>();
 
             Assert.Throws<ArgumentNullException>(() => new SignReadEvent(sign, null!));
         }
 
         [Fact]
-        public void Player_Get() {
+        public void Player_Get()
+        {
             var sign = Mock.Of<ISign>();
             var player = Mock.Of<IPlayer>();
             var evt = new SignReadEvent(sign, player);

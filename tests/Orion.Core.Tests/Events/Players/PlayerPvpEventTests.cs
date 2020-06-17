@@ -20,15 +20,19 @@ using Moq;
 using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Core.Events.Players {
-    public class PlayerPvpEventTests {
+namespace Orion.Core.Events.Players
+{
+    public class PlayerPvpEventTests
+    {
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new PlayerPvpEvent(null!, false));
         }
 
         [Fact]
-        public void IsInPvp_Get() {
+        public void IsInPvp_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var evt = new PlayerPvpEvent(player, true);
 

@@ -19,11 +19,13 @@ using System;
 using Orion.Core.Players;
 using Orion.Core.World;
 
-namespace Orion.Core.Events.World.Tiles {
+namespace Orion.Core.Events.World.Tiles
+{
     /// <summary>
     /// Provides the base class for a tile-related event.
     /// </summary>
-    public abstract class TileEvent : WorldEvent {
+    public abstract class TileEvent : WorldEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="TileEvent"/> class with the specified <paramref name="world"/>,
         /// <paramref name="player"/>, and coordinates.
@@ -33,7 +35,8 @@ namespace Orion.Core.Events.World.Tiles {
         /// <param name="x">The tile's X coordinate.</param>
         /// <param name="y">The tile's Y coordinate.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
-        protected TileEvent(IWorld world, IPlayer? player, int x, int y) : base(world) {
+        protected TileEvent(IWorld world, IPlayer? player, int x, int y) : base(world)
+        {
             Player = player;
             X = x;
             Y = y;

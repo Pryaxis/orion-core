@@ -18,10 +18,13 @@
 using System;
 using Xunit;
 
-namespace Orion.Core.Packets {
-    public class PacketTests {
+namespace Orion.Core.Packets
+{
+    public class PacketTests
+    {
         [Fact]
-        public void WriteWithHeader() {
+        public void WriteWithHeader()
+        {
             var bytes = new byte[4];
             var packet = new TestPacket();
 
@@ -30,12 +33,14 @@ namespace Orion.Core.Packets {
             Assert.Equal(new byte[] { 4, 0, 255, 42 }, bytes);
         }
 
-        private struct TestPacket : IPacket {
+        private struct TestPacket : IPacket
+        {
             public PacketId Id => (PacketId)255;
 
             public int Read(Span<byte> span, PacketContext context) => throw new NotImplementedException();
 
-            public int Write(Span<byte> span, PacketContext context) {
+            public int Write(Span<byte> span, PacketContext context)
+            {
                 span[0] = 42;
                 return 1;
             }

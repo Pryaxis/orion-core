@@ -20,7 +20,8 @@ using System.Diagnostics;
 using Orion.Core.Packets.World.Tiles;
 using Orion.Core.Players;
 
-namespace Orion.Core.World.Tiles {
+namespace Orion.Core.World.Tiles
+{
     /// <summary>
     /// Represents a two-dimensional slice of tiles.
     /// </summary>
@@ -33,7 +34,8 @@ namespace Orion.Core.World.Tiles {
     /// The <see cref="TileSliceExtensions.Slice(ITileSlice, int, int, int, int)"/> extension method allows zero-copy
     /// subslices to be obtained.
     /// </remarks>
-    public interface ITileSlice {
+    public interface ITileSlice
+    {
         /// <summary>
         /// Gets a reference to the tile at the given coordinates.
         /// </summary>
@@ -63,7 +65,8 @@ namespace Orion.Core.World.Tiles {
     /// <summary>
     /// Provides extensions for the <see cref="ITileSlice"/> interface.
     /// </summary>
-    public static class TileSliceExtensions {
+    public static class TileSliceExtensions
+    {
         /// <summary>
         /// Returns a slice of the <paramref name="tiles"/> with the specified starting coordinates and dimensions.
         /// </summary>
@@ -80,30 +83,36 @@ namespace Orion.Core.World.Tiles {
         /// <paramref name="startX"/>, <paramref name="startY"/>, <paramref name="width"/>, or <paramref name="height"/>
         /// are out of range.
         /// </exception>
-        public static ITileSlice Slice(this ITileSlice tiles, int startX, int startY, int width, int height) {
-            if (tiles is null) {
+        public static ITileSlice Slice(this ITileSlice tiles, int startX, int startY, int width, int height)
+        {
+            if (tiles is null)
+            {
                 throw new ArgumentNullException(nameof(tiles));
             }
 
-            if (startX < 0 || startX >= tiles.Width) {
+            if (startX < 0 || startX >= tiles.Width)
+            {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(
                     nameof(startX), $"Start X out of range (expected: 0 to {tiles.Width - 1})");
             }
 
-            if (startY < 0 || startY >= tiles.Height) {
+            if (startY < 0 || startY >= tiles.Height)
+            {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(
                     nameof(startY), $"Start Y out of range (expected: 0 to {tiles.Height - 1})");
             }
 
-            if (width <= 0 || startX + width > tiles.Width) {
+            if (width <= 0 || startX + width > tiles.Width)
+            {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(
                     nameof(width), $"Width out of range (expected: 1 to {tiles.Width - startX})");
             }
 
-            if (height <= 0 || startY + height > tiles.Height) {
+            if (height <= 0 || startY + height > tiles.Height)
+            {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(
                     nameof(height), $"Height out of range (expected: 1 to {tiles.Height - startY})");
@@ -112,12 +121,14 @@ namespace Orion.Core.World.Tiles {
             return new NestedTileSlice(tiles, startX, startY, width, height);
         }
 
-        private sealed class NestedTileSlice : ITileSlice {
+        private sealed class NestedTileSlice : ITileSlice
+        {
             private readonly ITileSlice _tiles;
             private readonly int _startX;
             private readonly int _startY;
 
-            public NestedTileSlice(ITileSlice tiles, int startX, int startY, int width, int height) {
+            public NestedTileSlice(ITileSlice tiles, int startX, int startY, int width, int height)
+            {
                 Debug.Assert(tiles != null);
                 Debug.Assert(startX >= 0 && startX + width <= tiles.Width);
                 Debug.Assert(startY >= 0 && startY + height <= tiles.Height);

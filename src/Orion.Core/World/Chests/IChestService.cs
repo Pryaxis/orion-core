@@ -19,7 +19,8 @@ using System.Collections.Generic;
 using Orion.Core.Events.World.Chests;
 using Orion.Core.Framework;
 
-namespace Orion.Core.World.Chests {
+namespace Orion.Core.World.Chests
+{
     /// <summary>
     /// Represents a chest service. Provides access to chests and publishes chest-related events.
     /// </summary>
@@ -33,7 +34,8 @@ namespace Orion.Core.World.Chests {
     /// </list>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
-    public interface IChestService {
+    public interface IChestService
+    {
         /// <summary>
         /// Gets the chests.
         /// </summary>

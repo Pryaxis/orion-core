@@ -21,17 +21,21 @@ using Orion.Core.Players;
 using Orion.Core.World;
 using Xunit;
 
-namespace Orion.Core.Events.World.Tiles {
-    public class BlockBreakEventTests {
+namespace Orion.Core.Events.World.Tiles
+{
+    public class BlockBreakEventTests
+    {
         [Fact]
-        public void Ctor_NullWorld_ThrowsArgumentNullException() {
+        public void Ctor_NullWorld_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new BlockBreakEvent(null!, player, 256, 100, true));
         }
 
         [Fact]
-        public void IsItemless_Get() {
+        public void IsItemless_Get()
+        {
             var world = Mock.Of<IWorld>();
             var player = Mock.Of<IPlayer>();
             var evt = new BlockBreakEvent(world, player, 256, 100, true);

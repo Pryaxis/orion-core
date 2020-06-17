@@ -22,10 +22,13 @@ using Orion.Core.World;
 using Orion.Core.World.Tiles;
 using Xunit;
 
-namespace Orion.Core.Events.World.Tiles {
-    public class TileSquareEventTests {
+namespace Orion.Core.Events.World.Tiles
+{
+    public class TileSquareEventTests
+    {
         [Fact]
-        public void Ctor_NullWorld_ThrowsArgumentNullException() {
+        public void Ctor_NullWorld_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
 
@@ -33,7 +36,8 @@ namespace Orion.Core.Events.World.Tiles {
         }
 
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             var world = Mock.Of<IWorld>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
 
@@ -41,7 +45,8 @@ namespace Orion.Core.Events.World.Tiles {
         }
 
         [Fact]
-        public void Ctor_NullTiles_ThrowsArgumentNullException() {
+        public void Ctor_NullTiles_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
             var world = Mock.Of<IWorld>();
 
@@ -49,7 +54,8 @@ namespace Orion.Core.Events.World.Tiles {
         }
 
         [Fact]
-        public void Ctor_TilesNotSquareArray_ThrowsArgumentNullException() {
+        public void Ctor_TilesNotSquareArray_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
             var world = Mock.Of<IWorld>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 2);
@@ -58,7 +64,8 @@ namespace Orion.Core.Events.World.Tiles {
         }
 
         [Fact]
-        public void Player_Get() {
+        public void Player_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var world = Mock.Of<IWorld>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
@@ -68,7 +75,8 @@ namespace Orion.Core.Events.World.Tiles {
         }
 
         [Fact]
-        public void X_Get() {
+        public void X_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var world = Mock.Of<IWorld>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
@@ -78,7 +86,8 @@ namespace Orion.Core.Events.World.Tiles {
         }
 
         [Fact]
-        public void Y_Get() {
+        public void Y_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var world = Mock.Of<IWorld>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
@@ -88,7 +97,8 @@ namespace Orion.Core.Events.World.Tiles {
         }
 
         [Fact]
-        public void Tiles_Get() {
+        public void Tiles_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var world = Mock.Of<IWorld>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);

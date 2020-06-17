@@ -19,10 +19,13 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Orion.Core.Items {
-    public class ItemPrefixTests {
+namespace Orion.Core.Items
+{
+    public class ItemPrefixTests
+    {
         [Fact]
-        public void AllItemPrefixesCovered() {
+        public void AllItemPrefixesCovered()
+        {
             var maxId = Enum.GetValues(typeof(ItemPrefix)).Cast<ItemPrefix>().Max();
             Assert.Equal((ItemPrefix)(Terraria.ID.PrefixID.Count - 1), maxId);
         }

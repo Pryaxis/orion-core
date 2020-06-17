@@ -19,13 +19,16 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.Players {
+namespace Orion.Core.Packets.Players
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerManaPacketTests {
+    public class PlayerManaPacketTests
+    {
         public static readonly byte[] Bytes = { 8, 0, 42, 5, 100, 0, 200, 0 };
 
         [Fact]
-        public void PlayerIndex_Set_Get() {
+        public void PlayerIndex_Set_Get()
+        {
             var packet = new PlayerManaPacket();
 
             packet.PlayerIndex = 5;
@@ -34,7 +37,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void Mana_Set_Get() {
+        public void Mana_Set_Get()
+        {
             var packet = new PlayerManaPacket();
 
             packet.Mana = 100;
@@ -43,7 +47,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void MaxMana_Set_Get() {
+        public void MaxMana_Set_Get()
+        {
             var packet = new PlayerManaPacket();
 
             packet.MaxMana = 200;
@@ -52,7 +57,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new PlayerManaPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -63,7 +69,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<PlayerManaPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

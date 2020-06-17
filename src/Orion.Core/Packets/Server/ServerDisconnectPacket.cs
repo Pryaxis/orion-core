@@ -19,11 +19,13 @@ using System;
 using System.Text;
 using Orion.Core.DataStructures;
 
-namespace Orion.Core.Packets.Server {
+namespace Orion.Core.Packets.Server
+{
     /// <summary>
     /// A packet sent from the server to the client to disconnect the client.
     /// </summary>
-    public struct ServerDisconnectPacket : IPacket {
+    public struct ServerDisconnectPacket : IPacket
+    {
         private NetworkText? _reason;
 
         /// <summary>
@@ -31,7 +33,8 @@ namespace Orion.Core.Packets.Server {
         /// </summary>
         /// <value>The disconnect reason.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public NetworkText Reason {
+        public NetworkText Reason
+        {
             get => _reason ?? NetworkText.Empty;
             set => _reason = value ?? throw new ArgumentNullException(nameof(value));
         }

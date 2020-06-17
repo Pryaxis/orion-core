@@ -15,11 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.Projectiles {
+namespace Orion.Core.Projectiles
+{
     /// <summary>
     /// Specifies a projectile ID.
     /// </summary>
-    public enum ProjectileId : short {
+    public enum ProjectileId : short
+    {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         None = 0,
         WoodenArrow = 1,

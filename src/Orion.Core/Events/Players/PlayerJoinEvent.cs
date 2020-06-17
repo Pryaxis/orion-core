@@ -18,12 +18,14 @@
 using System;
 using Orion.Core.Players;
 
-namespace Orion.Core.Events.Players {
+namespace Orion.Core.Events.Players
+{
     /// <summary>
     /// An event that occurs when a player is joining the server. This event can be canceled.
     /// </summary>
     [Event("player-join")]
-    public sealed class PlayerJoinEvent : PlayerEvent {
+    public sealed class PlayerJoinEvent : PlayerEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerJoinEvent"/> class with the specified
         /// <paramref name="player"/>.

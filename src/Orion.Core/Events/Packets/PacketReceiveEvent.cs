@@ -20,13 +20,15 @@ using Orion.Core.Packets;
 using Orion.Core.Players;
 using Serilog.Events;
 
-namespace Orion.Core.Events.Packets {
+namespace Orion.Core.Events.Packets
+{
     /// <summary>
     /// An event that occurs when a packet is being received. This event can be canceled.
     /// </summary>
     /// <typeparam name="TPacket">The type of packet.</typeparam>
     [Event("packet-recv", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class PacketReceiveEvent<TPacket> : PacketEvent<TPacket> where TPacket : struct, IPacket {
+    public sealed class PacketReceiveEvent<TPacket> : PacketEvent<TPacket> where TPacket : struct, IPacket
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="PacketReceiveEvent{TPacket}"/> class with the specified
         /// <paramref name="packet"/> reference and <paramref name="sender"/>.
@@ -34,7 +36,8 @@ namespace Orion.Core.Events.Packets {
         /// <param name="packet">The packet reference being received. <b>This must be on the stack!</b></param>
         /// <param name="sender">The packet's sender.</param>
         /// <exception cref="ArgumentNullException"><paramref name="sender"/> is <see langword="null"/>.</exception>
-        public PacketReceiveEvent(ref TPacket packet, IPlayer sender) : base(ref packet) {
+        public PacketReceiveEvent(ref TPacket packet, IPlayer sender) : base(ref packet)
+        {
             Sender = sender ?? throw new ArgumentNullException(nameof(sender));
         }
 

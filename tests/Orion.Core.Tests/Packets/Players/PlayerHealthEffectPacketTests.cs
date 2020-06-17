@@ -19,13 +19,16 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.Players {
+namespace Orion.Core.Packets.Players
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerHealthEffectPacketTests {
+    public class PlayerHealthEffectPacketTests
+    {
         public static readonly byte[] Bytes = { 6, 0, 35, 5, 100, 0 };
 
         [Fact]
-        public void PlayerIndex_Set_Get() {
+        public void PlayerIndex_Set_Get()
+        {
             var packet = new PlayerHealthEffectPacket();
 
             packet.PlayerIndex = 5;
@@ -34,7 +37,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void HealthAmount_Set_Get() {
+        public void HealthAmount_Set_Get()
+        {
             var packet = new PlayerHealthEffectPacket();
 
             packet.HealthAmount = 100;
@@ -43,7 +47,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new PlayerHealthEffectPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -53,7 +58,8 @@ namespace Orion.Core.Packets.Players {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<PlayerHealthEffectPacket>(
                 Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }

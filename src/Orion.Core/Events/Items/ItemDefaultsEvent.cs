@@ -19,13 +19,15 @@ using System;
 using Orion.Core.Items;
 using Serilog.Events;
 
-namespace Orion.Core.Events.Items {
+namespace Orion.Core.Events.Items
+{
     /// <summary>
     /// An event that occurs when an item's defaults are being set: i.e., when an item's stats are being initialized.
     /// This event can be canceled.
     /// </summary>
     [Event("item-defaults", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class ItemDefaultsEvent : ItemEvent {
+    public sealed class ItemDefaultsEvent : ItemEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemDefaultsEvent"/> class with the specified
         /// <paramref name="item"/>.

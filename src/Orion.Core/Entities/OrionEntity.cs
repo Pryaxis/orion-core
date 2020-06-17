@@ -20,10 +20,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using Orion.Core.DataStructures;
 
-namespace Orion.Core.Entities {
+namespace Orion.Core.Entities
+{
     internal abstract class OrionEntity<TTerrariaEntity> : AnnotatableObject, IEntity, IWrapping<TTerrariaEntity>
-            where TTerrariaEntity : Terraria.Entity {
-        protected OrionEntity(int entityIndex, TTerrariaEntity terrariaEntity) {
+            where TTerrariaEntity : Terraria.Entity
+    {
+        protected OrionEntity(int entityIndex, TTerrariaEntity terrariaEntity)
+        {
             Debug.Assert(terrariaEntity != null);
 
             Index = entityIndex;
@@ -32,7 +35,8 @@ namespace Orion.Core.Entities {
 
         public int Index { get; }
 
-        public bool IsActive {
+        public bool IsActive
+        {
             get => Wrapped.active;
             set => Wrapped.active = value;
         }
@@ -40,17 +44,20 @@ namespace Orion.Core.Entities {
         // Terraria.Entity does not provide this property, so we need to declare it.
         public abstract string Name { get; set; }
 
-        public Vector2f Position {
+        public Vector2f Position
+        {
             get => new Vector2f(Wrapped.position.X, Wrapped.position.Y);
             set => Wrapped.position = new Microsoft.Xna.Framework.Vector2(value.X, value.Y);
         }
 
-        public Vector2f Velocity {
+        public Vector2f Velocity
+        {
             get => new Vector2f(Wrapped.velocity.X, Wrapped.velocity.Y);
             set => Wrapped.velocity = new Microsoft.Xna.Framework.Vector2(value.X, value.Y);
         }
 
-        public Vector2f Size {
+        public Vector2f Size
+        {
             get => new Vector2f(Wrapped.Size.X, Wrapped.Size.Y);
             set => Wrapped.Size = new Microsoft.Xna.Framework.Vector2(value.X, value.Y);
         }

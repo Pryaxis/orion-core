@@ -20,23 +20,28 @@ using System.Diagnostics.CodeAnalysis;
 using Serilog.Events;
 using Xunit;
 
-namespace Orion.Core.Events {
+namespace Orion.Core.Events
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class EventAttributeTests {
+    public class EventAttributeTests
+    {
         [Fact]
-        public void Ctor_NullName_ThrowsArgumentNullException() {
+        public void Ctor_NullName_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new EventAttribute(null!));
         }
 
         [Fact]
-        public void Name_Get() {
+        public void Name_Get()
+        {
             var attribute = new EventAttribute("test");
 
             Assert.Equal("test", attribute.Name);
         }
 
         [Fact]
-        public void LoggingLevel_Set_Get() {
+        public void LoggingLevel_Set_Get()
+        {
             var attribute = new EventAttribute("test");
 
             attribute.LoggingLevel = LogEventLevel.Information;

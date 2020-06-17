@@ -19,10 +19,13 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Xunit;
 
-namespace Orion.Core.Packets {
-    public class StructExtensionsTests {
+namespace Orion.Core.Packets
+{
+    public class StructExtensionsTests
+    {
         [Fact]
-        public void AsRefByte() {
+        public void AsRefByte()
+        {
             var testStruct = new TestStruct();
 
             Unsafe.WriteUnaligned(ref testStruct.AsRefByte(4), 1234);
@@ -31,7 +34,8 @@ namespace Orion.Core.Packets {
         }
 
         [StructLayout(LayoutKind.Explicit)]
-        private struct TestStruct {
+        private struct TestStruct
+        {
             [FieldOffset(0)] public int Value;
             [FieldOffset(4)] public int Value2;
         }

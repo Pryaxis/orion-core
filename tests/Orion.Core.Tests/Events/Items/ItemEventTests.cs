@@ -20,22 +20,27 @@ using Moq;
 using Orion.Core.Items;
 using Xunit;
 
-namespace Orion.Core.Events.Items {
-    public class ItemEventTests {
+namespace Orion.Core.Events.Items
+{
+    public class ItemEventTests
+    {
         [Fact]
-        public void Ctor_NullItem_ThrowsArgumentNullException() {
+        public void Ctor_NullItem_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new TestItemEvent(null!));
         }
 
         [Fact]
-        public void Item_Get() {
+        public void Item_Get()
+        {
             var item = Mock.Of<IItem>();
             var evt = new TestItemEvent(item);
 
             Assert.Same(item, evt.Item);
         }
 
-        private class TestItemEvent : ItemEvent {
+        private class TestItemEvent : ItemEvent
+        {
             public TestItemEvent(IItem item) : base(item) { }
         }
     }

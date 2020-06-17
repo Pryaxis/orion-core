@@ -22,16 +22,20 @@ using Orion.Core.Items;
 using Orion.Core.Npcs;
 using Xunit;
 
-namespace Orion.Core.Events.Npcs {
+namespace Orion.Core.Events.Npcs
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class NpcLootEventTests {
+    public class NpcLootEventTests
+    {
         [Fact]
-        public void Ctor_NullNpc_ThrowsArgumentNullException() {
+        public void Ctor_NullNpc_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new NpcLootEvent(null!));
         }
 
         [Fact]
-        public void Id_Set_Get() {
+        public void Id_Set_Get()
+        {
             var npc = Mock.Of<INpc>();
             var evt = new NpcLootEvent(npc);
 
@@ -41,7 +45,8 @@ namespace Orion.Core.Events.Npcs {
         }
 
         [Fact]
-        public void StackSize_Set_Get() {
+        public void StackSize_Set_Get()
+        {
             var npc = Mock.Of<INpc>();
             var evt = new NpcLootEvent(npc);
 
@@ -51,7 +56,8 @@ namespace Orion.Core.Events.Npcs {
         }
 
         [Fact]
-        public void Prefix_Set_Get() {
+        public void Prefix_Set_Get()
+        {
             var npc = Mock.Of<INpc>();
             var evt = new NpcLootEvent(npc);
 

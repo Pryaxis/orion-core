@@ -20,15 +20,18 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.DataStructures;
 using Xunit;
 
-namespace Orion.Core.Packets.Server {
+namespace Orion.Core.Packets.Server
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ServerCombatTextPacketTests {
+    public class ServerCombatTextPacketTests
+    {
         public static readonly byte[] Bytes = new byte[] {
             24, 0, 119, 0, 0, 200, 66, 0, 0, 128, 67, 255, 255, 255, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97
         };
 
         [Fact]
-        public void Position_Set_Get() {
+        public void Position_Set_Get()
+        {
             var packet = new ServerCombatTextPacket();
 
             packet.Position = new Vector2f(100, 256);
@@ -37,7 +40,8 @@ namespace Orion.Core.Packets.Server {
         }
 
         [Fact]
-        public void Color_Set_Get() {
+        public void Color_Set_Get()
+        {
             var packet = new ServerCombatTextPacket();
 
             packet.Color = Color3.White;
@@ -46,21 +50,24 @@ namespace Orion.Core.Packets.Server {
         }
 
         [Fact]
-        public void Text_GetNullValue() {
+        public void Text_GetNullValue()
+        {
             var packet = new ServerCombatTextPacket();
 
             Assert.Equal(NetworkText.Empty, packet.Text);
         }
 
         [Fact]
-        public void Text_SetNullValue_ThrowsArgumentNullException() {
+        public void Text_SetNullValue_ThrowsArgumentNullException()
+        {
             var packet = new ServerCombatTextPacket();
 
             Assert.Throws<ArgumentNullException>(() => packet.Text = null!);
         }
 
         [Fact]
-        public void Text_Set_Get() {
+        public void Text_Set_Get()
+        {
             var packet = new ServerCombatTextPacket();
 
             packet.Text = "Terraria";
@@ -69,7 +76,8 @@ namespace Orion.Core.Packets.Server {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new ServerCombatTextPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -80,7 +88,8 @@ namespace Orion.Core.Packets.Server {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<ServerCombatTextPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

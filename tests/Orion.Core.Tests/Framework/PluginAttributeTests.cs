@@ -19,30 +19,36 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Framework {
+namespace Orion.Core.Framework
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PluginAttributeTests {
+    public class PluginAttributeTests
+    {
         [Fact]
-        public void Ctor_NullName_ThrowsArgumentNullException() {
+        public void Ctor_NullName_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new PluginAttribute(null!));
         }
 
         [Fact]
-        public void Name_Get() {
+        public void Name_Get()
+        {
             var attribute = new PluginAttribute("test");
 
             Assert.Equal("test", attribute.Name);
         }
 
         [Fact]
-        public void Author_SetNullValue_ThrowsArgumentNullException() {
+        public void Author_SetNullValue_ThrowsArgumentNullException()
+        {
             var attribute = new PluginAttribute("test");
 
             Assert.Throws<ArgumentNullException>(() => attribute.Author = null!);
         }
 
         [Fact]
-        public void Author_Set_Get() {
+        public void Author_Set_Get()
+        {
             var attribute = new PluginAttribute("test");
 
             attribute.Author = "test";

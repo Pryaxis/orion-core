@@ -18,11 +18,14 @@
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.World.Tiles {
+namespace Orion.Core.World.Tiles
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class TileTests {
+    public class TileTests
+    {
         [Fact]
-        public void BlockId_Set_Get() {
+        public void BlockId_Set_Get()
+        {
             var tile = new Tile();
 
             tile.BlockId = BlockId.Torches;
@@ -31,7 +34,8 @@ namespace Orion.Core.World.Tiles {
         }
 
         [Fact]
-        public void WallId_Set_Get() {
+        public void WallId_Set_Get()
+        {
             var tile = new Tile();
 
             tile.WallId = WallId.Stone;
@@ -40,7 +44,8 @@ namespace Orion.Core.World.Tiles {
         }
 
         [Fact]
-        public void LiquidAmount_Set_Get() {
+        public void LiquidAmount_Set_Get()
+        {
             var tile = new Tile();
 
             tile.LiquidAmount = 255;
@@ -49,7 +54,8 @@ namespace Orion.Core.World.Tiles {
         }
 
         [Fact]
-        public void BlockFrameX_Set_Get() {
+        public void BlockFrameX_Set_Get()
+        {
             var tile = new Tile();
 
             tile.BlockFrameX = 1234;
@@ -58,7 +64,8 @@ namespace Orion.Core.World.Tiles {
         }
 
         [Fact]
-        public void BlockFrameY_Set_Get() {
+        public void BlockFrameY_Set_Get()
+        {
             var tile = new Tile();
 
             tile.BlockFrameY = 5678;
@@ -67,7 +74,8 @@ namespace Orion.Core.World.Tiles {
         }
 
         [Fact]
-        public void BlockColor_Set_Get() {
+        public void BlockColor_Set_Get()
+        {
             var tile = new Tile();
 
             tile.BlockColor = PaintColor.Red;
@@ -78,7 +86,8 @@ namespace Orion.Core.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsBlockActive_Set_Get(bool isBlockActive) {
+        public void IsBlockActive_Set_Get(bool isBlockActive)
+        {
             var tile = new Tile();
 
             tile.IsBlockActive = isBlockActive;
@@ -89,7 +98,8 @@ namespace Orion.Core.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsBlockActuated_Set_Get(bool isBlockActuated) {
+        public void IsBlockActuated_Set_Get(bool isBlockActuated)
+        {
             var tile = new Tile();
 
             tile.IsBlockActuated = isBlockActuated;
@@ -100,7 +110,8 @@ namespace Orion.Core.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void HasRedWire_Set_Get(bool hasRedWire) {
+        public void HasRedWire_Set_Get(bool hasRedWire)
+        {
             var tile = new Tile();
 
             tile.HasRedWire = hasRedWire;
@@ -111,7 +122,8 @@ namespace Orion.Core.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void HasBlueWire_Set_Get(bool hasBlueWire) {
+        public void HasBlueWire_Set_Get(bool hasBlueWire)
+        {
             var tile = new Tile();
 
             tile.HasBlueWire = hasBlueWire;
@@ -122,7 +134,8 @@ namespace Orion.Core.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void HasGreenWire_Set_Get(bool hasGreenWire) {
+        public void HasGreenWire_Set_Get(bool hasGreenWire)
+        {
             var tile = new Tile();
 
             tile.HasGreenWire = hasGreenWire;
@@ -133,7 +146,8 @@ namespace Orion.Core.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsBlockHalved_Set_Get(bool isBlockHalved) {
+        public void IsBlockHalved_Set_Get(bool isBlockHalved)
+        {
             var tile = new Tile();
 
             tile.IsBlockHalved = isBlockHalved;
@@ -144,7 +158,8 @@ namespace Orion.Core.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void HasActuator_Set_Get(bool hasActuator) {
+        public void HasActuator_Set_Get(bool hasActuator)
+        {
             var tile = new Tile();
 
             tile.HasActuator = hasActuator;
@@ -153,7 +168,8 @@ namespace Orion.Core.World.Tiles {
         }
 
         [Fact]
-        public void Slope_Set_Get() {
+        public void Slope_Set_Get()
+        {
             var tile = new Tile();
 
             tile.Slope = Slope.TopLeft;
@@ -162,7 +178,8 @@ namespace Orion.Core.World.Tiles {
         }
 
         [Fact]
-        public void WallColor_Set_Get() {
+        public void WallColor_Set_Get()
+        {
             var tile = new Tile();
 
             tile.WallColor = PaintColor.Red;
@@ -173,7 +190,8 @@ namespace Orion.Core.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void HasYellowWire_Set_Get(bool hasYellowWire) {
+        public void HasYellowWire_Set_Get(bool hasYellowWire)
+        {
             var tile = new Tile();
 
             tile.HasYellowWire = hasYellowWire;
@@ -182,7 +200,8 @@ namespace Orion.Core.World.Tiles {
         }
 
         [Fact]
-        public void Liquid_Set_Get() {
+        public void Liquid_Set_Get()
+        {
             var tile = new Tile();
 
             tile.Liquid = Liquid.Honey;
@@ -191,7 +210,8 @@ namespace Orion.Core.World.Tiles {
         }
 
         [Fact]
-        public void BlockFrameNumber_Set_Get() {
+        public void BlockFrameNumber_Set_Get()
+        {
             var tile = new Tile();
 
             tile.BlockFrameNumber = 7;
@@ -202,7 +222,8 @@ namespace Orion.Core.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsCheckingLiquid_Set_Get(bool isCheckingLiquid) {
+        public void IsCheckingLiquid_Set_Get(bool isCheckingLiquid)
+        {
             var tile = new Tile();
 
             tile.IsCheckingLiquid = isCheckingLiquid;
@@ -213,7 +234,8 @@ namespace Orion.Core.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void ShouldSkipLiquid_Set_Get(bool shouldSkipLiquid) {
+        public void ShouldSkipLiquid_Set_Get(bool shouldSkipLiquid)
+        {
             var tile = new Tile();
 
             tile.ShouldSkipLiquid = shouldSkipLiquid;

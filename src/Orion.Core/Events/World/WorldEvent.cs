@@ -18,18 +18,21 @@
 using System;
 using Orion.Core.World;
 
-namespace Orion.Core.Events.World {
+namespace Orion.Core.Events.World
+{
     /// <summary>
     /// Provides the base class for a world-related event.
     /// </summary>
-    public abstract class WorldEvent : Event {
+    public abstract class WorldEvent : Event
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="WorldEvent"/> class with the specified
         /// <paramref name="world"/>.
         /// </summary>
         /// <param name="world">The world involved in the event.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
-        protected WorldEvent(IWorld world) {
+        protected WorldEvent(IWorld world)
+        {
             World = world ?? throw new ArgumentNullException(nameof(world));
         }
 

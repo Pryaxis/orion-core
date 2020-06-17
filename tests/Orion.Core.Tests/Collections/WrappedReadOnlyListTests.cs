@@ -20,12 +20,16 @@ using System.Linq;
 using Orion.Core.Entities;
 using Xunit;
 
-namespace Orion.Core.Collections {
-    public class WrappedReadOnlyListTests {
+namespace Orion.Core.Collections
+{
+    public class WrappedReadOnlyListTests
+    {
         [Fact]
-        public void Count_Get() {
+        public void Count_Get()
+        {
             var wrappedItems = new TestWrappedClass[10];
-            for (var i = 0; i < 10; ++i) {
+            for (var i = 0; i < 10; ++i)
+            {
                 wrappedItems[i] = new TestWrappedClass();
             }
 
@@ -38,9 +42,11 @@ namespace Orion.Core.Collections {
         [Theory]
         [InlineData(-1)]
         [InlineData(1000)]
-        public void Item_GetIndexOutOfRange_ThrowsArgumentOutOfRangeException(int index) {
+        public void Item_GetIndexOutOfRange_ThrowsArgumentOutOfRangeException(int index)
+        {
             var wrappedItems = new TestWrappedClass[10];
-            for (var i = 0; i < 10; ++i) {
+            for (var i = 0; i < 10; ++i)
+            {
                 wrappedItems[i] = new TestWrappedClass();
             }
 
@@ -51,9 +57,11 @@ namespace Orion.Core.Collections {
         }
 
         [Fact]
-        public void Item_Get() {
+        public void Item_Get()
+        {
             var wrappedItems = new TestWrappedClass[10];
-            for (var i = 0; i < 10; ++i) {
+            for (var i = 0; i < 10; ++i)
+            {
                 wrappedItems[i] = new TestWrappedClass();
             }
 
@@ -65,9 +73,11 @@ namespace Orion.Core.Collections {
         }
 
         [Fact]
-        public void Item_GetMultipleTimes_ReturnsSameInstance() {
+        public void Item_GetMultipleTimes_ReturnsSameInstance()
+        {
             var wrappedItems = new TestWrappedClass[10];
-            for (var i = 0; i < 10; ++i) {
+            for (var i = 0; i < 10; ++i)
+            {
                 wrappedItems[i] = new TestWrappedClass();
             }
 
@@ -80,23 +90,28 @@ namespace Orion.Core.Collections {
         }
 
         [Fact]
-        public void GetEnumerator() {
+        public void GetEnumerator()
+        {
             var wrappedItems = new TestWrappedClass[10];
-            for (var i = 0; i < 10; ++i) {
+            for (var i = 0; i < 10; ++i)
+            {
                 wrappedItems[i] = new TestWrappedClass();
             }
 
             var items = new WrappedReadOnlyList<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass)).ToList();
-            for (var i = 0; i < 10; ++i) {
+            for (var i = 0; i < 10; ++i)
+            {
                 Assert.Same(wrappedItems[i], items[i].Wrapped);
             }
         }
 
-        private class TestClass : IWrapping<TestWrappedClass> {
+        private class TestClass : IWrapping<TestWrappedClass>
+        {
             public TestWrappedClass Wrapped { get; }
 
-            public TestClass(TestWrappedClass testWrappedClass) {
+            public TestClass(TestWrappedClass testWrappedClass)
+            {
                 Wrapped = testWrappedClass;
             }
         }

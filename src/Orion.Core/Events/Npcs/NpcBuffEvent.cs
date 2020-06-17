@@ -20,12 +20,14 @@ using Orion.Core.Buffs;
 using Orion.Core.Npcs;
 using Orion.Core.Players;
 
-namespace Orion.Core.Events.Npcs {
+namespace Orion.Core.Events.Npcs
+{
     /// <summary>
     /// An event that occurs when an NPC is being buffed. This event can be canceled.
     /// </summary>
     [Event("npc-buff")]
-    public sealed class NpcBuffEvent : NpcEvent {
+    public sealed class NpcBuffEvent : NpcEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcBuffEvent"/> class with the specified
         /// <paramref name="npc"/>, <paramref name="player"/>, and <paramref name="buff"/>.
@@ -36,7 +38,8 @@ namespace Orion.Core.Events.Npcs {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="npc"/> or <paramref name="player"/> are <see langword="null"/>.
         /// </exception>
-        public NpcBuffEvent(INpc npc, IPlayer player, Buff buff) : base(npc) {
+        public NpcBuffEvent(INpc npc, IPlayer player, Buff buff) : base(npc)
+        {
             Player = player ?? throw new ArgumentNullException(nameof(player));
             Buff = buff;
         }

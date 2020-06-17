@@ -20,13 +20,16 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.Items;
 using Xunit;
 
-namespace Orion.Core.Packets.World.Chests {
+namespace Orion.Core.Packets.World.Chests
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ChestInventoryPacketTests {
+    public class ChestInventoryPacketTests
+    {
         public static readonly byte[] Bytes = { 11, 0, 32, 5, 0, 2, 1, 0, 82, 17, 6 };
 
         [Fact]
-        public void ChestIndex_Set_Get() {
+        public void ChestIndex_Set_Get()
+        {
             var packet = new ChestInventoryPacket();
 
             packet.ChestIndex = 5;
@@ -35,7 +38,8 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         [Fact]
-        public void Slot_Set_Get() {
+        public void Slot_Set_Get()
+        {
             var packet = new ChestInventoryPacket();
 
             packet.Slot = 2;
@@ -44,7 +48,8 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         [Fact]
-        public void StackSize_Set_Get() {
+        public void StackSize_Set_Get()
+        {
             var packet = new ChestInventoryPacket();
 
             packet.StackSize = 1;
@@ -53,7 +58,8 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         [Fact]
-        public void Prefix_Set_Get() {
+        public void Prefix_Set_Get()
+        {
             var packet = new ChestInventoryPacket();
 
             packet.Prefix = ItemPrefix.Unreal;
@@ -62,7 +68,8 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         [Fact]
-        public void Id_Set_Get() {
+        public void Id_Set_Get()
+        {
             var packet = new ChestInventoryPacket();
 
             packet.Id = ItemId.Sdmg;
@@ -71,7 +78,8 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new ChestInventoryPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -84,7 +92,8 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<ChestInventoryPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

@@ -35,9 +35,11 @@ using Orion.Core.Packets.Modules;
 using Orion.Core.Packets.Players;
 using Serilog;
 
-namespace Orion.Core.Players {
+namespace Orion.Core.Players
+{
     [Binding("orion-players", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
-    internal sealed class OrionPlayerService : OrionService, IPlayerService {
+    internal sealed class OrionPlayerService : OrionService, IPlayerService
+    {
         private delegate void OnReceivePacketHandler(Terraria.MessageBuffer buffer, Span<byte> span);
         private delegate void OnSendPacketHandler(int playerIndex, Span<byte> span);
 
@@ -57,7 +59,8 @@ namespace Orion.Core.Players {
         private readonly OnSendPacketHandler?[] _onSendModuleHandlers = new OnSendPacketHandler?[65536];
         private readonly ThreadLocal<byte[]> _sendBuffer = new ThreadLocal<byte[]>(() => new byte[ushort.MaxValue]);
 
-        public OrionPlayerService(OrionKernel kernel, ILogger log) : base(kernel, log) {
+        public OrionPlayerService(OrionKernel kernel, ILogger log) : base(kernel, log)
+        {
             // Construct the `Players` array. Note that the last player should be ignored, as it is not a real player.
             Players = new WrappedReadOnlyList<OrionPlayer, Terraria.Player>(
                 Terraria.Main.player.AsMemory(..^1),
@@ -75,7 +78,8 @@ namespace Orion.Core.Players {
 
             // Construct the `_onReceivePacketHandlers` and `_onSendPacketHandlers` arrays ahead of time for the valid
             // `PacketId` instances. The invalid instances are handled by defaulting to `UnknownPacket`.
-            foreach (var packetId in (PacketId[])Enum.GetValues(typeof(PacketId))) {
+            foreach (var packetId in (PacketId[])Enum.GetValues(typeof(PacketId)))
+            {
                 var packetType = packetId.Type();
                 _onReceivePacketHandlers[(byte)packetId] = MakeOnReceivePacketHandler(packetType);
                 _onSendPacketHandlers[(byte)packetId] = MakeOnSendPacketHandler(packetType);
@@ -83,7 +87,8 @@ namespace Orion.Core.Players {
 
             // Construct the `_onReceiveModuleHandlers` and `_onSendModuleHandlers` arrays ahead of time for the valid
             // `ModuleId` instances. The invalid instances are handled by defaulting to `UnknownModule`.
-            foreach (var moduleId in (ModuleId[])Enum.GetValues(typeof(ModuleId))) {
+            foreach (var moduleId in (ModuleId[])Enum.GetValues(typeof(ModuleId)))
+            {
                 var packetType = typeof(ModulePacket<>).MakeGenericType(moduleId.Type());
                 _onReceiveModuleHandlers[(ushort)moduleId] = MakeOnReceivePacketHandler(packetType);
                 _onSendModuleHandlers[(ushort)moduleId] = MakeOnSendPacketHandler(packetType);
@@ -100,7 +105,8 @@ namespace Orion.Core.Players {
 
         public IReadOnlyList<IPlayer> Players { get; }
 
-        public override void Dispose() {
+        public override void Dispose()
+        {
             _ignoreReceiveDataHandler.Dispose();
             _receiveBuffer.Dispose();
             _sendBuffer.Dispose();
@@ -119,7 +125,8 @@ namespace Orion.Core.Players {
         //
 
         private OTAPI.HookResult ReceiveDataHandler(
-                Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset, ref int start, ref int length) {
+                Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset, ref int start, ref int length)
+        {
             Debug.Assert(buffer != null);
             Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Players.Count);
             Debug.Assert(start >= 0 && start + length <= buffer.readBuffer.Length);
@@ -127,17 +134,21 @@ namespace Orion.Core.Players {
 
             // Check `_ignoreReceiveDataHandler` to prevent an infinite loop if `GetData()` is called in
             // `ReceivePacket`. A thread-local value is used in case there is some concurrency.
-            if (_ignoreReceiveDataHandler.Value) {
+            if (_ignoreReceiveDataHandler.Value)
+            {
                 _ignoreReceiveDataHandler.Value = false;
                 return OTAPI.HookResult.Continue;
             }
 
             OnReceivePacketHandler handler;
             var span = buffer.readBuffer.AsSpan(start..(start + length));
-            if (packetId == (byte)PacketId.Module) {
+            if (packetId == (byte)PacketId.Module)
+            {
                 var moduleId = Unsafe.ReadUnaligned<ushort>(ref span[1]);
                 handler = _onReceiveModuleHandlers[moduleId] ?? OnReceivePacket<ModulePacket<UnknownModule>>;
-            } else {
+            }
+            else
+            {
                 handler = _onReceivePacketHandlers[packetId] ?? OnReceivePacket<UnknownPacket>;
             }
 
@@ -147,7 +158,8 @@ namespace Orion.Core.Players {
 
         private OTAPI.HookResult SendBytesHandler(
                 ref int playerIndex, ref byte[] data, ref int offset, ref int size,
-                ref Terraria.Net.Sockets.SocketSendCallback callback, ref object state) {
+                ref Terraria.Net.Sockets.SocketSendCallback callback, ref object state)
+        {
             Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
             Debug.Assert(data != null);
             Debug.Assert(offset >= 0 && offset + size <= data.Length);
@@ -164,15 +176,18 @@ namespace Orion.Core.Players {
 
         private OTAPI.HookResult SendNetDataHandler(
                 Terraria.Net.NetManager manager, Terraria.Net.Sockets.ISocket socket,
-                ref Terraria.Net.NetPacket packet) {
+                ref Terraria.Net.NetPacket packet)
+        {
             Debug.Assert(socket != null);
             Debug.Assert(packet.Buffer.Data != null);
             Debug.Assert(packet.Writer.BaseStream.Position >= 5);
 
             // Since we don't have an index, scan through the clients to find the player index.
             var playerIndex = -1;
-            for (var i = 0; i < Terraria.Netplay.MaxConnections; ++i) {
-                if (Terraria.Netplay.Clients[i].Socket == socket) {
+            for (var i = 0; i < Terraria.Netplay.MaxConnections; ++i)
+            {
+                if (Terraria.Netplay.Clients[i].Socket == socket)
+                {
                     playerIndex = i;
                     break;
                 }
@@ -189,7 +204,8 @@ namespace Orion.Core.Players {
             return OTAPI.HookResult.Cancel;
         }
 
-        private OTAPI.HookResult PreUpdateHandler(Terraria.Player terrariaPlayer, ref int playerIndex) {
+        private OTAPI.HookResult PreUpdateHandler(Terraria.Player terrariaPlayer, ref int playerIndex)
+        {
             Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
 
             var evt = new PlayerTickEvent(Players[playerIndex]);
@@ -197,12 +213,14 @@ namespace Orion.Core.Players {
             return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
-        private OTAPI.HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
+        private OTAPI.HookResult PreResetHandler(Terraria.RemoteClient remoteClient)
+        {
             Debug.Assert(remoteClient != null);
             Debug.Assert(remoteClient.Id >= 0 && remoteClient.Id < Players.Count);
 
             // Check if the client was active since this gets called when setting up `RemoteClient` as well.
-            if (!remoteClient.IsActive) {
+            if (!remoteClient.IsActive)
+            {
                 return OTAPI.HookResult.Continue;
             }
 
@@ -216,7 +234,8 @@ namespace Orion.Core.Players {
         //
 
         private void OnReceivePacket<TPacket>(Terraria.MessageBuffer buffer, Span<byte> span)
-                where TPacket : struct, IPacket {
+                where TPacket : struct, IPacket
+        {
             Debug.Assert(buffer != null);
             Debug.Assert(span.Length > 0);
 
@@ -228,13 +247,15 @@ namespace Orion.Core.Players {
 
             // If `TPacket` is `UnknownPacket`, then we need to set the `Id` property appropriately since it's not
             // available in the `Read` method.
-            if (typeof(TPacket) == typeof(UnknownPacket)) {
+            if (typeof(TPacket) == typeof(UnknownPacket))
+            {
                 Unsafe.As<TPacket, UnknownPacket>(ref packet).Id = (PacketId)span[0];
             }
 
             var evt = new PacketReceiveEvent<TPacket>(ref packet, Players[buffer.whoAmI]);
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled) {
+            if (evt.IsCanceled)
+            {
                 return;
             }
 
@@ -257,7 +278,8 @@ namespace Orion.Core.Players {
             buffer.reader = oldReader;
         }
 
-        private void OnSendPacket<TPacket>(int playerIndex, Span<byte> span) where TPacket : struct, IPacket {
+        private void OnSendPacket<TPacket>(int playerIndex, Span<byte> span) where TPacket : struct, IPacket
+        {
             Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
             Debug.Assert(span.Length > 0);
 
@@ -269,13 +291,15 @@ namespace Orion.Core.Players {
 
             // If `TPacket` is `UnknownPacket`, then we need to set the `Id` property appropriately since it's not
             // available in the `Read` method.
-            if (typeof(TPacket) == typeof(UnknownPacket)) {
+            if (typeof(TPacket) == typeof(UnknownPacket))
+            {
                 Unsafe.As<TPacket, UnknownPacket>(ref packet).Id = (PacketId)span[0];
             }
 
             var evt = new PacketSendEvent<TPacket>(ref packet, Players[playerIndex]);
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled) {
+            if (evt.IsCanceled)
+            {
                 return;
             }
 
@@ -285,9 +309,11 @@ namespace Orion.Core.Players {
             var newPacketLength = packet.WriteWithHeader(sendBuffer, PacketContext.Server);
 
             var terrariaClient = Terraria.Netplay.Clients[playerIndex];
-            try {
+            try
+            {
                 terrariaClient.Socket.AsyncSend(sendBuffer, 0, newPacketLength, terrariaClient.ServerWriteCallBack);
-            } catch (IOException) { }
+            }
+            catch (IOException) { }
         }
 
         // =============================================================================================================
@@ -296,13 +322,15 @@ namespace Orion.Core.Players {
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnPlayerJoinPacket(PacketReceiveEvent<PlayerJoinPacket> evt) {
+        private void OnPlayerJoinPacket(PacketReceiveEvent<PlayerJoinPacket> evt)
+        {
             ForwardEvent(evt, new PlayerJoinEvent(evt.Sender));
         }
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnPlayerHealthPacket(PacketReceiveEvent<PlayerHealthPacket> evt) {
+        private void OnPlayerHealthPacket(PacketReceiveEvent<PlayerHealthPacket> evt)
+        {
             ref var packet = ref evt.Packet;
 
             ForwardEvent(evt, new PlayerHealthEvent(evt.Sender, packet.Health, packet.MaxHealth));
@@ -310,7 +338,8 @@ namespace Orion.Core.Players {
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnPlayerPvpPacket(PacketReceiveEvent<PlayerPvpPacket> evt) {
+        private void OnPlayerPvpPacket(PacketReceiveEvent<PlayerPvpPacket> evt)
+        {
             ref var packet = ref evt.Packet;
 
             ForwardEvent(evt, new PlayerPvpEvent(evt.Sender, packet.IsInPvp));
@@ -318,7 +347,8 @@ namespace Orion.Core.Players {
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnClientPasswordPacket(PacketReceiveEvent<ClientPasswordPacket> evt) {
+        private void OnClientPasswordPacket(PacketReceiveEvent<ClientPasswordPacket> evt)
+        {
             ref var packet = ref evt.Packet;
 
             ForwardEvent(evt, new PlayerPasswordEvent(evt.Sender, packet.Password));
@@ -326,7 +356,8 @@ namespace Orion.Core.Players {
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnPlayerManaPacket(PacketReceiveEvent<PlayerManaPacket> evt) {
+        private void OnPlayerManaPacket(PacketReceiveEvent<PlayerManaPacket> evt)
+        {
             ref var packet = ref evt.Packet;
 
             ForwardEvent(evt, new PlayerManaEvent(evt.Sender, packet.Mana, packet.MaxMana));
@@ -334,7 +365,8 @@ namespace Orion.Core.Players {
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnPlayerTeamPacket(PacketReceiveEvent<PlayerTeamPacket> evt) {
+        private void OnPlayerTeamPacket(PacketReceiveEvent<PlayerTeamPacket> evt)
+        {
             ref var packet = ref evt.Packet;
 
             ForwardEvent(evt, new PlayerTeamEvent(evt.Sender, packet.Team));
@@ -342,7 +374,8 @@ namespace Orion.Core.Players {
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnClientUuidPacket(PacketReceiveEvent<ClientUuidPacket> evt) {
+        private void OnClientUuidPacket(PacketReceiveEvent<ClientUuidPacket> evt)
+        {
             ref var packet = ref evt.Packet;
 
             ForwardEvent(evt, new PlayerUuidEvent(evt.Sender, packet.Uuid));
@@ -350,16 +383,19 @@ namespace Orion.Core.Players {
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
-        private void OnChatModule(PacketReceiveEvent<ModulePacket<ChatModule>> evt) {
+        private void OnChatModule(PacketReceiveEvent<ModulePacket<ChatModule>> evt)
+        {
             ref var module = ref evt.Packet.Module;
 
             ForwardEvent(evt, new PlayerChatEvent(evt.Sender, module.ClientCommand, module.ClientMessage));
         }
 
         // Forwards `evt` as `newEvt`.
-        private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event {
+        private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event
+        {
             Kernel.Raise(newEvt, Log);
-            if (newEvt.IsCanceled) {
+            if (newEvt.IsCanceled)
+            {
                 evt.Cancel(newEvt.CancellationReason);
             }
         }

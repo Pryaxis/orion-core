@@ -20,22 +20,27 @@ using Moq;
 using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Core.Events.Players {
-    public class PlayerEventTests {
+namespace Orion.Core.Events.Players
+{
+    public class PlayerEventTests
+    {
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new TestPlayerEvent(null!));
         }
 
         [Fact]
-        public void Player_Get() {
+        public void Player_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var evt = new TestPlayerEvent(player);
 
             Assert.Same(player, evt.Player);
         }
 
-        private class TestPlayerEvent : PlayerEvent {
+        private class TestPlayerEvent : PlayerEvent
+        {
             public TestPlayerEvent(IPlayer player) : base(player) { }
         }
     }

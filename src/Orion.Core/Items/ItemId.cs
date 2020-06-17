@@ -15,11 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.Items {
+namespace Orion.Core.Items
+{
     /// <summary>
     /// Specifies an item ID.
     /// </summary>
-    public enum ItemId : short {
+    public enum ItemId : short
+    {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         None = 0,
         IronPickaxe = 1,

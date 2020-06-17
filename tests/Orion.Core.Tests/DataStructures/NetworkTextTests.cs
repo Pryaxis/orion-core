@@ -20,8 +20,10 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.DataStructures {
-    public class NetworkTextTests {
+namespace Orion.Core.DataStructures
+{
+    public class NetworkTextTests
+    {
         public static readonly IEnumerable<object[]> NetworkTexts = new[] {
             new object[] { (NetworkText)"literal" },
             new object[] { NetworkText.Formatted("formattable {0} {1}", "literal", "literal2") },
@@ -30,14 +32,16 @@ namespace Orion.Core.DataStructures {
 
         [Theory]
         [MemberData(nameof(NetworkTexts))]
-        public void Equals_ReturnsTrue(NetworkText text) {
+        public void Equals_ReturnsTrue(NetworkText text)
+        {
             Assert.True(text.Equals((object)text));
             Assert.True(text.Equals(text));
             Assert.Equal(text.GetHashCode(), text.GetHashCode());
         }
 
         [Fact]
-        public void Equals_ReturnsFalse() {
+        public void Equals_ReturnsFalse()
+        {
             NetworkText text = "test";
             NetworkText text2 = "test2";
 
@@ -51,7 +55,8 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
-        public void Equals_ArgsDifferent_ReturnsFalse() {
+        public void Equals_ArgsDifferent_ReturnsFalse()
+        {
             var text = NetworkText.Formatted("test {0}", "test");
             var text2 = NetworkText.Formatted("test {0}", "test2");
 
@@ -61,65 +66,77 @@ namespace Orion.Core.DataStructures {
 
         [Theory]
         [MemberData(nameof(NetworkTexts))]
-        public void GetHashCode_Equals_AreEqual(NetworkText text) {
+        public void GetHashCode_Equals_AreEqual(NetworkText text)
+        {
             Assert.Equal(text.GetHashCode(), text.GetHashCode());
         }
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Implicit_NullText_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => {
+        public void op_Implicit_NullText_ThrowsArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
                 NetworkText text = (string)null!;
             });
         }
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Implicit() {
+        public void op_Implicit()
+        {
             NetworkText text = "test";
 
             Assert.Equal("test", text);
         }
 
         [Fact]
-        public void Formatted_NullFormat_ThrowsArgumentNullException() {
+        public void Formatted_NullFormat_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => NetworkText.Formatted(null!));
         }
 
         [Fact]
-        public void Formatted_NullArgs_ThrowsArgumentNullException() {
+        public void Formatted_NullArgs_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => NetworkText.Formatted("{0} {1}", null!));
         }
 
         [Fact]
-        public void Formatted_NullArg_ThrowsArgumentException() {
+        public void Formatted_NullArg_ThrowsArgumentException()
+        {
             Assert.Throws<ArgumentException>(() => NetworkText.Formatted("{0} {1}", "a", null!));
         }
 
         [Fact]
-        public void Formatted() {
+        public void Formatted()
+        {
             var text = NetworkText.Formatted("{0} {1}", "a", "b");
 
             Assert.Equal(NetworkText.Formatted("{0} {1}", "a", "b"), text);
         }
 
         [Fact]
-        public void Localized_NullFormat_ThrowsArgumentNullException() {
+        public void Localized_NullFormat_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => NetworkText.Localized(null!));
         }
 
         [Fact]
-        public void Localized_NullArgs_ThrowsArgumentNullException() {
+        public void Localized_NullArgs_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => NetworkText.Localized("{0} {1}", null!));
         }
 
         [Fact]
-        public void Localized_NullArg_ThrowsArgumentException() {
+        public void Localized_NullArg_ThrowsArgumentException()
+        {
             Assert.Throws<ArgumentException>(() => NetworkText.Localized("{0} {1}", "a", null!));
         }
 
         [Fact]
-        public void Localized() {
+        public void Localized()
+        {
             var text = NetworkText.Localized("{0} {1}", "a", "b");
 
             Assert.Equal(NetworkText.Localized("{0} {1}", "a", "b"), text);
@@ -128,7 +145,8 @@ namespace Orion.Core.DataStructures {
         [Theory]
         [MemberData(nameof(NetworkTexts))]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Equality_ReturnsTrue(NetworkText text) {
+        public void op_Equality_ReturnsTrue(NetworkText text)
+        {
 #pragma warning disable CS1718 // Comparison made to same variable
             Assert.True(text == text);
 #pragma warning restore CS1718 // Comparison made to same variable
@@ -137,7 +155,8 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Equality_ReturnsFalse() {
+        public void op_Equality_ReturnsFalse()
+        {
             var text = "test";
             var text2 = "test2";
 
@@ -146,7 +165,8 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Inequality_ReturnsTrue() {
+        public void op_Inequality_ReturnsTrue()
+        {
             var text = "test";
             var text2 = "test2";
 
@@ -156,7 +176,8 @@ namespace Orion.Core.DataStructures {
         [Theory]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         [MemberData(nameof(NetworkTexts))]
-        public void op_Inequality_ReturnsFalse(NetworkText text) {
+        public void op_Inequality_ReturnsFalse(NetworkText text)
+        {
 #pragma warning disable CS1718 // Comparison made to same variable
             Assert.False(text != text);
 #pragma warning restore CS1718 // Comparison made to same variable

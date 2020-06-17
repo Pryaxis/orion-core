@@ -15,12 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.Events {
+namespace Orion.Core.Events
+{
     /// <summary>
     /// Specifies the priority of an event handler. Event handlers with higher priorities will be run before event
     /// handlers with lower priorities.
     /// </summary>
-    public enum EventPriority {
+    public enum EventPriority
+    {
         /// <summary>
         /// Indicates that the event handler should have the highest priority.
         /// </summary>

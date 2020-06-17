@@ -26,14 +26,17 @@ using Orion.Core.Players;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Core.Npcs {
+namespace Orion.Core.Npcs
+{
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
-    public class OrionNpcServiceTests {
+    public class OrionNpcServiceTests
+    {
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
-        public void Npcs_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Npcs_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index)
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
 
@@ -41,7 +44,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void Npcs_Item_Get() {
+        public void Npcs_Item_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var npc = npcService.Npcs[1];
@@ -51,7 +55,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void Npcs_Item_GetMultipleTimes_ReturnsSameInstance() {
+        public void Npcs_Item_GetMultipleTimes_ReturnsSameInstance()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
 
@@ -62,13 +67,15 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void Npcs_GetEnumerator() {
+        public void Npcs_GetEnumerator()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
 
             var npcs = npcService.Npcs.ToList();
 
-            for (var i = 0; i < npcs.Count; ++i) {
+            for (var i = 0; i < npcs.Count; ++i)
+            {
                 Assert.Same(Terraria.Main.npc[i], ((OrionNpc)npcs[i]).Wrapped);
             }
         }
@@ -76,13 +83,15 @@ namespace Orion.Core.Npcs {
         [Theory]
         [InlineData(NpcId.BlueSlime)]
         [InlineData(NpcId.GreenSlime)]
-        public void NpcSetDefaults_EventTriggered(NpcId id) {
+        public void NpcSetDefaults_EventTriggered(NpcId id)
+        {
             Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<NpcDefaultsEvent>(evt => {
+            kernel.RegisterHandler<NpcDefaultsEvent>(evt =>
+            {
                 Assert.Same(Terraria.Main.npc[0], ((OrionNpc)evt.Npc).Wrapped);
                 Assert.Equal(id, evt.Id);
                 isRun = true;
@@ -97,7 +106,8 @@ namespace Orion.Core.Npcs {
         [Theory]
         [InlineData(NpcId.BlueSlime, NpcId.GreenSlime)]
         [InlineData(NpcId.BlueSlime, NpcId.None)]
-        public void NpcSetDefaults_EventModified(NpcId oldId, NpcId newId) {
+        public void NpcSetDefaults_EventModified(NpcId oldId, NpcId newId)
+        {
             Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
@@ -110,7 +120,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void NpcSetDefaults_EventCanceled() {
+        public void NpcSetDefaults_EventCanceled()
+        {
             Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
@@ -123,7 +134,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void NpcSpawn_EventTriggered() {
+        public void NpcSpawn_EventTriggered()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             INpc? evtNpc = null;
@@ -136,7 +148,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void NpcSpawn_EventCanceled() {
+        public void NpcSpawn_EventCanceled()
+        {
             Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
@@ -150,13 +163,15 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void NpcTick_EventTriggered() {
+        public void NpcTick_EventTriggered()
+        {
             Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<NpcTickEvent>(evt => {
+            kernel.RegisterHandler<NpcTickEvent>(evt =>
+            {
                 Assert.Same(Terraria.Main.npc[0], ((OrionNpc)evt.Npc).Wrapped);
                 isRun = true;
             }, Logger.None);
@@ -167,7 +182,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void NpcTick_EventCanceled() {
+        public void NpcTick_EventCanceled()
+        {
             Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
@@ -178,13 +194,15 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void NpcKilled_EventTriggered() {
+        public void NpcKilled_EventTriggered()
+        {
             Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<NpcKilledEvent>(evt => {
+            kernel.RegisterHandler<NpcKilledEvent>(evt =>
+            {
                 Assert.Same(Terraria.Main.npc[0], ((OrionNpc)evt.Npc).Wrapped);
                 isRun = true;
             }, Logger.None);
@@ -197,14 +215,16 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void NpcLoot_EventTriggered() {
+        public void NpcLoot_EventTriggered()
+        {
             Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
             Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<NpcLootEvent>(evt => {
+            kernel.RegisterHandler<NpcLootEvent>(evt =>
+            {
                 Assert.Same(Terraria.Main.npc[0], ((OrionNpc)evt.Npc).Wrapped);
                 Assert.Equal(ItemId.Gel, evt.Id);
                 Assert.InRange(evt.StackSize, 1, 2);
@@ -221,13 +241,15 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void NpcLoot_EventModified() {
+        public void NpcLoot_EventModified()
+        {
             Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
             Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
-            kernel.RegisterHandler<NpcLootEvent>(evt => {
+            kernel.RegisterHandler<NpcLootEvent>(evt =>
+            {
                 evt.Id = ItemId.Sdmg;
                 evt.StackSize = 1;
                 evt.Prefix = ItemPrefix.Unreal;
@@ -243,7 +265,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void NpcLoot_EventCanceled() {
+        public void NpcLoot_EventCanceled()
+        {
             Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
             Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
 
@@ -259,7 +282,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void PacketReceive_NpcBuff_EventTriggered() {
+        public void PacketReceive_NpcBuff_EventTriggered()
+        {
             // Set `State` to 10 so that the NPC catch packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -269,7 +293,8 @@ namespace Orion.Core.Npcs {
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<NpcBuffEvent>(evt => {
+            kernel.RegisterHandler<NpcBuffEvent>(evt =>
+            {
                 Assert.Same(npcService.Npcs[1], evt.Npc);
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(new Buff(BuffId.Poisoned, TimeSpan.FromSeconds(1)), evt.Buff);
@@ -284,7 +309,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void PacketReceive_NpcBuff_EventCanceled() {
+        public void PacketReceive_NpcBuff_EventCanceled()
+        {
             // Set `State` to 10 so that the NPC catch packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -301,7 +327,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void PacketReceive_NpcCatch_EventTriggered() {
+        public void PacketReceive_NpcCatch_EventTriggered()
+        {
             // Set `State` to 10 so that the NPC catch packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -313,7 +340,8 @@ namespace Orion.Core.Npcs {
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<NpcCatchEvent>(evt => {
+            kernel.RegisterHandler<NpcCatchEvent>(evt =>
+            {
                 Assert.Same(npcService.Npcs[1], evt.Npc);
                 Assert.Same(playerService.Players[5], evt.Player);
                 isRun = true;
@@ -326,7 +354,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void PacketReceive_NpcCatch_EventCanceled() {
+        public void PacketReceive_NpcCatch_EventCanceled()
+        {
             // Set `State` to 10 so that the NPC catch packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -345,7 +374,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void PacketReceive_NpcFish_EventTriggered() {
+        public void PacketReceive_NpcFish_EventTriggered()
+        {
             // Set `State` to 10 so that the NPC fish packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -355,7 +385,8 @@ namespace Orion.Core.Npcs {
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<NpcFishEvent>(evt => {
+            kernel.RegisterHandler<NpcFishEvent>(evt =>
+            {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(100, evt.X);
                 Assert.Equal(256, evt.Y);
@@ -370,7 +401,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void PacketReceive_NpcFish_EventCanceled() {
+        public void PacketReceive_NpcFish_EventCanceled()
+        {
             // Set `State` to 10 so that the NPC fish packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -387,7 +419,8 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void SpawnNpc() {
+        public void SpawnNpc()
+        {
             Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
@@ -399,8 +432,10 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void SpawnNpc_ReturnsNull() {
-            for (var i = 0; i < Terraria.Main.maxNPCs; ++i) {
+        public void SpawnNpc_ReturnsNull()
+        {
+            for (var i = 0; i < Terraria.Main.maxNPCs; ++i)
+            {
                 Terraria.Main.npc[i] = new Terraria.NPC { whoAmI = i, active = true };
             }
 

@@ -18,10 +18,13 @@
 using System;
 using Xunit;
 
-namespace Orion.Core.Events.Players {
-    public class PlayerQuitEventTests {
+namespace Orion.Core.Events.Players
+{
+    public class PlayerQuitEventTests
+    {
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new PlayerQuitEvent(null!));
         }
     }

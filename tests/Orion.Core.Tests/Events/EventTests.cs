@@ -18,10 +18,13 @@
 using System;
 using Xunit;
 
-namespace Orion.Core.Events {
-    public class EventTests {
+namespace Orion.Core.Events
+{
+    public class EventTests
+    {
         [Fact]
-        public void IsCanceled_Get_ReturnsTrue() {
+        public void IsCanceled_Get_ReturnsTrue()
+        {
             var evt = new TestEvent();
 
             evt.Cancel();
@@ -30,14 +33,16 @@ namespace Orion.Core.Events {
         }
 
         [Fact]
-        public void IsCanceled_Get_ReturnsFalse() {
+        public void IsCanceled_Get_ReturnsFalse()
+        {
             var evt = new TestEvent();
 
             Assert.False(evt.IsCanceled);
         }
 
         [Fact]
-        public void CancellationReason_Get() {
+        public void CancellationReason_Get()
+        {
             var evt = new TestEvent();
 
             evt.Cancel("test");
@@ -46,28 +51,32 @@ namespace Orion.Core.Events {
         }
 
         [Fact]
-        public void CancellationReason_GetNotCanceled_ThrowsInvalidOperationException() {
+        public void CancellationReason_GetNotCanceled_ThrowsInvalidOperationException()
+        {
             var evt = new TestEvent();
 
             Assert.Throws<InvalidOperationException>(() => evt.CancellationReason);
         }
 
         [Fact]
-        public void Cancel_NullReason_ThrowsArgumentNullException() {
+        public void Cancel_NullReason_ThrowsArgumentNullException()
+        {
             var evt = new TestEvent();
 
             Assert.Throws<ArgumentNullException>(() => evt.Cancel(null!));
         }
 
         [Fact]
-        public void Uncancel_NotCanceled_ThrowsInvalidOperationException() {
+        public void Uncancel_NotCanceled_ThrowsInvalidOperationException()
+        {
             var evt = new TestEvent();
 
             Assert.Throws<InvalidOperationException>(() => evt.Uncancel());
         }
 
         [Fact]
-        public void Uncancel() {
+        public void Uncancel()
+        {
             var evt = new TestEvent();
             evt.Cancel("test");
 

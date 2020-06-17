@@ -18,18 +18,21 @@
 using System;
 using Orion.Core.Players;
 
-namespace Orion.Core.Events.Players {
+namespace Orion.Core.Events.Players
+{
     /// <summary>
     /// Provides the base class for a player-related event.
     /// </summary>
-    public abstract class PlayerEvent : Event {
+    public abstract class PlayerEvent : Event
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerEvent"/> class with the specified
         /// <paramref name="player"/>.
         /// </summary>
         /// <param name="player">The player involved in the event.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        protected PlayerEvent(IPlayer player) {
+        protected PlayerEvent(IPlayer player)
+        {
             Player = player ?? throw new ArgumentNullException(nameof(player));
         }
 

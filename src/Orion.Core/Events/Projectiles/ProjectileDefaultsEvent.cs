@@ -19,13 +19,15 @@ using System;
 using Orion.Core.Projectiles;
 using Serilog.Events;
 
-namespace Orion.Core.Events.Projectiles {
+namespace Orion.Core.Events.Projectiles
+{
     /// <summary>
     /// An event that occurs when a projectile's defaults are being set: i.e., when a projectile's stats are being
     /// initialized. This event can be canceled.
     /// </summary>
     [Event("proj-defaults", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class ProjectileDefaultsEvent : ProjectileEvent {
+    public sealed class ProjectileDefaultsEvent : ProjectileEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectileDefaultsEvent"/> class with the specified
         /// <paramref name="projectile"/>.

@@ -20,11 +20,14 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.Items;
 using Xunit;
 
-namespace Orion.Core.World.Chests {
+namespace Orion.Core.World.Chests
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class OrionChestTests {
+    public class OrionChestTests
+    {
         [Fact]
-        public void Name_GetNullValue() {
+        public void Name_GetNullValue()
+        {
             var terrariaChest = new Terraria.Chest { x = 256, y = 100, name = null };
             var chest = new OrionChest(terrariaChest);
 
@@ -32,7 +35,8 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void Name_Get() {
+        public void Name_Get()
+        {
             var terrariaChest = new Terraria.Chest { x = 256, y = 100, name = "test" };
             var chest = new OrionChest(terrariaChest);
 
@@ -40,7 +44,8 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void Name_SetNullValue_ThrowsArgumentNullException() {
+        public void Name_SetNullValue_ThrowsArgumentNullException()
+        {
             var terrariaChest = new Terraria.Chest();
             var chest = new OrionChest(terrariaChest);
 
@@ -48,7 +53,8 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void Name_Set() {
+        public void Name_Set()
+        {
             var terrariaChest = new Terraria.Chest();
             var chest = new OrionChest(terrariaChest);
 
@@ -60,7 +66,8 @@ namespace Orion.Core.World.Chests {
         [Theory]
         [InlineData(-1)]
         [InlineData(100)]
-        public void Items_Get_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Items_Get_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index)
+        {
             var terrariaChest = new Terraria.Chest();
             var chest = new OrionChest(terrariaChest);
 
@@ -68,9 +75,11 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void Items_Get_Item_Get() {
+        public void Items_Get_Item_Get()
+        {
             var terrariaChest = new Terraria.Chest();
-            terrariaChest.item[0] = new Terraria.Item {
+            terrariaChest.item[0] = new Terraria.Item
+            {
                 type = (int)ItemId.Sdmg,
                 stack = 1,
                 prefix = (byte)ItemPrefix.Unreal
@@ -82,7 +91,8 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void Items_Get_Item_Get_Null() {
+        public void Items_Get_Item_Get_Null()
+        {
             var terrariaChest = new Terraria.Chest();
             var chest = new OrionChest(terrariaChest);
 
@@ -92,7 +102,8 @@ namespace Orion.Core.World.Chests {
         [Theory]
         [InlineData(-1)]
         [InlineData(100)]
-        public void Items_Get_Item_SetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Items_Get_Item_SetInvalidIndex_ThrowsIndexOutOfRangeException(int index)
+        {
             var terrariaChest = new Terraria.Chest();
             var chest = new OrionChest(terrariaChest);
 
@@ -100,7 +111,8 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void Items_Get_Item_Set() {
+        public void Items_Get_Item_Set()
+        {
             var terrariaChest = new Terraria.Chest();
             terrariaChest.item[0] = new Terraria.Item();
             var chest = new OrionChest(terrariaChest);
@@ -113,7 +125,8 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void Items_Get_Item_Set_Null() {
+        public void Items_Get_Item_Set_Null()
+        {
             var terrariaChest = new Terraria.Chest();
             var chest = new OrionChest(terrariaChest);
 
@@ -125,7 +138,8 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void Index_Get() {
+        public void Index_Get()
+        {
             var terrariaChest = new Terraria.Chest();
             var chest = new OrionChest(1, terrariaChest);
 
@@ -133,14 +147,16 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void IsActive_Get_ReturnsFalse() {
+        public void IsActive_Get_ReturnsFalse()
+        {
             var chest = new OrionChest(null);
 
             Assert.False(chest.IsActive);
         }
 
         [Fact]
-        public void IsActive_Get_ReturnsTrue() {
+        public void IsActive_Get_ReturnsTrue()
+        {
             var terrariaChest = new Terraria.Chest();
             var chest = new OrionChest(terrariaChest);
 
@@ -148,7 +164,8 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void X_Get() {
+        public void X_Get()
+        {
             var terrariaChest = new Terraria.Chest { x = 256, y = 100, name = "test" };
             var chest = new OrionChest(terrariaChest);
 
@@ -156,7 +173,8 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void X_Set() {
+        public void X_Set()
+        {
             var terrariaChest = new Terraria.Chest();
             var chest = new OrionChest(terrariaChest);
 
@@ -166,7 +184,8 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void Y_Get() {
+        public void Y_Get()
+        {
             var terrariaChest = new Terraria.Chest { x = 256, y = 100, name = "test" };
             var chest = new OrionChest(terrariaChest);
 
@@ -174,7 +193,8 @@ namespace Orion.Core.World.Chests {
         }
 
         [Fact]
-        public void Y_Set() {
+        public void Y_Set()
+        {
             var terrariaChest = new Terraria.Chest();
             var chest = new OrionChest(terrariaChest);
 

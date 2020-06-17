@@ -25,14 +25,16 @@ using Orion.Core.Packets.Server;
 using Orion.Core.Packets.World.Tiles;
 using Orion.Core.World.Tiles;
 
-namespace Orion.Core.Players {
+namespace Orion.Core.Players
+{
     /// <summary>
     /// Represents a Terraria player.
     /// </summary>
     /// <remarks>
     /// Implementations are required to be thread-safe: i.e., each operation on the player should be atomic.
     /// </remarks>
-    public interface IPlayer : IEntity {
+    public interface IPlayer : IEntity
+    {
         /// <summary>
         /// Gets or sets the player's health.
         /// </summary>
@@ -92,7 +94,8 @@ namespace Orion.Core.Players {
     /// <summary>
     /// Provides extensions for the <see cref="IPlayer"/> interface.
     /// </summary>
-    public static class PlayerExtensions {
+    public static class PlayerExtensions
+    {
         /// <summary>
         /// Sends the given <paramref name="packet"/> to the <paramref name="player"/>. This "overload" is provided for
         /// convenience, but is slightly less efficient due to a struct copy.
@@ -101,8 +104,10 @@ namespace Orion.Core.Players {
         /// <param name="player">The player.</param>
         /// <param name="packet">The packet to send.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public static void SendPacket<TPacket>(this IPlayer player, TPacket packet) where TPacket : struct, IPacket {
-            if (player is null) {
+        public static void SendPacket<TPacket>(this IPlayer player, TPacket packet) where TPacket : struct, IPacket
+        {
+            if (player is null)
+            {
                 throw new ArgumentNullException(nameof(player));
             }
 
@@ -117,12 +122,15 @@ namespace Orion.Core.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="reason"/> are <see langword="null"/>.
         /// </exception>
-        public static void Disconnect(this IPlayer player, NetworkText reason) {
-            if (player is null) {
+        public static void Disconnect(this IPlayer player, NetworkText reason)
+        {
+            if (player is null)
+            {
                 throw new ArgumentNullException(nameof(player));
             }
 
-            if (reason is null) {
+            if (reason is null)
+            {
                 throw new ArgumentNullException(nameof(reason));
             }
 
@@ -140,12 +148,15 @@ namespace Orion.Core.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="message"/> are <see langword="null"/>.
         /// </exception>
-        public static void SendMessage(this IPlayer player, NetworkText message, Color3 color) {
-            if (player is null) {
+        public static void SendMessage(this IPlayer player, NetworkText message, Color3 color)
+        {
+            if (player is null)
+            {
                 throw new ArgumentNullException(nameof(player));
             }
 
-            if (message is null) {
+            if (message is null)
+            {
                 throw new ArgumentNullException(nameof(message));
             }
 
@@ -164,16 +175,20 @@ namespace Orion.Core.Players {
         /// <paramref name="player"/> or <paramref name="tiles"/> are <see langword="null"/>.
         /// </exception>
         /// <exception cref="NotSupportedException"><paramref name="tiles"/> is not square.</exception>
-        public static void SendTiles(this IPlayer player, int x, int y, ITileSlice tiles) {
-            if (player is null) {
+        public static void SendTiles(this IPlayer player, int x, int y, ITileSlice tiles)
+        {
+            if (player is null)
+            {
                 throw new ArgumentNullException(nameof(player));
             }
 
-            if (tiles is null) {
+            if (tiles is null)
+            {
                 throw new ArgumentNullException(nameof(tiles));
             }
 
-            if (tiles.Width != tiles.Height) {
+            if (tiles.Width != tiles.Height)
+            {
                 // Not localized because this string is developer-facing.
                 // TODO: implement this when the section packet is implemented.
                 throw new NotSupportedException("Tiles is not square");

@@ -19,20 +19,24 @@ using System;
 using Destructurama.Attributed;
 using Orion.Core.Entities;
 
-namespace Orion.Core.Npcs {
+namespace Orion.Core.Npcs
+{
     [LogAsScalar]
-    internal sealed class OrionNpc : OrionEntity<Terraria.NPC>, INpc {
+    internal sealed class OrionNpc : OrionEntity<Terraria.NPC>, INpc
+    {
         public OrionNpc(int npcIndex, Terraria.NPC terrariaNpc) : base(npcIndex, terrariaNpc) { }
         public OrionNpc(Terraria.NPC terrariaNpc) : this(-1, terrariaNpc) { }
 
-        public override string Name {
+        public override string Name
+        {
             get => Wrapped.GivenOrTypeName;
             set => Wrapped._givenName = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public NpcId Id => (NpcId)Wrapped.netID;
 
-        public void SetId(NpcId id) {
+        public void SetId(NpcId id)
+        {
             Wrapped.SetDefaults((int)id, Wrapped.GetMatchingSpawnParams());
         }
     }

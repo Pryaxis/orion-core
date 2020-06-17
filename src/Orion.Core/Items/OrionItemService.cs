@@ -24,12 +24,15 @@ using Orion.Core.Events.Items;
 using Orion.Core.Framework;
 using Serilog;
 
-namespace Orion.Core.Items {
+namespace Orion.Core.Items
+{
     [Binding("orion-items", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
-    internal sealed class OrionItemService : OrionService, IItemService {
+    internal sealed class OrionItemService : OrionService, IItemService
+    {
         private readonly object _lock = new object();
 
-        public OrionItemService(OrionKernel kernel, ILogger log) : base(kernel, log) {
+        public OrionItemService(OrionKernel kernel, ILogger log) : base(kernel, log)
+        {
             // Construct the `Items` array. Note that the last item should be ignored, as it is not a real item.
             Items = new WrappedReadOnlyList<OrionItem, Terraria.Item>(
                 Terraria.Main.item.AsMemory(..^1),
@@ -41,16 +44,19 @@ namespace Orion.Core.Items {
 
         public IReadOnlyList<IItem> Items { get; }
 
-        public override void Dispose() {
+        public override void Dispose()
+        {
             OTAPI.Hooks.Item.PreSetDefaultsById = null;
             OTAPI.Hooks.Item.PreUpdate = null;
         }
 
-        public IItem SpawnItem(ItemStack itemStack, Vector2f position) {
+        public IItem SpawnItem(ItemStack itemStack, Vector2f position)
+        {
             // Not localized because this string is developer-facing.
             Log.Debug("Spawning {ItemStack} at {Position}", itemStack);
 
-            lock (_lock) {
+            lock (_lock)
+            {
                 var itemIndex = Terraria.Item.NewItem(
                     (int)position.X, (int)position.Y, 0, 0, (int)itemStack.Id, itemStack.StackSize, false,
                     (int)itemStack.Prefix);
@@ -65,13 +71,15 @@ namespace Orion.Core.Items {
         //
 
         private OTAPI.HookResult PreSetDefaultsByIdHandler(
-                Terraria.Item terrariaItem, ref int itemId, ref bool noMatCheck) {
+                Terraria.Item terrariaItem, ref int itemId, ref bool noMatCheck)
+        {
             Debug.Assert(terrariaItem != null);
 
             var item = GetItem(terrariaItem);
             var evt = new ItemDefaultsEvent(item) { Id = (ItemId)itemId };
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled) {
+            if (evt.IsCanceled)
+            {
                 return OTAPI.HookResult.Cancel;
             }
 
@@ -79,7 +87,8 @@ namespace Orion.Core.Items {
             return OTAPI.HookResult.Continue;
         }
 
-        private OTAPI.HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int itemIndex) {
+        private OTAPI.HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int itemIndex)
+        {
             Debug.Assert(terrariaItem != null);
             Debug.Assert(itemIndex >= 0 && itemIndex < Items.Count);
 
@@ -94,7 +103,8 @@ namespace Orion.Core.Items {
 
         // Gets an `IItem` which corresponds to the given Terraria item. Retrieves the `IItem` from the `Items` array,
         // if possible.
-        private IItem GetItem(Terraria.Item terrariaItem) {
+        private IItem GetItem(Terraria.Item terrariaItem)
+        {
             Debug.Assert(terrariaItem != null);
 
             var itemIndex = terrariaItem.whoAmI;

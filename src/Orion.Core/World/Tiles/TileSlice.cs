@@ -17,14 +17,16 @@
 
 using System;
 
-namespace Orion.Core.World.Tiles {
+namespace Orion.Core.World.Tiles
+{
     /// <summary>
     /// Represents a slice of tiles backed by a two-dimensional tile array.
     /// </summary>
     /// <remarks>
     /// This class is thread-safe.
     /// </remarks>
-    public sealed class TileSlice : ITileSlice {
+    public sealed class TileSlice : ITileSlice
+    {
         private readonly Tile[,] _tiles;
 
         /// <summary>
@@ -35,13 +37,16 @@ namespace Orion.Core.World.Tiles {
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="width"/> or <paramref name="height"/> are negative.
         /// </exception>
-        public TileSlice(int width, int height) {
-            if (width < 0) {
+        public TileSlice(int width, int height)
+        {
+            if (width < 0)
+            {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(nameof(width), "Width is negative");
             }
 
-            if (height < 0) {
+            if (height < 0)
+            {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(nameof(height), "Height is negative");
             }

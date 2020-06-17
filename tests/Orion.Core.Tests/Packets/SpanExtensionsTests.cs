@@ -21,8 +21,10 @@ using System.Text;
 using Orion.Core.DataStructures;
 using Xunit;
 
-namespace Orion.Core.Packets {
-    public class SpanExtensionsTests {
+namespace Orion.Core.Packets
+{
+    public class SpanExtensionsTests
+    {
         public static readonly IEnumerable<object[]> StringParams = new[] {
             new object[] { "a" },
             new object[] { new string('a', 128) },
@@ -37,20 +39,24 @@ namespace Orion.Core.Packets {
         };
 
         [Fact]
-        public void ReadString_7BitIntegerTooLarge_ThrowsArgumentException() {
+        public void ReadString_7BitIntegerTooLarge_ThrowsArgumentException()
+        {
             var bytes = new byte[] { 255, 255, 255, 255, 255, 255 };
 
-            Assert.Throws<ArgumentException>(() => {
+            Assert.Throws<ArgumentException>(() =>
+            {
                 var span = bytes.AsSpan();
                 return span.Read(Encoding.UTF8, out string _);
             });
         }
 
         [Fact]
-        public void ReadString_Negative7BitInteger_ThrowsArgumentException() {
+        public void ReadString_Negative7BitInteger_ThrowsArgumentException()
+        {
             var bytes = new byte[] { 255, 255, 255, 255, 15 };
 
-            Assert.Throws<ArgumentException>(() => {
+            Assert.Throws<ArgumentException>(() =>
+            {
                 var span = bytes.AsSpan();
                 return span.Read(Encoding.UTF8, out string _);
             });
@@ -58,7 +64,8 @@ namespace Orion.Core.Packets {
 
         [Theory]
         [MemberData(nameof(StringParams))]
-        public void WriteString_ReadString(string str) {
+        public void WriteString_ReadString(string str)
+        {
             var bytes = new byte[10000000];
             var span = bytes.AsSpan();
 
@@ -71,7 +78,8 @@ namespace Orion.Core.Packets {
 
         [Theory]
         [MemberData(nameof(NetworkTextParams))]
-        public void WriteNetworkText_ReadNetworkText(NetworkText text) {
+        public void WriteNetworkText_ReadNetworkText(NetworkText text)
+        {
             var bytes = new byte[10000000];
             var span = bytes.AsSpan();
 

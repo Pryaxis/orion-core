@@ -22,17 +22,21 @@ using Orion.Core.World;
 using Orion.Core.World.Tiles;
 using Xunit;
 
-namespace Orion.Core.Events.World.Tiles {
-    public class TileLiquidEventTests {
+namespace Orion.Core.Events.World.Tiles
+{
+    public class TileLiquidEventTests
+    {
         [Fact]
-        public void Ctor_NullWorld_ThrowsArgumentNullException() {
+        public void Ctor_NullWorld_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new TileLiquidEvent(null!, player, 256, 100, 255, Liquid.Honey));
         }
 
         [Fact]
-        public void LiquidAmount_Get() {
+        public void LiquidAmount_Get()
+        {
             var world = Mock.Of<IWorld>();
             var player = Mock.Of<IPlayer>();
             var evt = new TileLiquidEvent(world, player, 256, 100, 255, Liquid.Honey);
@@ -41,7 +45,8 @@ namespace Orion.Core.Events.World.Tiles {
         }
 
         [Fact]
-        public void Liquid_Get() {
+        public void Liquid_Get()
+        {
             var world = Mock.Of<IWorld>();
             var player = Mock.Of<IPlayer>();
             var evt = new TileLiquidEvent(world, player, 256, 100, 255, Liquid.Honey);

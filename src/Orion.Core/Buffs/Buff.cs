@@ -19,7 +19,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 
-namespace Orion.Core.Buffs {
+namespace Orion.Core.Buffs
+{
     /// <summary>
     /// Represents a buff.
     /// </summary>
@@ -30,7 +31,8 @@ namespace Orion.Core.Buffs {
     /// Each buff consists of a <see cref="BuffId"/>, which specifies the type of buff, along with a duration indicating
     /// the amount of time remaining on the buff.
     /// </remarks>
-    public readonly struct Buff : IEquatable<Buff> {
+    public readonly struct Buff : IEquatable<Buff>
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="Buff"/> structure with the specified buff <paramref name="id"/>
         /// and <paramref name="ticks"/>.
@@ -38,8 +40,10 @@ namespace Orion.Core.Buffs {
         /// <param name="id">The buff ID.</param>
         /// <param name="ticks">The buff duration, in ticks.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="ticks"/> is negative.</exception>
-        public Buff(BuffId id, int ticks) {
-            if (ticks < 0) {
+        public Buff(BuffId id, int ticks)
+        {
+            if (ticks < 0)
+            {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(nameof(ticks), "Ticks is negative");
             }
@@ -55,8 +59,10 @@ namespace Orion.Core.Buffs {
         /// <param name="id">The buff ID.</param>
         /// <param name="duration">The buff duration.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="duration"/> is negative.</exception>
-        public Buff(BuffId id, TimeSpan duration) {
-            if (duration < TimeSpan.Zero) {
+        public Buff(BuffId id, TimeSpan duration)
+        {
+            if (duration < TimeSpan.Zero)
+            {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(nameof(duration), "Duration is negative");
             }

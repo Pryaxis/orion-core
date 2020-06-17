@@ -19,9 +19,11 @@ using System;
 using Destructurama.Attributed;
 using Orion.Core.Entities;
 
-namespace Orion.Core.Projectiles {
+namespace Orion.Core.Projectiles
+{
     [LogAsScalar]
-    internal sealed class OrionProjectile : OrionEntity<Terraria.Projectile>, IProjectile {
+    internal sealed class OrionProjectile : OrionEntity<Terraria.Projectile>, IProjectile
+    {
         private string? _nameOverride;
 
         public OrionProjectile(int projectileIndex, Terraria.Projectile terrariaProjectile)
@@ -29,14 +31,16 @@ namespace Orion.Core.Projectiles {
 
         public OrionProjectile(Terraria.Projectile terrariaProjectile) : this(-1, terrariaProjectile) { }
 
-        public override string Name {
+        public override string Name
+        {
             get => _nameOverride ?? Wrapped.Name;
             set => _nameOverride = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public ProjectileId Id => (ProjectileId)Wrapped.type;
 
-        public void SetId(ProjectileId id) {
+        public void SetId(ProjectileId id)
+        {
             Wrapped.SetDefaults((int)id);
         }
     }

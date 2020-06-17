@@ -18,14 +18,16 @@
 using Orion.Core.Entities;
 using Orion.Core.World.Tiles;
 
-namespace Orion.Core.World {
+namespace Orion.Core.World
+{
     /// <summary>
     /// Represents a Terraria world.
     /// </summary>
     /// <remarks>
     /// Implementations are required to be thread-safe.
     /// </remarks>
-    public interface IWorld : ITileSlice, IAnnotatable {
+    public interface IWorld : ITileSlice, IAnnotatable
+    {
         /// <summary>
         /// Gets the world's name.
         /// </summary>

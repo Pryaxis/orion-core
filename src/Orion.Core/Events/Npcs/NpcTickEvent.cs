@@ -19,12 +19,14 @@ using System;
 using Orion.Core.Npcs;
 using Serilog.Events;
 
-namespace Orion.Core.Events.Npcs {
+namespace Orion.Core.Events.Npcs
+{
     /// <summary>
     /// An event that occurs when an NPC tick (update) occurs. This event can be canceled.
     /// </summary>
     [Event("npc-tick", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class NpcTickEvent : NpcEvent {
+    public sealed class NpcTickEvent : NpcEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcTickEvent"/> class with the specified
         /// <paramref name="npc"/>.

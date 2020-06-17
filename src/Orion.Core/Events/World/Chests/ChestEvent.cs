@@ -18,18 +18,21 @@
 using System;
 using Orion.Core.World.Chests;
 
-namespace Orion.Core.Events.World.Chests {
+namespace Orion.Core.Events.World.Chests
+{
     /// <summary>
     /// Provides the base class for a chest-related event.
     /// </summary>
-    public abstract class ChestEvent : Event {
+    public abstract class ChestEvent : Event
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="ChestEvent"/> class with the specified
         /// <paramref name="chest"/>.
         /// </summary>
         /// <param name="chest">The chest involved in the event.</param>
         /// <exception cref="ArgumentNullException"><paramref name="chest"/> is <see langword="null"/>.</exception>
-        protected ChestEvent(IChest chest) {
+        protected ChestEvent(IChest chest)
+        {
             Chest = chest ?? throw new ArgumentNullException(nameof(chest));
         }
 

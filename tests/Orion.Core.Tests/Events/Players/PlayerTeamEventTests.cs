@@ -20,15 +20,19 @@ using Moq;
 using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Core.Events.Players {
-    public class PlayerTeamEventTests {
+namespace Orion.Core.Events.Players
+{
+    public class PlayerTeamEventTests
+    {
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new PlayerTeamEvent(null!, PlayerTeam.None));
         }
 
         [Fact]
-        public void Team_Get() {
+        public void Team_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var evt = new PlayerTeamEvent(player, PlayerTeam.Red);
 

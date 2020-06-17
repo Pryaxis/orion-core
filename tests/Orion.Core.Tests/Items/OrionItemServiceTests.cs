@@ -22,14 +22,17 @@ using Orion.Core.Events.Items;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Core.Items {
+namespace Orion.Core.Items
+{
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
-    public class OrionItemServiceTests {
+    public class OrionItemServiceTests
+    {
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
-        public void Items_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Items_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index)
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
 
@@ -37,7 +40,8 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void Items_Item_Get() {
+        public void Items_Item_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
             var item = itemService.Items[1];
@@ -47,7 +51,8 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void Items_Item_GetMultipleTimes_ReturnsSameInstance() {
+        public void Items_Item_GetMultipleTimes_ReturnsSameInstance()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
 
@@ -58,23 +63,27 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void Items_GetEnumerator() {
+        public void Items_GetEnumerator()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
 
             var items = itemService.Items.ToList();
 
-            for (var i = 0; i < items.Count; ++i) {
+            for (var i = 0; i < items.Count; ++i)
+            {
                 Assert.Same(Terraria.Main.item[i], ((OrionItem)items[i]).Wrapped);
             }
         }
 
         [Fact]
-        public void ItemDefaults_EventTriggered() {
+        public void ItemDefaults_EventTriggered()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<ItemDefaultsEvent>(evt => {
+            kernel.RegisterHandler<ItemDefaultsEvent>(evt =>
+            {
                 Assert.Same(Terraria.Main.item[0], ((OrionItem)evt.Item).Wrapped);
                 Assert.Equal(ItemId.Sdmg, evt.Id);
                 isRun = true;
@@ -87,13 +96,15 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void ItemDefaults_AbstractItemEventTriggered() {
+        public void ItemDefaults_AbstractItemEventTriggered()
+        {
             var terrariaItem = new Terraria.Item();
 
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<ItemDefaultsEvent>(evt => {
+            kernel.RegisterHandler<ItemDefaultsEvent>(evt =>
+            {
                 Assert.Same(terrariaItem, ((OrionItem)evt.Item).Wrapped);
                 Assert.Equal(ItemId.Sdmg, evt.Id);
                 isRun = true;
@@ -106,7 +117,8 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void ItemDefaults_EventModified() {
+        public void ItemDefaults_EventModified()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
             kernel.RegisterHandler<ItemDefaultsEvent>(evt => evt.Id = ItemId.DirtBlock, Logger.None);
@@ -117,7 +129,8 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void ItemDefaults_EventCanceled() {
+        public void ItemDefaults_EventCanceled()
+        {
             Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
@@ -130,11 +143,13 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void ItemTick_EventTriggered() {
+        public void ItemTick_EventTriggered()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<ItemTickEvent>(evt => {
+            kernel.RegisterHandler<ItemTickEvent>(evt =>
+            {
                 Assert.Same(Terraria.Main.item[0], ((OrionItem)evt.Item).Wrapped);
                 isRun = true;
             }, Logger.None);
@@ -145,7 +160,8 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
-        public void ItemTick_EventCanceled() {
+        public void ItemTick_EventCanceled()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
             kernel.RegisterHandler<ItemTickEvent>(evt => evt.Cancel(), Logger.None);
@@ -157,7 +173,8 @@ namespace Orion.Core.Items {
         [InlineData(ItemId.StoneBlock, 100, ItemPrefix.None)]
         [InlineData(ItemId.Sdmg, 1, ItemPrefix.Unreal)]
         [InlineData(ItemId.Meowmere, 1, ItemPrefix.Legendary)]
-        public void SpawnItem(ItemId id, int stackSize, ItemPrefix prefix) {
+        public void SpawnItem(ItemId id, int stackSize, ItemPrefix prefix)
+        {
             Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);

@@ -19,31 +19,37 @@ using System;
 using Destructurama.Attributed;
 using Orion.Core.Entities;
 
-namespace Orion.Core.Items {
+namespace Orion.Core.Items
+{
     [LogAsScalar]
-    internal sealed class OrionItem : OrionEntity<Terraria.Item>, IItem {
+    internal sealed class OrionItem : OrionEntity<Terraria.Item>, IItem
+    {
         public OrionItem(int itemIndex, Terraria.Item terrariaItem) : base(itemIndex, terrariaItem) { }
         public OrionItem(Terraria.Item terrariaItem) : this(-1, terrariaItem) { }
 
-        public override string Name {
+        public override string Name
+        {
             get => Wrapped.Name;
             set => Wrapped._nameOverride = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public ItemId Id => (ItemId)Wrapped.type;
 
-        public int StackSize {
+        public int StackSize
+        {
             get => Wrapped.stack;
             set => Wrapped.stack = value;
         }
 
         public ItemPrefix Prefix => (ItemPrefix)Wrapped.prefix;
 
-        public void SetId(ItemId id) {
+        public void SetId(ItemId id)
+        {
             Wrapped.SetDefaults((int)id);
         }
 
-        public void SetPrefix(ItemPrefix prefix) {
+        public void SetPrefix(ItemPrefix prefix)
+        {
             Wrapped.Prefix((int)prefix);
         }
     }

@@ -18,12 +18,14 @@
 using System;
 using Destructurama.Attributed;
 
-namespace Orion.Core.Events {
+namespace Orion.Core.Events
+{
     /// <summary>
     /// Provides the base class for an event, the main form of communication between Orion and its plugins.
     /// </summary>
     [Event("event")]
-    public abstract class Event {
+    public abstract class Event
+    {
         private string? _cancellationReason;
 
         /// <summary>
@@ -48,7 +50,8 @@ namespace Orion.Core.Events {
         /// </summary>
         /// <param name="reason">The cancellation reason.</param>
         /// <exception cref="ArgumentNullException"><paramref name="reason"/> is <see langword="null"/>.</exception>
-        public void Cancel(string reason = "") {
+        public void Cancel(string reason = "")
+        {
             _cancellationReason = reason ?? throw new ArgumentNullException(nameof(reason));
         }
 
@@ -56,8 +59,10 @@ namespace Orion.Core.Events {
         /// Uncancels the event. This is only applicable if the event is canceled.
         /// </summary>
         /// <exception cref="InvalidOperationException">The event is not canceled.</exception>
-        public void Uncancel() {
-            if (_cancellationReason is null) {
+        public void Uncancel()
+        {
+            if (_cancellationReason is null)
+            {
                 // Not localized because this string is developer-facing.
                 throw new InvalidOperationException("Event is not canceled");
             }

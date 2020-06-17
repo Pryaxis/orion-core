@@ -19,12 +19,14 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Orion.Core.Packets.World.Chests {
+namespace Orion.Core.Packets.World.Chests
+{
     /// <summary>
     /// A packet sent from the client to the server to open a chest.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct ChestOpenPacket : IPacket {
+    public struct ChestOpenPacket : IPacket
+    {
         /// <summary>
         /// Gets or sets the chest's X coordinate.
         /// </summary>
@@ -40,13 +42,15 @@ namespace Orion.Core.Packets.World.Chests {
         PacketId IPacket.Id => PacketId.ChestOpen;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 4);
             return 4;
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 4);
             return 4;
         }

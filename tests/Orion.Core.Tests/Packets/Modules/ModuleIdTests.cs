@@ -20,14 +20,18 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Orion.Core.Packets.Modules {
-    public class ModuleIdTests {
+namespace Orion.Core.Packets.Modules
+{
+    public class ModuleIdTests
+    {
         private static readonly ISet<Type> _excludedTypes =
             new HashSet<Type> { typeof(UnknownModule), typeof(IModule) };
 
         [Fact]
-        public void Type() {
-            for (var i = 0; i < 65535; ++i) {
+        public void Type()
+        {
+            for (var i = 0; i < 65535; ++i)
+            {
                 var id = (ModuleId)i;
 
                 // Scan the Orion assembly for a packet type (not of type `UnknownModule`) which has the correct ID.

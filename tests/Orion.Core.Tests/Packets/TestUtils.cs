@@ -19,13 +19,16 @@ using System;
 using Orion.Core.Packets.Modules;
 using Xunit;
 
-namespace Orion.Core.Packets {
-    public static class TestUtils {
+namespace Orion.Core.Packets
+{
+    public static class TestUtils
+    {
         // Tests a packet round trip by reading, writing, reading the written packet, writing that read packet, and then
         // comparing the two written byte sequences. This resmoves any boundary conditions where data is in a different
         // form than would be normally expected.
         public static void RoundTripPacket<TPacket>(Span<byte> span, PacketContext context)
-                where TPacket : struct, IPacket {
+                where TPacket : struct, IPacket
+        {
             // Read packet.
             var packet = new TPacket();
             Assert.Equal(span.Length, packet.Read(span, context));
@@ -49,7 +52,8 @@ namespace Orion.Core.Packets {
         // comparing the two written byte sequences. This resmoves any boundary conditions where data is in a different
         // form than would be normally expected.
         public static void RoundTripModule<TModule>(Span<byte> span, PacketContext context)
-                where TModule : struct, IModule {
+                where TModule : struct, IModule
+        {
             // Read module.
             var module = new TModule();
             Assert.Equal(span.Length, module.Read(span, context));

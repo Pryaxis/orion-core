@@ -20,12 +20,14 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Orion.Core.World.Tiles;
 
-namespace Orion.Core.Packets.World.Tiles {
+namespace Orion.Core.Packets.World.Tiles
+{
     /// <summary>
     /// A packet sent to modify a tile.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct TileModifyPacket : IPacket {
+    public struct TileModifyPacket : IPacket
+    {
         [FieldOffset(5)] private ushort _data;
         [FieldOffset(7)] private byte _data2;
 
@@ -54,9 +56,12 @@ namespace Orion.Core.Packets.World.Tiles {
         /// <exception cref="InvalidOperationException">
         /// <see cref="Modification"/> does not involve placing a block.
         /// </exception>
-        public BlockId BlockId {
-            get {
-                if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock) {
+        public BlockId BlockId
+        {
+            get
+            {
+                if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock)
+                {
                     // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve placing a block");
                 }
@@ -64,8 +69,10 @@ namespace Orion.Core.Packets.World.Tiles {
                 return (BlockId)_data;
             }
 
-            set {
-                if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock) {
+            set
+            {
+                if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock)
+                {
                     // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve placing a block");
                 }
@@ -82,9 +89,12 @@ namespace Orion.Core.Packets.World.Tiles {
         /// <exception cref="InvalidOperationException">
         /// <see cref="Modification"/> does not involve placing a block.
         /// </exception>
-        public byte BlockStyle {
-            get {
-                if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock) {
+        public byte BlockStyle
+        {
+            get
+            {
+                if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock)
+                {
                     // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve placing a block");
                 }
@@ -92,8 +102,10 @@ namespace Orion.Core.Packets.World.Tiles {
                 return _data2;
             }
 
-            set {
-                if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock) {
+            set
+            {
+                if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock)
+                {
                     // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve placing a block");
                 }
@@ -109,9 +121,12 @@ namespace Orion.Core.Packets.World.Tiles {
         /// <exception cref="InvalidOperationException">
         /// <see cref="Modification"/> does not involve placing a wall.
         /// </exception>
-        public WallId WallId {
-            get {
-                if (Modification != TileModification.PlaceWall && Modification != TileModification.ReplaceWall) {
+        public WallId WallId
+        {
+            get
+            {
+                if (Modification != TileModification.PlaceWall && Modification != TileModification.ReplaceWall)
+                {
                     // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve placing a wall");
                 }
@@ -119,8 +134,10 @@ namespace Orion.Core.Packets.World.Tiles {
                 return (WallId)_data;
             }
 
-            set {
-                if (Modification != TileModification.PlaceWall && Modification != TileModification.ReplaceWall) {
+            set
+            {
+                if (Modification != TileModification.PlaceWall && Modification != TileModification.ReplaceWall)
+                {
                     // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve placing a wall");
                 }
@@ -136,10 +153,13 @@ namespace Orion.Core.Packets.World.Tiles {
         /// <exception cref="InvalidOperationException">
         /// <see cref="Modification"/> does not involve sloping a block.
         /// </exception>
-        public Slope Slope {
-            get {
+        public Slope Slope
+        {
+            get
+            {
                 if (Modification != TileModification.SlopeBlock &&
-                        Modification != TileModification.SlopeAndHammerBlock) {
+                        Modification != TileModification.SlopeAndHammerBlock)
+                {
                     // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve sloping a block");
                 }
@@ -147,9 +167,11 @@ namespace Orion.Core.Packets.World.Tiles {
                 return (Slope)_data;
             }
 
-            set {
+            set
+            {
                 if (Modification != TileModification.SlopeBlock &&
-                        Modification != TileModification.SlopeAndHammerBlock) {
+                        Modification != TileModification.SlopeAndHammerBlock)
+                {
                     // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve sloping a block");
                 }
@@ -166,11 +188,14 @@ namespace Orion.Core.Packets.World.Tiles {
         /// <exception cref="InvalidOperationException">
         /// <see cref="Modification"/> does not involve breaking a block, wall, or container.
         /// </exception>
-        public bool IsFailure {
-            get {
+        public bool IsFailure
+        {
+            get
+            {
                 if (Modification != TileModification.BreakBlock && Modification != TileModification.BreakWall &&
                         Modification != TileModification.BreakBlockItemless &&
-                        Modification != TileModification.BreakContainer) {
+                        Modification != TileModification.BreakContainer)
+                {
                     // Not localized because this string is developer-facing.
                     throw new InvalidOperationException(
                         "Modification does not involve breaking a block, wall, or container");
@@ -179,10 +204,12 @@ namespace Orion.Core.Packets.World.Tiles {
                 return _data == 1;
             }
 
-            set {
+            set
+            {
                 if (Modification != TileModification.BreakBlock && Modification != TileModification.BreakWall &&
                         Modification != TileModification.BreakBlockItemless &&
-                        Modification != TileModification.BreakContainer) {
+                        Modification != TileModification.BreakContainer)
+                {
                     // Not localized because this string is developer-facing.
                     throw new InvalidOperationException(
                         "Modification does not involve breaking a block, wall, or container");
@@ -195,13 +222,15 @@ namespace Orion.Core.Packets.World.Tiles {
         PacketId IPacket.Id => PacketId.TileModify;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 8);
             return 8;
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 8);
             return 8;
         }

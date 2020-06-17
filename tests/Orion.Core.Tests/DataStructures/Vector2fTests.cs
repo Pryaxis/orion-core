@@ -18,17 +18,21 @@
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.DataStructures {
-    public class Vector2fTests {
+namespace Orion.Core.DataStructures
+{
+    public class Vector2fTests
+    {
         [Fact]
-        public void X_Get() {
+        public void X_Get()
+        {
             var vector = new Vector2f(1.23f, 4.56f);
 
             Assert.Equal(1.23f, vector.X);
         }
 
         [Fact]
-        public void Y_Get() {
+        public void Y_Get()
+        {
             var vector = new Vector2f(1.23f, 4.56f);
 
             Assert.Equal(4.56f, vector.Y);
@@ -36,7 +40,8 @@ namespace Orion.Core.DataStructures {
 
 
         [Fact]
-        public void Equals_ReturnsTrue() {
+        public void Equals_ReturnsTrue()
+        {
             var vector = new Vector2f(1.23f, 4.56f);
             var vector2 = new Vector2f(1.23f, 4.56f);
 
@@ -45,7 +50,8 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
-        public void Equals_ReturnsFalse() {
+        public void Equals_ReturnsFalse()
+        {
             var vector = new Vector2f(1.23f, 4.56f);
             var vector2 = new Vector2f(1.23f, 0);
             var vector3 = new Vector2f(0, 0);
@@ -58,7 +64,8 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
-        public void GetHashCode_Equals_AreEqual() {
+        public void GetHashCode_Equals_AreEqual()
+        {
             var vector = new Vector2f(1.23f, 4.56f);
             var vector2 = new Vector2f(1.23f, 4.56f);
 
@@ -67,7 +74,8 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Equality_ReturnsTrue() {
+        public void op_Equality_ReturnsTrue()
+        {
             var vector = new Vector2f(1.23f, 4.56f);
             var vector2 = new Vector2f(1.23f, 4.56f);
 
@@ -76,7 +84,8 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Equality_ReturnsFalse() {
+        public void op_Equality_ReturnsFalse()
+        {
             var vector = new Vector2f(1.23f, 4.56f);
             var vector2 = new Vector2f(1.23f, 0);
             var vector3 = new Vector2f(0, 4.56f);
@@ -87,7 +96,8 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Inequality_ReturnsTrue() {
+        public void op_Inequality_ReturnsTrue()
+        {
             var vector = new Vector2f(1.23f, 4.56f);
             var vector2 = new Vector2f(1.23f, 0);
             var vector3 = new Vector2f(0, 4.56f);
@@ -98,7 +108,8 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Inequality_ReturnsFalse() {
+        public void op_Inequality_ReturnsFalse()
+        {
             var vector = new Vector2f(1.23f, 4.56f);
             var vector2 = new Vector2f(1.23f, 4.56f);
 
@@ -107,7 +118,8 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Addition() {
+        public void op_Addition()
+        {
             var vector = new Vector2f(1f, 2f);
             var vector2 = new Vector2f(3f, 5f);
 
@@ -116,7 +128,8 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Subtraction() {
+        public void op_Subtraction()
+        {
             var vector = new Vector2f(1f, 2f);
             var vector2 = new Vector2f(3f, 5f);
 
@@ -125,7 +138,8 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Multiplication() {
+        public void op_Multiplication()
+        {
             var vector = new Vector2f(1f, 2f);
 
             Assert.Equal(new Vector2f(2f, 4f), 2 * vector);
@@ -133,7 +147,8 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Division() {
+        public void op_Division()
+        {
             var vector = new Vector2f(2f, 4f);
 
             Assert.Equal(new Vector2f(1f, 2f), vector / 2);

@@ -19,13 +19,16 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.World.Signs {
+namespace Orion.Core.Packets.World.Signs
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class SignReadPacketTests {
+    public class SignReadPacketTests
+    {
         public static readonly byte[] Bytes = { 7, 0, 46, 0, 1, 100, 0 };
 
         [Fact]
-        public void X_Set_Get() {
+        public void X_Set_Get()
+        {
             var packet = new SignReadPacket();
 
             packet.X = 256;
@@ -34,7 +37,8 @@ namespace Orion.Core.Packets.World.Signs {
         }
 
         [Fact]
-        public void Y_Set_Get() {
+        public void Y_Set_Get()
+        {
             var packet = new SignReadPacket();
 
             packet.Y = 100;
@@ -43,7 +47,8 @@ namespace Orion.Core.Packets.World.Signs {
         }
 
         [Fact]
-        public void Read() {
+        public void Read()
+        {
             var packet = new SignReadPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -53,7 +58,8 @@ namespace Orion.Core.Packets.World.Signs {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip()
+        {
             TestUtils.RoundTripPacket<SignReadPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

@@ -15,9 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.Players {
-    public static class TestUtils {
-        public static void FakeReceiveBytes(int index, byte[] bytes) {
+namespace Orion.Core.Players
+{
+    public static class TestUtils
+    {
+        public static void FakeReceiveBytes(int index, byte[] bytes)
+        {
             var buffer = Terraria.NetMessage.buffer[index];
             var oldBytes = buffer.readBuffer;
             buffer.readBuffer = bytes;

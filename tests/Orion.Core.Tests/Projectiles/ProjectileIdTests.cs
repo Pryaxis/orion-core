@@ -19,10 +19,13 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Orion.Core.Projectiles {
-    public class ProjectileIdTests {
+namespace Orion.Core.Projectiles
+{
+    public class ProjectileIdTests
+    {
         [Fact]
-        public void AllProjectileIdsCovered() {
+        public void AllProjectileIdsCovered()
+        {
             var maxId = Enum.GetValues(typeof(ProjectileId)).Cast<ProjectileId>().Max();
             Assert.Equal((ProjectileId)(Terraria.ID.ProjectileID.Count - 1), maxId);
         }

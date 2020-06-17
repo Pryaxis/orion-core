@@ -19,12 +19,14 @@ using System;
 using Orion.Core.Players;
 using Orion.Core.World.Chests;
 
-namespace Orion.Core.Events.World.Chests {
+namespace Orion.Core.Events.World.Chests
+{
     /// <summary>
     /// An event that occurs when a player is opening a chest. This event can be canceled.
     /// </summary>
     [Event("chest-open")]
-    public sealed class ChestOpenEvent : ChestEvent {
+    public sealed class ChestOpenEvent : ChestEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="ChestOpenEvent"/> class with the specified
         /// <paramref name="chest"/> and <paramref name="player"/>.
@@ -34,7 +36,8 @@ namespace Orion.Core.Events.World.Chests {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="chest"/> or <paramref name="player"/> are <see langword="null"/>.
         /// </exception>
-        public ChestOpenEvent(IChest chest, IPlayer player) : base(chest) {
+        public ChestOpenEvent(IChest chest, IPlayer player) : base(chest)
+        {
             Player = player ?? throw new ArgumentNullException(nameof(player));
         }
 

@@ -15,12 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.Framework {
+namespace Orion.Core.Framework
+{
     /// <summary>
     /// Specifies the priority of a service binding. Service bindings with higher priorities will take precedence over
     /// service bindings with lower priorities.
     /// </summary>
-    public enum BindingPriority {
+    public enum BindingPriority
+    {
         /// <summary>
         /// Indicates that the service binding should have the lowest priority.
         /// </summary>

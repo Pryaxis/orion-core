@@ -18,11 +18,13 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
-namespace Orion.Core.World.Tiles {
+namespace Orion.Core.World.Tiles
+{
     /// <summary>
     /// Specifies a block ID.
     /// </summary>
-    public enum BlockId : ushort {
+    public enum BlockId : ushort
+    {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         Dirt = 0,
         Stone = 1,
@@ -653,7 +655,8 @@ namespace Orion.Core.World.Tiles {
     /// <summary>
     /// Provides extensions for the <see cref="BlockId"/> enumeration.
     /// </summary>
-    public static class BlockIdExtensions {
+    public static class BlockIdExtensions
+    {
         private static readonly ISet<BlockId> _frames = new HashSet<BlockId> {
             BlockId.ShortGrassPlants,
             BlockId.Torches,

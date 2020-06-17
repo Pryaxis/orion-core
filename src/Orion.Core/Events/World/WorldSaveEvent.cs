@@ -18,12 +18,14 @@
 using System;
 using Orion.Core.World;
 
-namespace Orion.Core.Events.World {
+namespace Orion.Core.Events.World
+{
     /// <summary>
     /// An event that occurs when a world is saving. This event can be canceled.
     /// </summary>
     [Event("world-save")]
-    public sealed class WorldSaveEvent : WorldEvent {
+    public sealed class WorldSaveEvent : WorldEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="WorldSaveEvent"/> class with the specified
         /// <paramref name="world"/>.

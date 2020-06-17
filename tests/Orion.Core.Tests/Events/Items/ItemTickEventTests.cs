@@ -18,10 +18,13 @@
 using System;
 using Xunit;
 
-namespace Orion.Core.Events.Items {
-    public class ItemTickEventTests {
+namespace Orion.Core.Events.Items
+{
+    public class ItemTickEventTests
+    {
         [Fact]
-        public void Ctor_NullItem_ThrowsArgumentNullException() {
+        public void Ctor_NullItem_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new ItemTickEvent(null!));
         }
     }

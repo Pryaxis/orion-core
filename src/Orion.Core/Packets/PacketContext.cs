@@ -17,11 +17,13 @@
 
 using System.Diagnostics.Contracts;
 
-namespace Orion.Core.Packets {
+namespace Orion.Core.Packets
+{
     /// <summary>
     /// Describes the context with which a packet should be processed.
     /// </summary>
-    public enum PacketContext {
+    public enum PacketContext
+    {
         /// <summary>
         /// Indicates that the packet should be processed as the server.
         /// </summary>
@@ -36,7 +38,8 @@ namespace Orion.Core.Packets {
     /// <summary>
     /// Provides extensions for the <see cref="PacketContext"/> enumeration.
     /// </summary>
-    public static class PacketContextExtensions {
+    public static class PacketContextExtensions
+    {
         /// <summary>
         /// Returns the other context for the packet <paramref name="context"/>.
         /// </summary>

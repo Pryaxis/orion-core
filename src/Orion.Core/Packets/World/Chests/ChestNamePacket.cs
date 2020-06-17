@@ -20,13 +20,15 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Orion.Core.Packets.World.Chests {
+namespace Orion.Core.Packets.World.Chests
+{
     /// <summary>
     /// A packet sent from the client to the server to request a chest's name or from the server to the client to set a
     /// chest's name.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct ChestNamePacket : IPacket {
+    public struct ChestNamePacket : IPacket
+    {
         [field: FieldOffset(8)] private string? _name;
 
         /// <summary>
@@ -54,7 +56,8 @@ namespace Orion.Core.Packets.World.Chests {
         /// </summary>
         /// <value>The chest's name.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string Name {
+        public string Name
+        {
             get => _name ?? string.Empty;
             set => _name = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -62,9 +65,11 @@ namespace Orion.Core.Packets.World.Chests {
         PacketId IPacket.Id => PacketId.ChestName;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 6);
-            if (context == PacketContext.Server) {
+            if (context == PacketContext.Server)
+            {
                 return 6;
             }
 
@@ -73,9 +78,11 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 6);
-            if (context == PacketContext.Client) {
+            if (context == PacketContext.Client)
+            {
                 return 6;
             }
 

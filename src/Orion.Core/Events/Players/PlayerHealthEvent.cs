@@ -18,12 +18,14 @@
 using System;
 using Orion.Core.Players;
 
-namespace Orion.Core.Events.Players {
+namespace Orion.Core.Events.Players
+{
     /// <summary>
     /// An event that occurs when a player is sending their health information. This event can be canceled.
     /// </summary>
     [Event("player-hp")]
-    public sealed class PlayerHealthEvent : PlayerEvent {
+    public sealed class PlayerHealthEvent : PlayerEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerHealthEvent"/> class with the specified
         /// <paramref name="player"/>, <paramref name="health"/>, and <paramref name="maxHealth"/>.
@@ -32,7 +34,8 @@ namespace Orion.Core.Events.Players {
         /// <param name="health">The player's health.</param>
         /// <param name="maxHealth">The player's maximum health.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerHealthEvent(IPlayer player, int health, int maxHealth) : base(player) {
+        public PlayerHealthEvent(IPlayer player, int health, int maxHealth) : base(player)
+        {
             Health = health;
             MaxHealth = maxHealth;
         }

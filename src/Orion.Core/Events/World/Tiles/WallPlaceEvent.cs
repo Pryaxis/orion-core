@@ -20,12 +20,14 @@ using Orion.Core.Players;
 using Orion.Core.World;
 using Orion.Core.World.Tiles;
 
-namespace Orion.Core.Events.World.Tiles {
+namespace Orion.Core.Events.World.Tiles
+{
     /// <summary>
     /// An event that occurs when a wall is being placed. This event can be canceled.
     /// </summary>
     [Event("wall-place")]
-    public sealed class WallPlaceEvent : TileEvent {
+    public sealed class WallPlaceEvent : TileEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="WallPlaceEvent"/> class with the specified
         /// <paramref name="world"/>, <paramref name="player"/>, coordinates, wall <paramref name="id"/>, and
@@ -39,7 +41,8 @@ namespace Orion.Core.Events.World.Tiles {
         /// <param name="isReplacement">Whether the wall placing is a replacement.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public WallPlaceEvent(IWorld world, IPlayer? player, int x, int y, WallId id, bool isReplacement)
-                : base(world, player, x, y) {
+                : base(world, player, x, y)
+        {
             Id = id;
             IsReplacement = isReplacement;
         }

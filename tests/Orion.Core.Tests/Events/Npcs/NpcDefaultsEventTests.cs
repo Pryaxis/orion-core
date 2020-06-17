@@ -21,16 +21,20 @@ using Moq;
 using Orion.Core.Npcs;
 using Xunit;
 
-namespace Orion.Core.Events.Npcs {
+namespace Orion.Core.Events.Npcs
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class NpcDefaultsEventTests {
+    public class NpcDefaultsEventTests
+    {
         [Fact]
-        public void Ctor_NullNpc_ThrowsArgumentNullException() {
+        public void Ctor_NullNpc_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new NpcDefaultsEvent(null!));
         }
 
         [Fact]
-        public void Id_Set_Get() {
+        public void Id_Set_Get()
+        {
             var npc = Mock.Of<INpc>();
             var evt = new NpcDefaultsEvent(npc);
 

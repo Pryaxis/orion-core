@@ -19,12 +19,14 @@ using System;
 using Orion.Core.Npcs;
 using Orion.Core.Players;
 
-namespace Orion.Core.Events.Npcs {
+namespace Orion.Core.Events.Npcs
+{
     /// <summary>
     /// An event that occurs when a player is catching an NPC. This event can be canceled.
     /// </summary>
     [Event("npc-catch")]
-    public sealed class NpcCatchEvent : NpcEvent {
+    public sealed class NpcCatchEvent : NpcEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcCatchEvent"/> class with the specified
         /// <paramref name="npc"/> and <paramref name="player"/>.
@@ -34,7 +36,8 @@ namespace Orion.Core.Events.Npcs {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="npc"/> or <paramref name="player"/> are <see langword="null"/>.
         /// </exception>
-        public NpcCatchEvent(INpc npc, IPlayer player) : base(npc) {
+        public NpcCatchEvent(INpc npc, IPlayer player) : base(npc)
+        {
             Player = player ?? throw new ArgumentNullException(nameof(player));
         }
 

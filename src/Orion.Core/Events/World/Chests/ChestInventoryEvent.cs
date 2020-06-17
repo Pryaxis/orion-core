@@ -20,12 +20,14 @@ using Orion.Core.Items;
 using Orion.Core.Players;
 using Orion.Core.World.Chests;
 
-namespace Orion.Core.Events.World.Chests {
+namespace Orion.Core.Events.World.Chests
+{
     /// <summary>
     /// An event that occurs when a player is modifying a chest's inventory. This event can be canceled.
     /// </summary>
     [Event("chest-inv")]
-    public sealed class ChestInventoryEvent : ChestEvent {
+    public sealed class ChestInventoryEvent : ChestEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="ChestInventoryEvent"/> class with the specified
         /// <paramref name="chest"/>, <paramref name="player"/>, inventory <paramref name="slot"/>, and
@@ -35,7 +37,8 @@ namespace Orion.Core.Events.World.Chests {
         /// <param name="player">The player modifying the chest's inventory.</param>
         /// <param name="slot">The inventory slot being modified.</param>
         /// <param name="itemStack">The new item stack.</param>
-        public ChestInventoryEvent(IChest chest, IPlayer player, int slot, ItemStack itemStack) : base(chest) {
+        public ChestInventoryEvent(IChest chest, IPlayer player, int slot, ItemStack itemStack) : base(chest)
+        {
             Player = player ?? throw new ArgumentNullException(nameof(player));
             Slot = slot;
             ItemStack = itemStack;

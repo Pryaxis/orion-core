@@ -18,7 +18,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Orion.Core.World.Tiles {
+namespace Orion.Core.World.Tiles
+{
     /// <summary>
     /// Represents an optimized Terraria tile.
     /// </summary>
@@ -26,7 +27,8 @@ namespace Orion.Core.World.Tiles {
     /// This structure is not thread-safe.
     /// </remarks>
     [StructLayout(LayoutKind.Explicit)]
-    public struct Tile {
+    public struct Tile
+    {
         // The shifts for the tile header.
         private const int BlockColorShift = 0;
         private const int SlopeShift = 12;
@@ -93,7 +95,8 @@ namespace Orion.Core.World.Tiles {
         /// Gets or sets the block color.
         /// </summary>
         /// <value>The block color.</value>
-        public PaintColor BlockColor {
+        public PaintColor BlockColor
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (PaintColor)((_header & BlockColorMask) >> BlockColorShift);
 
@@ -105,15 +108,20 @@ namespace Orion.Core.World.Tiles {
         /// Gets or sets a value indicating whether the block is active.
         /// </summary>
         /// <value><see langword="true"/> if the block is active; otherwise, <see langword="false"/>.</value>
-        public bool IsBlockActive {
+        public bool IsBlockActive
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & IsBlockActiveMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     _header |= IsBlockActiveMask;
-                } else {
+                }
+                else
+                {
                     _header &= ~IsBlockActiveMask;
                 }
             }
@@ -123,15 +131,20 @@ namespace Orion.Core.World.Tiles {
         /// Gets or sets a value indicating whether the block is actuated.
         /// </summary>
         /// <value><see langword="true"/> if the block is actuated; otherwise, <see langword="false"/>.</value>
-        public bool IsBlockActuated {
+        public bool IsBlockActuated
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & IsBlockActuatedMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     _header |= IsBlockActuatedMask;
-                } else {
+                }
+                else
+                {
                     _header &= ~IsBlockActuatedMask;
                 }
             }
@@ -141,15 +154,20 @@ namespace Orion.Core.World.Tiles {
         /// Gets or sets a value indicating whether the tile has red wire.
         /// </summary>
         /// <value><see langword="true"/> if the tile has red wire; otherwise, <see langword="false"/>.</value>
-        public bool HasRedWire {
+        public bool HasRedWire
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & HasRedWireMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     _header |= HasRedWireMask;
-                } else {
+                }
+                else
+                {
                     _header &= ~HasRedWireMask;
                 }
             }
@@ -159,15 +177,20 @@ namespace Orion.Core.World.Tiles {
         /// Gets or sets a value indicating whether the tile has blue wire.
         /// </summary>
         /// <value><see langword="true"/> if the tile has blue wire; otherwise, <see langword="false"/>.</value>
-        public bool HasBlueWire {
+        public bool HasBlueWire
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & HasBlueWireMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     _header |= HasBlueWireMask;
-                } else {
+                }
+                else
+                {
                     _header &= ~HasBlueWireMask;
                 }
             }
@@ -177,15 +200,20 @@ namespace Orion.Core.World.Tiles {
         /// Gets or sets a value indicating whether the tile has green wire.
         /// </summary>
         /// <value><see langword="true"/> if the tile has green wire; otherwise, <see langword="false"/>.</value>
-        public bool HasGreenWire {
+        public bool HasGreenWire
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & HasGreenWireMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     _header |= HasGreenWireMask;
-                } else {
+                }
+                else
+                {
                     _header &= ~HasGreenWireMask;
                 }
             }
@@ -195,15 +223,20 @@ namespace Orion.Core.World.Tiles {
         /// Gets or sets a value indicating whether the block is halved.
         /// </summary>
         /// <value><see langword="true"/> if the block is halved; otherwise, <see langword="false"/>.</value>
-        public bool IsBlockHalved {
+        public bool IsBlockHalved
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & IsBlockHalvedMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     _header |= IsBlockHalvedMask;
-                } else {
+                }
+                else
+                {
                     _header &= ~IsBlockHalvedMask;
                 }
             }
@@ -213,15 +246,20 @@ namespace Orion.Core.World.Tiles {
         /// Gets or sets a value indicating whether the tile has an actuator.
         /// </summary>
         /// <value><see langword="true"/> if the tile has an actuator; otherwise, <see langword="false"/>.</value>
-        public bool HasActuator {
+        public bool HasActuator
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & HasActuatorMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     _header |= HasActuatorMask;
-                } else {
+                }
+                else
+                {
                     _header &= ~HasActuatorMask;
                 }
             }
@@ -231,7 +269,8 @@ namespace Orion.Core.World.Tiles {
         /// Gets or sets the slope.
         /// </summary>
         /// <value>The slope.</value>
-        public Slope Slope {
+        public Slope Slope
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (Slope)((_header & SlopeMask) >> SlopeShift);
 
@@ -243,7 +282,8 @@ namespace Orion.Core.World.Tiles {
         /// Gets or sets the wall color.
         /// </summary>
         /// <value>The wall color.</value>
-        public PaintColor WallColor {
+        public PaintColor WallColor
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (PaintColor)((_header & WallColorMask) >> WallColorShift);
 
@@ -255,7 +295,8 @@ namespace Orion.Core.World.Tiles {
         /// Gets or sets the liquid.
         /// </summary>
         /// <value>The liquid.</value>
-        public Liquid Liquid {
+        public Liquid Liquid
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (Liquid)((_header & LiquidMask) >> LiquidShift);
 
@@ -267,15 +308,20 @@ namespace Orion.Core.World.Tiles {
         /// Gets or sets a value indicating whether the tile has green wire.
         /// </summary>
         /// <value><see langword="true"/> if the tile has green wire; otherwise, <see langword="false"/>.</value>
-        public bool HasYellowWire {
+        public bool HasYellowWire
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & HasYellowWireMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     _header |= HasYellowWireMask;
-                } else {
+                }
+                else
+                {
                     _header &= ~HasYellowWireMask;
                 }
             }
@@ -285,12 +331,14 @@ namespace Orion.Core.World.Tiles {
         /// Gets or sets the block's frame number.
         /// </summary>
         /// <value>The block's frame number.</value>
-        public byte BlockFrameNumber {
+        public byte BlockFrameNumber
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (byte)((_header & BlockFrameNumberMask) >> BlockFrameNumberShift);
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set {
+            set
+            {
                 _header =
                     (_header & ~BlockFrameNumberMask) | (((uint)value << BlockFrameNumberShift) & BlockFrameNumberMask);
             }
@@ -300,15 +348,20 @@ namespace Orion.Core.World.Tiles {
         /// Gets or sets a value indicating whether the tile is checking liquid.
         /// </summary>
         /// <value><see langword="true"/> if the tile is checking liquid; otherwise, <see langword="false"/>.</value>
-        public bool IsCheckingLiquid {
+        public bool IsCheckingLiquid
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & IsCheckingLiquidMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     _header |= IsCheckingLiquidMask;
-                } else {
+                }
+                else
+                {
                     _header &= ~IsCheckingLiquidMask;
                 }
             }
@@ -318,15 +371,20 @@ namespace Orion.Core.World.Tiles {
         /// Gets or sets a value indicating whether the tile should skip liquids.
         /// </summary>
         /// <value><see langword="true"/> if the tile should skip liquids; otherwise, <see langword="false"/>.</value>
-        public bool ShouldSkipLiquid {
+        public bool ShouldSkipLiquid
+        {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & ShouldSkipLiquidMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     _header |= ShouldSkipLiquidMask;
-                } else {
+                }
+                else
+                {
                     _header &= ~ShouldSkipLiquidMask;
                 }
             }

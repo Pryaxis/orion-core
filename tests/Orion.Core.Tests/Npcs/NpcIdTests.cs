@@ -19,19 +19,24 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Orion.Core.Npcs {
+namespace Orion.Core.Npcs
+{
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
-    public class NpcIdTests {
+    public class NpcIdTests
+    {
         [Fact]
-        public void AllNpcIdsCovered() {
+        public void AllNpcIdsCovered()
+        {
             var maxId = Enum.GetValues(typeof(NpcId)).Cast<NpcId>().Max();
             Assert.Equal((NpcId)(Terraria.ID.NPCID.Count - 1), maxId);
         }
 
         [Fact]
-        public void IsCatchable() {
-            for (var i = 0; i < Terraria.ID.NPCID.Count; ++i) {
+        public void IsCatchable()
+        {
+            for (var i = 0; i < Terraria.ID.NPCID.Count; ++i)
+            {
                 Assert.Equal(Terraria.Main.npcCatchable[i], ((NpcId)i).IsCatchable());
             }
         }

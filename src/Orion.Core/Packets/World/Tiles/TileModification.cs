@@ -15,11 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.Packets.World.Tiles {
+namespace Orion.Core.Packets.World.Tiles
+{
     /// <summary>
     /// Specifies the modification in a <see cref="TileModifyPacket"/>.
     /// </summary>
-    public enum TileModification : byte {
+    public enum TileModification : byte
+    {
         /// <summary>
         /// Indicates that a block should be broken.
         /// </summary>

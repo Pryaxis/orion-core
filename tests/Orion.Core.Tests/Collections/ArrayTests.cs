@@ -18,24 +18,30 @@
 using System.Linq;
 using Xunit;
 
-namespace Orion.Core.Collections {
-    public class ArrayTests {
+namespace Orion.Core.Collections
+{
+    public class ArrayTests
+    {
         [Fact]
-        public void GetEnumerator() {
+        public void GetEnumerator()
+        {
             var nums = new[] { 1, 2, 3 };
             var array = new TestArray(nums);
 
             Assert.Equal(nums, array.ToList());
         }
 
-        private class TestArray : IArray<int> {
+        private class TestArray : IArray<int>
+        {
             private readonly int[] _array;
 
-            public TestArray(int[] array) {
+            public TestArray(int[] array)
+            {
                 _array = array;
             }
 
-            public int this[int index] {
+            public int this[int index]
+            {
                 get => _array[index];
                 set => _array[index] = value;
             }

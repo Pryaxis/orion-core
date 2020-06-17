@@ -17,12 +17,15 @@
 
 using Xunit;
 
-namespace Orion.Core.Packets {
-    public class PacketContextTests {
+namespace Orion.Core.Packets
+{
+    public class PacketContextTests
+    {
         [Theory]
         [InlineData(PacketContext.Client, PacketContext.Server)]
         [InlineData(PacketContext.Server, PacketContext.Client)]
-        public void Switch(PacketContext context, PacketContext expected) {
+        public void Switch(PacketContext context, PacketContext expected)
+        {
             Assert.Equal(expected, context.Switch());
         }
     }

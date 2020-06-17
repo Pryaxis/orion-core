@@ -18,10 +18,13 @@
 using System;
 using Xunit;
 
-namespace Orion.Core.Events.Projectiles {
-    public class ProjectileTickEventTests {
+namespace Orion.Core.Events.Projectiles
+{
+    public class ProjectileTickEventTests
+    {
         [Fact]
-        public void Ctor_NullProjectile_ThrowsArgumentNullException() {
+        public void Ctor_NullProjectile_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new ProjectileTickEvent(null!));
         }
     }

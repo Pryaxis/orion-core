@@ -17,11 +17,13 @@
 
 using System;
 
-namespace Orion.Core.Packets.Server {
+namespace Orion.Core.Packets.Server
+{
     /// <summary>
     /// A packet sent from the server to the client to set the client's index.
     /// </summary>
-    public struct ServerIndexPacket : IPacket {
+    public struct ServerIndexPacket : IPacket
+    {
         /// <summary>
         /// Gets or sets the client's index.
         /// </summary>
@@ -31,13 +33,15 @@ namespace Orion.Core.Packets.Server {
         PacketId IPacket.Id => PacketId.ServerIndex;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
             Index = span[0];
             return 1;
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context)
+        {
             span[0] = Index;
             return 1;
         }

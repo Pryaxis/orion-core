@@ -19,8 +19,10 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
-namespace Orion.Core.Packets {
-    internal static class StructExtensions {
+namespace Orion.Core.Packets
+{
+    internal static class StructExtensions
+    {
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ref byte AsRefByte<T>(ref this T value, int byteOffset) where T : struct =>
             ref Unsafe.As<T, byte>(ref Unsafe.AddByteOffset(ref value, new IntPtr(byteOffset)));

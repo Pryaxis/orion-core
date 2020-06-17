@@ -18,10 +18,13 @@
 using System;
 using Xunit;
 
-namespace Orion.Core.Events.Players {
-    public class PlayerJoinEventTests {
+namespace Orion.Core.Events.Players
+{
+    public class PlayerJoinEventTests
+    {
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new PlayerJoinEvent(null!));
         }
     }

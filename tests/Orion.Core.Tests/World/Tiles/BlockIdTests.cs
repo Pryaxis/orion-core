@@ -19,19 +19,24 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Orion.Core.World.Tiles {
+namespace Orion.Core.World.Tiles
+{
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
-    public class BlockIdTests {
+    public class BlockIdTests
+    {
         [Fact]
-        public void AllBlockIdsCovered() {
+        public void AllBlockIdsCovered()
+        {
             var maxId = Enum.GetValues(typeof(BlockId)).Cast<BlockId>().Max();
             Assert.Equal((BlockId)(Terraria.ID.TileID.Count - 1), maxId);
         }
 
         [Fact]
-        public void HasFrames() {
-            for (var i = 0; i < Terraria.ID.TileID.Count; ++i) {
+        public void HasFrames()
+        {
+            for (var i = 0; i < Terraria.ID.TileID.Count; ++i)
+            {
                 Assert.Equal(Terraria.Main.tileFrameImportant[i], ((BlockId)i).HasFrames());
             }
         }

@@ -15,11 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.Framework {
+namespace Orion.Core.Framework
+{
     /// <summary>
     /// Controls the scope of a service.
     /// </summary>
-    public enum ServiceScope {
+    public enum ServiceScope
+    {
         /// <summary>
         /// Indicates that the service should have singleton scope: i.e., only one object is ever constructed.
         /// </summary>

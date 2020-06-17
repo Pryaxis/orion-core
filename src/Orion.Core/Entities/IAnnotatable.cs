@@ -18,7 +18,8 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Orion.Core.Entities {
+namespace Orion.Core.Entities
+{
     /// <summary>
     /// Provides annotation support.
     /// </summary>
@@ -26,7 +27,8 @@ namespace Orion.Core.Entities {
     /// This interface is used to allow consumers to attach custom state to objects without having to rely on the
     /// <see cref="ConditionalWeakTable{TKey, TValue}"/> class.
     /// </remarks>
-    public interface IAnnotatable {
+    public interface IAnnotatable
+    {
         /// <summary>
         /// Gets a reference to the annotation of type <typeparamref name="T"/> with the given <paramref name="key"/>,
         /// using the specified <paramref name="initializer"/> to initialize the annotation.

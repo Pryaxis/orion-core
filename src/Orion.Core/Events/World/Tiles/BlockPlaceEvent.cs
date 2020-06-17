@@ -20,12 +20,14 @@ using Orion.Core.Players;
 using Orion.Core.World;
 using Orion.Core.World.Tiles;
 
-namespace Orion.Core.Events.World.Tiles {
+namespace Orion.Core.Events.World.Tiles
+{
     /// <summary>
     /// An event that occurs when a block is being placed. This event can be canceled.
     /// </summary>
     [Event("block-place")]
-    public sealed class BlockPlaceEvent : TileEvent {
+    public sealed class BlockPlaceEvent : TileEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockPlaceEvent"/> class with the specified
         /// <paramref name="world"/>, <paramref name="player"/>, coordinates, block <paramref name="id"/>,
@@ -40,7 +42,8 @@ namespace Orion.Core.Events.World.Tiles {
         /// <param name="isReplacement">Whether the block placing is a replacement.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public BlockPlaceEvent(IWorld world, IPlayer? player, int x, int y, BlockId id, int style, bool isReplacement)
-                : base(world, player, x, y) {
+                : base(world, player, x, y)
+        {
             Id = id;
             Style = style;
             IsReplacement = isReplacement;

@@ -20,15 +20,19 @@ using Moq;
 using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Core.Events.Players {
-    public class PlayerManaEventTests {
+namespace Orion.Core.Events.Players
+{
+    public class PlayerManaEventTests
+    {
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new PlayerManaEvent(null!, 0, 0));
         }
 
         [Fact]
-        public void Mana_Get() {
+        public void Mana_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var evt = new PlayerManaEvent(player, 100, 200);
 
@@ -36,7 +40,8 @@ namespace Orion.Core.Events.Players {
         }
 
         [Fact]
-        public void MaxMana_Get() {
+        public void MaxMana_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var evt = new PlayerManaEvent(player, 100, 200);
 

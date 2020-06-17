@@ -18,18 +18,21 @@
 using System;
 using Orion.Core.Projectiles;
 
-namespace Orion.Core.Events.Projectiles {
+namespace Orion.Core.Events.Projectiles
+{
     /// <summary>
     /// Provides the base class for a projectile-related event.
     /// </summary>
-    public abstract class ProjectileEvent : Event {
+    public abstract class ProjectileEvent : Event
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectileEvent"/> class with the specified
         /// <paramref name="projectile"/>.
         /// </summary>
         /// <param name="projectile">The projectile involved in the event.</param>
         /// <exception cref="ArgumentNullException"><paramref name="projectile"/> is <see langword="null"/>.</exception>
-        protected ProjectileEvent(IProjectile projectile) {
+        protected ProjectileEvent(IProjectile projectile)
+        {
             Projectile = projectile ?? throw new ArgumentNullException(nameof(projectile));
         }
 

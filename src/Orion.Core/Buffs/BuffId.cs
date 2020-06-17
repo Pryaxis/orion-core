@@ -18,11 +18,13 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
-namespace Orion.Core.Buffs {
+namespace Orion.Core.Buffs
+{
     /// <summary>
     /// Specifies a buff ID.
     /// </summary>
-    public enum BuffId : ushort {
+    public enum BuffId : ushort
+    {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         None = 0,
         ObsidianSkin = 1,
@@ -353,7 +355,8 @@ namespace Orion.Core.Buffs {
     /// <summary>
     /// Provides extensions for the <see cref="BuffId"/> enumeration.
     /// </summary>
-    public static class BuffIdExtensions {
+    public static class BuffIdExtensions
+    {
         private static readonly ISet<BuffId> _debuffs = new HashSet<BuffId> {
             BuffId.Poisoned,
             BuffId.PotionSickness,

@@ -21,18 +21,23 @@ using System.Linq;
 using Orion.Core.Packets.Modules;
 using Xunit;
 
-namespace Orion.Core.Packets {
-    public class PacketIdTests {
+namespace Orion.Core.Packets
+{
+    public class PacketIdTests
+    {
         private static readonly ISet<Type> _excludedTypes =
             new HashSet<Type> { typeof(ModulePacket<>), typeof(UnknownPacket), typeof(IPacket) };
 
         [Fact]
-        public void Type() {
-            for (var i = 0; i < 256; ++i) {
+        public void Type()
+        {
+            for (var i = 0; i < 256; ++i)
+            {
                 var id = (PacketId)i;
 
                 // Ignore the `Module` packet ID, since it is handled specially.
-                if (id == PacketId.Module) {
+                if (id == PacketId.Module)
+                {
                     continue;
                 }
 

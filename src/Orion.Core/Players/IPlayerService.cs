@@ -26,7 +26,8 @@ using Orion.Core.Packets.Server;
 using Orion.Core.Packets.World.Tiles;
 using Orion.Core.World.Tiles;
 
-namespace Orion.Core.Players {
+namespace Orion.Core.Players
+{
     /// <summary>
     /// Represents a player service. Provides access to players and publishes packet and player-related events.
     /// </summary>
@@ -50,7 +51,8 @@ namespace Orion.Core.Players {
     /// </list>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
-    public interface IPlayerService {
+    public interface IPlayerService
+    {
         /// <summary>
         /// Gets the players.
         /// </summary>
@@ -61,7 +63,8 @@ namespace Orion.Core.Players {
     /// <summary>
     /// Provides extensions for the <see cref="IPlayerService"/> interface.
     /// </summary>
-    public static class PlayerServiceExtensions {
+    public static class PlayerServiceExtensions
+    {
         /// <summary>
         /// Broadcasts the given <paramref name="packet"/> reference to all active players.
         /// </summary>
@@ -72,13 +75,16 @@ namespace Orion.Core.Players {
         /// <paramref name="playerService"/> is <see langword="null"/>.
         /// </exception>
         public static void BroadcastPacket<TPacket>(this IPlayerService playerService, ref TPacket packet)
-                where TPacket : struct, IPacket {
-            if (playerService is null) {
+                where TPacket : struct, IPacket
+        {
+            if (playerService is null)
+            {
                 throw new ArgumentNullException(nameof(playerService));
             }
 
             var players = playerService.Players;
-            for (var i = 0; i < players.Count; ++i) {
+            for (var i = 0; i < players.Count; ++i)
+            {
                 players[i].SendPacket(ref packet);
             }
         }
@@ -94,13 +100,16 @@ namespace Orion.Core.Players {
         /// <paramref name="playerService"/> is <see langword="null"/>.
         /// </exception>
         public static void BroadcastPacket<TPacket>(this IPlayerService playerService, TPacket packet)
-                where TPacket : struct, IPacket {
-            if (playerService is null) {
+                where TPacket : struct, IPacket
+        {
+            if (playerService is null)
+            {
                 throw new ArgumentNullException(nameof(playerService));
             }
 
             var players = playerService.Players;
-            for (var i = 0; i < players.Count; ++i) {
+            for (var i = 0; i < players.Count; ++i)
+            {
                 players[i].SendPacket(ref packet);
             }
         }
@@ -115,12 +124,15 @@ namespace Orion.Core.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="playerService"/> or <paramref name="message"/> are <see langword="null"/>.
         /// </exception>
-        public static void BroadcastMessage(this IPlayerService playerService, NetworkText message, Color3 color) {
-            if (playerService is null) {
+        public static void BroadcastMessage(this IPlayerService playerService, NetworkText message, Color3 color)
+        {
+            if (playerService is null)
+            {
                 throw new ArgumentNullException(nameof(playerService));
             }
 
-            if (message is null) {
+            if (message is null)
+            {
                 throw new ArgumentNullException(nameof(message));
             }
 
@@ -139,16 +151,20 @@ namespace Orion.Core.Players {
         /// <paramref name="playerService"/> or <paramref name="tiles"/> are <see langword="null"/>.
         /// </exception>
         /// <exception cref="NotSupportedException"><paramref name="tiles"/> is not square.</exception>
-        public static void BroadcastTiles(this IPlayerService playerService, int x, int y, ITileSlice tiles) {
-            if (playerService is null) {
+        public static void BroadcastTiles(this IPlayerService playerService, int x, int y, ITileSlice tiles)
+        {
+            if (playerService is null)
+            {
                 throw new ArgumentNullException(nameof(playerService));
             }
 
-            if (tiles is null) {
+            if (tiles is null)
+            {
                 throw new ArgumentNullException(nameof(tiles));
             }
 
-            if (tiles.Width != tiles.Height) {
+            if (tiles.Width != tiles.Height)
+            {
                 // Not localized because this string is developer-facing.
                 // TODO: implement this when the section packet is implemented.
                 throw new NotSupportedException("Tiles is not square");

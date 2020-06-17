@@ -22,11 +22,13 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 
-namespace Orion.Core.DataStructures {
+namespace Orion.Core.DataStructures
+{
     /// <summary>
     /// Represents text transmitted over the network.
     /// </summary>
-    public sealed class NetworkText : IEquatable<NetworkText> {
+    public sealed class NetworkText : IEquatable<NetworkText>
+    {
         /// <summary>
         /// Represents the empty network text.
         /// </summary>
@@ -36,7 +38,8 @@ namespace Orion.Core.DataStructures {
         internal readonly string _format;
         internal readonly NetworkText[] _args;
 
-        internal NetworkText(Mode mode, string format, params NetworkText[] args) {
+        internal NetworkText(Mode mode, string format, params NetworkText[] args)
+        {
             Debug.Assert(format != null);
             Debug.Assert(args != null);
             Debug.Assert(mode != Mode.Literal || args.Length == 0);
@@ -53,17 +56,22 @@ namespace Orion.Core.DataStructures {
 
         /// <inheritdoc/>
         [Pure]
-        public bool Equals(NetworkText? other) {
-            if (other is null) {
+        public bool Equals(NetworkText? other)
+        {
+            if (other is null)
+            {
                 return false;
             }
 
-            if (_mode != other._mode || _format != other._format || _args.Length != other._args.Length) {
+            if (_mode != other._mode || _format != other._format || _args.Length != other._args.Length)
+            {
                 return false;
             }
 
-            for (var i = 0; i < _args.Length; ++i) {
-                if (!_args[i].Equals(other._args[i])) {
+            for (var i = 0; i < _args.Length; ++i)
+            {
+                if (!_args[i].Equals(other._args[i]))
+                {
                     return false;
                 }
             }
@@ -76,11 +84,13 @@ namespace Orion.Core.DataStructures {
         /// </summary>
         /// <returns>The hash code of the network text.</returns>
         [Pure]
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             var hashCode = new HashCode();
             hashCode.Add(_mode);
             hashCode.Add(_format);
-            foreach (var arg in _args) {
+            foreach (var arg in _args)
+            {
                 hashCode.Add(arg);
             }
 
@@ -92,7 +102,8 @@ namespace Orion.Core.DataStructures {
         /// </summary>
         /// <returns>A string representation of the network text.</returns>
         [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => _mode switch {
+        public override string ToString() => _mode switch
+        {
             Mode.Literal => _format,
             Mode.Formatted => string.Format(CultureInfo.InvariantCulture, _format, _args),
             Mode.Localized => Terraria.Localization.Language.GetTextValue(_format, _args),
@@ -140,16 +151,20 @@ namespace Orion.Core.DataStructures {
             NewNetworkText(Mode.Localized, format, args);
 
         [Pure]
-        private static NetworkText NewNetworkText(Mode mode, string format, NetworkText[] args) {
-            if (format is null) {
+        private static NetworkText NewNetworkText(Mode mode, string format, NetworkText[] args)
+        {
+            if (format is null)
+            {
                 throw new ArgumentNullException(nameof(format));
             }
 
-            if (args is null) {
+            if (args is null)
+            {
                 throw new ArgumentNullException(nameof(args));
             }
 
-            if (args.Any(a => a == null)) {
+            if (args.Any(a => a == null))
+            {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentException("Args contains null", nameof(args));
             }
@@ -182,7 +197,8 @@ namespace Orion.Core.DataStructures {
         [Pure]
         public static bool operator !=(NetworkText? left, NetworkText? right) => !(left == right);
 
-        internal enum Mode {
+        internal enum Mode
+        {
             Literal = 0,
             Formatted = 1,
             Localized = 2,

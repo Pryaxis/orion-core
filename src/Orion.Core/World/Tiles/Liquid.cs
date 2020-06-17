@@ -15,11 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.World.Tiles {
+namespace Orion.Core.World.Tiles
+{
     /// <summary>
     /// Specifies a liquid.
     /// </summary>
-    public enum Liquid : byte {
+    public enum Liquid : byte
+    {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         Water = 0,
         Lava = 1,

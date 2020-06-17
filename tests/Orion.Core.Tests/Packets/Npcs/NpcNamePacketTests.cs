@@ -19,14 +19,17 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.Npcs {
+namespace Orion.Core.Packets.Npcs
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class NpcNamePacketTests {
+    public class NpcNamePacketTests
+    {
         public static readonly byte[] ServerBytes = { 5, 0, 69, 5, 0 };
         public static readonly byte[] ClientBytes = { 14, 0, 69, 5, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
 
         [Fact]
-        public void NpcIndex_Set_Get() {
+        public void NpcIndex_Set_Get()
+        {
             var packet = new NpcNamePacket();
 
             packet.NpcIndex = 5;
@@ -35,21 +38,24 @@ namespace Orion.Core.Packets.Npcs {
         }
 
         [Fact]
-        public void Name_GetNullValue() {
+        public void Name_GetNullValue()
+        {
             var packet = new NpcNamePacket();
 
             Assert.Equal(string.Empty, packet.Name);
         }
 
         [Fact]
-        public void Name_SetNullValue_ThrowsArgumentNullException() {
+        public void Name_SetNullValue_ThrowsArgumentNullException()
+        {
             var packet = new NpcNamePacket();
 
             Assert.Throws<ArgumentNullException>(() => packet.Name = null!);
         }
 
         [Fact]
-        public void Name_Set_Get() {
+        public void Name_Set_Get()
+        {
             var packet = new NpcNamePacket();
 
             packet.Name = "Terraria";
@@ -58,7 +64,8 @@ namespace Orion.Core.Packets.Npcs {
         }
 
         [Fact]
-        public void Read_AsServer() {
+        public void Read_AsServer()
+        {
             var packet = new NpcNamePacket();
             var span = ServerBytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -67,7 +74,8 @@ namespace Orion.Core.Packets.Npcs {
         }
 
         [Fact]
-        public void Read_AsClient() {
+        public void Read_AsClient()
+        {
             var packet = new NpcNamePacket();
             var span = ClientBytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Client));
@@ -77,12 +85,14 @@ namespace Orion.Core.Packets.Npcs {
         }
 
         [Fact]
-        public void RoundTrip_AsServer() {
+        public void RoundTrip_AsServer()
+        {
             TestUtils.RoundTripPacket<NpcNamePacket>(ServerBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
 
         [Fact]
-        public void RoundTrip_AsClient() {
+        public void RoundTrip_AsClient()
+        {
             TestUtils.RoundTripPacket<NpcNamePacket>(ClientBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Client);
         }
     }

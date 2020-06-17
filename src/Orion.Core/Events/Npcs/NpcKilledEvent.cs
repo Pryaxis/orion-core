@@ -18,12 +18,14 @@
 using System;
 using Orion.Core.Npcs;
 
-namespace Orion.Core.Events.Npcs {
+namespace Orion.Core.Events.Npcs
+{
     /// <summary>
     /// An event that occurs when an NPC has been killed.
     /// </summary>
     [Event("npc-killed")]
-    public sealed class NpcKilledEvent : NpcEvent {
+    public sealed class NpcKilledEvent : NpcEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcKilledEvent"/> class with the specified
         /// <paramref name="npc"/>.

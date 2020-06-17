@@ -18,12 +18,14 @@
 using System;
 using Orion.Core.World;
 
-namespace Orion.Core.Events.World {
+namespace Orion.Core.Events.World
+{
     /// <summary>
     /// An event that occurs when a world has been loaded.
     /// </summary>
     [Event("world-loaded")]
-    public sealed class WorldLoadedEvent : WorldEvent {
+    public sealed class WorldLoadedEvent : WorldEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="WorldLoadedEvent"/> class with the specified
         /// <paramref name="world"/>.

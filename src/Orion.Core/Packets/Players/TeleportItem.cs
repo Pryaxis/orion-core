@@ -15,11 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.Packets.Players {
+namespace Orion.Core.Packets.Players
+{
     /// <summary>
     /// Describes a teleport item in a <see cref="PlayerTeleportItemPacket"/>.
     /// </summary>
-    public enum TeleportItem : byte {
+    public enum TeleportItem : byte
+    {
         /// <summary>
         /// Indicates a teleportation potion.
         /// </summary>

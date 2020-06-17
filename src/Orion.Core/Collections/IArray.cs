@@ -19,12 +19,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Orion.Core.Collections {
+namespace Orion.Core.Collections
+{
     /// <summary>
     /// Represents a collection of elements that can be accessed by index.
     /// </summary>
     /// <typeparam name="T">The type of element.</typeparam>
-    public interface IArray<T> : IReadOnlyCollection<T> {
+    public interface IArray<T> : IReadOnlyCollection<T>
+    {
         /// <summary>
         /// Gets or sets the element at the given <paramref name="index"/>.
         /// </summary>
@@ -33,8 +35,10 @@ namespace Orion.Core.Collections {
         T this[int index] { get; set; }
 
         // Provide default implementations for `GetEnumerator` as they should be consistent.
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() {
-            for (var i = 0; i < Count; ++i) {
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            for (var i = 0; i < Count; ++i)
+            {
                 yield return this[i];
             }
         }

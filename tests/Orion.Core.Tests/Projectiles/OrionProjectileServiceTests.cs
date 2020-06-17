@@ -22,14 +22,17 @@ using Orion.Core.Events.Projectiles;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Core.Projectiles {
+namespace Orion.Core.Projectiles
+{
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
-    public class OrionProjectileServiceTests {
+    public class OrionProjectileServiceTests
+    {
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
-        public void Projectiles_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Projectiles_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index)
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
 
@@ -37,7 +40,8 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void Projectiles_Item_Get() {
+        public void Projectiles_Item_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
             var projectile = projectileService.Projectiles[1];
@@ -47,7 +51,8 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void Projectiles_Item_GetMultipleTimes_ReturnsSameInstance() {
+        public void Projectiles_Item_GetMultipleTimes_ReturnsSameInstance()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
 
@@ -58,25 +63,29 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void Projectiles_GetEnumerator() {
+        public void Projectiles_GetEnumerator()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
 
             var projectiles = projectileService.Projectiles.ToList();
 
-            for (var i = 0; i < projectiles.Count; ++i) {
+            for (var i = 0; i < projectiles.Count; ++i)
+            {
                 Assert.Same(Terraria.Main.projectile[i], ((OrionProjectile)projectiles[i]).Wrapped);
             }
         }
 
         [Fact]
-        public void ProjectileDefaults_EventTriggered() {
+        public void ProjectileDefaults_EventTriggered()
+        {
             Terraria.Main.projectile[0] = new Terraria.Projectile { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<ProjectileDefaultsEvent>(evt => {
+            kernel.RegisterHandler<ProjectileDefaultsEvent>(evt =>
+            {
                 Assert.Same(Terraria.Main.projectile[0], ((OrionProjectile)evt.Projectile).Wrapped);
                 Assert.Equal(ProjectileId.CrystalBullet, evt.Id);
                 isRun = true;
@@ -89,13 +98,15 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void ProjectileDefaults_AbstractProjectile_EventTriggered() {
+        public void ProjectileDefaults_AbstractProjectile_EventTriggered()
+        {
             var terrariaProjectile = new Terraria.Projectile();
 
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<ProjectileDefaultsEvent>(evt => {
+            kernel.RegisterHandler<ProjectileDefaultsEvent>(evt =>
+            {
                 Assert.Same(terrariaProjectile, ((OrionProjectile)evt.Projectile).Wrapped);
                 Assert.Equal(ProjectileId.CrystalBullet, evt.Id);
                 isRun = true;
@@ -110,7 +121,8 @@ namespace Orion.Core.Projectiles {
         [Theory]
         [InlineData(ProjectileId.CrystalBullet, ProjectileId.WoodenArrow)]
         [InlineData(ProjectileId.CrystalBullet, ProjectileId.None)]
-        public void ProjectileDefaults_EventModified(ProjectileId oldId, ProjectileId newId) {
+        public void ProjectileDefaults_EventModified(ProjectileId oldId, ProjectileId newId)
+        {
             Terraria.Main.projectile[0] = new Terraria.Projectile { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
@@ -123,7 +135,8 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void ProjectileDefaults_EventCanceled() {
+        public void ProjectileDefaults_EventCanceled()
+        {
             Terraria.Main.projectile[0] = new Terraria.Projectile { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
@@ -136,11 +149,13 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void ProjectileTick_EventTriggered() {
+        public void ProjectileTick_EventTriggered()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<ProjectileTickEvent>(evt => {
+            kernel.RegisterHandler<ProjectileTickEvent>(evt =>
+            {
                 Assert.Same(Terraria.Main.projectile[0], ((OrionProjectile)evt.Projectile).Wrapped);
                 isRun = true;
             }, Logger.None);
@@ -151,7 +166,8 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void ProjectileTick_EventCanceled() {
+        public void ProjectileTick_EventCanceled()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
             kernel.RegisterHandler<ProjectileTickEvent>(evt => evt.Cancel(), Logger.None);
@@ -160,7 +176,8 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void SpawnProjectile() {
+        public void SpawnProjectile()
+        {
             Terraria.Main.projectile[0] = new Terraria.Projectile { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);

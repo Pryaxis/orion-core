@@ -18,11 +18,13 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
-namespace Orion.Core.Npcs {
+namespace Orion.Core.Npcs
+{
     /// <summary>
     /// Specifies an NPC ID.
     /// </summary>
-    public enum NpcId : short {
+    public enum NpcId : short
+    {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         BigStingyHornet = -65,
         LittleStingyHornet = -64,
@@ -753,7 +755,8 @@ namespace Orion.Core.Npcs {
     /// <summary>
     /// Provides extensions for the <see cref="NpcId"/> enumeration.
     /// </summary>
-    public static class NpcIdExtensions {
+    public static class NpcIdExtensions
+    {
         private static readonly ISet<NpcId> _catchables = new HashSet<NpcId> {
             NpcId.Bunny,
             NpcId.Goldfish,

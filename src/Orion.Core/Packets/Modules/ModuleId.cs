@@ -19,11 +19,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
-namespace Orion.Core.Packets.Modules {
+namespace Orion.Core.Packets.Modules
+{
     /// <summary>
     /// Specifies a module ID.
     /// </summary>
-    public enum ModuleId : ushort {
+    public enum ModuleId : ushort
+    {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         Chat = 1
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -32,8 +34,10 @@ namespace Orion.Core.Packets.Modules {
     /// <summary>
     /// Provides extensions for the <see cref="ModuleId"/> enumeration.
     /// </summary>
-    public static class ModuleIdExtensions {
-        private static readonly IDictionary<ModuleId, Type> _types = new Dictionary<ModuleId, Type> {
+    public static class ModuleIdExtensions
+    {
+        private static readonly IDictionary<ModuleId, Type> _types = new Dictionary<ModuleId, Type>
+        {
             [ModuleId.Chat] = typeof(ChatModule)
         };
 

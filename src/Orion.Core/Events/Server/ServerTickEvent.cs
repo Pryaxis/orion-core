@@ -17,7 +17,8 @@
 
 using Serilog.Events;
 
-namespace Orion.Core.Events.Server {
+namespace Orion.Core.Events.Server
+{
     /// <summary>
     /// An event that occurs when a server tick (update) occurs.
     /// </summary>

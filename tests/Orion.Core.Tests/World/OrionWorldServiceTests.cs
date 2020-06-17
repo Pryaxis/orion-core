@@ -25,12 +25,15 @@ using Orion.Core.World.Tiles;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Core.World {
+namespace Orion.Core.World
+{
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
-    public class OrionWorldServiceTests {
+    public class OrionWorldServiceTests
+    {
         [Fact]
-        public void Main_tile_Width_Get() {
+        public void Main_tile_Width_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -38,7 +41,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_Height_Get() {
+        public void Main_tile_Height_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -46,7 +50,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_type_Get() {
+        public void Main_tile_type_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -56,7 +61,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_type_Set() {
+        public void Main_tile_type_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -66,7 +72,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_wall_Get() {
+        public void Main_tile_wall_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -76,7 +83,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_wall_Set() {
+        public void Main_tile_wall_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -86,7 +94,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_liquid_Get() {
+        public void Main_tile_liquid_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -96,7 +105,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_liquid_Set() {
+        public void Main_tile_liquid_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -106,7 +116,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_sTileHeader_Get() {
+        public void Main_tile_sTileHeader_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -116,7 +127,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_sTileHeader_Set() {
+        public void Main_tile_sTileHeader_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -126,7 +138,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_bTileHeader_Get() {
+        public void Main_tile_bTileHeader_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -136,7 +149,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_bTileHeader_Set() {
+        public void Main_tile_bTileHeader_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -146,7 +160,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_bTileHeader3_Get() {
+        public void Main_tile_bTileHeader3_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -156,7 +171,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_bTileHeader3_Set() {
+        public void Main_tile_bTileHeader3_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -166,7 +182,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_frameX_Get() {
+        public void Main_tile_frameX_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -176,7 +193,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_frameX_Set() {
+        public void Main_tile_frameX_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -186,7 +204,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_frameY_Get() {
+        public void Main_tile_frameY_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -196,7 +215,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_frameY_Set() {
+        public void Main_tile_frameY_Set()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -206,7 +226,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_color() {
+        public void Main_tile_color()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -220,7 +241,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_active() {
+        public void Main_tile_active()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -234,7 +256,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_inActive() {
+        public void Main_tile_inActive()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -248,7 +271,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_nactive() {
+        public void Main_tile_nactive()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { IsBlockActive = true };
@@ -261,7 +285,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_wire() {
+        public void Main_tile_wire()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -275,7 +300,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_wire2() {
+        public void Main_tile_wire2()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -289,7 +315,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_wire3() {
+        public void Main_tile_wire3()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -303,7 +330,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_halfBrick() {
+        public void Main_tile_halfBrick()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -317,7 +345,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_actuator() {
+        public void Main_tile_actuator()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -331,7 +360,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_slope() {
+        public void Main_tile_slope()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -345,7 +375,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_wallColor() {
+        public void Main_tile_wallColor()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -359,7 +390,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_lava() {
+        public void Main_tile_lava()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -377,7 +409,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_honey() {
+        public void Main_tile_honey()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { Liquid = Liquid.Honey };
@@ -394,7 +427,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_liquidType() {
+        public void Main_tile_liquidType()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { Liquid = Liquid.Lava };
@@ -407,7 +441,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_wire4() {
+        public void Main_tile_wire4()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { HasYellowWire = true };
@@ -420,7 +455,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_frameNumber() {
+        public void Main_tile_frameNumber()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { BlockFrameNumber = 7 };
@@ -433,7 +469,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_checkingLiquid() {
+        public void Main_tile_checkingLiquid()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { IsCheckingLiquid = true };
@@ -446,7 +483,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_skipLiquid() {
+        public void Main_tile_skipLiquid()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { ShouldSkipLiquid = true };
@@ -459,10 +497,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_CopyFrom_NullTile() {
+        public void Main_tile_CopyFrom_NullTile()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 BlockId = (BlockId)1,
                 WallId = (WallId)2,
                 LiquidAmount = 3,
@@ -486,10 +526,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_CopyFrom_TileAdapter() {
+        public void Main_tile_CopyFrom_TileAdapter()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 BlockId = BlockId.Stone,
                 WallId = WallId.Dirt,
                 LiquidAmount = 3,
@@ -513,7 +555,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_NullTile_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_NullTile_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -521,7 +564,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_TileAdapterDifferentHeader_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentHeader_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { IsBlockActive = true };
@@ -531,14 +575,17 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_TileAdapterDifferentHeader2_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentHeader2_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 LiquidAmount = 1,
                 _bTileHeader = 1
             };
-            worldService.World[0, 1] = new Tile {
+            worldService.World[0, 1] = new Tile
+            {
                 LiquidAmount = 1,
                 _bTileHeader = 2
             };
@@ -547,14 +594,17 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockIdAndBlockActive_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockIdAndBlockActive_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 IsBlockActive = true,
                 BlockId = BlockId.Stone
             };
-            worldService.World[0, 1] = new Tile {
+            worldService.World[0, 1] = new Tile
+            {
                 IsBlockActive = true,
                 BlockId = BlockId.Dirt
             };
@@ -563,7 +613,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockIdButNotBlockActive_ReturnsTrue() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockIdButNotBlockActive_ReturnsTrue()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { BlockId = BlockId.Stone };
@@ -573,15 +624,18 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockFrameXAndHasFrames_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockFrameXAndHasFrames_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 IsBlockActive = true,
                 BlockId = BlockId.Torches,
                 BlockFrameX = 1
             };
-            worldService.World[0, 1] = new Tile {
+            worldService.World[0, 1] = new Tile
+            {
                 IsBlockActive = true,
                 BlockId = BlockId.Torches,
                 BlockFrameX = 2
@@ -591,15 +645,18 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockFrameYAndHasFrames_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockFrameYAndHasFrames_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 IsBlockActive = true,
                 BlockId = BlockId.Torches,
                 BlockFrameY = 1
             };
-            worldService.World[0, 1] = new Tile {
+            worldService.World[0, 1] = new Tile
+            {
                 IsBlockActive = true,
                 BlockId = BlockId.Torches,
                 BlockFrameY = 2
@@ -609,16 +666,19 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockFramesButNotHasFrames_ReturnsTrue() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockFramesButNotHasFrames_ReturnsTrue()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 IsBlockActive = true,
                 BlockId = BlockId.Stone,
                 BlockFrameX = 1,
                 BlockFrameY = 1
             };
-            worldService.World[0, 1] = new Tile {
+            worldService.World[0, 1] = new Tile
+            {
                 IsBlockActive = true,
                 BlockId = BlockId.Stone,
                 BlockFrameX = 2,
@@ -629,7 +689,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_TileAdapterDifferentWallId_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentWallId_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { WallId = WallId.Stone };
@@ -639,7 +700,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_TileAdapterDifferentLiquidAmount_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentLiquidAmount_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { LiquidAmount = 1 };
@@ -649,7 +711,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_TileAdapterDifferentWallColor_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentWallColor_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { WallColor = PaintColor.Red };
@@ -659,7 +722,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_TileAdapterDifferentYellowWire_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentYellowWire_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { HasYellowWire = true };
@@ -669,7 +733,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_ITileDifferentHeader_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_ITileDifferentHeader_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { IsBlockActive = true };
@@ -679,10 +744,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_ITileDifferentHeader2_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_ITileDifferentHeader2_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 LiquidAmount = 1,
                 _bTileHeader = 1
             };
@@ -692,10 +759,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_ITileDifferentBlockIdAndBlockActive_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_ITileDifferentBlockIdAndBlockActive_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 IsBlockActive = true,
                 BlockId = BlockId.Stone
             };
@@ -705,7 +774,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_ITileDifferentBlockIdButNotBlockActive_ReturnsTrue() {
+        public void Main_tile_isTheSameAs_ITileDifferentBlockIdButNotBlockActive_ReturnsTrue()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { BlockId = BlockId.Stone };
@@ -715,10 +785,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_ITileDifferentBlockFrameXAndHasFrames_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_ITileDifferentBlockFrameXAndHasFrames_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 IsBlockActive = true,
                 BlockId = BlockId.Torches,
                 BlockFrameX = 1
@@ -730,10 +802,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_ITileDifferentBlockFrameYAndHasFrames_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_ITileDifferentBlockFrameYAndHasFrames_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 IsBlockActive = true,
                 BlockId = BlockId.Torches,
                 BlockFrameY = 1
@@ -745,10 +819,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_ITileDifferentBlockFramesButNotHasFrames_ReturnsTrue() {
+        public void Main_tile_isTheSameAs_ITileDifferentBlockFramesButNotHasFrames_ReturnsTrue()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 IsBlockActive = true,
                 BlockId = BlockId.Stone,
                 BlockFrameX = 1,
@@ -761,7 +837,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_ITileDifferentWallId_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_ITileDifferentWallId_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { WallId = WallId.Stone };
@@ -771,7 +848,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_ITileDifferentLiquidAmount_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_ITileDifferentLiquidAmount_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { LiquidAmount = 1 };
@@ -781,7 +859,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_ITileDifferentWallColor_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_ITileDifferentWallColor_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { WallColor = PaintColor.Red };
@@ -791,7 +870,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_ITileDifferentYellowWire_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_ITileDifferentYellowWire_ReturnsFalse()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { HasYellowWire = true };
@@ -801,10 +881,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_ClearEverything() {
+        public void Main_tile_ClearEverything()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 BlockId = BlockId.Stone,
                 WallId = WallId.Dirt,
                 LiquidAmount = 3,
@@ -828,10 +910,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_ClearMetadata() {
+        public void Main_tile_ClearMetadata()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 BlockId = BlockId.Stone,
                 WallId = WallId.Dirt,
                 LiquidAmount = 3,
@@ -855,10 +939,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_ClearTile() {
+        public void Main_tile_ClearTile()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 Slope = Slope.BottomRight,
                 IsBlockHalved = true,
                 IsBlockActive = true,
@@ -874,10 +960,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_Clear_Tile() {
+        public void Main_tile_Clear_Tile()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 BlockId = BlockId.Stone,
                 IsBlockActive = true,
                 BlockFrameX = 1,
@@ -893,10 +981,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_Clear_TilePaint() {
+        public void Main_tile_Clear_TilePaint()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 BlockColor = PaintColor.Red
             };
 
@@ -906,10 +996,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_Clear_Wall() {
+        public void Main_tile_Clear_Wall()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 WallId = WallId.Dirt
             };
 
@@ -919,10 +1011,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_Clear_WallPaint() {
+        public void Main_tile_Clear_WallPaint()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 WallColor = PaintColor.Red
             };
 
@@ -932,10 +1026,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_Clear_Liquid() {
+        public void Main_tile_Clear_Liquid()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 LiquidAmount = 100,
                 Liquid = Liquid.Honey,
                 IsCheckingLiquid = true
@@ -949,10 +1045,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_Clear_Wiring() {
+        public void Main_tile_Clear_Wiring()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 HasRedWire = true,
                 HasBlueWire = true,
                 HasGreenWire = true,
@@ -968,10 +1066,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_Clear_Actuator() {
+        public void Main_tile_Clear_Actuator()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 HasActuator = true,
                 IsBlockActuated = true
             };
@@ -983,10 +1083,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_Clear_Slope() {
+        public void Main_tile_Clear_Slope()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 Slope = Slope.TopLeft,
                 IsBlockHalved = true
             };
@@ -998,10 +1100,12 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_ResetToType() {
+        public void Main_tile_ResetToType()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
-            worldService.World[0, 0] = new Tile {
+            worldService.World[0, 0] = new Tile
+            {
                 BlockId = BlockId.Stone,
                 WallId = WallId.Dirt,
                 LiquidAmount = 3,
@@ -1030,7 +1134,8 @@ namespace Orion.Core.World {
         [InlineData(Slope.TopRight, true)]
         [InlineData(Slope.BottomLeft, false)]
         [InlineData(Slope.BottomRight, false)]
-        public void Main_tile_topSlope(Slope slope, bool value) {
+        public void Main_tile_topSlope(Slope slope, bool value)
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -1045,7 +1150,8 @@ namespace Orion.Core.World {
         [InlineData(Slope.TopRight, false)]
         [InlineData(Slope.BottomLeft, true)]
         [InlineData(Slope.BottomRight, true)]
-        public void Main_tile_bottomSlope(Slope slope, bool value) {
+        public void Main_tile_bottomSlope(Slope slope, bool value)
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -1060,7 +1166,8 @@ namespace Orion.Core.World {
         [InlineData(Slope.TopRight, false)]
         [InlineData(Slope.BottomLeft, true)]
         [InlineData(Slope.BottomRight, false)]
-        public void Main_tile_leftSlope(Slope slope, bool value) {
+        public void Main_tile_leftSlope(Slope slope, bool value)
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -1075,7 +1182,8 @@ namespace Orion.Core.World {
         [InlineData(Slope.TopRight, true)]
         [InlineData(Slope.BottomLeft, false)]
         [InlineData(Slope.BottomRight, true)]
-        public void Main_tile_rightSlope(Slope slope, bool value) {
+        public void Main_tile_rightSlope(Slope slope, bool value)
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
@@ -1085,7 +1193,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_HasSameSlope() {
+        public void Main_tile_HasSameSlope()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { Slope = Slope.BottomRight };
@@ -1099,7 +1208,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_blockType() {
+        public void Main_tile_blockType()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile();
@@ -1108,7 +1218,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_blockType_Halved() {
+        public void Main_tile_blockType_Halved()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { IsBlockHalved = true };
@@ -1117,7 +1228,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_blockType_Slope() {
+        public void Main_tile_blockType_Slope()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { Slope = Slope.BottomRight };
@@ -1126,14 +1238,16 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void WorldSave_EventTriggered() {
+        public void WorldSave_EventTriggered()
+        {
             Terraria.IO.WorldFile._tempTime = 0.0;
 
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
             var isRun = false;
-            kernel.RegisterHandler<WorldSaveEvent>(evt => {
+            kernel.RegisterHandler<WorldSaveEvent>(evt =>
+            {
                 Assert.Same(worldService.World, evt.World);
                 isRun = true;
             }, Logger.None);
@@ -1145,7 +1259,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void WorldSave_EventCanceled() {
+        public void WorldSave_EventCanceled()
+        {
             Terraria.IO.WorldFile._tempTime = 0.0;
 
             using var kernel = new OrionKernel(Logger.None);
@@ -1159,7 +1274,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_BreakBlock_EventTriggered() {
+        public void PacketReceive_TileModify_BreakBlock_EventTriggered()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1175,7 +1291,8 @@ namespace Orion.Core.World {
             Terraria.Main.tile[100, 256].active(true);
 
             var isRun = false;
-            kernel.RegisterHandler<BlockBreakEvent>(evt => {
+            kernel.RegisterHandler<BlockBreakEvent>(evt =>
+            {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(100, evt.X);
@@ -1192,7 +1309,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_BreakBlock_EventCanceled() {
+        public void PacketReceive_TileModify_BreakBlock_EventCanceled()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1215,7 +1333,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_BreakBlockFailure_EventNotTriggered() {
+        public void PacketReceive_TileModify_BreakBlockFailure_EventNotTriggered()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1236,7 +1355,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_PlaceBlock_EventTriggered() {
+        public void PacketReceive_TileModify_PlaceBlock_EventTriggered()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1253,7 +1373,8 @@ namespace Orion.Core.World {
             Terraria.Main.tile[100, 257].active(true);
 
             var isRun = false;
-            kernel.RegisterHandler<BlockPlaceEvent>(evt => {
+            kernel.RegisterHandler<BlockPlaceEvent>(evt =>
+            {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(100, evt.X);
@@ -1272,7 +1393,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_PlaceBlock_EventCanceled() {
+        public void PacketReceive_TileModify_PlaceBlock_EventCanceled()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1296,7 +1418,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_BreakWall_EventTriggered() {
+        public void PacketReceive_TileModify_BreakWall_EventTriggered()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1311,7 +1434,8 @@ namespace Orion.Core.World {
             Terraria.Main.tile[100, 256] = new Terraria.Tile { wall = (ushort)WallId.Stone };
 
             var isRun = false;
-            kernel.RegisterHandler<WallBreakEvent>(evt => {
+            kernel.RegisterHandler<WallBreakEvent>(evt =>
+            {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(100, evt.X);
@@ -1327,7 +1451,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_BreakWall_EventCanceled() {
+        public void PacketReceive_TileModify_BreakWall_EventCanceled()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1349,7 +1474,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_BreakWallFailure_EventNotTriggered() {
+        public void PacketReceive_TileModify_BreakWallFailure_EventNotTriggered()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1372,7 +1498,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_PlaceWall_EventTriggered() {
+        public void PacketReceive_TileModify_PlaceWall_EventTriggered()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1387,7 +1514,8 @@ namespace Orion.Core.World {
             Terraria.Main.tile[100, 256] = new Terraria.Tile();
 
             var isRun = false;
-            kernel.RegisterHandler<WallPlaceEvent>(evt => {
+            kernel.RegisterHandler<WallPlaceEvent>(evt =>
+            {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(100, evt.X);
@@ -1404,7 +1532,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_PlaceWall_EventCanceled() {
+        public void PacketReceive_TileModify_PlaceWall_EventCanceled()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1426,7 +1555,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_BreakBlockItemless_EventTriggered() {
+        public void PacketReceive_TileModify_BreakBlockItemless_EventTriggered()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1442,7 +1572,8 @@ namespace Orion.Core.World {
             Terraria.Main.tile[100, 256].active(true);
 
             var isRun = false;
-            kernel.RegisterHandler<BlockBreakEvent>(evt => {
+            kernel.RegisterHandler<BlockBreakEvent>(evt =>
+            {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(100, evt.X);
@@ -1459,7 +1590,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_BreakBlockItemless_EventCanceled() {
+        public void PacketReceive_TileModify_BreakBlockItemless_EventCanceled()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1482,7 +1614,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_BreakBlockItemlessFailure_EventNotTriggered() {
+        public void PacketReceive_TileModify_BreakBlockItemlessFailure_EventNotTriggered()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1503,7 +1636,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_ReplaceBlock_EventTriggered() {
+        public void PacketReceive_TileModify_ReplaceBlock_EventTriggered()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1521,7 +1655,8 @@ namespace Orion.Core.World {
             Terraria.Main.tile[100, 257].active(true);
 
             var isRun = false;
-            kernel.RegisterHandler<BlockPlaceEvent>(evt => {
+            kernel.RegisterHandler<BlockPlaceEvent>(evt =>
+            {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(100, evt.X);
@@ -1540,7 +1675,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_ReplaceBlock_EventCanceled() {
+        public void PacketReceive_TileModify_ReplaceBlock_EventCanceled()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1566,7 +1702,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_ReplaceWall_EventTriggered() {
+        public void PacketReceive_TileModify_ReplaceWall_EventTriggered()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1581,7 +1718,8 @@ namespace Orion.Core.World {
             Terraria.Main.tile[100, 256] = new Terraria.Tile { wall = (ushort)WallId.Dirt };
 
             var isRun = false;
-            kernel.RegisterHandler<WallPlaceEvent>(evt => {
+            kernel.RegisterHandler<WallPlaceEvent>(evt =>
+            {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(100, evt.X);
@@ -1598,7 +1736,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModify_ReplaceWall_EventCanceled() {
+        public void PacketReceive_TileModify_ReplaceWall_EventCanceled()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1620,7 +1759,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileModifyInvalidModification() {
+        public void PacketReceive_TileModifyInvalidModification()
+        {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1635,7 +1775,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileSquare_EventTriggered() {
+        public void PacketReceive_TileSquare_EventTriggered()
+        {
             // Set `State` to 10 so that the tile square packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1644,14 +1785,17 @@ namespace Orion.Core.World {
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
-            for (var i = 0; i < 3; ++i) {
-                for (var j = 0; j < 3; ++j) {
+            for (var i = 0; i < 3; ++i)
+            {
+                for (var j = 0; j < 3; ++j)
+                {
                     Terraria.Main.tile[100 + i, 256 + j] = new Terraria.Tile();
                 }
             }
 
             var isRun = false;
-            kernel.RegisterHandler<TileSquareEvent>(evt => {
+            kernel.RegisterHandler<TileSquareEvent>(evt =>
+            {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(100, evt.X);
@@ -1667,7 +1811,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileSquare_EventModified() {
+        public void PacketReceive_TileSquare_EventModified()
+        {
             // Set `State` to 10 so that the tile square packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1676,13 +1821,16 @@ namespace Orion.Core.World {
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
-            for (var i = 0; i < 3; ++i) {
-                for (var j = 0; j < 3; ++j) {
+            for (var i = 0; i < 3; ++i)
+            {
+                for (var j = 0; j < 3; ++j)
+                {
                     Terraria.Main.tile[100 + i, 256 + j] = new Terraria.Tile();
                 }
             }
 
-            kernel.RegisterHandler<TileSquareEvent>(evt => {
+            kernel.RegisterHandler<TileSquareEvent>(evt =>
+            {
                 evt.Tiles[0, 0].BlockId = BlockId.Stone;
                 evt.Tiles[0, 0].IsBlockActive = true;
             }, Logger.None);
@@ -1694,7 +1842,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileSquare_EventCanceled() {
+        public void PacketReceive_TileSquare_EventCanceled()
+        {
             // Set `State` to 10 so that the tile square packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1703,8 +1852,10 @@ namespace Orion.Core.World {
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
-            for (var i = 0; i < 3; ++i) {
-                for (var j = 0; j < 3; ++j) {
+            for (var i = 0; i < 3; ++i)
+            {
+                for (var j = 0; j < 3; ++j)
+                {
                     Terraria.Main.tile[2206 + i, 312 + j] = new Terraria.Tile();
                 }
             }
@@ -1717,7 +1868,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileLiquid_EventTriggered() {
+        public void PacketReceive_TileLiquid_EventTriggered()
+        {
             // Set `State` to 10 so that the tile liquid packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1727,9 +1879,10 @@ namespace Orion.Core.World {
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
             Terraria.Main.tile[256, 100] = new Terraria.Tile();
-            
+
             var isRun = false;
-            kernel.RegisterHandler<TileLiquidEvent>(evt => {
+            kernel.RegisterHandler<TileLiquidEvent>(evt =>
+            {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(256, evt.X);
@@ -1747,7 +1900,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileLiquid_EventCanceled() {
+        public void PacketReceive_TileLiquid_EventCanceled()
+        {
             // Set `State` to 10 so that the tile liquid packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1766,7 +1920,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WireActivate_EventTriggered() {
+        public void PacketReceive_WireActivate_EventTriggered()
+        {
             // Set `State` to 10 so that the wire activate packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1784,7 +1939,8 @@ namespace Orion.Core.World {
             Terraria.Main.tile[257, 100].actuator(true);
 
             var isRun = false;
-            kernel.RegisterHandler<WiringActivateEvent>(evt => {
+            kernel.RegisterHandler<WiringActivateEvent>(evt =>
+            {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(256, evt.X);
@@ -1799,7 +1955,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WireActivate_EventCanceled() {
+        public void PacketReceive_WireActivate_EventCanceled()
+        {
             // Set `State` to 10 so that the wire activate packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1824,7 +1981,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockPaint_EventTriggered() {
+        public void PacketReceive_BlockPaint_EventTriggered()
+        {
             // Set `State` to 10 so that the block paint packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1837,7 +1995,8 @@ namespace Orion.Core.World {
             Terraria.Main.tile[256, 100].active(true);
 
             var isRun = false;
-            kernel.RegisterHandler<BlockPaintEvent>(evt => {
+            kernel.RegisterHandler<BlockPaintEvent>(evt =>
+            {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(256, evt.X);
@@ -1853,7 +2012,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockPaint_EventCanceled() {
+        public void PacketReceive_BlockPaint_EventCanceled()
+        {
             // Set `State` to 10 so that the block paint packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1873,7 +2033,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WallPaint_EventTriggered() {
+        public void PacketReceive_WallPaint_EventTriggered()
+        {
             // Set `State` to 10 so that the wall paint packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1885,7 +2046,8 @@ namespace Orion.Core.World {
             Terraria.Main.tile[256, 100] = new Terraria.Tile { wall = (byte)WallId.Stone };
 
             var isRun = false;
-            kernel.RegisterHandler<WallPaintEvent>(evt => {
+            kernel.RegisterHandler<WallPaintEvent>(evt =>
+            {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(256, evt.X);
@@ -1901,7 +2063,8 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WallPaint_EventCanceled() {
+        public void PacketReceive_WallPaint_EventCanceled()
+        {
             // Set `State` to 10 so that the wall paint packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };

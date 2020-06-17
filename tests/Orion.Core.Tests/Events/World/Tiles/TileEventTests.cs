@@ -21,17 +21,21 @@ using Orion.Core.Players;
 using Orion.Core.World;
 using Xunit;
 
-namespace Orion.Core.Events.World.Tiles {
-    public class TileEventTests {
+namespace Orion.Core.Events.World.Tiles
+{
+    public class TileEventTests
+    {
         [Fact]
-        public void Ctor_NullWorld_ThrowsArgumentNullException() {
+        public void Ctor_NullWorld_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new TestTileEvent(null!, player, 123, 456));
         }
 
         [Fact]
-        public void Player_Get() {
+        public void Player_Get()
+        {
             var world = Mock.Of<IWorld>();
             var player = Mock.Of<IPlayer>();
             var evt = new TestTileEvent(world, player, 123, 456);
@@ -40,7 +44,8 @@ namespace Orion.Core.Events.World.Tiles {
         }
 
         [Fact]
-        public void X_Get() {
+        public void X_Get()
+        {
             var world = Mock.Of<IWorld>();
             var player = Mock.Of<IPlayer>();
             var evt = new TestTileEvent(world, player, 123, 456);
@@ -49,7 +54,8 @@ namespace Orion.Core.Events.World.Tiles {
         }
 
         [Fact]
-        public void Y_Get() {
+        public void Y_Get()
+        {
             var world = Mock.Of<IWorld>();
             var player = Mock.Of<IPlayer>();
             var evt = new TestTileEvent(world, player, 123, 456);
@@ -57,7 +63,8 @@ namespace Orion.Core.Events.World.Tiles {
             Assert.Equal(456, evt.Y);
         }
 
-        private class TestTileEvent : TileEvent {
+        private class TestTileEvent : TileEvent
+        {
             public TestTileEvent(IWorld world, IPlayer? player, int x, int y) : base(world, player, x, y) { }
         }
     }

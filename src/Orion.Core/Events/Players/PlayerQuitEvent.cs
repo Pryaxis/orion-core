@@ -18,12 +18,14 @@
 using System;
 using Orion.Core.Players;
 
-namespace Orion.Core.Events.Players {
+namespace Orion.Core.Events.Players
+{
     /// <summary>
     /// An event that occurs when a player has quit the server.
     /// </summary>
     [Event("player-quit")]
-    public sealed class PlayerQuitEvent : PlayerEvent {
+    public sealed class PlayerQuitEvent : PlayerEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerQuitEvent"/> class with the specified
         /// <paramref name="player"/>.

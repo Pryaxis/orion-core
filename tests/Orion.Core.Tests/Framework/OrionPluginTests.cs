@@ -20,29 +20,35 @@ using Serilog;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Core.Framework {
-    public class OrionPluginTests {
+namespace Orion.Core.Framework
+{
+    public class OrionPluginTests
+    {
         [Fact]
-        public void Ctor_NullKernel_ThrowsArgumentNullException() {
+        public void Ctor_NullKernel_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new TestOrionPlugin(null!, Logger.None));
         }
 
         [Fact]
-        public void Ctor_NullLog_ThrowsArgumentNullException() {
+        public void Ctor_NullLog_ThrowsArgumentNullException()
+        {
             using var kernel = new OrionKernel(Logger.None);
 
             Assert.Throws<ArgumentNullException>(() => new TestOrionPlugin(kernel, null!));
         }
 
         [Fact]
-        public void Kernel_Get() {
+        public void Kernel_Get()
+        {
             using var kernel = new OrionKernel(Logger.None);
             using var plugin = new TestOrionPlugin(kernel, Logger.None);
 
             Assert.Same(kernel, plugin.Kernel);
         }
 
-        private class TestOrionPlugin : OrionPlugin {
+        private class TestOrionPlugin : OrionPlugin
+        {
             public new OrionKernel Kernel => base.Kernel;
 
             public TestOrionPlugin(OrionKernel kernel, ILogger log) : base(kernel, log) { }

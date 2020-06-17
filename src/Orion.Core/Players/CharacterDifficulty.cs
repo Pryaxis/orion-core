@@ -15,11 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.Players {
+namespace Orion.Core.Players
+{
     /// <summary>
     /// Specifies a player's character difficulty.
     /// </summary>
-    public enum CharacterDifficulty : byte {
+    public enum CharacterDifficulty : byte
+    {
         /// <summary>
         /// Indicates a classic character.
         /// </summary>

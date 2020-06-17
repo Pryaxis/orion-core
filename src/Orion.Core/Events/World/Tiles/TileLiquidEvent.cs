@@ -20,12 +20,14 @@ using Orion.Core.Players;
 using Orion.Core.World;
 using Orion.Core.World.Tiles;
 
-namespace Orion.Core.Events.World.Tiles {
+namespace Orion.Core.Events.World.Tiles
+{
     /// <summary>
     /// An event that occurs when a tile's liquid is being set. This event can be canceled.
     /// </summary>
     [Event("tile-liquid")]
-    public sealed class TileLiquidEvent : TileEvent {
+    public sealed class TileLiquidEvent : TileEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="TileLiquidEvent"/> class with the specified
         /// <paramref name="world"/>, <paramref name="player"/>, tile coordinates, <paramref name="liquidAmount"/>, and
@@ -39,7 +41,8 @@ namespace Orion.Core.Events.World.Tiles {
         /// <param name="liquid">The tile's liquid.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public TileLiquidEvent(IWorld world, IPlayer? player, int x, int y, byte liquidAmount, Liquid liquid)
-                : base(world, player, x, y) {
+                : base(world, player, x, y)
+        {
             LiquidAmount = liquidAmount;
             Liquid = liquid;
         }

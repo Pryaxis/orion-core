@@ -17,18 +17,21 @@
 
 using System;
 
-namespace Orion.Core.Framework {
+namespace Orion.Core.Framework
+{
     /// <summary>
     /// Specifies information about a service definition.
     /// </summary>
     [AttributeUsage(AttributeTargets.Interface, Inherited = false)]
-    public sealed class ServiceAttribute : Attribute {
+    public sealed class ServiceAttribute : Attribute
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceAttribute"/> class with the specified service
         /// <paramref name="scope"/>.
         /// </summary>
         /// <param name="scope">The service scope.</param>
-        public ServiceAttribute(ServiceScope scope) {
+        public ServiceAttribute(ServiceScope scope)
+        {
             Scope = scope;
         }
 

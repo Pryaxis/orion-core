@@ -19,12 +19,14 @@ using System;
 using Orion.Core.Players;
 using Orion.Core.World;
 
-namespace Orion.Core.Events.World.Tiles {
+namespace Orion.Core.Events.World.Tiles
+{
     /// <summary>
     /// An event that occurs when a block is being broken. This event can be canceled.
     /// </summary>
     [Event("block-break")]
-    public sealed class BlockBreakEvent : TileEvent {
+    public sealed class BlockBreakEvent : TileEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockBreakEvent"/> class with the specified
         /// <paramref name="world"/>, <paramref name="player"/>, coordinates, and itemlessness flag.
@@ -36,7 +38,8 @@ namespace Orion.Core.Events.World.Tiles {
         /// <param name="isItemless">Whether the block breaking is itemless.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public BlockBreakEvent(IWorld world, IPlayer? player, int x, int y, bool isItemless)
-                : base(world, player, x, y) {
+                : base(world, player, x, y)
+        {
             IsItemless = isItemless;
         }
 

@@ -18,10 +18,13 @@
 using System;
 using Xunit;
 
-namespace Orion.Core.Events.World {
-    public class WorldSaveEventTests {
+namespace Orion.Core.Events.World
+{
+    public class WorldSaveEventTests
+    {
         [Fact]
-        public void Ctor_NullWorld() {
+        public void Ctor_NullWorld()
+        {
             Assert.Throws<ArgumentNullException>(() => new WorldSaveEvent(null!));
         }
     }

@@ -20,11 +20,14 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.World.Signs;
 using Xunit;
 
-namespace Orion.Core.World.TileEntities {
+namespace Orion.Core.World.TileEntities
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class OrionSignTests {
+    public class OrionSignTests
+    {
         [Fact]
-        public void Text_GetNullValue () {
+        public void Text_GetNullValue()
+        {
             var terrariaSign = new Terraria.Sign { x = 256, y = 100, text = null };
             var sign = new OrionSign(terrariaSign);
 
@@ -32,7 +35,8 @@ namespace Orion.Core.World.TileEntities {
         }
 
         [Fact]
-        public void Text_Get() {
+        public void Text_Get()
+        {
             var terrariaSign = new Terraria.Sign { x = 256, y = 100, text = "test" };
             var sign = new OrionSign(terrariaSign);
 
@@ -40,7 +44,8 @@ namespace Orion.Core.World.TileEntities {
         }
 
         [Fact]
-        public void Text_SetNullValue_ThrowsArgumentNullException() {
+        public void Text_SetNullValue_ThrowsArgumentNullException()
+        {
             var terrariaSign = new Terraria.Sign();
             var sign = new OrionSign(terrariaSign);
 
@@ -48,7 +53,8 @@ namespace Orion.Core.World.TileEntities {
         }
 
         [Fact]
-        public void Text_Set() {
+        public void Text_Set()
+        {
             var terrariaSign = new Terraria.Sign();
             var sign = new OrionSign(terrariaSign);
 
@@ -58,7 +64,8 @@ namespace Orion.Core.World.TileEntities {
         }
 
         [Fact]
-        public void Index_Get() {
+        public void Index_Get()
+        {
             var terrariaSign = new Terraria.Sign();
             var sign = new OrionSign(1, terrariaSign);
 
@@ -66,14 +73,16 @@ namespace Orion.Core.World.TileEntities {
         }
 
         [Fact]
-        public void IsActive_Get_ReturnsFalse() {
+        public void IsActive_Get_ReturnsFalse()
+        {
             var sign = new OrionSign(null);
 
             Assert.False(sign.IsActive);
         }
 
         [Fact]
-        public void IsActive_Get_ReturnsTrue() {
+        public void IsActive_Get_ReturnsTrue()
+        {
             var terrariaSign = new Terraria.Sign();
             var sign = new OrionSign(terrariaSign);
 
@@ -81,7 +90,8 @@ namespace Orion.Core.World.TileEntities {
         }
 
         [Fact]
-        public void X_Get() {
+        public void X_Get()
+        {
             var terrariaSign = new Terraria.Sign { x = 256, y = 100, text = "test" };
             var sign = new OrionSign(terrariaSign);
 
@@ -89,7 +99,8 @@ namespace Orion.Core.World.TileEntities {
         }
 
         [Fact]
-        public void X_Set() {
+        public void X_Set()
+        {
             var terrariaSign = new Terraria.Sign();
             var sign = new OrionSign(terrariaSign);
 
@@ -99,7 +110,8 @@ namespace Orion.Core.World.TileEntities {
         }
 
         [Fact]
-        public void Y_Get() {
+        public void Y_Get()
+        {
             var terrariaSign = new Terraria.Sign { x = 256, y = 100, text = "test" };
             var sign = new OrionSign(terrariaSign);
 
@@ -107,7 +119,8 @@ namespace Orion.Core.World.TileEntities {
         }
 
         [Fact]
-        public void Y_Set() {
+        public void Y_Set()
+        {
             var terrariaSign = new Terraria.Sign();
             var sign = new OrionSign(terrariaSign);
 

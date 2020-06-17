@@ -17,11 +17,13 @@
 
 using System;
 
-namespace Orion.Core.Packets.Players {
+namespace Orion.Core.Packets.Players
+{
     /// <summary>
     /// A packet sent to cause a player to teleport with an item.
     /// </summary>
-    public struct PlayerTeleportItemPacket : IPacket {
+    public struct PlayerTeleportItemPacket : IPacket
+    {
         /// <summary>
         /// Gets or sets the teleport item.
         /// </summary>
@@ -31,13 +33,15 @@ namespace Orion.Core.Packets.Players {
         PacketId IPacket.Id => PacketId.PlayerTeleportItem;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
             Item = (TeleportItem)span[0];
             return 1;
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context)
+        {
             span[0] = (byte)Item;
             return 1;
         }

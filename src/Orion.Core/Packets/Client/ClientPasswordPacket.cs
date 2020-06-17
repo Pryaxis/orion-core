@@ -19,11 +19,13 @@ using System;
 using System.Text;
 using Destructurama.Attributed;
 
-namespace Orion.Core.Packets.Client {
+namespace Orion.Core.Packets.Client
+{
     /// <summary>
     /// A packet sent from the client to the server to send a password.
     /// </summary>
-    public struct ClientPasswordPacket : IPacket {
+    public struct ClientPasswordPacket : IPacket
+    {
         private string? _password;
 
         /// <summary>
@@ -32,7 +34,8 @@ namespace Orion.Core.Packets.Client {
         /// <value>The client's password.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         [LogMasked]
-        public string Password {
+        public string Password
+        {
             get => _password ?? string.Empty;
             set => _password = value ?? throw new ArgumentNullException(nameof(value));
         }

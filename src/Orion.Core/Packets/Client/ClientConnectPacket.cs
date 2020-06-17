@@ -18,11 +18,13 @@
 using System;
 using System.Text;
 
-namespace Orion.Core.Packets.Client {
+namespace Orion.Core.Packets.Client
+{
     /// <summary>
     /// A packet sent from the client to the server to connect.
     /// </summary>
-    public struct ClientConnectPacket : IPacket {
+    public struct ClientConnectPacket : IPacket
+    {
         private string? _version;
 
         /// <summary>
@@ -30,7 +32,8 @@ namespace Orion.Core.Packets.Client {
         /// </summary>
         /// <value>The client's version.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string Version {
+        public string Version
+        {
             get => _version ?? string.Empty;
             set => _version = value ?? throw new ArgumentNullException(nameof(value));
         }

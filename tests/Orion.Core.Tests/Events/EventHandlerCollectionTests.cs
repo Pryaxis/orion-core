@@ -19,10 +19,13 @@ using System;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Core.Events {
-    public class EventHandlerCollectionTests {
+namespace Orion.Core.Events
+{
+    public class EventHandlerCollectionTests
+    {
         [Fact]
-        public void DeregisterHandler() {
+        public void DeregisterHandler()
+        {
             var collection = new EventHandlerCollection<TestEvent>();
             collection.RegisterHandler(TestHandler2, Logger.None);
             collection.RegisterHandler(TestHandler, Logger.None);
@@ -35,7 +38,8 @@ namespace Orion.Core.Events {
         }
 
         [Fact]
-        public void Raise_RunsHandlers() {
+        public void Raise_RunsHandlers()
+        {
             var collection = new EventHandlerCollection<TestEvent>();
             collection.RegisterHandler(TestHandler, Logger.None);
             var evt = new TestEvent();
@@ -46,7 +50,8 @@ namespace Orion.Core.Events {
         }
 
         [Fact]
-        public void Raise_HandlerPriority() {
+        public void Raise_HandlerPriority()
+        {
             var collection = new EventHandlerCollection<TestEvent>();
             collection.RegisterHandler(TestHandler2, Logger.None);
             collection.RegisterHandler(TestHandler, Logger.None);
@@ -58,7 +63,8 @@ namespace Orion.Core.Events {
         }
 
         [Fact]
-        public void Raise_HandlerIgnoresCanceled() {
+        public void Raise_HandlerIgnoresCanceled()
+        {
             var collection = new EventHandlerCollection<TestEvent>();
             collection.RegisterHandler(TestHandler, Logger.None);
             var evt = new TestEvent();
@@ -70,7 +76,8 @@ namespace Orion.Core.Events {
         }
 
         [Fact]
-        public void Raise_HandlerThrowsNotImplementedException() {
+        public void Raise_HandlerThrowsNotImplementedException()
+        {
             var collection = new EventHandlerCollection<TestEvent>();
             collection.RegisterHandler(TestHandler3, Logger.None);
 
@@ -78,20 +85,24 @@ namespace Orion.Core.Events {
         }
 
         [EventHandler("test", Priority = EventPriority.Lowest)]
-        private static void TestHandler(TestEvent evt) {
+        private static void TestHandler(TestEvent evt)
+        {
             evt.Value = 100;
         }
 
         [EventHandler("test-2", Priority = EventPriority.Highest)]
-        private static void TestHandler2(TestEvent evt) {
+        private static void TestHandler2(TestEvent evt)
+        {
             evt.Value = 200;
         }
 
-        private static void TestHandler3(TestEvent evt) {
+        private static void TestHandler3(TestEvent evt)
+        {
             throw new NotImplementedException();
         }
 
-        private class TestEvent : Event {
+        private class TestEvent : Event
+        {
             public int Value { get; set; }
         }
     }

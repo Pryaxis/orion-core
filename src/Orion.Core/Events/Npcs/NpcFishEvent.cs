@@ -20,12 +20,14 @@ using Orion.Core.Events.Players;
 using Orion.Core.Npcs;
 using Orion.Core.Players;
 
-namespace Orion.Core.Events.Npcs {
+namespace Orion.Core.Events.Npcs
+{
     /// <summary>
     /// An event that occurs when a player is fishing an NPC. This event can be canceled.
     /// </summary>
     [Event("npc-fish")]
-    public sealed class NpcFishEvent : PlayerEvent {
+    public sealed class NpcFishEvent : PlayerEvent
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcFishEvent"/> class with the specified
         /// <paramref name="player"/>, NPC coordinates, and NPC <paramref name="id"/>.
@@ -35,7 +37,8 @@ namespace Orion.Core.Events.Npcs {
         /// <param name="y">The NPC's Y coordinate.</param>
         /// <param name="id">The NPC ID being fished.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public NpcFishEvent(IPlayer player, int x, int y, NpcId id) : base(player) {
+        public NpcFishEvent(IPlayer player, int x, int y, NpcId id) : base(player)
+        {
             X = x;
             Y = y;
             Id = id;

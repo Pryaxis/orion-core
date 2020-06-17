@@ -20,29 +20,35 @@ using Moq;
 using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Core.Events.Players {
-    public class PlayerChatEventTests {
+namespace Orion.Core.Events.Players
+{
+    public class PlayerChatEventTests
+    {
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(null!, "Say", "/command test"));
         }
 
         [Fact]
-        public void Ctor_NullCommand_ThrowsArgumentNullException() {
+        public void Ctor_NullCommand_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(player, null!, "/command test"));
         }
 
         [Fact]
-        public void Ctor_NullMessage_ThrowsArgumentNullException() {
+        public void Ctor_NullMessage_ThrowsArgumentNullException()
+        {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(player, "Say", null!));
         }
 
         [Fact]
-        public void Command_Get() {
+        public void Command_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var evt = new PlayerChatEvent(player, "Say", "/command test");
 
@@ -50,7 +56,8 @@ namespace Orion.Core.Events.Players {
         }
 
         [Fact]
-        public void Message_Get() {
+        public void Message_Get()
+        {
             var player = Mock.Of<IPlayer>();
             var evt = new PlayerChatEvent(player, "Say", "/command test");
 

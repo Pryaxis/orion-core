@@ -20,12 +20,14 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Orion.Core.World.Tiles;
 
-namespace Orion.Core.Packets.World.Tiles {
+namespace Orion.Core.Packets.World.Tiles
+{
     /// <summary>
     /// A packet sent to set a tile's liquid.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct TileLiquidPacket : IPacket {
+    public struct TileLiquidPacket : IPacket
+    {
         /// <summary>
         /// Gets or sets the tile's X coordinate.
         /// </summary>
@@ -53,13 +55,15 @@ namespace Orion.Core.Packets.World.Tiles {
         PacketId IPacket.Id => PacketId.TileLiquid;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) {
+        public int Read(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 6);
             return 6;
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context)
+        {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 6);
             return 6;
         }

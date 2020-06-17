@@ -21,16 +21,20 @@ using Moq;
 using Orion.Core.Items;
 using Xunit;
 
-namespace Orion.Core.Events.Items {
+namespace Orion.Core.Events.Items
+{
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ItemDefaultsEventTests {
+    public class ItemDefaultsEventTests
+    {
         [Fact]
-        public void Ctor_NullItem_ThrowsArgumentNullException() {
+        public void Ctor_NullItem_ThrowsArgumentNullException()
+        {
             Assert.Throws<ArgumentNullException>(() => new ItemDefaultsEvent(null!));
         }
 
         [Fact]
-        public void Id_Set_Get() {
+        public void Id_Set_Get()
+        {
             var item = Mock.Of<IItem>();
             var evt = new ItemDefaultsEvent(item);
 
