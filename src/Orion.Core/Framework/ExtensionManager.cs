@@ -60,8 +60,7 @@ namespace Orion.Core.Framework
 
                     var name =
                         type.GetCustomAttribute<BindingAttribute>()?.Name ??
-                        type.GetCustomAttribute<PluginAttribute>()?.Name ??
-                        type.Name;
+                        type.GetCustomAttribute<PluginAttribute>()!.Name;
                     return log.ForContext("Name", name);
                 })
                 .InTransientScope();
