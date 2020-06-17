@@ -208,6 +208,10 @@ namespace Orion.Core.Events
             [EventHandler("test")]
             [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Testing")]
             public void OnTest_InvalidParamType(int x) { }
+
+            [EventHandler("test")]
+            [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Testing")]
+            public int OnTest_NotVoid(TestEvent evt) => 0;
         }
 
         private class TestClass_Private

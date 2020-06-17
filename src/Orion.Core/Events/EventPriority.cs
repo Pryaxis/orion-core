@@ -18,7 +18,7 @@
 namespace Orion.Core.Events
 {
     /// <summary>
-    /// Specifies the priority of an event handler. Event handlers with higher priorities will be run before event
+    /// Controls the priority of an event handler. Event handlers with higher priorities will be run before event
     /// handlers with lower priorities.
     /// </summary>
     public enum EventPriority
