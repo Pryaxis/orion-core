@@ -1246,7 +1246,7 @@ namespace Orion.Core.World
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
             var isRun = false;
-            kernel.RegisterHandler<WorldSaveEvent>(evt =>
+            kernel.Events.RegisterHandler<WorldSaveEvent>(evt =>
             {
                 Assert.Same(worldService.World, evt.World);
                 isRun = true;
@@ -1266,7 +1266,7 @@ namespace Orion.Core.World
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
-            kernel.RegisterHandler<WorldSaveEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<WorldSaveEvent>(evt => evt.Cancel(), Logger.None);
 
             Terraria.IO.WorldFile.SaveWorld(false, true);
 
@@ -1291,7 +1291,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[100, 256].active(true);
 
             var isRun = false;
-            kernel.RegisterHandler<BlockBreakEvent>(evt =>
+            kernel.Events.RegisterHandler<BlockBreakEvent>(evt =>
             {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -1325,7 +1325,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[100, 256] = new Terraria.Tile();
             Terraria.Main.tile[100, 256].active(true);
 
-            kernel.RegisterHandler<BlockBreakEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<BlockBreakEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakBlockBytes);
 
@@ -1347,7 +1347,7 @@ namespace Orion.Core.World
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
             var isRun = false;
-            kernel.RegisterHandler<BlockBreakEvent>(evt => isRun = true, Logger.None);
+            kernel.Events.RegisterHandler<BlockBreakEvent>(evt => isRun = true, Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakBlockFailureBytes);
 
@@ -1373,7 +1373,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[100, 257].active(true);
 
             var isRun = false;
-            kernel.RegisterHandler<BlockPlaceEvent>(evt =>
+            kernel.Events.RegisterHandler<BlockPlaceEvent>(evt =>
             {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -1410,7 +1410,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[100, 257] = new Terraria.Tile();
             Terraria.Main.tile[100, 257].active(true);
 
-            kernel.RegisterHandler<BlockPlaceEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<BlockPlaceEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.PlaceBlockBytes);
 
@@ -1434,7 +1434,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[100, 256] = new Terraria.Tile { wall = (ushort)WallId.Stone };
 
             var isRun = false;
-            kernel.RegisterHandler<WallBreakEvent>(evt =>
+            kernel.Events.RegisterHandler<WallBreakEvent>(evt =>
             {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -1466,7 +1466,7 @@ namespace Orion.Core.World
 
             Terraria.Main.tile[100, 256] = new Terraria.Tile { wall = (ushort)WallId.Stone };
 
-            kernel.RegisterHandler<WallBreakEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<WallBreakEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakWallBytes);
 
@@ -1490,7 +1490,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[100, 256] = new Terraria.Tile { wall = (ushort)WallId.Stone };
 
             var isRun = false;
-            kernel.RegisterHandler<WallBreakEvent>(evt => isRun = true, Logger.None);
+            kernel.Events.RegisterHandler<WallBreakEvent>(evt => isRun = true, Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakWallFailureBytes);
 
@@ -1514,7 +1514,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[100, 256] = new Terraria.Tile();
 
             var isRun = false;
-            kernel.RegisterHandler<WallPlaceEvent>(evt =>
+            kernel.Events.RegisterHandler<WallPlaceEvent>(evt =>
             {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -1547,7 +1547,7 @@ namespace Orion.Core.World
 
             Terraria.Main.tile[100, 256] = new Terraria.Tile();
 
-            kernel.RegisterHandler<WallPlaceEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<WallPlaceEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.PlaceWallBytes);
 
@@ -1572,7 +1572,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[100, 256].active(true);
 
             var isRun = false;
-            kernel.RegisterHandler<BlockBreakEvent>(evt =>
+            kernel.Events.RegisterHandler<BlockBreakEvent>(evt =>
             {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -1606,7 +1606,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[100, 256] = new Terraria.Tile();
             Terraria.Main.tile[100, 256].active(true);
 
-            kernel.RegisterHandler<BlockBreakEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<BlockBreakEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakBlockItemlessBytes);
 
@@ -1628,7 +1628,7 @@ namespace Orion.Core.World
             using var worldService = new OrionWorldService(kernel, Logger.None);
 
             var isRun = false;
-            kernel.RegisterHandler<BlockBreakEvent>(evt => isRun = true, Logger.None);
+            kernel.Events.RegisterHandler<BlockBreakEvent>(evt => isRun = true, Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakBlockItemlessFailureBytes);
 
@@ -1655,7 +1655,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[100, 257].active(true);
 
             var isRun = false;
-            kernel.RegisterHandler<BlockPlaceEvent>(evt =>
+            kernel.Events.RegisterHandler<BlockPlaceEvent>(evt =>
             {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -1693,7 +1693,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[100, 257] = new Terraria.Tile();
             Terraria.Main.tile[100, 257].active(true);
 
-            kernel.RegisterHandler<BlockPlaceEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<BlockPlaceEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.ReplaceBlockBytes);
 
@@ -1718,7 +1718,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[100, 256] = new Terraria.Tile { wall = (ushort)WallId.Dirt };
 
             var isRun = false;
-            kernel.RegisterHandler<WallPlaceEvent>(evt =>
+            kernel.Events.RegisterHandler<WallPlaceEvent>(evt =>
             {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -1751,7 +1751,7 @@ namespace Orion.Core.World
 
             Terraria.Main.tile[100, 256] = new Terraria.Tile { wall = (ushort)WallId.Dirt };
 
-            kernel.RegisterHandler<WallPlaceEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<WallPlaceEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.ReplaceWallBytes);
 
@@ -1794,7 +1794,7 @@ namespace Orion.Core.World
             }
 
             var isRun = false;
-            kernel.RegisterHandler<TileSquareEvent>(evt =>
+            kernel.Events.RegisterHandler<TileSquareEvent>(evt =>
             {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -1829,7 +1829,7 @@ namespace Orion.Core.World
                 }
             }
 
-            kernel.RegisterHandler<TileSquareEvent>(evt =>
+            kernel.Events.RegisterHandler<TileSquareEvent>(evt =>
             {
                 evt.Tiles[0, 0].BlockId = BlockId.Stone;
                 evt.Tiles[0, 0].IsBlockActive = true;
@@ -1860,7 +1860,7 @@ namespace Orion.Core.World
                 }
             }
 
-            kernel.RegisterHandler<TileSquareEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<TileSquareEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileSquarePacketTests.Bytes);
 
@@ -1881,7 +1881,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[256, 100] = new Terraria.Tile();
 
             var isRun = false;
-            kernel.RegisterHandler<TileLiquidEvent>(evt =>
+            kernel.Events.RegisterHandler<TileLiquidEvent>(evt =>
             {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -1912,7 +1912,7 @@ namespace Orion.Core.World
 
             Terraria.Main.tile[256, 100] = new Terraria.Tile();
 
-            kernel.RegisterHandler<TileLiquidEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<TileLiquidEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileLiquidPacketTests.Bytes);
 
@@ -1939,7 +1939,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[257, 100].actuator(true);
 
             var isRun = false;
-            kernel.RegisterHandler<WiringActivateEvent>(evt =>
+            kernel.Events.RegisterHandler<WiringActivateEvent>(evt =>
             {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -1973,7 +1973,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[257, 100].wire(true);
             Terraria.Main.tile[257, 100].actuator(true);
 
-            kernel.RegisterHandler<WiringActivateEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<WiringActivateEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, WireActivatePacketTests.Bytes);
 
@@ -1995,7 +1995,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[256, 100].active(true);
 
             var isRun = false;
-            kernel.RegisterHandler<BlockPaintEvent>(evt =>
+            kernel.Events.RegisterHandler<BlockPaintEvent>(evt =>
             {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -2025,7 +2025,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[256, 100] = new Terraria.Tile();
             Terraria.Main.tile[256, 100].active(true);
 
-            kernel.RegisterHandler<BlockPaintEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<BlockPaintEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, BlockPaintPacketTests.Bytes);
 
@@ -2046,7 +2046,7 @@ namespace Orion.Core.World
             Terraria.Main.tile[256, 100] = new Terraria.Tile { wall = (byte)WallId.Stone };
 
             var isRun = false;
-            kernel.RegisterHandler<WallPaintEvent>(evt =>
+            kernel.Events.RegisterHandler<WallPaintEvent>(evt =>
             {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -2075,7 +2075,7 @@ namespace Orion.Core.World
 
             Terraria.Main.tile[256, 100] = new Terraria.Tile { wall = (byte)WallId.Stone };
 
-            kernel.RegisterHandler<WallPaintEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<WallPaintEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, WallPaintPacketTests.Bytes);
 

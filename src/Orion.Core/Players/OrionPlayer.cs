@@ -110,7 +110,7 @@ namespace Orion.Core.Players
             }
 
             var evt = new PacketSendEvent<TPacket>(ref packet, this);
-            _kernel.Raise(evt, _log);
+            _kernel.Events.Raise(evt, _log);
             if (evt.IsCanceled)
             {
                 return;

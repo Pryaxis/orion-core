@@ -100,7 +100,7 @@ namespace Orion.Core.Players
             OTAPI.Hooks.Player.PreUpdate = PreUpdateHandler;
             OTAPI.Hooks.Net.RemoteClient.PreReset = PreResetHandler;
 
-            Kernel.RegisterHandlers(this, Log);
+            Kernel.Events.RegisterHandlers(this, Log);
         }
 
         public IReadOnlyList<IPlayer> Players { get; }
@@ -117,7 +117,7 @@ namespace Orion.Core.Players
             OTAPI.Hooks.Player.PreUpdate = null;
             OTAPI.Hooks.Net.RemoteClient.PreReset = null;
 
-            Kernel.DeregisterHandlers(this, Log);
+            Kernel.Events.DeregisterHandlers(this, Log);
         }
 
         // =============================================================================================================
@@ -209,7 +209,7 @@ namespace Orion.Core.Players
             Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
 
             var evt = new PlayerTickEvent(Players[playerIndex]);
-            Kernel.Raise(evt, Log);
+            Kernel.Events.Raise(evt, Log);
             return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
@@ -225,7 +225,7 @@ namespace Orion.Core.Players
             }
 
             var evt = new PlayerQuitEvent(Players[remoteClient.Id]);
-            Kernel.Raise(evt, Log);
+            Kernel.Events.Raise(evt, Log);
             return OTAPI.HookResult.Continue;
         }
 
@@ -253,7 +253,7 @@ namespace Orion.Core.Players
             }
 
             var evt = new PacketReceiveEvent<TPacket>(ref packet, Players[buffer.whoAmI]);
-            Kernel.Raise(evt, Log);
+            Kernel.Events.Raise(evt, Log);
             if (evt.IsCanceled)
             {
                 return;
@@ -297,7 +297,7 @@ namespace Orion.Core.Players
             }
 
             var evt = new PacketSendEvent<TPacket>(ref packet, Players[playerIndex]);
-            Kernel.Raise(evt, Log);
+            Kernel.Events.Raise(evt, Log);
             if (evt.IsCanceled)
             {
                 return;
@@ -393,7 +393,7 @@ namespace Orion.Core.Players
         // Forwards `evt` as `newEvt`.
         private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event
         {
-            Kernel.Raise(newEvt, Log);
+            Kernel.Events.Raise(newEvt, Log);
             if (newEvt.IsCanceled)
             {
                 evt.Cancel(newEvt.CancellationReason);

@@ -82,7 +82,7 @@ namespace Orion.Core.Items
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<ItemDefaultsEvent>(evt =>
+            kernel.Events.RegisterHandler<ItemDefaultsEvent>(evt =>
             {
                 Assert.Same(Terraria.Main.item[0], ((OrionItem)evt.Item).Wrapped);
                 Assert.Equal(ItemId.Sdmg, evt.Id);
@@ -103,7 +103,7 @@ namespace Orion.Core.Items
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<ItemDefaultsEvent>(evt =>
+            kernel.Events.RegisterHandler<ItemDefaultsEvent>(evt =>
             {
                 Assert.Same(terrariaItem, ((OrionItem)evt.Item).Wrapped);
                 Assert.Equal(ItemId.Sdmg, evt.Id);
@@ -121,7 +121,7 @@ namespace Orion.Core.Items
         {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
-            kernel.RegisterHandler<ItemDefaultsEvent>(evt => evt.Id = ItemId.DirtBlock, Logger.None);
+            kernel.Events.RegisterHandler<ItemDefaultsEvent>(evt => evt.Id = ItemId.DirtBlock, Logger.None);
 
             Terraria.Main.item[0].SetDefaults((int)ItemId.Sdmg);
 
@@ -135,7 +135,7 @@ namespace Orion.Core.Items
 
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
-            kernel.RegisterHandler<ItemDefaultsEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<ItemDefaultsEvent>(evt => evt.Cancel(), Logger.None);
 
             Terraria.Main.item[0].SetDefaults((int)ItemId.Sdmg);
 
@@ -148,7 +148,7 @@ namespace Orion.Core.Items
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<ItemTickEvent>(evt =>
+            kernel.Events.RegisterHandler<ItemTickEvent>(evt =>
             {
                 Assert.Same(Terraria.Main.item[0], ((OrionItem)evt.Item).Wrapped);
                 isRun = true;
@@ -164,7 +164,7 @@ namespace Orion.Core.Items
         {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
-            kernel.RegisterHandler<ItemTickEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<ItemTickEvent>(evt => evt.Cancel(), Logger.None);
 
             Terraria.Main.item[0].UpdateItem(0);
         }

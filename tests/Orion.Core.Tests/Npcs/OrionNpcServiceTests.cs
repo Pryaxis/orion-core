@@ -90,7 +90,7 @@ namespace Orion.Core.Npcs
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<NpcDefaultsEvent>(evt =>
+            kernel.Events.RegisterHandler<NpcDefaultsEvent>(evt =>
             {
                 Assert.Same(Terraria.Main.npc[0], ((OrionNpc)evt.Npc).Wrapped);
                 Assert.Equal(id, evt.Id);
@@ -112,7 +112,7 @@ namespace Orion.Core.Npcs
 
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
-            kernel.RegisterHandler<NpcDefaultsEvent>(evt => evt.Id = newId, Logger.None);
+            kernel.Events.RegisterHandler<NpcDefaultsEvent>(evt => evt.Id = newId, Logger.None);
 
             Terraria.Main.npc[0].SetDefaults((int)oldId);
 
@@ -126,7 +126,7 @@ namespace Orion.Core.Npcs
 
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
-            kernel.RegisterHandler<NpcDefaultsEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<NpcDefaultsEvent>(evt => evt.Cancel(), Logger.None);
 
             Terraria.Main.npc[0].SetDefaults((int)NpcId.BlueSlime);
 
@@ -139,7 +139,7 @@ namespace Orion.Core.Npcs
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             INpc? evtNpc = null;
-            kernel.RegisterHandler<NpcSpawnEvent>(evt => evtNpc = evt.Npc, Logger.None);
+            kernel.Events.RegisterHandler<NpcSpawnEvent>(evt => evtNpc = evt.Npc, Logger.None);
 
             var npcIndex = Terraria.NPC.NewNPC(0, 0, (int)NpcId.BlueSlime);
 
@@ -154,7 +154,7 @@ namespace Orion.Core.Npcs
 
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
-            kernel.RegisterHandler<NpcSpawnEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<NpcSpawnEvent>(evt => evt.Cancel(), Logger.None);
 
             var npcIndex = Terraria.NPC.NewNPC(0, 0, (int)NpcId.BlueSlime);
 
@@ -170,7 +170,7 @@ namespace Orion.Core.Npcs
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<NpcTickEvent>(evt =>
+            kernel.Events.RegisterHandler<NpcTickEvent>(evt =>
             {
                 Assert.Same(Terraria.Main.npc[0], ((OrionNpc)evt.Npc).Wrapped);
                 isRun = true;
@@ -188,7 +188,7 @@ namespace Orion.Core.Npcs
 
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
-            kernel.RegisterHandler<NpcTickEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<NpcTickEvent>(evt => evt.Cancel(), Logger.None);
 
             Terraria.Main.npc[0].UpdateNPC(0);
         }
@@ -201,7 +201,7 @@ namespace Orion.Core.Npcs
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<NpcKilledEvent>(evt =>
+            kernel.Events.RegisterHandler<NpcKilledEvent>(evt =>
             {
                 Assert.Same(Terraria.Main.npc[0], ((OrionNpc)evt.Npc).Wrapped);
                 isRun = true;
@@ -223,7 +223,7 @@ namespace Orion.Core.Npcs
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<NpcLootEvent>(evt =>
+            kernel.Events.RegisterHandler<NpcLootEvent>(evt =>
             {
                 Assert.Same(Terraria.Main.npc[0], ((OrionNpc)evt.Npc).Wrapped);
                 Assert.Equal(ItemId.Gel, evt.Id);
@@ -248,7 +248,7 @@ namespace Orion.Core.Npcs
 
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
-            kernel.RegisterHandler<NpcLootEvent>(evt =>
+            kernel.Events.RegisterHandler<NpcLootEvent>(evt =>
             {
                 evt.Id = ItemId.Sdmg;
                 evt.StackSize = 1;
@@ -272,7 +272,7 @@ namespace Orion.Core.Npcs
 
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
-            kernel.RegisterHandler<NpcLootEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<NpcLootEvent>(evt => evt.Cancel(), Logger.None);
             Terraria.Main.npc[0].SetDefaults((int)NpcId.BlueSlime);
             Terraria.Main.npc[0].life = 0;
 
@@ -293,7 +293,7 @@ namespace Orion.Core.Npcs
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<NpcBuffEvent>(evt =>
+            kernel.Events.RegisterHandler<NpcBuffEvent>(evt =>
             {
                 Assert.Same(npcService.Npcs[1], evt.Npc);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -319,7 +319,7 @@ namespace Orion.Core.Npcs
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
-            kernel.RegisterHandler<NpcBuffEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<NpcBuffEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, NpcBuffPacketTests.Bytes);
 
@@ -340,7 +340,7 @@ namespace Orion.Core.Npcs
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<NpcCatchEvent>(evt =>
+            kernel.Events.RegisterHandler<NpcCatchEvent>(evt =>
             {
                 Assert.Same(npcService.Npcs[1], evt.Npc);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -366,7 +366,7 @@ namespace Orion.Core.Npcs
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
-            kernel.RegisterHandler<NpcCatchEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<NpcCatchEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, NpcCatchPacketTests.Bytes);
 
@@ -385,7 +385,7 @@ namespace Orion.Core.Npcs
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<NpcFishEvent>(evt =>
+            kernel.Events.RegisterHandler<NpcFishEvent>(evt =>
             {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(100, evt.X);
@@ -411,7 +411,7 @@ namespace Orion.Core.Npcs
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
-            kernel.RegisterHandler<NpcFishEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<NpcFishEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, NpcFishPacketTests.Bytes);
 

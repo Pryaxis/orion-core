@@ -100,7 +100,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerTickEvent>(evt =>
+            kernel.Events.RegisterHandler<PlayerTickEvent>(evt =>
             {
                 Assert.Same(Terraria.Main.player[0], ((OrionPlayer)evt.Player).Wrapped);
                 isRun = true;
@@ -116,7 +116,7 @@ namespace Orion.Core.Players
         {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PlayerTickEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<PlayerTickEvent>(evt => evt.Cancel(), Logger.None);
 
             Terraria.Main.player[0].Update(0);
         }
@@ -129,7 +129,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerQuitEvent>(evt =>
+            kernel.Events.RegisterHandler<PlayerQuitEvent>(evt =>
             {
                 Assert.Same(playerService.Players[5], evt.Player);
                 isRun = true;
@@ -148,7 +148,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerQuitEvent>(evt => isRun = true, Logger.None);
+            kernel.Events.RegisterHandler<PlayerQuitEvent>(evt => isRun = true, Logger.None);
 
             Terraria.Netplay.Clients[5].Reset();
 
@@ -164,7 +164,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketReceiveEvent<ClientConnectPacket>>(evt =>
+            kernel.Events.RegisterHandler<PacketReceiveEvent<ClientConnectPacket>>(evt =>
             {
                 Assert.Same(playerService.Players[5], evt.Sender);
                 Assert.Equal("Terraria" + Terraria.Main.curRelease, evt.Packet.Version);
@@ -185,7 +185,7 @@ namespace Orion.Core.Players
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PacketReceiveEvent<ClientConnectPacket>>(
+            kernel.Events.RegisterHandler<PacketReceiveEvent<ClientConnectPacket>>(
                 evt => evt.Packet.Version = "Terraria1", Logger.None);
 
             TestUtils.FakeReceiveBytes(5, _serverConnectBytes);
@@ -201,7 +201,7 @@ namespace Orion.Core.Players
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PacketReceiveEvent<ClientConnectPacket>>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<PacketReceiveEvent<ClientConnectPacket>>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, _serverConnectBytes);
 
@@ -214,7 +214,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketReceiveEvent<UnknownPacket>>(evt =>
+            kernel.Events.RegisterHandler<PacketReceiveEvent<UnknownPacket>>(evt =>
             {
                 ref var packet = ref evt.Packet;
                 Assert.Equal((PacketId)255, packet.Id);
@@ -233,7 +233,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketReceiveEvent<ModulePacket<UnknownModule>>>(evt =>
+            kernel.Events.RegisterHandler<PacketReceiveEvent<ModulePacket<UnknownModule>>>(evt =>
             {
                 ref var module = ref evt.Packet.Module;
                 Assert.Equal((ModuleId)65535, module.Id);
@@ -256,7 +256,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerJoinEvent>(evt =>
+            kernel.Events.RegisterHandler<PlayerJoinEvent>(evt =>
             {
                 Assert.Same(playerService.Players[5], evt.Player);
                 isRun = true;
@@ -277,7 +277,7 @@ namespace Orion.Core.Players
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PlayerJoinEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<PlayerJoinEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, PlayerJoinPacketTests.Bytes);
 
@@ -294,7 +294,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerHealthEvent>(evt =>
+            kernel.Events.RegisterHandler<PlayerHealthEvent>(evt =>
             {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(100, evt.Health);
@@ -318,7 +318,7 @@ namespace Orion.Core.Players
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PlayerHealthEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<PlayerHealthEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, PlayerHealthPacketTests.Bytes);
 
@@ -336,7 +336,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerPvpEvent>(evt =>
+            kernel.Events.RegisterHandler<PlayerPvpEvent>(evt =>
             {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.True(evt.IsInPvp);
@@ -358,7 +358,7 @@ namespace Orion.Core.Players
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PlayerPvpEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<PlayerPvpEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, PlayerPvpPacketTests.Bytes);
 
@@ -376,7 +376,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerPasswordEvent>(evt =>
+            kernel.Events.RegisterHandler<PlayerPasswordEvent>(evt =>
             {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal("Terraria", evt.Password);
@@ -399,7 +399,7 @@ namespace Orion.Core.Players
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PlayerPasswordEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<PlayerPasswordEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, ClientPasswordPacketTests.Bytes);
 
@@ -416,7 +416,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerManaEvent>(evt =>
+            kernel.Events.RegisterHandler<PlayerManaEvent>(evt =>
             {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(100, evt.Mana);
@@ -440,7 +440,7 @@ namespace Orion.Core.Players
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PlayerManaEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<PlayerManaEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, PlayerManaPacketTests.Bytes);
 
@@ -459,7 +459,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerTeamEvent>(evt =>
+            kernel.Events.RegisterHandler<PlayerTeamEvent>(evt =>
             {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(PlayerTeam.Red, evt.Team);
@@ -481,7 +481,7 @@ namespace Orion.Core.Players
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PlayerTeamEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<PlayerTeamEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, PlayerTeamPacketTests.Bytes);
 
@@ -494,7 +494,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerUuidEvent>(evt =>
+            kernel.Events.RegisterHandler<PlayerUuidEvent>(evt =>
             {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal("Terraria", evt.Uuid);
@@ -519,7 +519,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PlayerChatEvent>(evt =>
+            kernel.Events.RegisterHandler<PlayerChatEvent>(evt =>
             {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal("Say", evt.Command);
@@ -547,7 +547,7 @@ namespace Orion.Core.Players
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PlayerChatEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<PlayerChatEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, ChatModuleTests.ServerBytes);
 
@@ -563,7 +563,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketSendEvent<ClientConnectPacket>>(evt =>
+            kernel.Events.RegisterHandler<PacketSendEvent<ClientConnectPacket>>(evt =>
             {
                 Assert.Same(playerService.Players[5], evt.Receiver);
                 Assert.Equal("Terraria" + Terraria.Main.curRelease, evt.Packet.Version);
@@ -585,7 +585,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketSendEvent<UnknownPacket>>(evt =>
+            kernel.Events.RegisterHandler<PacketSendEvent<UnknownPacket>>(evt =>
             {
                 Assert.Same(playerService.Players[5], evt.Receiver);
                 Assert.Equal((PacketId)25, evt.Packet.Id);
@@ -607,7 +607,7 @@ namespace Orion.Core.Players
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PacketSendEvent<ClientConnectPacket>>(
+            kernel.Events.RegisterHandler<PacketSendEvent<ClientConnectPacket>>(
                 evt => evt.Packet.Version = string.Empty, Logger.None);
 
             Terraria.NetMessage.SendData((byte)PacketId.ClientConnect, 5);
@@ -623,7 +623,7 @@ namespace Orion.Core.Players
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PacketSendEvent<ClientConnectPacket>>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<PacketSendEvent<ClientConnectPacket>>(evt => evt.Cancel(), Logger.None);
 
             Terraria.NetMessage.SendData((byte)PacketId.ClientConnect, 5);
 
@@ -651,7 +651,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketSendEvent<ModulePacket<ChatModule>>>(evt =>
+            kernel.Events.RegisterHandler<PacketSendEvent<ModulePacket<ChatModule>>>(evt =>
             {
                 Assert.Same(playerService.Players[5], evt.Receiver);
                 Assert.Equal(1, evt.Packet.Module.ServerAuthorIndex);
@@ -679,7 +679,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketSendEvent<ModulePacket<UnknownModule>>>(evt =>
+            kernel.Events.RegisterHandler<PacketSendEvent<ModulePacket<UnknownModule>>>(evt =>
             {
                 Assert.Same(playerService.Players[5], evt.Receiver);
                 Assert.Equal((ModuleId)65535, evt.Packet.Module.Id);
@@ -703,7 +703,7 @@ namespace Orion.Core.Players
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PacketSendEvent<ModulePacket<ChatModule>>>(
+            kernel.Events.RegisterHandler<PacketSendEvent<ModulePacket<ChatModule>>>(
                 evt => evt.Packet.Module.ServerColor = Color3.Black, Logger.None);
 
             var packet = new Terraria.Net.NetPacket(1, 16);
@@ -723,7 +723,7 @@ namespace Orion.Core.Players
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PacketSendEvent<ModulePacket<ChatModule>>>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<PacketSendEvent<ModulePacket<ChatModule>>>(evt => evt.Cancel(), Logger.None);
 
             var packet = new Terraria.Net.NetPacket(1, 16);
             packet.Writer.Write((byte)1);

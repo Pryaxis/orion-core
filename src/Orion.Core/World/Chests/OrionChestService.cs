@@ -38,14 +38,14 @@ namespace Orion.Core.World.Chests
             Chests = new WrappedReadOnlyList<OrionChest, Terraria.Chest?>(
                 Terraria.Main.chest, (chestIndex, terrariaChest) => new OrionChest(chestIndex, terrariaChest));
 
-            Kernel.RegisterHandlers(this, Log);
+            Kernel.Events.RegisterHandlers(this, Log);
         }
 
         public IReadOnlyList<IChest> Chests { get; }
 
         public override void Dispose()
         {
-            Kernel.DeregisterHandlers(this, Log);
+            Kernel.Events.DeregisterHandlers(this, Log);
         }
 
         private IChest? FindChest(int x, int y) => Chests.FirstOrDefault(s => s.IsActive && s.X == x && s.Y == y);
@@ -82,7 +82,7 @@ namespace Orion.Core.World.Chests
         // Forwards `evt` as `newEvt`.
         private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event
         {
-            Kernel.Raise(newEvt, Log);
+            Kernel.Events.Raise(newEvt, Log);
             if (newEvt.IsCanceled)
             {
                 evt.Cancel(newEvt.CancellationReason);

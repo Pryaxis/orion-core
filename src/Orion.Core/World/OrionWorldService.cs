@@ -50,7 +50,7 @@ namespace Orion.Core.World
             OTAPI.Hooks.World.IO.PostLoadWorld = PostLoadWorldHandler;
             OTAPI.Hooks.World.IO.PreSaveWorld = PreSaveWorldHandler;
 
-            Kernel.RegisterHandlers(this, Log);
+            Kernel.Events.RegisterHandlers(this, Log);
         }
 
         public IWorld World => _tileCollection.World;
@@ -60,7 +60,7 @@ namespace Orion.Core.World
             OTAPI.Hooks.World.IO.PostLoadWorld = null;
             OTAPI.Hooks.World.IO.PreSaveWorld = null;
 
-            Kernel.DeregisterHandlers(this, Log);
+            Kernel.Events.DeregisterHandlers(this, Log);
         }
 
         // =============================================================================================================
@@ -70,13 +70,13 @@ namespace Orion.Core.World
         private void PostLoadWorldHandler(bool loadFromCloud)
         {
             var evt = new WorldLoadedEvent(World);
-            Kernel.Raise(evt, Log);
+            Kernel.Events.Raise(evt, Log);
         }
 
         private OTAPI.HookResult PreSaveWorldHandler(ref bool useCloudSaving, ref bool resetTime)
         {
             var evt = new WorldSaveEvent(World);
-            Kernel.Raise(evt, Log);
+            Kernel.Events.Raise(evt, Log);
             return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
@@ -92,7 +92,7 @@ namespace Orion.Core.World
 
             Event Raise<TEvent>(TEvent newEvt) where TEvent : Event
             {
-                Kernel.Raise(newEvt, Log);
+                Kernel.Events.Raise(newEvt, Log);
                 return newEvt;
             }
 
@@ -176,7 +176,7 @@ namespace Orion.Core.World
         // Forwards `evt` as `newEvt`.
         private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event
         {
-            Kernel.Raise(newEvt, Log);
+            Kernel.Events.Raise(newEvt, Log);
             if (newEvt.IsCanceled)
             {
                 evt.Cancel(newEvt.CancellationReason);

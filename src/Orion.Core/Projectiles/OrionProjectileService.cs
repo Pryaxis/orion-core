@@ -78,7 +78,7 @@ namespace Orion.Core.Projectiles
 
             var projectile = GetProjectile(terrariaProjectile);
             var evt = new ProjectileDefaultsEvent(projectile) { Id = (ProjectileId)projectileId };
-            Kernel.Raise(evt, Log);
+            Kernel.Events.Raise(evt, Log);
             if (evt.IsCanceled)
             {
                 return OTAPI.HookResult.Cancel;
@@ -93,7 +93,7 @@ namespace Orion.Core.Projectiles
             Debug.Assert(projectileIndex >= 0 && projectileIndex < Projectiles.Count);
 
             var evt = new ProjectileTickEvent(Projectiles[projectileIndex]);
-            Kernel.Raise(evt, Log);
+            Kernel.Events.Raise(evt, Log);
             return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 

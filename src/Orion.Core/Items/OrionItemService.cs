@@ -77,7 +77,7 @@ namespace Orion.Core.Items
 
             var item = GetItem(terrariaItem);
             var evt = new ItemDefaultsEvent(item) { Id = (ItemId)itemId };
-            Kernel.Raise(evt, Log);
+            Kernel.Events.Raise(evt, Log);
             if (evt.IsCanceled)
             {
                 return OTAPI.HookResult.Cancel;
@@ -97,7 +97,7 @@ namespace Orion.Core.Items
             terrariaItem.whoAmI = itemIndex;
 
             var evt = new ItemTickEvent(Items[itemIndex]);
-            Kernel.Raise(evt, Log);
+            Kernel.Events.Raise(evt, Log);
             return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 

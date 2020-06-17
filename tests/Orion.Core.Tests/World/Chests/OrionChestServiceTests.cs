@@ -103,7 +103,7 @@ namespace Orion.Core.World.Chests
             using var chestService = new OrionChestService(kernel, Logger.None);
 
             var isRun = false;
-            kernel.RegisterHandler<ChestOpenEvent>(evt =>
+            kernel.Events.RegisterHandler<ChestOpenEvent>(evt =>
             {
                 Assert.Same(chestService.Chests[0], evt.Chest);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -130,7 +130,7 @@ namespace Orion.Core.World.Chests
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             using var chestService = new OrionChestService(kernel, Logger.None);
 
-            kernel.RegisterHandler<ChestOpenEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<ChestOpenEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, ChestOpenPacketTests.Bytes);
 
@@ -152,7 +152,7 @@ namespace Orion.Core.World.Chests
             using var chestService = new OrionChestService(kernel, Logger.None);
 
             var isRun = false;
-            kernel.RegisterHandler<ChestOpenEvent>(evt => isRun = true, Logger.None);
+            kernel.Events.RegisterHandler<ChestOpenEvent>(evt => isRun = true, Logger.None);
 
             TestUtils.FakeReceiveBytes(5, ChestOpenPacketTests.Bytes);
 
@@ -173,7 +173,7 @@ namespace Orion.Core.World.Chests
             using var chestService = new OrionChestService(kernel, Logger.None);
 
             var isRun = false;
-            kernel.RegisterHandler<ChestInventoryEvent>(evt =>
+            kernel.Events.RegisterHandler<ChestInventoryEvent>(evt =>
             {
                 Assert.Same(chestService.Chests[5], evt.Chest);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -203,7 +203,7 @@ namespace Orion.Core.World.Chests
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             using var chestService = new OrionChestService(kernel, Logger.None);
 
-            kernel.RegisterHandler<ChestInventoryEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<ChestInventoryEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, ChestInventoryPacketTests.Bytes);
 

@@ -37,14 +37,14 @@ namespace Orion.Core.World.Signs
             Signs = new WrappedReadOnlyList<OrionSign, Terraria.Sign?>(
                 Terraria.Main.sign, (signIndex, terrariaSign) => new OrionSign(signIndex, terrariaSign));
 
-            Kernel.RegisterHandlers(this, Log);
+            Kernel.Events.RegisterHandlers(this, Log);
         }
 
         public IReadOnlyList<ISign> Signs { get; }
 
         public override void Dispose()
         {
-            Kernel.DeregisterHandlers(this, Log);
+            Kernel.Events.DeregisterHandlers(this, Log);
         }
 
         private ISign? FindSign(int x, int y) => Signs.FirstOrDefault(s => s.IsActive && s.X == x && s.Y == y);
@@ -70,7 +70,7 @@ namespace Orion.Core.World.Signs
         // Forwards `evt` as `newEvt`.
         private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event
         {
-            Kernel.Raise(newEvt, Log);
+            Kernel.Events.Raise(newEvt, Log);
             if (newEvt.IsCanceled)
             {
                 evt.Cancel(newEvt.CancellationReason);

@@ -84,7 +84,7 @@ namespace Orion.Core.Projectiles
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<ProjectileDefaultsEvent>(evt =>
+            kernel.Events.RegisterHandler<ProjectileDefaultsEvent>(evt =>
             {
                 Assert.Same(Terraria.Main.projectile[0], ((OrionProjectile)evt.Projectile).Wrapped);
                 Assert.Equal(ProjectileId.CrystalBullet, evt.Id);
@@ -105,7 +105,7 @@ namespace Orion.Core.Projectiles
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<ProjectileDefaultsEvent>(evt =>
+            kernel.Events.RegisterHandler<ProjectileDefaultsEvent>(evt =>
             {
                 Assert.Same(terrariaProjectile, ((OrionProjectile)evt.Projectile).Wrapped);
                 Assert.Equal(ProjectileId.CrystalBullet, evt.Id);
@@ -127,7 +127,7 @@ namespace Orion.Core.Projectiles
 
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
-            kernel.RegisterHandler<ProjectileDefaultsEvent>(evt => evt.Id = newId, Logger.None);
+            kernel.Events.RegisterHandler<ProjectileDefaultsEvent>(evt => evt.Id = newId, Logger.None);
 
             Terraria.Main.projectile[0].SetDefaults((int)oldId);
 
@@ -141,7 +141,7 @@ namespace Orion.Core.Projectiles
 
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
-            kernel.RegisterHandler<ProjectileDefaultsEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<ProjectileDefaultsEvent>(evt => evt.Cancel(), Logger.None);
 
             Terraria.Main.projectile[0].SetDefaults((int)ProjectileId.CrystalBullet);
 
@@ -154,7 +154,7 @@ namespace Orion.Core.Projectiles
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<ProjectileTickEvent>(evt =>
+            kernel.Events.RegisterHandler<ProjectileTickEvent>(evt =>
             {
                 Assert.Same(Terraria.Main.projectile[0], ((OrionProjectile)evt.Projectile).Wrapped);
                 isRun = true;
@@ -170,7 +170,7 @@ namespace Orion.Core.Projectiles
         {
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
-            kernel.RegisterHandler<ProjectileTickEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<ProjectileTickEvent>(evt => evt.Cancel(), Logger.None);
 
             Terraria.Main.projectile[0].Update(0);
         }

@@ -305,7 +305,7 @@ namespace Orion.Core.Players
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(5, terrariaPlayer, kernel, Logger.None);
-            kernel.RegisterHandler<PacketSendEvent<TestPacket>>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<PacketSendEvent<TestPacket>>(evt => evt.Cancel(), Logger.None);
 
             var packet = new TestPacket();
             player.SendPacket(ref packet);

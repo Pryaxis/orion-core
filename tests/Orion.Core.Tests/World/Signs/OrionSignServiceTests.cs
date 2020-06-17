@@ -102,7 +102,7 @@ namespace Orion.Core.World.Signs
             using var signService = new OrionSignService(kernel, Logger.None);
 
             var isRun = false;
-            kernel.RegisterHandler<SignReadEvent>(evt =>
+            kernel.Events.RegisterHandler<SignReadEvent>(evt =>
             {
                 Assert.Same(signService.Signs[0], evt.Sign);
                 Assert.Same(playerService.Players[5], evt.Player);
@@ -130,7 +130,7 @@ namespace Orion.Core.World.Signs
 
             Terraria.Main.tile[256, 100] = new Terraria.Tile { type = (ushort)BlockId.Sign };
 
-            kernel.RegisterHandler<SignReadEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.Events.RegisterHandler<SignReadEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, SignReadPacketTests.Bytes);
 
@@ -152,7 +152,7 @@ namespace Orion.Core.World.Signs
             using var signService = new OrionSignService(kernel, Logger.None);
 
             var isRun = false;
-            kernel.RegisterHandler<SignReadEvent>(evt => isRun = true, Logger.None);
+            kernel.Events.RegisterHandler<SignReadEvent>(evt => isRun = true, Logger.None);
 
             TestUtils.FakeReceiveBytes(5, SignReadPacketTests.Bytes);
 

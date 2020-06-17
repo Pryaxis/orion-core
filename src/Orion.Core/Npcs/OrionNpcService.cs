@@ -52,7 +52,7 @@ namespace Orion.Core.Npcs
             OTAPI.Hooks.Npc.Killed = KilledHandler;
             OTAPI.Hooks.Npc.PreDropLoot = PreDropLootHandler;
 
-            Kernel.RegisterHandlers(this, Log);
+            Kernel.Events.RegisterHandlers(this, Log);
         }
 
         public IReadOnlyList<INpc> Npcs { get; }
@@ -67,7 +67,7 @@ namespace Orion.Core.Npcs
             OTAPI.Hooks.Npc.Killed = null;
             OTAPI.Hooks.Npc.PreDropLoot = null;
 
-            Kernel.DeregisterHandlers(this, Log);
+            Kernel.Events.DeregisterHandlers(this, Log);
         }
 
         public INpc? SpawnNpc(NpcId id, Vector2f position)
@@ -101,7 +101,7 @@ namespace Orion.Core.Npcs
 
             var npc = GetNpc(terrariaNpc);
             var evt = new NpcDefaultsEvent(npc) { Id = (NpcId)npcId };
-            Kernel.Raise(evt, Log);
+            Kernel.Events.Raise(evt, Log);
             if (evt.IsCanceled)
             {
                 return OTAPI.HookResult.Cancel;
@@ -121,7 +121,7 @@ namespace Orion.Core.Npcs
 
             var npc = Npcs[npcIndex];
             var evt = new NpcSpawnEvent(npc);
-            Kernel.Raise(evt, Log);
+            Kernel.Events.Raise(evt, Log);
             if (evt.IsCanceled)
             {
                 // To cancel the event, remove the NPC and return the failure index.
@@ -138,7 +138,7 @@ namespace Orion.Core.Npcs
             Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count);
 
             var evt = new NpcTickEvent(Npcs[npcIndex]);
-            Kernel.Raise(evt, Log);
+            Kernel.Events.Raise(evt, Log);
             return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
@@ -148,7 +148,7 @@ namespace Orion.Core.Npcs
 
             var npc = GetNpc(terrariaNpc);
             var evt = new NpcKilledEvent(npc);
-            Kernel.Raise(evt, Log);
+            Kernel.Events.Raise(evt, Log);
         }
 
         private OTAPI.HookResult PreDropLootHandler(
@@ -160,7 +160,7 @@ namespace Orion.Core.Npcs
 
             var npc = GetNpc(terrariaNpc);
             var evt = new NpcLootEvent(npc) { Id = (ItemId)itemId, StackSize = stackSize, Prefix = (ItemPrefix)prefix };
-            Kernel.Raise(evt, Log);
+            Kernel.Events.Raise(evt, Log);
             if (evt.IsCanceled)
             {
                 return OTAPI.HookResult.Cancel;
@@ -222,7 +222,7 @@ namespace Orion.Core.Npcs
         // Forwards `evt` as `newEvt`.
         private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event
         {
-            Kernel.Raise(newEvt, Log);
+            Kernel.Events.Raise(newEvt, Log);
             if (newEvt.IsCanceled)
             {
                 evt.Cancel(newEvt.CancellationReason);
