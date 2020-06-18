@@ -57,21 +57,21 @@ Event handlers may also be *asynchronous* and either *blocking* (the default) or
 | Type | Effect | Restrictions |
 |------|--------|--------------|
 | Blocking | If the event is finished, the event handler *must* be completed.| Only thread-safe Orion APIs may be used during asynchronous execution. |
-| Non-blocking | The event handler *may* not be completed before the event is finished. | Only thread-safe Orion APIs which do not interface with Terraria state may be used during asynchronous execution. |
+| Non-blocking | If the event is finished, the event handler *may not* be completed. | Only thread-safe Orion APIs __which do not interface with Terraria state__ may be used during asynchronous execution. |
 
 An example asynchronous event handler is below:
 
 # [C#](#tab/c-sharp)
 
 ```csharp
-    [EventHandler("example", IsBlocking = false)]
+    [EventHandler("example-async", IsBlocking = false)]
     private async Task OnPlayerQuit(PlayerQuitEvent evt)
     {
         var fileName = Path.Join("players", $"{evt.Player.Name}.data");
         using (var stream = File.Create(fileName))
         using (var writer = new StreamWriter(stream))
         {
-            await writer.WriteAsync("test");
+            await writer.WriteAsync("test").ConfigureAwait(false);
         }
     }
 ```
