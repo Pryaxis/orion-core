@@ -18,10 +18,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Orion.Core.Events;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Core.Events
+namespace Orion.Core.Framework.Events
 {
     public class EventManagerTests
     {
@@ -32,7 +33,7 @@ namespace Orion.Core.Events
 
             Assert.Throws<ArgumentNullException>(() => manager.RegisterHandler<TestEvent>(null!, Logger.None));
         }
-        
+
         [Fact]
         public void RegisterHandler_NullLog_ThrowsArgumentNullException()
         {

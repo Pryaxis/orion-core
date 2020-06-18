@@ -17,10 +17,11 @@
 
 using System;
 using System.Threading.Tasks;
+using Orion.Core.Events;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Core.Events
+namespace Orion.Core.Framework.Events
 {
     public class EventHandlerCollectionTests
     {

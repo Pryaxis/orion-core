@@ -27,6 +27,7 @@ using Orion.Core.Events;
 using Orion.Core.Events.Npcs;
 using Orion.Core.Events.Packets;
 using Orion.Core.Framework;
+using Orion.Core.Framework.Events;
 using Orion.Core.Items;
 using Orion.Core.Packets.Npcs;
 using Serilog;

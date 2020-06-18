@@ -21,10 +21,11 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
 using Destructurama.Attributed;
+using Orion.Core.Events;
 using Serilog;
 using Serilog.Events;
 
-namespace Orion.Core.Events
+namespace Orion.Core.Framework.Events
 {
     internal sealed class EventHandlerCollection<TEvent> where TEvent : Event
     {
@@ -77,16 +78,14 @@ namespace Orion.Core.Events
             Debug.Assert(handler != null);
             Debug.Assert(log != null);
 
-            if (!_handlerToRegistration.TryGetValue(handler, out var registration))
+            if (_handlerToRegistration.TryGetValue(handler, out var registration))
             {
-                return;
+                _registrations.Remove(registration);
+                _handlerToRegistration.Remove(handler);
+
+                // Not localized because this string is developer-facing.
+                log.Debug("Deregistering {EventName} with {@Registration}", _eventName, registration);
             }
-
-            _registrations.Remove(registration);
-            _handlerToRegistration.Remove(handler);
-
-            // Not localized because this string is developer-facing.
-            log.Debug("Deregistering {EventName} with {@Registration}", _eventName, registration);
         }
 
         public void DeregisterAsyncHandler(Func<TEvent, Task> handler, ILogger log)
@@ -94,16 +93,14 @@ namespace Orion.Core.Events
             Debug.Assert(handler != null);
             Debug.Assert(log != null);
 
-            if (!_handlerToAsyncRegistration.TryGetValue(handler, out var registration))
+            if (_handlerToAsyncRegistration.TryGetValue(handler, out var registration))
             {
-                return;
+                _asyncRegistrations.Remove(registration);
+                _handlerToAsyncRegistration.Remove(handler);
+
+                // Not localized because this string is developer-facing.
+                log.Debug("Deregistering {EventName} with {@Registration}", _eventName, registration);
             }
-
-            _asyncRegistrations.Remove(registration);
-            _handlerToAsyncRegistration.Remove(handler);
-
-            // Not localized because this string is developer-facing.
-            log.Debug("Deregistering {EventName} with {@Registration}", _eventName, registration);
         }
 
         public void Raise(TEvent evt, ILogger log)
@@ -198,9 +195,7 @@ namespace Orion.Core.Events
             {
                 Handler = handler;
 
-                // Retrieve and cache information about the event handler. If `EventHandlerAttribute` is not present on
-                // the event, then reasonable defaults are chosen.
-                var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute?>();
+                var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute>();
                 Name = attribute?.Name ?? handler.Method.Name;
                 Priority = attribute?.Priority ?? EventPriority.Normal;
                 IgnoreCanceled = attribute?.IgnoreCanceled ?? true;
@@ -218,9 +213,7 @@ namespace Orion.Core.Events
             {
                 Handler = handler;
 
-                // Retrieve and cache information about the event handler. If `EventHandlerAttribute` is not present on
-                // the event, then reasonable defaults are chosen.
-                var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute?>();
+                var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute>();
                 Name = attribute?.Name ?? handler.Method.Name;
                 IgnoreCanceled = attribute?.IgnoreCanceled ?? true;
                 IsBlocking = attribute?.IsBlocking ?? true;

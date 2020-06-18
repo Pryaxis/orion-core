@@ -20,12 +20,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Orion.Core.Events;
 using Serilog;
 
-namespace Orion.Core.Events
+namespace Orion.Core.Framework.Events
 {
     /// <summary>
-    /// Handles event handler registrations, deregistrations and event raisings.
+    /// Handles event handler registrations, deregistrations, and event raisings.
     /// </summary>
     public sealed class EventManager
     {

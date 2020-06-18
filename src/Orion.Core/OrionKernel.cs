@@ -16,9 +16,9 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Orion.Core.Events;
 using Orion.Core.Events.Server;
 using Orion.Core.Framework;
+using Orion.Core.Framework.Events;
 using Serilog;
 
 namespace Orion.Core

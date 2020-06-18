@@ -23,6 +23,7 @@ using Orion.Core.Events;
 using Orion.Core.Events.Packets;
 using Orion.Core.Events.World.Signs;
 using Orion.Core.Framework;
+using Orion.Core.Framework.Events;
 using Orion.Core.Packets.World.Signs;
 using Serilog;
 
