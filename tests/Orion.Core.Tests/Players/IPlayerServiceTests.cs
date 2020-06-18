@@ -38,7 +38,7 @@ namespace Orion.Core.Players
             Assert.Throws<ArgumentNullException>(() =>
             {
                 var packet = new TestPacket();
-                PlayerServiceExtensions.BroadcastPacket(null!, ref packet);
+                IPlayerServiceExtensions.BroadcastPacket(null!, ref packet);
             });
         }
 
@@ -59,7 +59,7 @@ namespace Orion.Core.Players
         public void BroadcastPacket_NullPlayerService_ThrowsArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(
-                () => PlayerServiceExtensions.BroadcastPacket(null!, new TestPacket()));
+                () => IPlayerServiceExtensions.BroadcastPacket(null!, new TestPacket()));
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace Orion.Core.Players
         public void BroadcastMessage_NullPlayerService_ThrowsArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(
-                () => PlayerServiceExtensions.BroadcastMessage(null!, "test", Color3.White));
+                () => IPlayerServiceExtensions.BroadcastMessage(null!, "test", Color3.White));
         }
 
         [Fact]
@@ -115,7 +115,7 @@ namespace Orion.Core.Players
         {
             var tiles = Mock.Of<ITileSlice>();
 
-            Assert.Throws<ArgumentNullException>(() => PlayerServiceExtensions.BroadcastTiles(null!, 123, 456, tiles));
+            Assert.Throws<ArgumentNullException>(() => IPlayerServiceExtensions.BroadcastTiles(null!, 123, 456, tiles));
         }
 
         [Fact]

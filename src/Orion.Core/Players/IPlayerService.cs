@@ -63,7 +63,7 @@ namespace Orion.Core.Players
     /// <summary>
     /// Provides extensions for the <see cref="IPlayerService"/> interface.
     /// </summary>
-    public static class PlayerServiceExtensions
+    public static class IPlayerServiceExtensions
     {
         /// <summary>
         /// Broadcasts the given <paramref name="packet"/> reference to all active players.

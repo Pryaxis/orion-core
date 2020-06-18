@@ -19,11 +19,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
 using Orion.Core.Collections;
 using Orion.Core.Events;
 using Orion.Core.Events.Packets;
@@ -41,8 +38,7 @@ namespace Orion.Core.Players
     [Binding("orion-players", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
     internal sealed class OrionPlayerService : OrionExtension, IPlayerService
     {
-        private delegate void OnReceivePacketHandler(Terraria.MessageBuffer buffer, Span<byte> span);
-        private delegate void OnSendPacketHandler(int playerIndex, Span<byte> span);
+        private delegate void PacketHandler(int playerIndex, Span<byte> span);
 
         private static readonly MethodInfo _onReceivePacket =
             typeof(OrionPlayerService)
@@ -51,14 +47,12 @@ namespace Orion.Core.Players
             typeof(OrionPlayerService)
                 .GetMethod(nameof(OnSendPacket), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
-        private readonly ThreadLocal<bool> _ignoreReceiveDataHandler = new ThreadLocal<bool>();
-        private readonly OnReceivePacketHandler?[] _onReceivePacketHandlers = new OnReceivePacketHandler?[256];
-        private readonly OnReceivePacketHandler?[] _onReceiveModuleHandlers = new OnReceivePacketHandler?[65536];
-        private readonly ThreadLocal<byte[]> _receiveBuffer = new ThreadLocal<byte[]>(() => new byte[ushort.MaxValue]);
+        [ThreadStatic] internal static bool _ignoreGetData;
 
-        private readonly OnSendPacketHandler?[] _onSendPacketHandlers = new OnSendPacketHandler?[256];
-        private readonly OnSendPacketHandler?[] _onSendModuleHandlers = new OnSendPacketHandler?[65536];
-        private readonly ThreadLocal<byte[]> _sendBuffer = new ThreadLocal<byte[]>(() => new byte[ushort.MaxValue]);
+        private readonly PacketHandler?[] _onReceivePacketHandlers = new PacketHandler?[256];
+        private readonly PacketHandler?[] _onReceiveModuleHandlers = new PacketHandler?[65536];
+        private readonly PacketHandler?[] _onSendPacketHandlers = new PacketHandler?[256];
+        private readonly PacketHandler?[] _onSendModuleHandlers = new PacketHandler?[65536];
 
         public OrionPlayerService(OrionKernel kernel, ILogger log) : base(kernel, log)
         {
@@ -66,16 +60,6 @@ namespace Orion.Core.Players
             Players = new WrappedReadOnlyList<OrionPlayer, Terraria.Player>(
                 Terraria.Main.player.AsMemory(..^1),
                 (playerIndex, terrariaPlayer) => new OrionPlayer(playerIndex, terrariaPlayer, kernel, log));
-
-            OnReceivePacketHandler MakeOnReceivePacketHandler(Type packetType) =>
-                (OnReceivePacketHandler)_onReceivePacket
-                    .MakeGenericMethod(packetType)
-                    .CreateDelegate(typeof(OnReceivePacketHandler), this);
-
-            OnSendPacketHandler MakeOnSendPacketHandler(Type packetType) =>
-                (OnSendPacketHandler)_onSendPacket
-                    .MakeGenericMethod(packetType)
-                    .CreateDelegate(typeof(OnSendPacketHandler), this);
 
             // Construct the `_onReceivePacketHandlers` and `_onSendPacketHandlers` arrays ahead of time for the valid
             // `PacketId` instances. The invalid instances are handled by defaulting to `UnknownPacket`.
@@ -102,16 +86,22 @@ namespace Orion.Core.Players
             OTAPI.Hooks.Net.RemoteClient.PreReset = PreResetHandler;
 
             Kernel.Events.RegisterHandlers(this, Log);
+
+            PacketHandler MakeOnReceivePacketHandler(Type packetType) =>
+                (PacketHandler)_onReceivePacket
+                    .MakeGenericMethod(packetType)
+                    .CreateDelegate(typeof(PacketHandler), this);
+
+            PacketHandler MakeOnSendPacketHandler(Type packetType) =>
+                (PacketHandler)_onSendPacket
+                    .MakeGenericMethod(packetType)
+                    .CreateDelegate(typeof(PacketHandler), this);
         }
 
         public IReadOnlyList<IPlayer> Players { get; }
 
         public override void Dispose()
         {
-            _ignoreReceiveDataHandler.Dispose();
-            _receiveBuffer.Dispose();
-            _sendBuffer.Dispose();
-
             OTAPI.Hooks.Net.ReceiveData = null;
             OTAPI.Hooks.Net.SendBytes = null;
             OTAPI.Hooks.Net.SendNetData = null;
@@ -133,15 +123,13 @@ namespace Orion.Core.Players
             Debug.Assert(start >= 0 && start + length <= buffer.readBuffer.Length);
             Debug.Assert(length > 0);
 
-            // Check `_ignoreReceiveDataHandler` to prevent an infinite loop if `GetData` is called in `ReceivePacket`.
-            // A thread-local value is used in case there is some concurrency.
-            if (_ignoreReceiveDataHandler.Value)
+            // Check `_ignoreGetData` to prevent infinite loops.
+            if (_ignoreGetData)
             {
-                _ignoreReceiveDataHandler.Value = false;
                 return OTAPI.HookResult.Continue;
             }
 
-            OnReceivePacketHandler handler;
+            PacketHandler handler;
             var span = buffer.readBuffer.AsSpan(start..(start + length));
             if (packetId == (byte)PacketId.Module)
             {
@@ -153,7 +141,7 @@ namespace Orion.Core.Players
                 handler = _onReceivePacketHandlers[packetId] ?? OnReceivePacket<UnknownPacket>;
             }
 
-            handler(buffer, span);
+            handler(buffer.whoAmI, span);
             return OTAPI.HookResult.Cancel;
         }
 
@@ -235,54 +223,22 @@ namespace Orion.Core.Players
         // Packet event publishers
         //
 
-        private void OnReceivePacket<TPacket>(Terraria.MessageBuffer buffer, Span<byte> span)
-            where TPacket : struct, IPacket
+        private void OnReceivePacket<TPacket>(int playerIndex, Span<byte> span) where TPacket : struct, IPacket
         {
-            Debug.Assert(buffer != null);
+            Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
             Debug.Assert(span.Length > 0);
 
-            // When reading the packet, we need to use the `Server` context since this packet should be read as the
-            // server. Ignore the first byte as it is the packet ID.
             var packet = new TPacket();
             if (typeof(TPacket) == typeof(UnknownPacket))
             {
                 Unsafe.As<TPacket, UnknownPacket>(ref packet).Id = (PacketId)span[0];
             }
 
+            // Read the packet using the `Server` context since we're receiving this packet.
             var packetLength = packet.Read(span[1..], PacketContext.Server);
             Debug.Assert(packetLength == span.Length - 1);
 
-            // If `TPacket` is `UnknownPacket`, then we need to set the `Id` property appropriately since it's not
-            // available in the `Read` method.
-            if (typeof(TPacket) == typeof(UnknownPacket))
-            {
-                Unsafe.As<TPacket, UnknownPacket>(ref packet).Id = (PacketId)span[0];
-            }
-
-            var evt = new PacketReceiveEvent<TPacket>(ref packet, Players[buffer.whoAmI]);
-            Kernel.Events.Raise(evt, Log);
-            if (evt.IsCanceled)
-            {
-                return;
-            }
-
-            // To simulate the receival of the packet, we must swap out the read buffer and reader, and call `GetData()`
-            // while ensuring that the next `ReceiveDataHandler()` call is ignored. A thread-local receive buffer is
-            // used in case there is some concurrency.
-            var oldReadBuffer = buffer.readBuffer;
-            var oldReader = buffer.reader;
-
-            // When writing the packet, we need to use the `Client` context since this packet comes from the client.
-            var receiveBuffer = _receiveBuffer.Value;
-            var newPacketLength = packet.WriteWithHeader(receiveBuffer, PacketContext.Client);
-
-            _ignoreReceiveDataHandler.Value = true;
-            buffer.readBuffer = receiveBuffer;
-            buffer.reader = new BinaryReader(new MemoryStream(buffer.readBuffer), Encoding.UTF8);
-            buffer.GetData(2, newPacketLength - 2, out _);
-
-            buffer.readBuffer = oldReadBuffer;
-            buffer.reader = oldReader;
+            Players[playerIndex].ReceivePacket(ref packet);
         }
 
         private void OnSendPacket<TPacket>(int playerIndex, Span<byte> span) where TPacket : struct, IPacket
@@ -290,37 +246,17 @@ namespace Orion.Core.Players
             Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
             Debug.Assert(span.Length > 0);
 
-            // When reading the packet, we need to use the `Client` context since this packet should be read as the
-            // client. Ignore the first byte as it is the packet ID.
             var packet = new TPacket();
-            var packetLength = packet.Read(span[1..], PacketContext.Client);
-            Debug.Assert(packetLength == span.Length - 1);
-
-            // If `TPacket` is `UnknownPacket`, then we need to set the `Id` property appropriately since it's not
-            // available in the `Read` method.
             if (typeof(TPacket) == typeof(UnknownPacket))
             {
                 Unsafe.As<TPacket, UnknownPacket>(ref packet).Id = (PacketId)span[0];
             }
 
-            var evt = new PacketSendEvent<TPacket>(ref packet, Players[playerIndex]);
-            Kernel.Events.Raise(evt, Log);
-            if (evt.IsCanceled)
-            {
-                return;
-            }
+            // Read the packet using the `Client` context since we're sending this packet.
+            var packetLength = packet.Read(span[1..], PacketContext.Client);
+            Debug.Assert(packetLength == span.Length - 1);
 
-            // When writing the packet, we need to use the `Server` context since this packet comes from the server. A
-            // thread-local send buffer is used in case there is some concurrency.
-            var sendBuffer = _sendBuffer.Value;
-            var newPacketLength = packet.WriteWithHeader(sendBuffer, PacketContext.Server);
-
-            var terrariaClient = Terraria.Netplay.Clients[playerIndex];
-            try
-            {
-                terrariaClient.Socket.AsyncSend(sendBuffer, 0, newPacketLength, terrariaClient.ServerWriteCallBack);
-            }
-            catch (IOException) { }
+            Players[playerIndex].SendPacket(ref packet);
         }
 
         // =============================================================================================================

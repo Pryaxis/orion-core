@@ -93,7 +93,7 @@ namespace Orion.Core.Items
             Debug.Assert(itemIndex >= 0 && itemIndex < Items.Count);
 
             // Set `whoAmI` since this is never done in the vanilla server, and we depend on this field being set in
-            // `OrionEntity.Index`.
+            // `GetItem`.
             terrariaItem.whoAmI = itemIndex;
 
             var evt = new ItemTickEvent(Items[itemIndex]);

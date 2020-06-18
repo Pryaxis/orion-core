@@ -84,6 +84,13 @@ namespace Orion.Core.Players
         PlayerTeam Team { get; set; }
 
         /// <summary>
+        /// Receives the given <paramref name="packet"/> reference from the player.
+        /// </summary>
+        /// <typeparam name="TPacket">The type of packet.</typeparam>
+        /// <param name="packet">The packet reference to receive. <b>This must be on the stack!</b></param>
+        void ReceivePacket<TPacket>(ref TPacket packet) where TPacket : struct, IPacket;
+
+        /// <summary>
         /// Sends the given <paramref name="packet"/> reference to the player.
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>

@@ -16,9 +16,10 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Buffers;
 using System.Diagnostics;
 using System.IO;
-using System.Threading;
+using System.Text;
 using Destructurama.Attributed;
 using Orion.Core.Buffs;
 using Orion.Core.Collections;
@@ -34,10 +35,9 @@ namespace Orion.Core.Players
     {
         private readonly OrionKernel _kernel;
         private readonly ILogger _log;
-        private readonly ThreadLocal<byte[]> _sendBuffer = new ThreadLocal<byte[]>(() => new byte[ushort.MaxValue]);
 
         public OrionPlayer(int playerIndex, Terraria.Player terrariaPlayer, OrionKernel kernel, ILogger log)
-                : base(playerIndex, terrariaPlayer)
+            : base(playerIndex, terrariaPlayer)
         {
             Debug.Assert(kernel != null);
             Debug.Assert(log != null);
@@ -101,6 +101,46 @@ namespace Orion.Core.Players
             set => Wrapped.team = (int)value;
         }
 
+        public void ReceivePacket<TPacket>(ref TPacket packet) where TPacket : struct, IPacket
+        {
+            var evt = new PacketReceiveEvent<TPacket>(ref packet, this);
+            _kernel.Events.Raise(evt, _log);
+            if (evt.IsCanceled)
+            {
+                return;
+            }
+
+            var buffer = Terraria.NetMessage.buffer[Index];
+
+            // To simulate the receival of the packet, we must swap out the read buffer and reader, and call `GetData()`
+            // while ensuring that the next `ReceiveDataHandler()` call is ignored.
+            var oldReadBuffer = buffer.readBuffer;
+            var oldReader = buffer.reader;
+
+            var pool = ArrayPool<byte>.Shared;
+            var receiveBuffer = pool.Rent(65536);
+
+            try
+            {
+                // Write the packet using the `Client` context since we're receiving this packet.
+                var packetLength = packet.WriteWithHeader(receiveBuffer, PacketContext.Client);
+
+                // Ignore the next `GetData` call so that there isn't an infinite loop.
+                OrionPlayerService._ignoreGetData = true;
+                buffer.readBuffer = receiveBuffer;
+                buffer.reader = new BinaryReader(new MemoryStream(buffer.readBuffer), Encoding.UTF8);
+                buffer.GetData(2, packetLength - 2, out _);
+                OrionPlayerService._ignoreGetData = false;
+            }
+            finally
+            {
+                pool.Return(receiveBuffer);
+
+                buffer.readBuffer = oldReadBuffer;
+                buffer.reader = oldReader;
+            }
+        }
+
         public void SendPacket<TPacket>(ref TPacket packet) where TPacket : struct, IPacket
         {
             var terrariaClient = Terraria.Netplay.Clients[Index];
@@ -116,15 +156,33 @@ namespace Orion.Core.Players
                 return;
             }
 
-            // When writing the packet, we need to use the `Server` context since this packet comes from the server. A
-            // thread-local send buffer is used in case there is some concurrency.
-            var sendBuffer = _sendBuffer.Value;
-            var packetLength = packet.WriteWithHeader(sendBuffer, PacketContext.Server);
+            var pool = ArrayPool<byte>.Shared;
+            var sendBuffer = pool.Rent(65536);
+            var wasSuccessful = false;
+
             try
             {
-                terrariaClient.Socket.AsyncSend(sendBuffer, 0, packetLength, terrariaClient.ServerWriteCallBack);
+                // Write the packet using the `Server` context since we're sending this packet.
+                var packetLength = packet.WriteWithHeader(sendBuffer, PacketContext.Server);
+                terrariaClient.Socket.AsyncSend(sendBuffer, 0, packetLength, state =>
+                {
+                    ArrayPool<byte>.Shared.Return((byte[])state);
+                    terrariaClient.ServerWriteCallBack(null!);
+                }, sendBuffer);
+
+                wasSuccessful = true;
             }
-            catch (IOException) { }
+            catch (IOException)
+            {
+            }
+            finally
+            {
+                // To prevent leakage, return the buffer if the send wasn't successful.
+                if (!wasSuccessful)
+                {
+                    pool.Return(sendBuffer);
+                }
+            }
         }
 
         private class BuffArray : IArray<Buff>
