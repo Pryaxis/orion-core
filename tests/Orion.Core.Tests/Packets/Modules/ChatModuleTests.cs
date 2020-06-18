@@ -25,7 +25,8 @@ namespace Orion.Core.Packets.Modules
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ChatModuleTests
     {
-        public static readonly byte[] ServerBytes = {
+        public static readonly byte[] ServerBytes =
+        {
             23, 0, 82, 1, 0, 3, 83, 97, 121, 13, 47, 99, 111, 109, 109, 97, 110, 100, 32, 116, 101, 115, 116
         };
 

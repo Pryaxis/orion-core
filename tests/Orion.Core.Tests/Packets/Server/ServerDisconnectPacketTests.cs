@@ -26,7 +26,8 @@ namespace Orion.Core.Packets.Client
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ServerDisconnectPacketTests
     {
-        public static readonly byte[] Bytes = {
+        public static readonly byte[] Bytes =
+        {
             21, 0, 2, 2, 15, 67, 76, 73, 46, 75, 105, 99, 107, 77, 101, 115, 115, 97, 103, 101, 0
         };
 

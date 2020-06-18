@@ -25,14 +25,16 @@ namespace Orion.Core.Packets
 {
     public class SpanExtensionsTests
     {
-        public static readonly IEnumerable<object[]> StringParams = new[] {
+        public static readonly IEnumerable<object[]> StringParams = new[]
+        {
             new object[] { "a" },
             new object[] { new string('a', 128) },
             new object[] { new string('a', 16384) },
             new object[] { new string('a', 2097152) },
         };
 
-        public static readonly IEnumerable<object[]> NetworkTextParams = new[] {
+        public static readonly IEnumerable<object[]> NetworkTextParams = new[]
+        {
             new object[] { (NetworkText)"literal" },
             new object[] { NetworkText.Formatted("formattable {0} {1}", "literal", "literal2") },
             new object[] { NetworkText.Localized("localized {0} {1}", "literal", "literal2") },

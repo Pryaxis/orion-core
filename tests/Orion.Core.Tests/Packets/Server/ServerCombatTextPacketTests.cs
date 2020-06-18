@@ -25,7 +25,8 @@ namespace Orion.Core.Packets.Server
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ServerCombatTextPacketTests
     {
-        public static readonly byte[] Bytes = new byte[] {
+        public static readonly byte[] Bytes =
+        {
             24, 0, 119, 0, 0, 200, 66, 0, 0, 128, 67, 255, 255, 255, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97
         };
 

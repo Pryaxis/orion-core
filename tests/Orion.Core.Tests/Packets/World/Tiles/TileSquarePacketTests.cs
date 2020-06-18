@@ -26,7 +26,8 @@ namespace Orion.Core.Packets.World.Tiles
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class TileSquarePacketTests
     {
-        public static readonly byte[] Bytes = {
+        public static readonly byte[] Bytes =
+        {
             41, 0, 20, 3, 0, 100, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 4, 0, 1, 0, 2, 0, 4, 0, 1, 0, 8, 0, 255, 1, 0, 4, 1,
             0, 8, 1, 240, 131, 0, 0
         };

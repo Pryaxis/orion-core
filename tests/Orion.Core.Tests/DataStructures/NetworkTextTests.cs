@@ -24,7 +24,8 @@ namespace Orion.Core.DataStructures
 {
     public class NetworkTextTests
     {
-        public static readonly IEnumerable<object[]> NetworkTexts = new[] {
+        public static readonly IEnumerable<object[]> NetworkTexts = new[]
+        {
             new object[] { (NetworkText)"literal" },
             new object[] { NetworkText.Formatted("formattable {0} {1}", "literal", "literal2") },
             new object[] { NetworkText.Localized("localized {0} {1}", "literal", "literal2") },

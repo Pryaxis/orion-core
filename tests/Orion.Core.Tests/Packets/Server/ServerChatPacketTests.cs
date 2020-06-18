@@ -25,7 +25,8 @@ namespace Orion.Core.Packets.Server
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ServerChatPacketTests
     {
-        public static readonly byte[] Bytes = {
+        public static readonly byte[] Bytes =
+        {
             18, 0, 107, 255, 255, 255, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97, 100, 0
         };
 

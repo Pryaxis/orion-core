@@ -25,9 +25,7 @@ namespace Orion.Core.Packets.Server
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ServerCombatNumberPacketTests
     {
-        public static readonly byte[] Bytes = new byte[] {
-            18, 0, 81, 0, 0, 200, 66, 0, 0, 128, 67, 255, 255, 255, 210, 4, 0, 0
-        };
+        public static readonly byte[] Bytes = { 18, 0, 81, 0, 0, 200, 66, 0, 0, 128, 67, 255, 255, 255, 210, 4, 0, 0 };
 
         [Fact]
         public void Position_Set_Get()
