@@ -25,7 +25,7 @@ The following naming conventions should be adhered to:
 
 Most coding conventions, such as brace style and spacing, should be enforced by the `.editorconfig` file. IDEs should keep everything consistent.
 
-One important thing to note is that the line limit is 120 characters.
+One important thing to note is that there is a *recommended* line limit of 120 characters.
 
 #### Testing
 
