@@ -26,7 +26,8 @@ To access instances of these services, plugins need to request them with [*const
 
 ```csharp
     public ExamplePlugin(OrionKernel kernel, ILogger log,
-            IItemService itemService) : base(kernel, log) {
+        IItemService itemService) : base(kernel, log)
+    {
         _itemService = itemService;
     }
 ```
