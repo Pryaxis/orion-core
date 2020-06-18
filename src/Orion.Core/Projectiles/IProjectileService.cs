@@ -18,7 +18,7 @@
 using System.Collections.Generic;
 using Orion.Core.DataStructures;
 using Orion.Core.Events.Projectiles;
-using Orion.Core.Framework;
+using Orion.Core.Framework.Extensions;
 
 namespace Orion.Core.Projectiles
 {

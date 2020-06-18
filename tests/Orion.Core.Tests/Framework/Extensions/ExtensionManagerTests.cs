@@ -21,7 +21,7 @@ using Serilog;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Core.Framework
+namespace Orion.Core.Framework.Extensions
 {
     public class ExtensionManagerTests
     {
@@ -67,7 +67,7 @@ namespace Orion.Core.Framework
         internal class TestService2 : ITestTransientService { }
 
         [Plugin("test-plugin")]
-        public class TestOrionPlugin : OrionPlugin
+        public class TestOrionPlugin : OrionExtension
         {
             public TestOrionPlugin(
                 OrionKernel kernel, ILogger log,
@@ -76,13 +76,13 @@ namespace Orion.Core.Framework
             {
                 SingletonService = singletonService;
                 TransientService = transientService;
+                Value = 100;
             }
 
             public static ITestSingletonService SingletonService { get; private set; } = null!;
             public static ITestTransientService TransientService { get; private set; } = null!;
             public static int Value { get; set; }
 
-            public override void Initialize() => Value = 100;
             public override void Dispose() => Value = -100;
         }
     }

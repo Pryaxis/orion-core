@@ -22,8 +22,8 @@ using Orion.Core.Collections;
 using Orion.Core.Events;
 using Orion.Core.Events.Packets;
 using Orion.Core.Events.World.Chests;
-using Orion.Core.Framework;
 using Orion.Core.Framework.Events;
+using Orion.Core.Framework.Extensions;
 using Orion.Core.Items;
 using Orion.Core.Packets.World.Chests;
 using Serilog;
@@ -31,7 +31,7 @@ using Serilog;
 namespace Orion.Core.World.Chests
 {
     [Binding("orion-chests", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
-    internal sealed class OrionChestService : OrionService, IChestService
+    internal sealed class OrionChestService : OrionExtension, IChestService
     {
         public OrionChestService(OrionKernel kernel, ILogger log) : base(kernel, log)
         {

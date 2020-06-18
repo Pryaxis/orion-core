@@ -17,8 +17,8 @@
 
 using System;
 using Orion.Core.Events.Server;
-using Orion.Core.Framework;
 using Orion.Core.Framework.Events;
+using Orion.Core.Framework.Extensions;
 using Serilog;
 
 namespace Orion.Core

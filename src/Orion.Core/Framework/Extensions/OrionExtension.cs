@@ -18,10 +18,10 @@
 using System;
 using Serilog;
 
-namespace Orion.Core.Framework
+namespace Orion.Core.Framework.Extensions
 {
     /// <summary>
-    /// Provides the base class for an Orion extension.
+    /// Provides the base class for an Orion extension (service or plugin).
     /// </summary>
     public abstract class OrionExtension : IDisposable
     {
@@ -34,7 +34,7 @@ namespace Orion.Core.Framework
         /// <exception cref="ArgumentNullException">
         /// <paramref name="kernel"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        private protected OrionExtension(OrionKernel kernel, ILogger log)
+        protected OrionExtension(OrionKernel kernel, ILogger log)
         {
             Kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
             Log = log ?? throw new ArgumentNullException(nameof(log));

@@ -16,18 +16,19 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Moq;
 using Serilog;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Core.Framework
+namespace Orion.Core.Framework.Extensions
 {
-    public class OrionPluginTests
+    public class OrionExtensionTests
     {
         [Fact]
         public void Ctor_NullKernel_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new TestOrionPlugin(null!, Logger.None));
+            Assert.Throws<ArgumentNullException>(() => new TestExtension(null!, Logger.None));
         }
 
         [Fact]
@@ -35,14 +36,32 @@ namespace Orion.Core.Framework
         {
             using var kernel = new OrionKernel(Logger.None);
 
-            Assert.Throws<ArgumentNullException>(() => new TestOrionPlugin(kernel, null!));
+            Assert.Throws<ArgumentNullException>(() => new TestExtension(kernel, null!));
         }
 
-        private class TestOrionPlugin : OrionPlugin
+        [Fact]
+        public void Kernel_Get()
         {
-            public TestOrionPlugin(OrionKernel kernel, ILogger log) : base(kernel, log) { }
+            using var kernel = new OrionKernel(Logger.None);
+            var log = Mock.Of<ILogger>();
+            using var service = new TestExtension(kernel, log);
 
-            public override void Initialize() => throw new NotImplementedException();
+            Assert.Same(kernel, service.Kernel);
+        }
+
+        [Fact]
+        public void Log_Get()
+        {
+            using var kernel = new OrionKernel(Logger.None);
+            var log = Mock.Of<ILogger>();
+            using var service = new TestExtension(kernel, log);
+
+            Assert.Same(log, service.Log);
+        }
+
+        public class TestExtension : OrionExtension
+        {
+            public TestExtension(OrionKernel kernel, ILogger log) : base(kernel, log) { }
         }
     }
 }

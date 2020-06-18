@@ -22,15 +22,15 @@ using Orion.Core.Collections;
 using Orion.Core.Events;
 using Orion.Core.Events.Packets;
 using Orion.Core.Events.World.Signs;
-using Orion.Core.Framework;
 using Orion.Core.Framework.Events;
+using Orion.Core.Framework.Extensions;
 using Orion.Core.Packets.World.Signs;
 using Serilog;
 
 namespace Orion.Core.World.Signs
 {
     [Binding("orion-signs", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
-    internal sealed class OrionSignService : OrionService, ISignService
+    internal sealed class OrionSignService : OrionExtension, ISignService
     {
         public OrionSignService(OrionKernel kernel, ILogger log) : base(kernel, log)
         {

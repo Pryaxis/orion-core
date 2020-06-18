@@ -21,8 +21,8 @@ using Orion.Core.Events;
 using Orion.Core.Events.Packets;
 using Orion.Core.Events.World;
 using Orion.Core.Events.World.Tiles;
-using Orion.Core.Framework;
 using Orion.Core.Framework.Events;
+using Orion.Core.Framework.Extensions;
 using Orion.Core.Packets.World.Tiles;
 using Orion.Core.World.Tiles;
 using Serilog;
@@ -30,7 +30,7 @@ using Serilog;
 namespace Orion.Core.World
 {
     [Binding("orion-world", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
-    internal sealed class OrionWorldService : OrionService, IWorldService
+    internal sealed class OrionWorldService : OrionExtension, IWorldService
     {
         private readonly TileCollection _tileCollection;
 

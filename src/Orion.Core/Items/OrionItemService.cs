@@ -21,13 +21,13 @@ using System.Diagnostics;
 using Orion.Core.Collections;
 using Orion.Core.DataStructures;
 using Orion.Core.Events.Items;
-using Orion.Core.Framework;
+using Orion.Core.Framework.Extensions;
 using Serilog;
 
 namespace Orion.Core.Items
 {
     [Binding("orion-items", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
-    internal sealed class OrionItemService : OrionService, IItemService
+    internal sealed class OrionItemService : OrionExtension, IItemService
     {
         private readonly object _lock = new object();
 

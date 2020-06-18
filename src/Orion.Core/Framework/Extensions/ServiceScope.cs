@@ -15,25 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using Serilog;
-
-namespace Orion.Core.Framework
+namespace Orion.Core.Framework.Extensions
 {
     /// <summary>
-    /// Provides the base class for an Orion service.
+    /// Controls the scope of a service.
     /// </summary>
-    public abstract class OrionService : OrionExtension
+    public enum ServiceScope
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrionService"/> class with the specified
-        /// <paramref name="kernel"/> and <paramref name="log"/>.
+        /// Indicates that the service should have singleton scope: i.e., only one implementation is ever constructed.
         /// </summary>
-        /// <param name="kernel">The kernel.</param>
-        /// <param name="log">The service-specific log to log to.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="kernel"/> or <paramref name="log"/> are <see langword="null"/>.
-        /// </exception>
-        protected OrionService(OrionKernel kernel, ILogger log) : base(kernel, log) { }
+        Singleton,
+
+        /// <summary>
+        /// Indicates that the service should have transient scope: i.e., a new implementation is constructed each time,
+        /// and the lifetimes of the implementations are not managed.
+        /// </summary>
+        Transient
     }
 }

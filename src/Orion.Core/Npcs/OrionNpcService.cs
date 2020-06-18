@@ -26,8 +26,8 @@ using Orion.Core.DataStructures;
 using Orion.Core.Events;
 using Orion.Core.Events.Npcs;
 using Orion.Core.Events.Packets;
-using Orion.Core.Framework;
 using Orion.Core.Framework.Events;
+using Orion.Core.Framework.Extensions;
 using Orion.Core.Items;
 using Orion.Core.Packets.Npcs;
 using Serilog;
@@ -35,7 +35,7 @@ using Serilog;
 namespace Orion.Core.Npcs
 {
     [Binding("orion-npcs", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
-    internal sealed class OrionNpcService : OrionService, INpcService
+    internal sealed class OrionNpcService : OrionExtension, INpcService
     {
         private readonly object _lock = new object();
         private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();

@@ -15,22 +15,30 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.Framework
+using System;
+
+namespace Orion.Core.Framework.Extensions
 {
     /// <summary>
-    /// Controls the scope of a service.
+    /// Specifies information about a service interface.
     /// </summary>
-    public enum ServiceScope
+    [AttributeUsage(AttributeTargets.Interface, Inherited = false)]
+    public sealed class ServiceAttribute : Attribute
     {
         /// <summary>
-        /// Indicates that the service should have singleton scope: i.e., only one implementation is ever constructed.
+        /// Initializes a new instance of the <see cref="ServiceAttribute"/> class with the specified service
+        /// <paramref name="scope"/>.
         /// </summary>
-        Singleton,
+        /// <param name="scope">The service scope.</param>
+        public ServiceAttribute(ServiceScope scope)
+        {
+            Scope = scope;
+        }
 
         /// <summary>
-        /// Indicates that the service should have transient scope: i.e., a new implementation is constructed each time,
-        /// and the lifetimes of the implementations are not managed.
+        /// Gets the service scope.
         /// </summary>
-        Transient
+        /// <value>The service scope.</value>
+        public ServiceScope Scope { get; }
     }
 }

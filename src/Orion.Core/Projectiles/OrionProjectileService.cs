@@ -21,13 +21,13 @@ using System.Diagnostics;
 using Orion.Core.Collections;
 using Orion.Core.DataStructures;
 using Orion.Core.Events.Projectiles;
-using Orion.Core.Framework;
+using Orion.Core.Framework.Extensions;
 using Serilog;
 
 namespace Orion.Core.Projectiles
 {
     [Binding("orion-projs", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
-    internal sealed class OrionProjectileService : OrionService, IProjectileService
+    internal sealed class OrionProjectileService : OrionExtension, IProjectileService
     {
         private readonly object _lock = new object();
 

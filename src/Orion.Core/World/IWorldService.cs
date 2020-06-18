@@ -17,7 +17,7 @@
 
 using Orion.Core.Events.World;
 using Orion.Core.Events.World.Tiles;
-using Orion.Core.Framework;
+using Orion.Core.Framework.Extensions;
 
 namespace Orion.Core.World
 {
