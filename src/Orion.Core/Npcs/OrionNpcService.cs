@@ -88,12 +88,12 @@ namespace Orion.Core.Npcs
         //
 
         private OTAPI.HookResult PreSetDefaultsByIdHandler(
-                Terraria.NPC terrariaNpc, ref int npcId, ref Terraria.NPCSpawnParams spawnParams)
+            Terraria.NPC terrariaNpc, ref int npcId, ref Terraria.NPCSpawnParams spawnParams)
         {
             Debug.Assert(terrariaNpc != null);
 
-            // Check `_setDefaultsToIgnore` to ignore spurious calls if `SetDefaultsById()` is called with a negative
-            // ID. A thread-local value is used in case there is some concurrency.
+            // Check `_setDefaultsToIgnore` to ignore spurious calls if `SetDefaultsById` is called with a negative ID.
+            // A thread-local value is used in case there is some concurrency.
             if (_setDefaultsToIgnore.Value > 0)
             {
                 --_setDefaultsToIgnore.Value;
@@ -153,9 +153,9 @@ namespace Orion.Core.Npcs
         }
 
         private OTAPI.HookResult PreDropLootHandler(
-                Terraria.NPC terrariaNpc, ref int itemIndex, ref int x, ref int y, ref int width, ref int height,
-                ref int itemId, ref int stackSize, ref bool noBroadcast, ref int prefix, ref bool noGrabDelay,
-                ref bool reverseIndex)
+            Terraria.NPC terrariaNpc, ref int itemIndex, ref int x, ref int y, ref int width, ref int height,
+            ref int itemId, ref int stackSize, ref bool noBroadcast, ref int prefix, ref bool noGrabDelay,
+            ref bool reverseIndex)
         {
             Debug.Assert(terrariaNpc != null);
 
@@ -195,10 +195,8 @@ namespace Orion.Core.Npcs
         private void OnNpcBuffPacket(PacketReceiveEvent<NpcBuffPacket> evt)
         {
             ref var packet = ref evt.Packet;
-            var npc = Npcs[packet.NpcIndex];
-            var buff = new Buff(packet.Id, packet.Ticks);
 
-            ForwardEvent(evt, new NpcBuffEvent(npc, evt.Sender, buff));
+            ForwardEvent(evt, new NpcBuffEvent(Npcs[packet.NpcIndex], evt.Sender, new Buff(packet.Id, packet.Ticks)));
         }
 
         [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
@@ -206,9 +204,8 @@ namespace Orion.Core.Npcs
         private void OnNpcCatchPacket(PacketReceiveEvent<NpcCatchPacket> evt)
         {
             ref var packet = ref evt.Packet;
-            var npc = Npcs[packet.NpcIndex];
 
-            ForwardEvent(evt, new NpcCatchEvent(npc, evt.Sender));
+            ForwardEvent(evt, new NpcCatchEvent(Npcs[packet.NpcIndex], evt.Sender));
         }
 
         [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
