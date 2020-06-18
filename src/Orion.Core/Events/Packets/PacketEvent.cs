@@ -33,7 +33,7 @@ namespace Orion.Core.Events.Packets
         /// Initializes a new instance of the <see cref="PacketEvent{TPacket}"/> class with the specified
         /// <paramref name="packet"/> reference.
         /// </summary>
-        /// <param name="packet">The packet reference. <b>This must be on the stack!</b></param>
+        /// <param name="packet">The packet reference. <i>This must be on the stack!</i></param>
         public PacketEvent(ref TPacket packet)
         {
             _packetPtr = Unsafe.AsPointer(ref packet);

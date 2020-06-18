@@ -52,7 +52,7 @@ namespace Orion.Core.Projectiles
         }
 
         public IProjectile SpawnProjectile(
-                ProjectileId id, Vector2f position, Vector2f velocity, int damage, float knockback)
+            ProjectileId id, Vector2f position, Vector2f velocity, int damage, float knockback)
         {
             // Not localized because this string is developer-facing.
             Log.Debug("Spawning {ProjectileId} at {Position}", id, position);
@@ -71,8 +71,7 @@ namespace Orion.Core.Projectiles
         // OTAPI hooks
         //
 
-        private OTAPI.HookResult PreSetDefaultsByIdHandler(
-                Terraria.Projectile terrariaProjectile, ref int projectileId)
+        private OTAPI.HookResult PreSetDefaultsByIdHandler(Terraria.Projectile terrariaProjectile, ref int projectileId)
         {
             Debug.Assert(terrariaProjectile != null);
 

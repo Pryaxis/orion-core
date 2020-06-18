@@ -48,13 +48,14 @@ namespace Orion.Core.Packets
         }
 
         [Fact]
-        public void Data()
+        public void Data_Get()
         {
             var packet = new UnknownPacket();
+            packet.Length = 8;
 
-            packet.Data(0) = 123;
+            packet.Data[0] = 123;
 
-            Assert.Equal(123, packet.Data(0));
+            Assert.Equal(123, packet.Data[0]);
         }
 
         [Fact]
@@ -67,7 +68,7 @@ namespace Orion.Core.Packets
             Assert.Equal(8, packet.Length);
             for (var i = 0; i < 8; ++i)
             {
-                Assert.Equal(i, packet.Data(i));
+                Assert.Equal(i, packet.Data[i]);
             }
         }
 

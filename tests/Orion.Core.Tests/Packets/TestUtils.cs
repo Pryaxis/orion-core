@@ -27,22 +27,24 @@ namespace Orion.Core.Packets
         // comparing the two written byte sequences. This resmoves any boundary conditions where data is in a different
         // form than would be normally expected.
         public static void RoundTripPacket<TPacket>(Span<byte> span, PacketContext context)
-                where TPacket : struct, IPacket
+            where TPacket : struct, IPacket
         {
+            var otherContext = context == PacketContext.Server ? PacketContext.Client : PacketContext.Server;
+
             // Read packet.
             var packet = new TPacket();
             Assert.Equal(span.Length, packet.Read(span, context));
 
             // Write the packet.
             var bytes = new byte[ushort.MaxValue - IPacket.HeaderSize];
-            var packetLength = packet.Write(bytes, context.Switch());
+            var packetLength = packet.Write(bytes, otherContext);
 
             // Read the packet again.
             Assert.Equal(packetLength, packet.Read(bytes.AsSpan(..packetLength), context));
 
             // Write the packet again.
             var bytes2 = new byte[ushort.MaxValue - IPacket.HeaderSize];
-            var packetLength2 = packet.Write(bytes2, context.Switch());
+            var packetLength2 = packet.Write(bytes2, otherContext);
 
             Assert.Equal(packetLength, packetLength2);
             Assert.Equal(bytes, bytes2);
@@ -52,22 +54,24 @@ namespace Orion.Core.Packets
         // comparing the two written byte sequences. This resmoves any boundary conditions where data is in a different
         // form than would be normally expected.
         public static void RoundTripModule<TModule>(Span<byte> span, PacketContext context)
-                where TModule : struct, IModule
+            where TModule : struct, IModule
         {
+            var otherContext = context == PacketContext.Server ? PacketContext.Client : PacketContext.Server;
+
             // Read module.
             var module = new TModule();
             Assert.Equal(span.Length, module.Read(span, context));
 
             // Write the module.
             var bytes = new byte[ushort.MaxValue - IPacket.HeaderSize - IModule.HeaderSize];
-            var moduleLength = module.Write(bytes, context.Switch());
+            var moduleLength = module.Write(bytes, otherContext);
 
             // Read the module again.
             Assert.Equal(moduleLength, module.Read(bytes.AsSpan(..moduleLength), context));
 
             // Write the module again.
             var bytes2 = new byte[ushort.MaxValue - IPacket.HeaderSize - IModule.HeaderSize];
-            var moduleLength2 = module.Write(bytes2, context.Switch());
+            var moduleLength2 = module.Write(bytes2, otherContext);
 
             Assert.Equal(moduleLength, moduleLength2);
             Assert.Equal(bytes, bytes2);

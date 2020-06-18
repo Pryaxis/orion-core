@@ -33,7 +33,7 @@ namespace Orion.Core.Events.Packets
         /// Initializes a new instance of the <see cref="PacketReceiveEvent{TPacket}"/> class with the specified
         /// <paramref name="packet"/> reference and <paramref name="sender"/>.
         /// </summary>
-        /// <param name="packet">The packet reference being received. <b>This must be on the stack!</b></param>
+        /// <param name="packet">The packet reference being received. <i>This must be on the stack!</i></param>
         /// <param name="sender">The packet's sender.</param>
         /// <exception cref="ArgumentNullException"><paramref name="sender"/> is <see langword="null"/>.</exception>
         public PacketReceiveEvent(ref TPacket packet, IPlayer sender) : base(ref packet)

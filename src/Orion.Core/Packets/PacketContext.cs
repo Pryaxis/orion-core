@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.Contracts;
-
 namespace Orion.Core.Packets
 {
     /// <summary>
@@ -32,20 +30,6 @@ namespace Orion.Core.Packets
         /// <summary>
         /// Indicates that the packet should be processed as the client.
         /// </summary>
-        Client = 1,
-    }
-
-    /// <summary>
-    /// Provides extensions for the <see cref="PacketContext"/> enumeration.
-    /// </summary>
-    public static class PacketContextExtensions
-    {
-        /// <summary>
-        /// Returns the other context for the packet <paramref name="context"/>.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns>The other context for the packet <paramref name="context"/>.</returns>
-        [Pure]
-        public static PacketContext Switch(this PacketContext context) => (PacketContext)((int)context ^ 1);
+        Client = 1
     }
 }

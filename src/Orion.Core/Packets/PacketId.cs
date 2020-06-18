@@ -121,7 +121,6 @@ namespace Orion.Core.Packets
         /// <param name="id">The packet ID.</param>
         /// <returns>The corresponding type for the packet <paramref name="id"/>.</returns>
         [Pure]
-        public static Type Type(this PacketId id) =>
-            _types.TryGetValue(id, out var type) ? type : typeof(UnknownPacket);
+        public static Type Type(this PacketId id) => _types.TryGetValue(id, out var type) ? type : typeof(UnknownPacket);
     }
 }

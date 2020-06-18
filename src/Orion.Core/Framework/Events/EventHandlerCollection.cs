@@ -42,8 +42,10 @@ namespace Orion.Core.Framework.Events
 
         public EventHandlerCollection()
         {
-            var attribute = typeof(TEvent).GetCustomAttribute<EventAttribute>();
-            _eventName = attribute?.Name ?? typeof(TEvent).Name;
+            var type = typeof(TEvent);
+
+            var attribute = type.GetCustomAttribute<EventAttribute>();
+            _eventName = attribute?.Name ?? type.Name;
             _eventLoggingLevel = attribute?.LoggingLevel ?? LogEventLevel.Debug;
         }
 

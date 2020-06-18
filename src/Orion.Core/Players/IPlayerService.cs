@@ -70,7 +70,7 @@ namespace Orion.Core.Players
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="playerService">The player service.</param>
-        /// <param name="packet">The packet reference to send. <b>This must be on the stack!</b></param>
+        /// <param name="packet">The packet reference to send. <i>This must be on the stack!</i></param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="playerService"/> is <see langword="null"/>.
         /// </exception>
