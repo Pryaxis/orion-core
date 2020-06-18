@@ -71,7 +71,7 @@ namespace Orion.Core.Items
         //
 
         private OTAPI.HookResult PreSetDefaultsByIdHandler(
-                Terraria.Item terrariaItem, ref int itemId, ref bool noMatCheck)
+            Terraria.Item terrariaItem, ref int itemId, ref bool noMatCheck)
         {
             Debug.Assert(terrariaItem != null);
 
@@ -93,7 +93,7 @@ namespace Orion.Core.Items
             Debug.Assert(itemIndex >= 0 && itemIndex < Items.Count);
 
             // Set `whoAmI` since this is never done in the vanilla server, and we depend on this field being set in
-            // `OrionEntity`.
+            // `OrionEntity.Index`.
             terrariaItem.whoAmI = itemIndex;
 
             var evt = new ItemTickEvent(Items[itemIndex]);

@@ -21,12 +21,12 @@ using Xunit;
 
 namespace Orion.Core.Items
 {
-    public class ItemTests
+    public class IItemTests
     {
         [Fact]
         public void AsItemStack_NullItem_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => ItemExtensions.AsItemStack(null!));
+            Assert.Throws<ArgumentNullException>(() => IItemExtensions.AsItemStack(null!));
         }
 
         [Fact]

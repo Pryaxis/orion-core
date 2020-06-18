@@ -63,7 +63,7 @@ namespace Orion.Core.Items
     /// <summary>
     /// Provides extensions for the <see cref="IItem"/> interface.
     /// </summary>
-    public static class ItemExtensions
+    public static class IItemExtensions
     {
         /// <summary>
         /// Returns the <paramref name="item"/> as an item stack instance.

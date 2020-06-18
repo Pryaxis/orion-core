@@ -83,6 +83,22 @@ namespace Orion.Core.Items
         }
 
         [Fact]
+        public void WithStackSize()
+        {
+            var itemStack = new ItemStack(ItemId.Sdmg, 5, ItemPrefix.Unreal);
+
+            Assert.Equal(new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal), itemStack.WithStackSize(1));
+        }
+
+        [Fact]
+        public void WithPrefix()
+        {
+            var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.None);
+
+            Assert.Equal(new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal), itemStack.WithPrefix(ItemPrefix.Unreal));
+        }
+
+        [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Equality_ReturnsTrue()
         {

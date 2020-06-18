@@ -85,6 +85,22 @@ namespace Orion.Core.Items
         public override string ToString() => $"{Id} x{StackSize} ({Prefix})";
 
         /// <summary>
+        /// Returns a new item stack with the given <paramref name="stackSize"/>.
+        /// </summary>
+        /// <param name="stackSize">The item stack size.</param>
+        /// <returns>A new item stack with the given <paramref name="stackSize"/>.</returns>
+        [Pure]
+        public ItemStack WithStackSize(int stackSize) => new ItemStack(Id, stackSize, Prefix);
+
+        /// <summary>
+        /// Returns a new item stack with the given <paramref name="prefix"/>.
+        /// </summary>
+        /// <param name="prefix">The item prefix.</param>
+        /// <returns>A new item stack with the given <paramref name="prefix"/>.</returns>
+        [Pure]
+        public ItemStack WithPrefix(ItemPrefix prefix) => new ItemStack(Id, StackSize, prefix);
+
+        /// <summary>
         /// Returns a value indicating whether <paramref name="left"/> and <paramref name="right"/> are equal.
         /// </summary>
         /// <param name="left">The left item stack.</param>
