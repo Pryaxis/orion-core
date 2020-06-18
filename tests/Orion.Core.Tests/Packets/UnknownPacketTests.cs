@@ -50,8 +50,7 @@ namespace Orion.Core.Packets
         [Fact]
         public void Data_Get()
         {
-            var packet = new UnknownPacket();
-            packet.Length = 8;
+            var packet = new UnknownPacket { Length = 8 };
 
             packet.Data[0] = 123;
 

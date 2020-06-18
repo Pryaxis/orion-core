@@ -20,7 +20,7 @@ using Xunit;
 
 namespace Orion.Core.Packets.Modules
 {
-    public class ModuleTests
+    public class IModuleTests
     {
         [Fact]
         public void WriteWithHeader()

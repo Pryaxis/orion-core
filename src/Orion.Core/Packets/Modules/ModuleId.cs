@@ -47,7 +47,6 @@ namespace Orion.Core.Packets.Modules
         /// <param name="id">The module ID.</param>
         /// <returns>The corresponding type for the module <paramref name="id"/>.</returns>
         [Pure]
-        public static Type Type(this ModuleId id) =>
-            _types.TryGetValue(id, out var type) ? type : typeof(UnknownModule);
+        public static Type Type(this ModuleId id) => _types.TryGetValue(id, out var type) ? type : typeof(UnknownModule);
     }
 }

@@ -17,6 +17,7 @@
 
 using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Orion.Core.Packets.Modules
 {
@@ -40,11 +41,10 @@ namespace Orion.Core.Packets.Modules
         public ModuleId Id { get; set; }
 
         /// <summary>
-        /// Gets a reference to the byte at the given <paramref name="index"/> in the module data.
+        /// Gets the module data.
         /// </summary>
-        /// <param name="index">The index.</param>
-        /// <returns>A reference to the byte at the given <paramref name="index"/> in the module data.</returns>
-        public unsafe ref byte Data(int index) => ref _data[index];
+        /// <value>The module data.</value>
+        public unsafe Span<byte> Data => MemoryMarshal.CreateSpan(ref _data[0], Length);
 
         /// <inheritdoc/>
         public unsafe int Read(Span<byte> span, PacketContext context)

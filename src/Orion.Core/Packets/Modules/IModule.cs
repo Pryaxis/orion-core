@@ -59,7 +59,7 @@ namespace Orion.Core.Packets.Modules
     /// <summary>
     /// Provides extensions for the <see cref="IModule"/> interface.
     /// </summary>
-    public static class ModuleExtensions
+    public static class IModuleExtensions
     {
         /// <summary>
         /// Writes the <paramref name="module"/> reference to the given <paramref name="span"/> with the specified
@@ -72,7 +72,7 @@ namespace Orion.Core.Packets.Modules
         /// <param name="context">The packet context to use when writing.</param>
         /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
         public static int WriteWithHeader<TModule>(ref this TModule module, Span<byte> span, PacketContext context)
-                where TModule : struct, IModule
+            where TModule : struct, IModule
         {
             Unsafe.WriteUnaligned(ref span[0], module.Id);
             return IModule.HeaderSize + module.Write(span[IModule.HeaderSize..], context);

@@ -50,11 +50,11 @@ namespace Orion.Core.Packets.Modules
         [Fact]
         public void Data()
         {
-            var packet = new UnknownModule();
+            var packet = new UnknownModule { Length = 8 };
 
-            packet.Data(0) = 123;
+            packet.Data[0] = 123;
 
-            Assert.Equal(123, packet.Data(0));
+            Assert.Equal(123, packet.Data[0]);
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace Orion.Core.Packets.Modules
             Assert.Equal(8, module.Length);
             for (var i = 0; i < 8; ++i)
             {
-                Assert.Equal(i, module.Data(i));
+                Assert.Equal(i, module.Data[i]);
             }
         }
 
