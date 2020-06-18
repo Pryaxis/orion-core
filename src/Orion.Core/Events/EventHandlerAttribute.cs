@@ -44,7 +44,7 @@ namespace Orion.Core.Events
         public string Name { get; }
 
         /// <summary>
-        /// Gets or sets the event handler's priority.
+        /// Gets or sets the event handler's priority. This is only applicable for synchronous event handlers.
         /// </summary>
         /// <value>The event handler's priority. The default value is <see cref="EventPriority.Normal"/>.</value>
         public EventPriority Priority { get; set; } = EventPriority.Normal;
@@ -57,5 +57,15 @@ namespace Orion.Core.Events
         /// value is <see langword="true"/>.
         /// </value>
         public bool IgnoreCanceled { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the event handler is blocking. This is only applicable for
+        /// asynchronous event handlers.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the event handler is blocking; otherwise, <see langword="false"/>. The default
+        /// value is <see langword="true"/>.
+        /// </value>
+        public bool IsBlocking { get; set; } = true;
     }
 }

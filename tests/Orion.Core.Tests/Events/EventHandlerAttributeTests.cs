@@ -57,5 +57,15 @@ namespace Orion.Core.Events
 
             Assert.False(attribute.IgnoreCanceled);
         }
+
+        [Fact]
+        public void IsBlocking_Set_Get()
+        {
+            var attribute = new EventHandlerAttribute("test");
+
+            attribute.IsBlocking = false;
+
+            Assert.False(attribute.IsBlocking);
+        }
     }
 }

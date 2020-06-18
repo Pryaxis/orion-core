@@ -85,6 +85,7 @@ namespace Orion.Core.Events
             Assert.False(evt.IsCanceled);
         }
 
+        [Event("test")]
         private class TestEvent : Event { }
     }
 }

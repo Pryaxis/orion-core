@@ -46,12 +46,6 @@ namespace Orion.Core.Events
         /// <summary>
         /// Indicates that the event handler should have the lowest priority.
         /// </summary>
-        Lowest,
-
-        /// <summary>
-        /// Indicates that the event handler should have the monitor priority. The event handler is guaranteed to see
-        /// the latest information, but is required to only <i>observe</i> the event.
-        /// </summary>
-        Monitor
+        Lowest
     }
 }

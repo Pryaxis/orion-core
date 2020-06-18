@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading.Tasks;
 using Serilog.Core;
 using Xunit;
 
@@ -24,21 +25,7 @@ namespace Orion.Core.Events
     public class EventHandlerCollectionTests
     {
         [Fact]
-        public void DeregisterHandler()
-        {
-            var collection = new EventHandlerCollection<TestEvent>();
-            collection.RegisterHandler(TestHandler2, Logger.None);
-            collection.RegisterHandler(TestHandler, Logger.None);
-            collection.DeregisterHandler(TestHandler2, Logger.None);
-            var evt = new TestEvent();
-
-            collection.Raise(evt, Logger.None);
-
-            Assert.Equal(100, evt.Value);
-        }
-
-        [Fact]
-        public void Raise_RunsHandlers()
+        public void RegisterHandler_Raise()
         {
             var collection = new EventHandlerCollection<TestEvent>();
             collection.RegisterHandler(TestHandler, Logger.None);
@@ -50,7 +37,7 @@ namespace Orion.Core.Events
         }
 
         [Fact]
-        public void Raise_HandlerPriority()
+        public void RegisterHandler_Raise_HandlerPriorities()
         {
             var collection = new EventHandlerCollection<TestEvent>();
             collection.RegisterHandler(TestHandler2, Logger.None);
@@ -63,7 +50,7 @@ namespace Orion.Core.Events
         }
 
         [Fact]
-        public void Raise_HandlerIgnoresCanceled()
+        public void RegisterHandler_Raise_HandlerIgnoresCanceled()
         {
             var collection = new EventHandlerCollection<TestEvent>();
             collection.RegisterHandler(TestHandler, Logger.None);
@@ -76,12 +63,101 @@ namespace Orion.Core.Events
         }
 
         [Fact]
-        public void Raise_HandlerThrowsNotImplementedException()
+        public void RegisterHandler_Raise_HandlerThrowsException()
         {
             var collection = new EventHandlerCollection<TestEvent>();
             collection.RegisterHandler(TestHandler3, Logger.None);
 
             collection.Raise(new TestEvent(), Logger.None);
+        }
+
+        [Fact]
+        public void RegisterAsyncHandler_Raise()
+        {
+            var collection = new EventHandlerCollection<TestEvent>();
+            collection.RegisterAsyncHandler(TestHandlerAsync, Logger.None);
+            collection.RegisterAsyncHandler(TestHandler2Async, Logger.None);
+            collection.RegisterAsyncHandler(TestHandler3Async, Logger.None);
+            var evt = new TestEvent();
+
+            collection.Raise(evt, Logger.None);
+
+            Assert.Equal(100, evt.Value);
+        }
+
+        [Fact]
+        public void RegisterAsyncHandler_Raise_HandlerIgnoresCanceled()
+        {
+            var collection = new EventHandlerCollection<TestEvent>();
+            collection.RegisterAsyncHandler(TestHandlerAsync, Logger.None);
+            var evt = new TestEvent();
+            evt.Cancel();
+
+            collection.Raise(evt, Logger.None);
+
+            Assert.NotEqual(100, evt.Value);
+        }
+
+        [Fact]
+        public void RegisterAsyncHandler_Raise_HandlerThrowsException()
+        {
+            var collection = new EventHandlerCollection<TestEvent>();
+            collection.RegisterAsyncHandler(TestHandler3Async, Logger.None);
+
+            collection.Raise(new TestEvent(), Logger.None);
+        }
+
+        [Fact]
+        public void RegisterAsyncHandler_Raise_HandlerNonBlocking()
+        {
+            var collection = new EventHandlerCollection<TestEvent>();
+            collection.RegisterAsyncHandler(TestHandler4Async, Logger.None);
+
+            collection.Raise(new TestEvent(), Logger.None);
+        }
+
+        [Fact]
+        public void DeregisterHandler()
+        {
+            var collection = new EventHandlerCollection<TestEvent>();
+            collection.RegisterHandler(TestHandler, Logger.None);
+
+            collection.DeregisterHandler(TestHandler, Logger.None);
+
+            var evt = new TestEvent();
+            collection.Raise(evt, Logger.None);
+
+            Assert.NotEqual(100, evt.Value);
+        }
+
+        [Fact]
+        public void DeregisterHandler_NotRegistered()
+        {
+            var collection = new EventHandlerCollection<TestEvent>();
+
+            collection.DeregisterHandler(TestHandler, Logger.None);
+        }
+
+        [Fact]
+        public void DeregisterAsyncHandler()
+        {
+            var collection = new EventHandlerCollection<TestEvent>();
+            collection.RegisterAsyncHandler(TestHandlerAsync, Logger.None);
+
+            collection.DeregisterAsyncHandler(TestHandlerAsync, Logger.None);
+
+            var evt = new TestEvent();
+            collection.Raise(evt, Logger.None);
+
+            Assert.NotEqual(100, evt.Value);
+        }
+
+        [Fact]
+        public void DeregisterAsyncHandler_NotRegistered()
+        {
+            var collection = new EventHandlerCollection<TestEvent>();
+
+            collection.DeregisterAsyncHandler(TestHandlerAsync, Logger.None);
         }
 
         [EventHandler("test", Priority = EventPriority.Lowest)]
@@ -99,6 +175,34 @@ namespace Orion.Core.Events
         private static void TestHandler3(TestEvent evt)
         {
             throw new NotImplementedException();
+        }
+
+        [EventHandler("test-async")]
+        private static async Task TestHandlerAsync(TestEvent evt)
+        {
+            await Task.Delay(100);
+
+            evt.Value = 100;
+        }
+
+        [EventHandler("test-async-2")]
+        private static async Task TestHandler2Async(TestEvent evt)
+        {
+            await Task.Delay(100);
+        }
+
+        [EventHandler("test-async-3")]
+        private static async Task TestHandler3Async(TestEvent evt)
+        {
+            await Task.Delay(100);
+
+            throw new NotImplementedException();
+        }
+
+        [EventHandler("test-async-4", IsBlocking = false)]
+        private static async Task TestHandler4Async(TestEvent evt)
+        {
+            await Task.Delay(1000);
         }
 
         private class TestEvent : Event

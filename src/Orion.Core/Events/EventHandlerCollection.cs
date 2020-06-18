@@ -19,13 +19,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading.Tasks;
 using Destructurama.Attributed;
 using Serilog;
 using Serilog.Events;
 
 namespace Orion.Core.Events
 {
-    // A collection of event handlers sorted by priority.
     internal sealed class EventHandlerCollection<TEvent> where TEvent : Event
     {
         private readonly string _eventName;
@@ -33,16 +33,17 @@ namespace Orion.Core.Events
 
         private readonly ISet<Registration> _registrations =
             new SortedSet<Registration>(Comparer<Registration>.Create((r1, r2) => r1.Priority.CompareTo(r2.Priority)));
+        private readonly ISet<AsyncRegistration> _asyncRegistrations = new HashSet<AsyncRegistration>();
         private readonly IDictionary<Action<TEvent>, Registration> _handlerToRegistration =
             new Dictionary<Action<TEvent>, Registration>();
+        private readonly IDictionary<Func<TEvent, Task>, AsyncRegistration> _handlerToAsyncRegistration =
+            new Dictionary<Func<TEvent, Task>, AsyncRegistration>();
 
         public EventHandlerCollection()
         {
-            // Retrieve and cache information about the event. If `EventAttribute` is not present on the event, then
-            // reasonable defaults are chosen.
-            var attribute = typeof(TEvent).GetCustomAttribute<EventAttribute?>();
+            var attribute = typeof(TEvent).GetCustomAttribute<EventAttribute>();
             _eventName = attribute?.Name ?? typeof(TEvent).Name;
-            _eventLoggingLevel = attribute?.LoggingLevel ?? LogEventLevel.Information;
+            _eventLoggingLevel = attribute?.LoggingLevel ?? LogEventLevel.Debug;
         }
 
         public void RegisterHandler(Action<TEvent> handler, ILogger log)
@@ -50,23 +51,35 @@ namespace Orion.Core.Events
             Debug.Assert(handler != null);
             Debug.Assert(log != null);
 
-            var registration = _handlerToRegistration[handler] = new Registration(handler);
+            var registration = new Registration(handler);
             _registrations.Add(registration);
+            _handlerToRegistration[handler] = registration;
 
             // Not localized because this string is developer-facing.
             log.Debug("Registering {EventName} with {@Registration}", _eventName, registration);
         }
 
-        public bool DeregisterHandler(Action<TEvent> handler, ILogger log)
+        public void RegisterAsyncHandler(Func<TEvent, Task> handler, ILogger log)
+        {
+            Debug.Assert(handler != null);
+            Debug.Assert(log != null);
+
+            var registration = new AsyncRegistration(handler);
+            _asyncRegistrations.Add(registration);
+            _handlerToAsyncRegistration[handler] = registration;
+
+            // Not localized because this string is developer-facing.
+            log.Debug("Registering {EventName} with {@AsyncRegistration}", _eventName, registration);
+        }
+
+        public void DeregisterHandler(Action<TEvent> handler, ILogger log)
         {
             Debug.Assert(handler != null);
             Debug.Assert(log != null);
 
             if (!_handlerToRegistration.TryGetValue(handler, out var registration))
             {
-                // Not localized because this string is developer-facing.
-                log.Warning("Failed to deregister from {EventName}", _eventName);
-                return false;
+                return;
             }
 
             _registrations.Remove(registration);
@@ -74,7 +87,23 @@ namespace Orion.Core.Events
 
             // Not localized because this string is developer-facing.
             log.Debug("Deregistering {EventName} with {@Registration}", _eventName, registration);
-            return true;
+        }
+
+        public void DeregisterAsyncHandler(Func<TEvent, Task> handler, ILogger log)
+        {
+            Debug.Assert(handler != null);
+            Debug.Assert(log != null);
+
+            if (!_handlerToAsyncRegistration.TryGetValue(handler, out var registration))
+            {
+                return;
+            }
+
+            _asyncRegistrations.Remove(registration);
+            _handlerToAsyncRegistration.Remove(handler);
+
+            // Not localized because this string is developer-facing.
+            log.Debug("Deregistering {EventName} with {@Registration}", _eventName, registration);
         }
 
         public void Raise(TEvent evt, ILogger log)
@@ -85,37 +114,84 @@ namespace Orion.Core.Events
             // Not localized because this string is developer-facing.
             log.Write(_eventLoggingLevel, "Raising {EventName} with {@Event}", _eventName, evt);
 
-            foreach (var registration in _registrations)
-            {
-                if (evt.IsCanceled && registration.IgnoreCanceled)
-                {
-                    continue;
-                }
-
-                try
-                {
-                    registration.Handler(evt);
-                }
-                catch (Exception ex)
-                {
-                    // Not localized because this string is developer-facing.
-                    log.Error(ex, "Unhandled exception from {@Registration} in {EventName}", registration, _eventName);
-                }
-            }
+            RaiseHandlers();
+            RaiseAsyncHandlers();
 
             if (evt.IsCanceled)
             {
                 // Not localized because this string is developer-facing.
-                log.Write(_eventLoggingLevel, "Canceled {EventName} for {CancellationReason}", _eventName,
-                          evt.CancellationReason);
+                log.Write(
+                    _eventLoggingLevel, "Canceled {EventName} for {CancellationReason}", _eventName,
+                    evt.CancellationReason);
+            }
+
+            void RaiseHandlers()
+            {
+                foreach (var registration in _registrations)
+                {
+                    if (evt.IsCanceled && registration.IgnoreCanceled)
+                    {
+                        continue;
+                    }
+
+                    try
+                    {
+                        registration.Handler(evt);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Not localized because this string is developer-facing.
+                        log.Error(
+                            ex, "Unhandled exception in {EventName} from {@Registration}", _eventName, registration);
+                    }
+                }
+            }
+
+            void RaiseAsyncHandlers()
+            {
+                // Short circuit if there are no asynchronous event handlers to skip `Task.WhenAll` and `Task.Wait`
+                // calls.
+                if (_asyncRegistrations.Count == 0)
+                {
+                    return;
+                }
+
+                var tasks = new List<Task>();
+                foreach (var registration in _asyncRegistrations)
+                {
+                    if (evt.IsCanceled && registration.IgnoreCanceled)
+                    {
+                        continue;
+                    }
+
+                    var task = registration.Handler(evt).ContinueWith(t =>
+                    {
+                        var ex = t.Exception;
+                        if (ex is null)
+                        {
+                            return;
+                        }
+
+                        // Not localized because this string is developer-facing.
+                        log.Error(
+                            ex, "Unhandled exception in {EventName} from {@Registration}", _eventName, registration);
+                    });
+
+                    if (registration.IsBlocking)
+                    {
+                        tasks.Add(task);
+                    }
+                }
+
+                Task.WhenAll(tasks).Wait();
             }
         }
 
         private sealed class Registration
         {
             [NotLogged] public Action<TEvent> Handler { get; }
-            public EventPriority Priority { get; }
             public string Name { get; }
+            public EventPriority Priority { get; }
             public bool IgnoreCanceled { get; }
 
             public Registration(Action<TEvent> handler)
@@ -125,9 +201,29 @@ namespace Orion.Core.Events
                 // Retrieve and cache information about the event handler. If `EventHandlerAttribute` is not present on
                 // the event, then reasonable defaults are chosen.
                 var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute?>();
+                Name = attribute?.Name ?? handler.Method.Name;
                 Priority = attribute?.Priority ?? EventPriority.Normal;
+                IgnoreCanceled = attribute?.IgnoreCanceled ?? true;
+            }
+        }
+
+        private sealed class AsyncRegistration
+        {
+            [NotLogged] public Func<TEvent, Task> Handler { get; }
+            public string Name { get; }
+            public bool IgnoreCanceled { get; }
+            public bool IsBlocking { get; }
+
+            public AsyncRegistration(Func<TEvent, Task> handler)
+            {
+                Handler = handler;
+
+                // Retrieve and cache information about the event handler. If `EventHandlerAttribute` is not present on
+                // the event, then reasonable defaults are chosen.
+                var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute?>();
                 Name = attribute?.Name ?? handler.Method.Name;
                 IgnoreCanceled = attribute?.IgnoreCanceled ?? true;
+                IsBlocking = attribute?.IsBlocking ?? true;
             }
         }
     }

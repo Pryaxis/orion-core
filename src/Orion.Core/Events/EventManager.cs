@@ -19,28 +19,39 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Serilog;
 
 namespace Orion.Core.Events
 {
     /// <summary>
-    /// Handles event handler registrations, deregistrations and event raising.
+    /// Handles event handler registrations, deregistrations and event raisings.
     /// </summary>
     public sealed class EventManager
     {
-        private static readonly MethodInfo _registerHandler = typeof(EventManager).GetMethod(nameof(RegisterHandler))!;
-        private static readonly MethodInfo _deregisterHandler = typeof(EventManager).GetMethod(nameof(DeregisterHandler))!;
+        private static readonly MethodInfo _registerHandler =
+            typeof(EventManager).GetMethod(nameof(RegisterHandler))!;
+        private static readonly MethodInfo _registerAsyncHandler =
+            typeof(EventManager).GetMethod(nameof(RegisterAsyncHandler))!;
+        private static readonly MethodInfo _deregisterHandler =
+            typeof(EventManager).GetMethod(nameof(DeregisterHandler))!;
+        private static readonly MethodInfo _deregisterAsyncHandler =
+            typeof(EventManager).GetMethod(nameof(DeregisterAsyncHandler))!;
 
         private readonly IDictionary<Type, object> _eventHandlerCollections = new Dictionary<Type, object>();
-
         private readonly IDictionary<object, IList<(Type eventType, object handler)>> _registrations =
             new Dictionary<object, IList<(Type, object)>>();
+        private readonly IDictionary<object, IList<(Type eventType, object handler)>> _asyncRegistrations =
+            new Dictionary<object, IList<(Type, object)>>();
+
+        internal EventManager() { }
 
         /// <summary>
-        /// Registers the given event <paramref name="handler"/> for events of type <typeparamref name="TEvent"/>.
+        /// Registers the given synchronous event <paramref name="handler"/> for events of type
+        /// <typeparamref name="TEvent"/>.
         /// </summary>
         /// <typeparam name="TEvent">The type of event.</typeparam>
-        /// <param name="handler">The event handler to register.</param>
+        /// <param name="handler">The synchronous event handler to register.</param>
         /// <param name="log">The log to log the registration to.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="handler"/> or <paramref name="log"/> are <see langword="null"/>.
@@ -59,6 +70,32 @@ namespace Orion.Core.Events
 
             var collection = GetEventHandlerCollection<TEvent>();
             collection.RegisterHandler(handler, log);
+        }
+
+        /// <summary>
+        /// Registers the given asynchronous event <paramref name="handler"/> for events of type
+        /// <typeparamref name="TEvent"/>.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of event.</typeparam>
+        /// <param name="handler">The asynchronous event handler to register.</param>
+        /// <param name="log">The log to log the registration to.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handler"/> or <paramref name="log"/> are <see langword="null"/>.
+        /// </exception>
+        public void RegisterAsyncHandler<TEvent>(Func<TEvent, Task> handler, ILogger log) where TEvent : Event
+        {
+            if (handler is null)
+            {
+                throw new ArgumentNullException(nameof(handler));
+            }
+
+            if (log is null)
+            {
+                throw new ArgumentNullException(nameof(log));
+            }
+
+            var collection = GetEventHandlerCollection<TEvent>();
+            collection.RegisterAsyncHandler(handler, log);
         }
 
         /// <summary>
@@ -82,25 +119,18 @@ namespace Orion.Core.Events
                 throw new ArgumentNullException(nameof(log));
             }
 
-            // Try to retrieve the existing registrations for `obj`. This allows consumers to call `RegisterHandlers` on
-            // an object multiple times and get the expected behavior of multiple registrations.
-            if (!_registrations.TryGetValue(obj, out var registrations))
-            {
-                registrations = new List<(Type eventType, object handler)>();
-                _registrations[obj] = registrations;
-            }
-
-            const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+            var registrations = GetOrCreateRegistrations();
+            var asyncRegistrations = GetOrCreateAsyncRegistrations();
             foreach (var method in obj
                 .GetType()
-                .GetMethods(flags)
+                .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
                 .Where(m => m.GetCustomAttribute<EventHandlerAttribute>() != null))
             {
                 var parameters = method.GetParameters();
                 if (parameters.Length != 1)
                 {
                     // Not localized because this string is developer-facing.
-                    log.Error("Skipping method {MethodName} as it does not have exactly one parameter", method.Name);
+                    log.Error("Skipping method {Method} as it does not have exactly one parameter", method);
                     continue;
                 }
 
@@ -108,39 +138,76 @@ namespace Orion.Core.Events
                 if (!eventType.IsSubclassOf(typeof(Event)))
                 {
                     // Not localized because this string is developer-facing.
-                    log.Error("Skipping method {MethodName}: parameter type is not derived from `Event`", method.Name);
+                    log.Error("Skipping method {Method}: parameter type is not derived from `Event`", method);
                     continue;
                 }
 
-                if (method.ReturnType != typeof(void))
+                var returnType = method.ReturnType;
+                if (returnType == typeof(void))
+                {
+                    RegisterHandler();
+                }
+                else if (returnType == typeof(Task))
+                {
+                    RegisterAsyncHandler();
+                }
+                else
                 {
                     // Not localized because this string is developer-facing.
-                    log.Error("Skipping method {MethodName}: return type is not `void`", method.Name);
-                    continue;
+                    log.Error("Skipping method {Method}: return type is {ReturnType}", method, returnType);
                 }
 
-                var handlerType = typeof(Action<>).MakeGenericType(eventType);
-                var handler = method.CreateDelegate(handlerType, obj);
-                _registerHandler.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
-                registrations.Add((eventType, handler));
+                void RegisterHandler()
+                {
+                    var handlerType = typeof(Action<>).MakeGenericType(eventType);
+                    var handler = method.CreateDelegate(handlerType, obj);
+                    _registerHandler.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
+                    registrations.Add((eventType, handler));
+                }
+
+                void RegisterAsyncHandler()
+                {
+                    var handlerType = typeof(Func<,>).MakeGenericType(eventType, typeof(Task));
+                    var handler = method.CreateDelegate(handlerType, obj);
+                    _registerAsyncHandler.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
+                    asyncRegistrations.Add((eventType, handler));
+                }
+            }
+
+            IList<(Type eventType, object handler)> GetOrCreateRegistrations()
+            {
+                if (!_registrations.TryGetValue(obj, out var registrations))
+                {
+                    registrations = new List<(Type, object)>();
+                    _registrations[obj] = registrations;
+                }
+
+                return registrations;
+            }
+
+            IList<(Type eventType, object handler)> GetOrCreateAsyncRegistrations()
+            {
+                if (!_asyncRegistrations.TryGetValue(obj, out var asyncRegistrations))
+                {
+                    asyncRegistrations = new List<(Type, object)>();
+                    _asyncRegistrations[obj] = asyncRegistrations;
+                }
+
+                return asyncRegistrations;
             }
         }
 
         /// <summary>
-        /// Deregisters the given event <paramref name="handler"/> for events of type <typeparamref name="TEvent"/>.
-        /// Returns a value indicating success.
+        /// Deregisters the given synchronous event <paramref name="handler"/> for events of type
+        /// <typeparamref name="TEvent"/>.
         /// </summary>
         /// <typeparam name="TEvent">The type of event.</typeparam>
-        /// <param name="handler">The event handler to deregister.</param>
+        /// <param name="handler">The synchronous event handler to deregister.</param>
         /// <param name="log">The log to log the deregistration to.</param>
-        /// <returns>
-        /// <see langword="true"/> if the event <paramref name="handler"/> was successfully deregistered; otherwise,
-        /// <see langword="false"/>.
-        /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="handler"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        public bool DeregisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event
+        public void DeregisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event
         {
             if (handler is null)
             {
@@ -153,23 +220,45 @@ namespace Orion.Core.Events
             }
 
             var collection = GetEventHandlerCollection<TEvent>();
-            return collection.DeregisterHandler(handler, log);
+            collection.DeregisterHandler(handler, log);
+        }
+
+        /// <summary>
+        /// Deregisters the given asynchronous event <paramref name="handler"/> for events of type
+        /// <typeparamref name="TEvent"/>.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of event.</typeparam>
+        /// <param name="handler">The asynchronous event handler to deregister.</param>
+        /// <param name="log">The log to log the deregistration to.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handler"/> or <paramref name="log"/> are <see langword="null"/>.
+        /// </exception>
+        public void DeregisterAsyncHandler<TEvent>(Func<TEvent, Task> handler, ILogger log) where TEvent : Event
+        {
+            if (handler is null)
+            {
+                throw new ArgumentNullException(nameof(handler));
+            }
+
+            if (log is null)
+            {
+                throw new ArgumentNullException(nameof(log));
+            }
+
+            var collection = GetEventHandlerCollection<TEvent>();
+            collection.DeregisterAsyncHandler(handler, log);
         }
 
         /// <summary>
         /// Deregisters all of the instance methods marked with <see cref="EventHandlerAttribute"/> as event handlers in
-        /// the given <paramref name="obj"/>. Returns a value indicating success.
+        /// the given <paramref name="obj"/>.
         /// </summary>
         /// <param name="obj">The object whose instance methods should be deregistered.</param>
-        /// <param name="log">The log to log the registrations to.</param>
-        /// <returns>
-        /// <see langword="true"/> if the event handlers in <paramref name="obj"/> were successfully deregistered;
-        /// otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <param name="log">The log to log the deregistrations to.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="obj"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        public bool DeregisterHandlers(object obj, ILogger log)
+        public void DeregisterHandlers(object obj, ILogger log)
         {
             if (obj is null)
             {
@@ -181,18 +270,32 @@ namespace Orion.Core.Events
                 throw new ArgumentNullException(nameof(log));
             }
 
-            if (!_registrations.TryGetValue(obj, out var registrations))
+            DeregisterHandlers();
+            DeregisterAsyncHandlers();
+
+            void DeregisterHandlers()
             {
-                return false;
+                if (_registrations.TryGetValue(obj, out var registrations))
+                {
+                    _registrations.Remove(obj);
+                    foreach (var (eventType, handler) in registrations)
+                    {
+                        _deregisterHandler.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
+                    }
+                }
             }
 
-            _registrations.Remove(obj);
-            foreach (var (eventType, handler) in registrations)
+            void DeregisterAsyncHandlers()
             {
-                _deregisterHandler.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
+                if (_asyncRegistrations.TryGetValue(obj, out var asyncRegistrations))
+                {
+                    _asyncRegistrations.Remove(obj);
+                    foreach (var (eventType, handler) in asyncRegistrations)
+                    {
+                        _deregisterAsyncHandler.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
+                    }
+                }
             }
-
-            return true;
         }
 
         /// <summary>

@@ -17,6 +17,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using Serilog.Core;
 using Xunit;
 
@@ -38,6 +39,23 @@ namespace Orion.Core.Events
             var manager = new EventManager();
 
             Assert.Throws<ArgumentNullException>(() => manager.RegisterHandler<TestEvent>(evt => { }, null!));
+        }
+
+        [Fact]
+        public void RegisterAsyncHandler_NullHandler_ThrowsArgumentNullException()
+        {
+            var manager = new EventManager();
+
+            Assert.Throws<ArgumentNullException>(() => manager.RegisterAsyncHandler<TestEvent>(null!, Logger.None));
+        }
+
+        [Fact]
+        public void RegisterAsyncHandler_NullLog_ThrowsArgumentNullException()
+        {
+            var manager = new EventManager();
+
+            Assert.Throws<ArgumentNullException>(
+                () => manager.RegisterAsyncHandler<TestEvent>(async evt => await Task.Delay(100), null!));
         }
 
         [Fact]
@@ -70,6 +88,23 @@ namespace Orion.Core.Events
             var manager = new EventManager();
 
             Assert.Throws<ArgumentNullException>(() => manager.DeregisterHandler<TestEvent>(evt => { }, null!));
+        }
+
+        [Fact]
+        public void DeregisterAsyncHandler_NullHandler_ThrowsArgumentNullException()
+        {
+            var manager = new EventManager();
+
+            Assert.Throws<ArgumentNullException>(() => manager.DeregisterAsyncHandler<TestEvent>(null!, Logger.None));
+        }
+
+        [Fact]
+        public void DeregisterAsyncHandler_NullLog_ThrowsArgumentNullException()
+        {
+            var manager = new EventManager();
+
+            Assert.Throws<ArgumentNullException>(
+                () => manager.DeregisterAsyncHandler<TestEvent>(async evt => await Task.Delay(100), null!));
         }
 
         [Fact]
@@ -117,6 +152,23 @@ namespace Orion.Core.Events
         }
 
         [Fact]
+        public void RegisterAsyncHandler_Raise()
+        {
+            var manager = new EventManager();
+            manager.RegisterAsyncHandler<TestEvent>(async evt =>
+            {
+                await Task.Delay(100);
+
+                evt.Value = 100;
+            }, Logger.None);
+            var evt = new TestEvent();
+
+            manager.Raise(evt, Logger.None);
+
+            Assert.Equal(100, evt.Value);
+        }
+
+        [Fact]
         public void RegisterHandlers_Raise()
         {
             var manager = new EventManager();
@@ -141,14 +193,26 @@ namespace Orion.Core.Events
         }
 
         [Fact]
-        public void DeregisterHandler_ReturnsTrue()
+        public void RegisterHandlers_Async_Raise()
+        {
+            var manager = new EventManager();
+            manager.RegisterHandlers(new TestClass_Async(), Logger.None);
+            var evt = new TestEvent();
+
+            manager.Raise(evt, Logger.None);
+
+            Assert.Equal(100, evt.Value);
+        }
+
+        [Fact]
+        public void DeregisterHandler()
         {
             static void Handler(TestEvent evt) => evt.Value = 100;
 
             var manager = new EventManager();
             manager.RegisterHandler<TestEvent>(Handler, Logger.None);
 
-            Assert.True(manager.DeregisterHandler<TestEvent>(Handler, Logger.None));
+            manager.DeregisterHandler<TestEvent>(Handler, Logger.None);
 
             var evt = new TestEvent();
             manager.Raise(evt, Logger.None);
@@ -157,21 +221,50 @@ namespace Orion.Core.Events
         }
 
         [Fact]
-        public void DeregisterHandler_ReturnsFalse()
+        public void DeregisterHandler_NotRegistered()
         {
             var manager = new EventManager();
 
-            Assert.False(manager.DeregisterHandler<TestEvent>(evt => { }, Logger.None));
+            manager.DeregisterHandler<TestEvent>(evt => { }, Logger.None);
         }
 
         [Fact]
-        public void DeregisterHandlers_ReturnsTrue()
+        public void DeregisterAsyncHandler()
+        {
+            static async Task Handler(TestEvent evt)
+            {
+                await Task.Delay(100);
+
+                evt.Value = 100;
+            }
+
+            var manager = new EventManager();
+            manager.RegisterAsyncHandler<TestEvent>(Handler, Logger.None);
+
+            manager.DeregisterAsyncHandler<TestEvent>(Handler, Logger.None);
+
+            var evt = new TestEvent();
+            manager.Raise(evt, Logger.None);
+
+            Assert.NotEqual(100, evt.Value);
+        }
+
+        [Fact]
+        public void DeregisterAsyncHandler_NotRegistered()
+        {
+            var manager = new EventManager();
+
+            manager.DeregisterAsyncHandler<TestEvent>(async evt => await Task.Delay(100), Logger.None);
+        }
+
+        [Fact]
+        public void DeregisterHandlers()
         {
             var manager = new EventManager();
             var testClass = new TestClass();
             manager.RegisterHandlers(testClass, Logger.None);
 
-            Assert.True(manager.DeregisterHandlers(testClass, Logger.None));
+            manager.DeregisterHandlers(testClass, Logger.None);
 
             var evt = new TestEvent();
             manager.Raise(evt, Logger.None);
@@ -180,11 +273,26 @@ namespace Orion.Core.Events
         }
 
         [Fact]
-        public void DeregisterHandlers_ReturnsFalse()
+        public void DeregisterHandlers_Async()
+        {
+            var manager = new EventManager();
+            var testClass = new TestClass_Async();
+            manager.RegisterHandlers(testClass, Logger.None);
+
+            manager.DeregisterHandlers(testClass, Logger.None);
+
+            var evt = new TestEvent();
+            manager.Raise(evt, Logger.None);
+
+            Assert.NotEqual(100, evt.Value);
+        }
+
+        [Fact]
+        public void DeregisterHandlers_NotRegistered()
         {
             var manager = new EventManager();
 
-            Assert.False(manager.DeregisterHandlers(new TestClass(), Logger.None));
+            manager.DeregisterHandlers(new TestClass(), Logger.None);
         }
 
         [Event("test")]
@@ -219,6 +327,17 @@ namespace Orion.Core.Events
             [EventHandler("test")]
             [SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Implicit usage")]
             private void OnTest(TestEvent evt) => evt.Value = 100;
+        }
+
+        private class TestClass_Async
+        {
+            [EventHandler("test")]
+            public async Task OnTestAsync(TestEvent evt)
+            {
+                await Task.Delay(100);
+
+                evt.Value = 100;
+            }
         }
     }
 }
