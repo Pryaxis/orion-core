@@ -109,6 +109,39 @@ namespace Orion.Core.Buffs
         }
 
         [Fact]
+        public void WithTicks_NegativeTicks_ThrowsArgumentOutOfRangeException()
+        {
+            var buff = new Buff(BuffId.ObsidianSkin, 28800);
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => buff.WithTicks(-1));
+        }
+
+        [Fact]
+        public void WithTicks()
+        {
+            var buff = new Buff(BuffId.ObsidianSkin, 1);
+
+            Assert.Equal(new Buff(BuffId.ObsidianSkin, 28800), buff.WithTicks(28800));
+        }
+
+        [Fact]
+        public void WithDuration_NegativeDuration_ThrowsArgumentOutOfRangeException()
+        {
+            var buff = new Buff(BuffId.ObsidianSkin, 28800);
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => buff.WithDuration(TimeSpan.FromSeconds(-1)));
+        }
+
+        [Fact]
+        public void WithDuration()
+        {
+            var buff = new Buff(BuffId.ObsidianSkin, 1);
+
+            Assert.Equal(
+                new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8)), buff.WithDuration(TimeSpan.FromMinutes(8)));
+        }
+
+        [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Equality_ReturnsTrue()
         {

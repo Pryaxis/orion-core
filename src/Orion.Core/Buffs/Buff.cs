@@ -118,6 +118,42 @@ namespace Orion.Core.Buffs
         public override string ToString() => $"{Id} for {Duration:mm:ss}";
 
         /// <summary>
+        /// Returns a new buff with the given <paramref name="ticks"/>.
+        /// </summary>
+        /// <param name="ticks">The buff duration, in ticks.</param>
+        /// <returns>A new buff with the given <paramref name="ticks"/>.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="ticks"/> is negative.</exception>
+        [Pure]
+        public Buff WithTicks(int ticks)
+        {
+            if (ticks < 0)
+            {
+                // Not localized because this string is developer-facing.
+                throw new ArgumentOutOfRangeException(nameof(ticks), "Ticks is negative");
+            }
+
+            return new Buff(Id, ticks);
+        }
+
+        /// <summary>
+        /// Returns a new buff with the given <paramref name="duration"/>.
+        /// </summary>
+        /// <param name="duration">The buff duration.</param>
+        /// <returns>A new buff with the given <paramref name="duration"/>.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="duration"/> is negative.</exception>
+        [Pure]
+        public Buff WithDuration(TimeSpan duration)
+        {
+            if (duration < TimeSpan.Zero)
+            {
+                // Not localized because this string is developer-facing.
+                throw new ArgumentOutOfRangeException(nameof(duration), "Duration is negative");
+            }
+
+            return new Buff(Id, duration);
+        }
+
+        /// <summary>
         /// Returns a value indicating whether <paramref name="left"/> is equal to <paramref name="right"/>.
         /// </summary>
         /// <param name="left">The left buff.</param>
