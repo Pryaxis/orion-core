@@ -46,10 +46,10 @@ namespace Orion.Core.Players
 
         private static readonly MethodInfo _onReceivePacket =
             typeof(OrionPlayerService)
-                .GetMethod(nameof(OnReceivePacket), BindingFlags.NonPublic | BindingFlags.Instance);
+                .GetMethod(nameof(OnReceivePacket), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo _onSendPacket =
             typeof(OrionPlayerService)
-                .GetMethod(nameof(OnSendPacket), BindingFlags.NonPublic | BindingFlags.Instance);
+                .GetMethod(nameof(OnSendPacket), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
         private readonly ThreadLocal<bool> _ignoreReceiveDataHandler = new ThreadLocal<bool>();
         private readonly OnReceivePacketHandler?[] _onReceivePacketHandlers = new OnReceivePacketHandler?[256];
@@ -126,15 +126,15 @@ namespace Orion.Core.Players
         //
 
         private OTAPI.HookResult ReceiveDataHandler(
-                Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset, ref int start, ref int length)
+            Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset, ref int start, ref int length)
         {
             Debug.Assert(buffer != null);
             Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Players.Count);
             Debug.Assert(start >= 0 && start + length <= buffer.readBuffer.Length);
             Debug.Assert(length > 0);
 
-            // Check `_ignoreReceiveDataHandler` to prevent an infinite loop if `GetData()` is called in
-            // `ReceivePacket`. A thread-local value is used in case there is some concurrency.
+            // Check `_ignoreReceiveDataHandler` to prevent an infinite loop if `GetData` is called in `ReceivePacket`.
+            // A thread-local value is used in case there is some concurrency.
             if (_ignoreReceiveDataHandler.Value)
             {
                 _ignoreReceiveDataHandler.Value = false;
@@ -158,8 +158,8 @@ namespace Orion.Core.Players
         }
 
         private OTAPI.HookResult SendBytesHandler(
-                ref int playerIndex, ref byte[] data, ref int offset, ref int size,
-                ref Terraria.Net.Sockets.SocketSendCallback callback, ref object state)
+            ref int playerIndex, ref byte[] data, ref int offset, ref int size,
+            ref Terraria.Net.Sockets.SocketSendCallback callback, ref object state)
         {
             Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
             Debug.Assert(data != null);
@@ -176,14 +176,15 @@ namespace Orion.Core.Players
         }
 
         private OTAPI.HookResult SendNetDataHandler(
-                Terraria.Net.NetManager manager, Terraria.Net.Sockets.ISocket socket,
-                ref Terraria.Net.NetPacket packet)
+            Terraria.Net.NetManager manager, Terraria.Net.Sockets.ISocket socket, ref Terraria.Net.NetPacket packet)
         {
             Debug.Assert(socket != null);
             Debug.Assert(packet.Buffer.Data != null);
             Debug.Assert(packet.Writer.BaseStream.Position >= 5);
 
             // Since we don't have an index, scan through the clients to find the player index.
+            //
+            // TODO: optimize this using a hash map, if needed
             var playerIndex = -1;
             for (var i = 0; i < Terraria.Netplay.MaxConnections; ++i)
             {
@@ -235,7 +236,7 @@ namespace Orion.Core.Players
         //
 
         private void OnReceivePacket<TPacket>(Terraria.MessageBuffer buffer, Span<byte> span)
-                where TPacket : struct, IPacket
+            where TPacket : struct, IPacket
         {
             Debug.Assert(buffer != null);
             Debug.Assert(span.Length > 0);
@@ -243,6 +244,11 @@ namespace Orion.Core.Players
             // When reading the packet, we need to use the `Server` context since this packet should be read as the
             // server. Ignore the first byte as it is the packet ID.
             var packet = new TPacket();
+            if (typeof(TPacket) == typeof(UnknownPacket))
+            {
+                Unsafe.As<TPacket, UnknownPacket>(ref packet).Id = (PacketId)span[0];
+            }
+
             var packetLength = packet.Read(span[1..], PacketContext.Server);
             Debug.Assert(packetLength == span.Length - 1);
 

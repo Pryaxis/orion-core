@@ -91,6 +91,23 @@ namespace Orion.Core.World
         {
             ref var packet = ref evt.Packet;
 
+            var newEvt = packet.Modification switch
+            {
+                TileModification.BreakBlock => RaiseBlockBreak(ref packet, false),
+                TileModification.PlaceBlock => RaiseBlockPlace(ref packet, false),
+                TileModification.BreakWall => RaiseWallBreak(ref packet),
+                TileModification.PlaceWall => RaiseWallPlace(ref packet, false),
+                TileModification.BreakBlockItemless => RaiseBlockBreak(ref packet, true),
+                TileModification.ReplaceBlock => RaiseBlockPlace(ref packet, true),
+                TileModification.ReplaceWall => RaiseWallPlace(ref packet, true),
+
+                _ => null
+            };
+            if (newEvt?.IsCanceled == true)
+            {
+                evt.Cancel(newEvt.CancellationReason);
+            }
+
             Event Raise<TEvent>(TEvent newEvt) where TEvent : Event
             {
                 Kernel.Events.Raise(newEvt, Log);
@@ -109,23 +126,6 @@ namespace Orion.Core.World
 
             Event RaiseWallPlace(ref TileModifyPacket packet, bool isReplacement) =>
                 Raise(new WallPlaceEvent(World, evt.Sender, packet.X, packet.Y, packet.WallId, isReplacement));
-
-            var newEvt = packet.Modification switch
-            {
-                TileModification.BreakBlock => RaiseBlockBreak(ref packet, false),
-                TileModification.PlaceBlock => RaiseBlockPlace(ref packet, false),
-                TileModification.BreakWall => RaiseWallBreak(ref packet),
-                TileModification.PlaceWall => RaiseWallPlace(ref packet, false),
-                TileModification.BreakBlockItemless => RaiseBlockBreak(ref packet, true),
-                TileModification.ReplaceBlock => RaiseBlockPlace(ref packet, true),
-                TileModification.ReplaceWall => RaiseWallPlace(ref packet, true),
-
-                _ => null
-            };
-            if (newEvt?.IsCanceled == true)
-            {
-                evt.Cancel(newEvt.CancellationReason);
-            }
         }
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]

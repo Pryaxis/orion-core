@@ -45,7 +45,7 @@ namespace Orion.Core.World.TileEntities
     /// </item>
     /// </list>
     /// 
-    /// These types can be differentiated using the <see cref="TileEntityExtensions.IsConcrete"/> extension method and
+    /// These types can be differentiated using the <see cref="ITileEntityExtensions.IsConcrete"/> extension method and
     /// the <see cref="IsActive"/> property.
     /// </remarks>
     public interface ITileEntity : IAnnotatable
@@ -79,7 +79,7 @@ namespace Orion.Core.World.TileEntities
     /// <summary>
     /// Provides extensions for the <see cref="ITileEntity"/> interface.
     /// </summary>
-    public static class TileEntityExtensions
+    public static class ITileEntityExtensions
     {
         /// <summary>
         /// Returns a value indicating whether the <paramref name="tileEntity"/> is concrete: i.e., whether the tile

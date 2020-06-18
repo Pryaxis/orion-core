@@ -195,8 +195,9 @@ namespace Orion.Core.Npcs
         private void OnNpcBuffPacket(PacketReceiveEvent<NpcBuffPacket> evt)
         {
             ref var packet = ref evt.Packet;
+            var buff = new Buff(packet.Id, packet.Ticks);
 
-            ForwardEvent(evt, new NpcBuffEvent(Npcs[packet.NpcIndex], evt.Sender, new Buff(packet.Id, packet.Ticks)));
+            ForwardEvent(evt, new NpcBuffEvent(Npcs[packet.NpcIndex], evt.Sender, buff));
         }
 
         [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]

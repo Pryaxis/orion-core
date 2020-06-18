@@ -326,7 +326,7 @@ namespace Orion.Core.Framework.Events
         private class TestClass_Private
         {
             [EventHandler("test")]
-            [SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Implicit usage")]
+            [SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
             private void OnTest(TestEvent evt) => evt.Value = 100;
         }
 

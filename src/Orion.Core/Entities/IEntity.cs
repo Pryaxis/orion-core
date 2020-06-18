@@ -45,7 +45,7 @@ namespace Orion.Core.Entities
     /// </item>
     /// </list>
     /// 
-    /// These types can be differentiated using the <see cref="EntityExtensions.IsConcrete"/> extension method and the
+    /// These types can be differentiated using the <see cref="IEntityExtensions.IsConcrete"/> extension method and the
     /// <see cref="IsActive"/> property.
     /// </remarks>
     public interface IEntity : IAnnotatable
@@ -91,7 +91,7 @@ namespace Orion.Core.Entities
     /// <summary>
     /// Provides extensions for the <see cref="IEntity"/> interface.
     /// </summary>
-    public static class EntityExtensions
+    public static class IEntityExtensions
     {
         /// <summary>
         /// Returns a value indicating whether the <paramref name="entity"/> is concrete: i.e., whether the entity

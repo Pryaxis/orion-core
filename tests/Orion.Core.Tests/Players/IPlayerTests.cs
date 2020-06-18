@@ -26,7 +26,7 @@ using Xunit;
 
 namespace Orion.Core.Players
 {
-    public class PlayerTests
+    public class IPlayerTests
     {
         private delegate void ServerDisconnectCallback(ref ServerDisconnectPacket packet);
         private delegate void ServerChatCallback(ref ServerChatPacket packet);
@@ -35,7 +35,7 @@ namespace Orion.Core.Players
         [Fact]
         public void SendPacket_NullPlayer_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => PlayerExtensions.SendPacket(null!, new TestPacket()));
+            Assert.Throws<ArgumentNullException>(() => IPlayerExtensions.SendPacket(null!, new TestPacket()));
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace Orion.Core.Players
         [Fact]
         public void Disconnect_NullPlayer_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => PlayerExtensions.Disconnect(null!, "test"));
+            Assert.Throws<ArgumentNullException>(() => IPlayerExtensions.Disconnect(null!, "test"));
         }
 
         [Fact]
@@ -81,7 +81,7 @@ namespace Orion.Core.Players
         [Fact]
         public void SendMessage_NullPlayer_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => PlayerExtensions.SendMessage(null!, "test", Color3.White));
+            Assert.Throws<ArgumentNullException>(() => IPlayerExtensions.SendMessage(null!, "test", Color3.White));
         }
 
         [Fact]
@@ -115,7 +115,7 @@ namespace Orion.Core.Players
         {
             var tiles = Mock.Of<ITileSlice>();
 
-            Assert.Throws<ArgumentNullException>(() => PlayerExtensions.SendTiles(null!, 123, 456, tiles));
+            Assert.Throws<ArgumentNullException>(() => IPlayerExtensions.SendTiles(null!, 123, 456, tiles));
         }
 
         [Fact]

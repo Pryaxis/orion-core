@@ -29,9 +29,9 @@ namespace Orion.Core.World.Tiles
     /// Implementations are required to be thread-safe.
     /// 
     /// A tile slice can be used to efficiently pass tiles by reference in, e.g., a<see cref="TileSquarePacket"/>
-    /// instance or the <see cref="PlayerExtensions.SendTiles(IPlayer, int, int, ITileSlice)"/> extension method.
+    /// instance or the <see cref="IPlayerExtensions.SendTiles(IPlayer, int, int, ITileSlice)"/> extension method.
     /// 
-    /// The <see cref="TileSliceExtensions.Slice(ITileSlice, int, int, int, int)"/> extension method allows zero-copy
+    /// The <see cref="ITileSliceExtensions.Slice(ITileSlice, int, int, int, int)"/> extension method allows zero-copy
     /// subslices to be obtained.
     /// </remarks>
     public interface ITileSlice
@@ -65,7 +65,7 @@ namespace Orion.Core.World.Tiles
     /// <summary>
     /// Provides extensions for the <see cref="ITileSlice"/> interface.
     /// </summary>
-    public static class TileSliceExtensions
+    public static class ITileSliceExtensions
     {
         /// <summary>
         /// Returns a slice of the <paramref name="tiles"/> with the specified starting coordinates and dimensions.

@@ -23,7 +23,7 @@ using Orion.Core.DataStructures;
 namespace Orion.Core.Entities
 {
     internal abstract class OrionEntity<TTerrariaEntity> : AnnotatableObject, IEntity, IWrapping<TTerrariaEntity>
-            where TTerrariaEntity : Terraria.Entity
+        where TTerrariaEntity : Terraria.Entity
     {
         protected OrionEntity(int entityIndex, TTerrariaEntity terrariaEntity)
         {
@@ -41,7 +41,7 @@ namespace Orion.Core.Entities
             set => Wrapped.active = value;
         }
 
-        // Terraria.Entity does not provide this property, so we need to declare it.
+        // `Terraria.Entity` does not provide this property, so we need to declare it.
         public abstract string Name { get; set; }
 
         public Vector2f Position

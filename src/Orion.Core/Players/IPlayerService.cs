@@ -75,7 +75,7 @@ namespace Orion.Core.Players
         /// <paramref name="playerService"/> is <see langword="null"/>.
         /// </exception>
         public static void BroadcastPacket<TPacket>(this IPlayerService playerService, ref TPacket packet)
-                where TPacket : struct, IPacket
+            where TPacket : struct, IPacket
         {
             if (playerService is null)
             {
@@ -100,7 +100,7 @@ namespace Orion.Core.Players
         /// <paramref name="playerService"/> is <see langword="null"/>.
         /// </exception>
         public static void BroadcastPacket<TPacket>(this IPlayerService playerService, TPacket packet)
-                where TPacket : struct, IPacket
+            where TPacket : struct, IPacket
         {
             if (playerService is null)
             {

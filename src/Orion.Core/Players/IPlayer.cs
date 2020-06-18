@@ -94,7 +94,7 @@ namespace Orion.Core.Players
     /// <summary>
     /// Provides extensions for the <see cref="IPlayer"/> interface.
     /// </summary>
-    public static class PlayerExtensions
+    public static class IPlayerExtensions
     {
         /// <summary>
         /// Sends the given <paramref name="packet"/> to the <paramref name="player"/>. This "overload" is provided for

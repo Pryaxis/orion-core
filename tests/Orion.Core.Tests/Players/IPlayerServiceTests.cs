@@ -27,7 +27,7 @@ using Xunit;
 
 namespace Orion.Core.Players
 {
-    public class PlayerServiceTests
+    public class IPlayerServiceTests
     {
         private delegate void ServerChatCallback(ref ServerChatPacket packet);
         private delegate void TileSquareCallback(ref TileSquarePacket packet);

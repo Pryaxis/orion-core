@@ -74,10 +74,9 @@ namespace Orion.Core.World.Chests
         private void OnChestInventoryPacket(PacketReceiveEvent<ChestInventoryPacket> evt)
         {
             ref var packet = ref evt.Packet;
-            var chest = Chests[packet.ChestIndex];
             var itemStack = new ItemStack(packet.Id, packet.StackSize, packet.Prefix);
 
-            ForwardEvent(evt, new ChestInventoryEvent(chest, evt.Sender, packet.Slot, itemStack));
+            ForwardEvent(evt, new ChestInventoryEvent(Chests[packet.ChestIndex], evt.Sender, packet.Slot, itemStack));
         }
 
         // Forwards `evt` as `newEvt`.
