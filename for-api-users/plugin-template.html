@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Plugin Template </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Plugin Template ">
+    <meta name="generator" content="docfx 2.45.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="plugin_template">
+<h2 id="plugin-template">Plugin Template</h2>
+
+<p>If you followed the <a class="xref" href="getting-started.html">Getting Started</a> page, then you should have a project set up for your plugin. Replace the auto-generated <code>Class1.cs</code> file with the following file (titled <code>ExamplePlugin.cs</code>):</p>
+<div class="tabGroup" id="tabgroup_CeZOj-G++Q">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_CeZOj-G++Q_c-sharp" role="tab" aria-controls="tabpanel_CeZOj-G++Q_c-sharp" data-tab="c-sharp" tabindex="0" aria-selected="true">C#</a>
+</li>
+</ul>
+<section id="tabpanel_CeZOj-G++Q_c-sharp" role="tabpanel" data-tab="c-sharp">
+
+<pre><code class="lang-csharp">using System;
+using Orion.Core;
+using Orion.Core.Framework;
+using Serilog;
+
+namespace Example {
+    [Plugin(&quot;example&quot;, Author = &quot;Pryaxis&quot;)]
+    public sealed class ExamplePlugin : OrionPlugin {
+        /// &lt;summary&gt;
+        /// Initializes a new instance of the &lt;see cref=&quot;ExamplePlugin&quot;/&gt; class.
+        /// This constructor gets called using a dependency injection container.
+        /// &lt;/summary&gt;
+        public ExamplePlugin(OrionKernel kernel, ILogger log)
+            : base(kernel, log) { }
+
+        /// &lt;summary&gt;
+        /// Initializes the plugin. This is where you perform initialization
+        /// logic, such as registering event handlers, reading configurations,
+        /// etc.
+        /// &lt;/summary&gt;
+        public override void Initialize() {
+            Console.WriteLine(&quot;Hello, world!&quot;);
+        }
+
+        /// &lt;summary&gt;
+        /// Disposes the plugin. This is where you perform &quot;reverse&quot;
+        /// initialization logic, such as deregistering event handlers, writing
+        /// configurations, etc.
+        /// &lt;/summary&gt;
+        public override void Dispose() {
+            Console.WriteLine(&quot;Goodbye, world!&quot;);
+        }
+    }
+}
+</code></pre>
+</section>
+</div>
+
+<p> </p>
+<p>This plugin simply prints <code>Hello, world!</code> and <code>Goodbye, world!</code> and initialization and disposal, respectively. The <a href="xref:Orion.Core.Framework.PluginAttribute"><code>Plugin</code></a> attribute specifies the plugin name (which should be unique among all plugins, and is used for logging/debugging purposes) and optionally the plugin author.</p>
+<h2 id="using-your-plugin">Using your Plugin</h2>
+<p>Once you've replaced the file, build your project in debug mode. In the <code>bin/Debug/netstandard2.1/</code> directory, copy the generated <code>Example.dll</code> file to the <code>plugins/</code> directory where the Orion launcher is located. The plugin will now take effect upon server startup.</p>
+<h2 id="behind-the-scenes">Behind the Scenes</h2>
+<p>Orion instantiates all plugins using <a href="https://www.nuget.org/packages/Ninject">Ninject</a> to gather any of the plugin's dependencies. Here is a rough sketch of how this is done (with the Orion launcher):</p>
+<ol>
+<li>The <code>plugins/</code> directory is scanned for .NET assemblies. For each .NET assembly:
+<ol>
+<li>All service interfaces are loaded.</li>
+<li>All service bindings are loaded, and for each interface, the binding with the highest <a href="xref:Orion.Core.Framework.BindingPriority"><code>BindingPriority</code></a> is kept.</li>
+<li>All plugin types are loaded.</li>
+</ol>
+</li>
+<li>Each service interface is bound to a single service binding via Ninject, with the scope specified by the <a href="xref:Orion.Core.Framework.ServiceAttribute"><code>Service</code></a> attribute placed on the service interface.</li>
+<li>Each plugin is constructed via Ninject.</li>
+</ol>
+<p>This allows plugins to define overriding service bindings, and to have dependencies on other plugins.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/docs/for-api-users/plugin-template.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

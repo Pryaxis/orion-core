@@ -1,0 +1,304 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class OrionKernel
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class OrionKernel
+   ">
+    <meta name="generator" content="docfx 2.45.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Orion.Core.OrionKernel">
+  
+  
+  <h1 id="Orion_Core_OrionKernel" data-uid="Orion.Core.OrionKernel" class="text-break">Class OrionKernel
+  </h1>
+  <div class="markdown level0 summary"><p>Represents Orion's core logic. Provides access to Orion extensions and events and publishes server-related
+events.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">OrionKernel</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">System.IDisposable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Orion.Core.html">Orion.Core</a></h6>
+  <h6><strong>Assembly</strong>: Orion.Core.dll</h6>
+  <h5 id="Orion_Core_OrionKernel_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class OrionKernel : IDisposable</code></pre>
+  </div>
+  <h5 id="Orion_Core_OrionKernel_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>The Orion kernel is responsible for publishing the following server-related events:</p>
+<ul><li><a class="xref" href="Orion.Core.Events.Server.ServerInitializeEvent.html">ServerInitializeEvent</a></li><li><a class="xref" href="Orion.Core.Events.Server.ServerStartEvent.html">ServerStartEvent</a></li><li><a class="xref" href="Orion.Core.Events.Server.ServerTickEvent.html">ServerTickEvent</a></li><li><a class="xref" href="Orion.Core.Events.Server.ServerCommandEvent.html">ServerCommandEvent</a></li></ul>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_OrionKernel__ctor_ILogger_.md&amp;value=---%0Auid%3A%20Orion.Core.OrionKernel.%23ctor(ILogger)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/OrionKernel.cs/#L48">View Source</a>
+  </span>
+  <a id="Orion_Core_OrionKernel__ctor_" data-uid="Orion.Core.OrionKernel.#ctor*"></a>
+  <h4 id="Orion_Core_OrionKernel__ctor_ILogger_" data-uid="Orion.Core.OrionKernel.#ctor(ILogger)">OrionKernel(ILogger)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Orion.Core.OrionKernel.html">OrionKernel</a> class with the specified <code data-dev-comment-type="paramref" class="paramref">log</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public OrionKernel(ILogger log)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ILogger</span></td>
+        <td><span class="parametername">log</span></td>
+        <td><p>The log.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">log</code> is <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_OrionKernel_Events.md&amp;value=---%0Auid%3A%20Orion.Core.OrionKernel.Events%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/OrionKernel.cs/#L77">View Source</a>
+  </span>
+  <a id="Orion_Core_OrionKernel_Events_" data-uid="Orion.Core.OrionKernel.Events*"></a>
+  <h4 id="Orion_Core_OrionKernel_Events" data-uid="Orion.Core.OrionKernel.Events">Events</h4>
+  <div class="markdown level1 summary"><p>Gets the kernel's event manager.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EventManager Events { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Framework.Events.EventManager.html">EventManager</a></td>
+        <td><p>The kernel's event manager.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_OrionKernel_Extensions.md&amp;value=---%0Auid%3A%20Orion.Core.OrionKernel.Extensions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/OrionKernel.cs/#L71">View Source</a>
+  </span>
+  <a id="Orion_Core_OrionKernel_Extensions_" data-uid="Orion.Core.OrionKernel.Extensions*"></a>
+  <h4 id="Orion_Core_OrionKernel_Extensions" data-uid="Orion.Core.OrionKernel.Extensions">Extensions</h4>
+  <div class="markdown level1 summary"><p>Gets the kernel's extension manager.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ExtensionManager Extensions { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Framework.Extensions.ExtensionManager.html">ExtensionManager</a></td>
+        <td><p>The kernel's extension manager.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_OrionKernel_Dispose.md&amp;value=---%0Auid%3A%20Orion.Core.OrionKernel.Dispose%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/OrionKernel.cs/#L82">View Source</a>
+  </span>
+  <a id="Orion_Core_OrionKernel_Dispose_" data-uid="Orion.Core.OrionKernel.Dispose*"></a>
+  <h4 id="Orion_Core_OrionKernel_Dispose" data-uid="Orion.Core.OrionKernel.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"><p>Disposes the kernel, releasing any resources associated with it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">System.IDisposable</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_OrionKernel.md&amp;value=---%0Auid%3A%20Orion.Core.OrionKernel%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/OrionKernel.cs/#L39" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Tutorial: Injecting Services </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Tutorial: Injecting Services ">
+    <meta name="generator" content="docfx 2.45.1.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="tutorial_injecting_services">
+<h2 id="tutorial-injecting-services">Tutorial: Injecting Services</h2>
+
+<p>Some plugins might need to access more than just the information retrieved from events. For example, a plugin might want to loop through all players or NPCs to perform some sort of logic. Before Orion, this was done by reading and modifying Terraria's <code>static</code> state, like the <code>Terraria.Main.npc</code> or <code>Terraria.Main.player</code> arrays.</p>
+<p>With Orion, however, this functionality is provided using <em>services</em>. Services essentially provide a certain type of functionality to plugins. Here is a list of the services currently defined in Orion:</p>
+<table>
+<thead>
+<tr>
+<th>Service Name</th>
+<th>Functionality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="xref" href="../../api/Orion.Core.World.Chests.IChestService.html"><code>IChestService</code></a></td>
+<td>Terraria chests</td>
+</tr>
+<tr>
+<td><a class="xref" href="../../api/Orion.Core.Items.IItemService.html"><code>IItemService</code></a></td>
+<td>Terraria items</td>
+</tr>
+<tr>
+<td><a class="xref" href="../../api/Orion.Core.Npcs.INpcService.html"><code>INpcService</code></a></td>
+<td>Terraria NPCs</td>
+</tr>
+<tr>
+<td><a class="xref" href="../../api/Orion.Core.Players.IPlayerService.html"><code>IPlayerService</code></a></td>
+<td>Terraria players</td>
+</tr>
+<tr>
+<td><a class="xref" href="../../api/Orion.Core.Projectiles.IProjectileService.html"><code>IProjectileService</code></a></td>
+<td>Terraria projectiles</td>
+</tr>
+<tr>
+<td><a class="xref" href="../../api/Orion.Core.World.Signs.ISignService.html"><code>ISignService</code></a></td>
+<td>Terraria signs</td>
+</tr>
+<tr>
+<td><a class="xref" href="../../api/Orion.Core.World.IWorldService.html"><code>IWorldService</code></a></td>
+<td>Terraria world</td>
+</tr>
+</tbody>
+</table>
+<h3 id="constructor-injection">Constructor Injection</h3>
+<p>To access instances of these services, plugins need to request them with <a href="https://en.wikipedia.org/wiki/Dependency_injection"><em>constructor injection</em></a>. This involves adding the service interface as a parameter in the constructor. At runtime, the Orion framework will provide an implementation of the service. An example of constructor injection is below:</p>
+<div class="tabGroup" id="tabgroup_CeZOj-G++Q">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_CeZOj-G++Q_c-sharp" role="tab" aria-controls="tabpanel_CeZOj-G++Q_c-sharp" data-tab="c-sharp" tabindex="0" aria-selected="true">C#</a>
+</li>
+</ul>
+<section id="tabpanel_CeZOj-G++Q_c-sharp" role="tabpanel" data-tab="c-sharp">
+
+<pre><code class="lang-csharp">    public ExamplePlugin(OrionKernel kernel, ILogger log,
+            IItemService itemService) : base(kernel, log) {
+        _itemService = itemService;
+    }
+</code></pre>
+</section>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/docs/for-api-users/tutorials/injecting-services.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

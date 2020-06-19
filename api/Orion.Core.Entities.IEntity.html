@@ -1,0 +1,360 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IEntity
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IEntity
+   ">
+    <meta name="generator" content="docfx 2.45.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Orion.Core.Entities.IEntity">
+  
+  
+  <h1 id="Orion_Core_Entities_IEntity" data-uid="Orion.Core.Entities.IEntity" class="text-break">Interface IEntity
+  </h1>
+  <div class="markdown level0 summary"><p>Represents an annotatable Terraria entity.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Orion.Core.Entities.IAnnotatable.html#Orion_Core_Entities_IAnnotatable_GetAnnotation__1_System_String_System_Nullable_System_Func___0___">IAnnotatable.GetAnnotation&lt;T&gt;(String, Nullable&lt;Func&lt;T&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Orion.Core.Entities.IAnnotatable.html#Orion_Core_Entities_IAnnotatable_RemoveAnnotation_System_String_">IAnnotatable.RemoveAnnotation(String)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Orion.Core.Entities.html">Orion.Core.Entities</a></h6>
+  <h6><strong>Assembly</strong>: Orion.Core.dll</h6>
+  <h5 id="Orion_Core_Entities_IEntity_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IEntity : IAnnotatable</code></pre>
+  </div>
+  <h5 id="Orion_Core_Entities_IEntity_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Implementations must be thread-safe.</p>
+<p>Many Terraria objects are entities and have common properties such as position, velocity, etc. Entities are
+annotatable, allowing consumers to easily attach custom state to them.</p>
+<p>There are three types of entities:</p>
+<ol><li>Entities which are abstract: they cannot affect the world.</li><li>
+Entities which are concrete but <em>not</em> active: the entity does not exist in the world.
+</li><li>Entities which are concrete and active: the entity exists in the world.</li></ol>
+<p>These types can be differentiated using the <a class="xref" href="Orion.Core.Entities.IEntityExtensions.html#Orion_Core_Entities_IEntityExtensions_IsConcrete_Orion_Core_Entities_IEntity_">IsConcrete(IEntity)</a> extension method and the
+<a class="xref" href="Orion.Core.Entities.IEntity.html#Orion_Core_Entities_IEntity_IsActive">IsActive</a> property.</p>
+</div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Entities_IEntity_Index.md&amp;value=---%0Auid%3A%20Orion.Core.Entities.IEntity.Index%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Entities/IEntity.cs/#L57">View Source</a>
+  </span>
+  <a id="Orion_Core_Entities_IEntity_Index_" data-uid="Orion.Core.Entities.IEntity.Index*"></a>
+  <h4 id="Orion_Core_Entities_IEntity_Index" data-uid="Orion.Core.Entities.IEntity.Index">Index</h4>
+  <div class="markdown level1 summary"><p>Gets the entity's index. A negative value indicates that the entity is abstract.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int Index { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The entity's index.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Entities_IEntity_IsActive.md&amp;value=---%0Auid%3A%20Orion.Core.Entities.IEntity.IsActive%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Entities/IEntity.cs/#L63">View Source</a>
+  </span>
+  <a id="Orion_Core_Entities_IEntity_IsActive_" data-uid="Orion.Core.Entities.IEntity.IsActive*"></a>
+  <h4 id="Orion_Core_Entities_IEntity_IsActive" data-uid="Orion.Core.Entities.IEntity.IsActive">IsActive</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the entity is active: i.e., whether the entity exists in the world.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsActive { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><span class="xref">true</span> if the entity is active; otherwise, <span class="xref">false</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Entities_IEntity_Name.md&amp;value=---%0Auid%3A%20Orion.Core.Entities.IEntity.Name%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Entities/IEntity.cs/#L70">View Source</a>
+  </span>
+  <a id="Orion_Core_Entities_IEntity_Name_" data-uid="Orion.Core.Entities.IEntity.Name*"></a>
+  <h4 id="Orion_Core_Entities_IEntity_Name" data-uid="Orion.Core.Entities.IEntity.Name">Name</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the entity's name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string Name { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>The entity's name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">value</code> is <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Entities_IEntity_Position.md&amp;value=---%0Auid%3A%20Orion.Core.Entities.IEntity.Position%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Entities/IEntity.cs/#L76">View Source</a>
+  </span>
+  <a id="Orion_Core_Entities_IEntity_Position_" data-uid="Orion.Core.Entities.IEntity.Position*"></a>
+  <h4 id="Orion_Core_Entities_IEntity_Position" data-uid="Orion.Core.Entities.IEntity.Position">Position</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the entity's position, in pixels.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Vector2f Position { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.DataStructures.Vector2f.html">Vector2f</a></td>
+        <td><p>The entity's position, in pixels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Entities_IEntity_Size.md&amp;value=---%0Auid%3A%20Orion.Core.Entities.IEntity.Size%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Entities/IEntity.cs/#L88">View Source</a>
+  </span>
+  <a id="Orion_Core_Entities_IEntity_Size_" data-uid="Orion.Core.Entities.IEntity.Size*"></a>
+  <h4 id="Orion_Core_Entities_IEntity_Size" data-uid="Orion.Core.Entities.IEntity.Size">Size</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the entity's size, in pixels.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Vector2f Size { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.DataStructures.Vector2f.html">Vector2f</a></td>
+        <td><p>The entity's size, in pixels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Entities_IEntity_Velocity.md&amp;value=---%0Auid%3A%20Orion.Core.Entities.IEntity.Velocity%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Entities/IEntity.cs/#L82">View Source</a>
+  </span>
+  <a id="Orion_Core_Entities_IEntity_Velocity_" data-uid="Orion.Core.Entities.IEntity.Velocity*"></a>
+  <h4 id="Orion_Core_Entities_IEntity_Velocity" data-uid="Orion.Core.Entities.IEntity.Velocity">Velocity</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the entity's velocity, in pixels per tick.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Vector2f Velocity { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.DataStructures.Vector2f.html">Vector2f</a></td>
+        <td><p>The entity's velocity, in pixels per tick.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Orion.Core.Entities.IEntityExtensions.html#Orion_Core_Entities_IEntityExtensions_IsConcrete_Orion_Core_Entities_IEntity_">IEntityExtensions.IsConcrete(IEntity)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Entities_IEntity.md&amp;value=---%0Auid%3A%20Orion.Core.Entities.IEntity%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Entities/IEntity.cs/#L51" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

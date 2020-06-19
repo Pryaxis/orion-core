@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>What is Orion? </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="What is Orion? ">
+    <meta name="generator" content="docfx 2.45.1.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="index">
+<h2 id="what-is-orion">What is Orion?</h2>
+
+<p>Orion is a high-level API for Terraria dedicated servers that is based on <a href="https://github.com/DeathCradle/Open-Terraria-API/">OTAPI</a>. It serves as an abstraction on top of Terraria, and is designed to follow software best practices. Orion will serve as the base library for TShock v5.0.</p>
+<h2 id="why-use-orion">Why use Orion?</h2>
+<p>There are many reasons why Orion will be an improvement over the current Terraria server API.</p>
+<h3 id="net-core-compatibility">.NET Core Compatibility</h3>
+<p>Orion is built using .NET Core 3.1, meaning that Orion is cross-platform compatible out of the box. No more fiddling with <code>xbuild</code> or having to install Mono -- that's all a thing of the past.</p>
+<h3 id="abstractability">Abstractability</h3>
+<p>By serving as an abstraction on top of Terraria, Orion aims to shield developers from Terraria's version changes. This is accomplished by, e.g., providing interfaces (such as <a href="xref:Orion.Players.IPlayer"><code>IPlayer</code></a>) for developers to program against. That way, changes made to Terraria only need to be handled within Orion. The following table shows Terraria concepts along with their corresponding Orion abstractions:</p>
+<table>
+<thead>
+<tr>
+<th>Terraria Concept</th>
+<th>Orion Abstraction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Terraria.Chest</code></td>
+<td><a href="xref:Orion.World.Chests.IChest"><code>IChest</code></a></td>
+</tr>
+<tr>
+<td><code>Terraria.Item</code></td>
+<td><a href="xref:Orion.Items.IItem"><code>IItem</code></a></td>
+</tr>
+<tr>
+<td><code>Terraria.NetMessage</code></td>
+<td><a href="xref:Orion.Packets.IPacket"><code>IPacket</code></a></td>
+</tr>
+<tr>
+<td><code>Terraria.NPC</code></td>
+<td><a href="xref:Orion.Npcs.INpc"><code>INpc</code></a></td>
+</tr>
+<tr>
+<td><code>Terraria.Player</code></td>
+<td><a href="xref:Orion.Players.IPlayer"><code>IPlayer</code></a></td>
+</tr>
+<tr>
+<td><code>Terraria.Projectile</code></td>
+<td><a href="xref:Orion.Projectiles.IProjectile"><code>IProjectile</code></a></td>
+</tr>
+<tr>
+<td><code>Terraria.Sign</code></td>
+<td><a href="xref:Orion.World.Signs.ISign"><code>ISign</code></a></td>
+</tr>
+<tr>
+<td><code>Terraria.Tile</code></td>
+<td><a href="xref:Orion.World.Tiles.Tile"><code>Tile</code></a></td>
+</tr>
+<tr>
+<td><code>Terraria.Main.tile</code></td>
+<td><a href="xref:Orion.World.IWorld"><code>IWorld</code></a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="flexibility">Flexibility</h3>
+<p>One benefit of the abstraction mechanism is that plugins can provide different implementations for the interfaces, which allows much greater control and flexibility than was previously possible.</p>
+<p>For example, an InfiniteChests plugin could provide its own <a href="xref:Orion.World.Chests.IChest"><code>IChest</code></a> implementation which uses a database-backed storage solution. This new <a href="xref:Orion.World.Chests.IChest"><code>IChest</code></a> implementation would then immediately be available to other consumers of the <a href="xref:Orion.World.Chests.IChest"><code>IChest</code></a> interface, which would allow other chest-based plugins (such as chest protection plugins) to work seamlessly with InfiniteChests.</p>
+<h3 id="testability">Testability</h3>
+<p>Another benefit of the abstraction mechanism is that the Orion API and consumers are completely testable. Since consumers no longer interact directly with Terraria state (which uses a bunch of nasty <code>static</code> state!) and instead interact with interfaces, more code can now be tested with the help of mocks.</p>
+<p>This will allow the codebase to be fully tested, which should improve overall code quality and developer happiness.</p>
+<h3 id="better-apis">Better APIs</h3>
+<p>Orion will have better APIs than the current Terraria server API. Here is a non-exhaustive list of API improvements:</p>
+<ul>
+<li>Events are easier to register and deregister now (with different priorities, too!).</li>
+<li>Plugins can act as both subscribers <em>and</em> publishers of any event.</li>
+<li>Logging is now handled in a structured manner via <a href="https://serilog.net/">Serilog</a>.</li>
+<li>Packets are now typed and implemented as <code>struct</code>s so that they can be both safe and blazing fast.</li>
+</ul>
+<h3 id="other-improvements">Other Improvements</h3>
+<p>Here is a non-exhaustive list of other improvements:</p>
+<ul>
+<li>Plugins will be unloadable (since they are required to not have <code>static</code> state). This means that hot reloading of <em>some</em> plugins is now viable.</li>
+<li>Orion will use resource strings. This means that localization will now be possible.</li>
+</ul>
+<h2 id="developers">Developers</h2>
+<p>To get started with developing on Orion, please take a look at the <a class="xref" href="for-developers/getting-started.html">Getting Started</a> page. If you wish to contribute to the project, please take a look at the <a class="xref" href="for-developers/contributing-guidelines.html">Contributing Guidelines</a> page, as well.</p>
+<h2 id="api-users">API Users</h2>
+<p>To get started with developing for Orion, please take a look at the <a class="xref" href="for-api-users/getting-started.html">Getting Started</a> page.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/docs/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

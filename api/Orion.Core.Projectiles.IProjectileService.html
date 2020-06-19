@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IProjectileService
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IProjectileService
+   ">
+    <meta name="generator" content="docfx 2.45.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Orion.Core.Projectiles.IProjectileService">
+  
+  
+  <h1 id="Orion_Core_Projectiles_IProjectileService" data-uid="Orion.Core.Projectiles.IProjectileService" class="text-break">Interface IProjectileService
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a projectile service. Provides access to projectiles and publishes projectile-related events.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Orion.Core.Projectiles.html">Orion.Core.Projectiles</a></h6>
+  <h6><strong>Assembly</strong>: Orion.Core.dll</h6>
+  <h5 id="Orion_Core_Projectiles_IProjectileService_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Service(ServiceScope.Singleton)]
+public interface IProjectileService</code></pre>
+  </div>
+  <h5 id="Orion_Core_Projectiles_IProjectileService_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Implementations are required to be thread-safe.</p>
+<p>The projectile service is responsible for publishing the following projectile-related events:</p>
+<ul><li><a class="xref" href="Orion.Core.Events.Projectiles.ProjectileDefaultsEvent.html">ProjectileDefaultsEvent</a></li><li><a class="xref" href="Orion.Core.Events.Projectiles.ProjectileTickEvent.html">ProjectileTickEvent</a></li></ul>
+</div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Projectiles_IProjectileService_Projectiles.md&amp;value=---%0Auid%3A%20Orion.Core.Projectiles.IProjectileService.Projectiles%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Projectiles/IProjectileService.cs/#L44">View Source</a>
+  </span>
+  <a id="Orion_Core_Projectiles_IProjectileService_Projectiles_" data-uid="Orion.Core.Projectiles.IProjectileService.Projectiles*"></a>
+  <h4 id="Orion_Core_Projectiles_IProjectileService_Projectiles" data-uid="Orion.Core.Projectiles.IProjectileService.Projectiles">Projectiles</h4>
+  <div class="markdown level1 summary"><p>Gets the projectiles.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyList&lt;IProjectile&gt; Projectiles { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Orion.Core.Projectiles.IProjectile.html">IProjectile</a>&gt;</td>
+        <td><p>The projectiles.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Projectiles_IProjectileService_SpawnProjectile_Orion_Core_Projectiles_ProjectileId_Orion_Core_DataStructures_Vector2f_Orion_Core_DataStructures_Vector2f_System_Int32_System_Single_.md&amp;value=---%0Auid%3A%20Orion.Core.Projectiles.IProjectileService.SpawnProjectile(Orion.Core.Projectiles.ProjectileId%2COrion.Core.DataStructures.Vector2f%2COrion.Core.DataStructures.Vector2f%2CSystem.Int32%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Projectiles/IProjectileService.cs/#L57">View Source</a>
+  </span>
+  <a id="Orion_Core_Projectiles_IProjectileService_SpawnProjectile_" data-uid="Orion.Core.Projectiles.IProjectileService.SpawnProjectile*"></a>
+  <h4 id="Orion_Core_Projectiles_IProjectileService_SpawnProjectile_Orion_Core_Projectiles_ProjectileId_Orion_Core_DataStructures_Vector2f_Orion_Core_DataStructures_Vector2f_System_Int32_System_Single_" data-uid="Orion.Core.Projectiles.IProjectileService.SpawnProjectile(Orion.Core.Projectiles.ProjectileId,Orion.Core.DataStructures.Vector2f,Orion.Core.DataStructures.Vector2f,System.Int32,System.Single)">SpawnProjectile(ProjectileId, Vector2f, Vector2f, Int32, Single)</h4>
+  <div class="markdown level1 summary"><p>Spawns a projectile with the given <code data-dev-comment-type="paramref" class="paramref">id</code> at the specified <code data-dev-comment-type="paramref" class="paramref">position</code> with
+the specified <code data-dev-comment-type="paramref" class="paramref">velocity</code>, <code data-dev-comment-type="paramref" class="paramref">damage</code>, and <code data-dev-comment-type="paramref" class="paramref">knockback</code>.
+Returns the resulting projectile.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IProjectile SpawnProjectile(ProjectileId id, Vector2f position, Vector2f velocity, int damage, float knockback)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Projectiles.ProjectileId.html">ProjectileId</a></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>The projectile ID to spawn.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Orion.Core.DataStructures.Vector2f.html">Vector2f</a></td>
+        <td><span class="parametername">position</span></td>
+        <td><p>The position to spawn the projectile at.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Orion.Core.DataStructures.Vector2f.html">Vector2f</a></td>
+        <td><span class="parametername">velocity</span></td>
+        <td><p>The projectile velocity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">damage</span></td>
+        <td><p>The projectile damage.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">knockback</span></td>
+        <td><p>The projectile knockback.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Projectiles.IProjectile.html">IProjectile</a></td>
+        <td><p>The resulting projectile.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Projectiles_IProjectileService.md&amp;value=---%0Auid%3A%20Orion.Core.Projectiles.IProjectileService%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Projectiles/IProjectileService.cs/#L37" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

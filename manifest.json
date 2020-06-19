@@ -1,0 +1,2612 @@
+{
+  "homepages": [],
+  "source_base_path": "/github/workspace/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Buffs.Buff.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Buffs.Buff.html",
+          "hash": "DWgkD9oKRrzvUCh4V0CqNA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Buffs.BuffId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Buffs.BuffId.html",
+          "hash": "Z4Bhdut9TdPnuSeCxhGPyA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Buffs.BuffIdExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Buffs.BuffIdExtensions.html",
+          "hash": "nhzKRlEw6VXMLM7Zw0Lvww=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Buffs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Buffs.html",
+          "hash": "xJII8AeP4uCjhWP+VuBNSA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Collections.IArray-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Collections.IArray-1.html",
+          "hash": "+dHIRd3VR01fGyXZrqHYJw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Collections.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Collections.html",
+          "hash": "KVLzSCyH2Y9wPD+QbnNXdg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.DataStructures.Color3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.DataStructures.Color3.html",
+          "hash": "53tG/HzqserpeumZfmHaiw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.DataStructures.NetworkText.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.DataStructures.NetworkText.html",
+          "hash": "z1HT/bZ3kzajLB8mhpedHA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.DataStructures.Vector2f.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.DataStructures.Vector2f.html",
+          "hash": "CR47vp6vEjllg28IRnzgLg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.DataStructures.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.DataStructures.html",
+          "hash": "KpSTZnSpQTdFR/TL/xoI+w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Entities.AnnotatableObject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Entities.AnnotatableObject.html",
+          "hash": "xF2yBVCseIA6pbvt9UU3fw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Entities.IAnnotatable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Entities.IAnnotatable.html",
+          "hash": "/zmTVTsd6gWHdWktrfEQgg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Entities.IEntity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Entities.IEntity.html",
+          "hash": "2TL/Cv8JvNJN2tKi1FKbNg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Entities.IEntityExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Entities.IEntityExtensions.html",
+          "hash": "LtJwUzUixkoJew9zQhRR0w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Entities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Entities.html",
+          "hash": "qaHMXdD6tQs4I1JEEbXfZw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Event.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Event.html",
+          "hash": "tIZ8mSd3xVD5z5reBGFZTA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.EventAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.EventAttribute.html",
+          "hash": "LvUEz/Gk9fkvZ6ASZlfEoA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Items.ItemDefaultsEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Items.ItemDefaultsEvent.html",
+          "hash": "iE5KsRgqHOJkEo4U0zpo7Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Items.ItemEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Items.ItemEvent.html",
+          "hash": "CV7igzYMHaw6Pv+cCfnafg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Items.ItemTickEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Items.ItemTickEvent.html",
+          "hash": "LHcDJEbIV9xHMAuVZjcAuw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Items.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Items.html",
+          "hash": "APG0abU1BIkIOZ//eifxig=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Npcs.NpcBuffEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Npcs.NpcBuffEvent.html",
+          "hash": "9DdP1hCm5gD78Yw9R7O2cA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Npcs.NpcCatchEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Npcs.NpcCatchEvent.html",
+          "hash": "kLAjAA7/WRWP/ncF21MWiA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Npcs.NpcDefaultsEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Npcs.NpcDefaultsEvent.html",
+          "hash": "IzHs1pLTNXlPAxYvHS2alA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Npcs.NpcEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Npcs.NpcEvent.html",
+          "hash": "ih4z9hO9+QuY/dZZvcnDYw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Npcs.NpcFishEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Npcs.NpcFishEvent.html",
+          "hash": "dCT/Pbjp3HIUiJt9Bzr8Cg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Npcs.NpcKilledEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Npcs.NpcKilledEvent.html",
+          "hash": "8MYeEweztgyxUKCKjE5NTg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Npcs.NpcLootEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Npcs.NpcLootEvent.html",
+          "hash": "v+XPKFeAJ5RaxeGdnTTjqQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Npcs.NpcSpawnEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Npcs.NpcSpawnEvent.html",
+          "hash": "03F5F8LWy2tR6ty1WHAmrg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Npcs.NpcTickEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Npcs.NpcTickEvent.html",
+          "hash": "B2SgtogmtXUZ4b/Pzz7TEw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Npcs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Npcs.html",
+          "hash": "KVWWj59LT0ZgPH36ULo97w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Packets.PacketEvent-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Packets.PacketEvent-1.html",
+          "hash": "aUYkAixbRWHhlhNsm24gUw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Packets.PacketReceiveEvent-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Packets.PacketReceiveEvent-1.html",
+          "hash": "Ty6xzabKS9eEAvlTQ5VSKQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Packets.PacketSendEvent-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Packets.PacketSendEvent-1.html",
+          "hash": "tME1cY3cw/N6FGINuhkrNA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Packets.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Packets.html",
+          "hash": "1FrKdTrJEsC8KtxLCxzOKw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Players.PlayerChatEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Players.PlayerChatEvent.html",
+          "hash": "MEATdUVv1DWxDZSDKcGR9Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Players.PlayerEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Players.PlayerEvent.html",
+          "hash": "OPSoamwGRp8JaPR8o3an+A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Players.PlayerHealthEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Players.PlayerHealthEvent.html",
+          "hash": "YtDVAvcsy32eD0MyAmDQMQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Players.PlayerJoinEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Players.PlayerJoinEvent.html",
+          "hash": "C/xDhdbq+xWiaYs3Aqd98Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Players.PlayerManaEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Players.PlayerManaEvent.html",
+          "hash": "dY/s5h0zEdcRjQGqjElIVw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Players.PlayerPasswordEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Players.PlayerPasswordEvent.html",
+          "hash": "KpyX7x2pe1OVs0y1tLqCCg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Players.PlayerPvpEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Players.PlayerPvpEvent.html",
+          "hash": "dwWk1JYoyLEjXSogOqA9Dw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Players.PlayerQuitEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Players.PlayerQuitEvent.html",
+          "hash": "2N6/bJlHXEXosvK+Ib9mzw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Players.PlayerTeamEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Players.PlayerTeamEvent.html",
+          "hash": "/g8On+Csa/8zz9UrbfDnsA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Players.PlayerTickEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Players.PlayerTickEvent.html",
+          "hash": "g4wCze2xSFQTYvLGOwxa4w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Players.PlayerUuidEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Players.PlayerUuidEvent.html",
+          "hash": "frTLhe/k2Zcd5qxyU0yaKw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Players.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Players.html",
+          "hash": "qKmNx4YR3F7fXR5wvhK4lw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Projectiles.ProjectileDefaultsEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Projectiles.ProjectileDefaultsEvent.html",
+          "hash": "g8Njme6h4O0EMpCLV/obIA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Projectiles.ProjectileEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Projectiles.ProjectileEvent.html",
+          "hash": "8ut3pajbMtIxwQtBlNg+dQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Projectiles.ProjectileTickEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Projectiles.ProjectileTickEvent.html",
+          "hash": "T/EtVe2/6r18KgW6XsMf4A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Projectiles.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Projectiles.html",
+          "hash": "jMBB0DK4ea2lhQuxxrmTug=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Server.ServerArgsEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Server.ServerArgsEvent.html",
+          "hash": "Dr6PsIqy4Cm4YkdjMCMuaQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Server.ServerCommandEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Server.ServerCommandEvent.html",
+          "hash": "K/iJ7SphDarRSC6FLXFELg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Server.ServerInitializeEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Server.ServerInitializeEvent.html",
+          "hash": "g7d9xnmraP00UrPBeGbwkw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Server.ServerStartEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Server.ServerStartEvent.html",
+          "hash": "voI0NxNZX3MsRsG0gxLBLQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Server.ServerTickEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Server.ServerTickEvent.html",
+          "hash": "4anuIDZm3RM5AAm1SoSeZQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.Server.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.Server.html",
+          "hash": "hNgH3g/U8PXWGqBJIy01+g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Chests.ChestEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Chests.ChestEvent.html",
+          "hash": "Wvh0nFJ0ZkK2cHK/8s+njw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Chests.ChestInventoryEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Chests.ChestInventoryEvent.html",
+          "hash": "S43kfT4yNQQNVAlrgG7Mog=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Chests.ChestOpenEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Chests.ChestOpenEvent.html",
+          "hash": "ynw1wmaK2kqRQyz3/B/nZw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Chests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Chests.html",
+          "hash": "CvGQsHRgy966JFRJbgFP6w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Signs.SignEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Signs.SignEvent.html",
+          "hash": "I180jAcWtQlU7+qLJdT9CA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Signs.SignReadEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Signs.SignReadEvent.html",
+          "hash": "uSGhMAONIe7lHt7gWAqzaw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Signs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Signs.html",
+          "hash": "NUf7Ou84qBzbSVXDOGnSrA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Tiles.BlockBreakEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Tiles.BlockBreakEvent.html",
+          "hash": "VcRrie121DRslRdqRDSfNw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Tiles.BlockPaintEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Tiles.BlockPaintEvent.html",
+          "hash": "1lh2WlMJeKw3GfIX3DI36Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Tiles.BlockPlaceEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Tiles.BlockPlaceEvent.html",
+          "hash": "ozQ2lUFY/fNMEJ1VdmNnLg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Tiles.TileEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Tiles.TileEvent.html",
+          "hash": "V55fvphdw0viZDfXjcao5A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Tiles.TileLiquidEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Tiles.TileLiquidEvent.html",
+          "hash": "RZ60aR1qvJfcn5lllf+w9A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Tiles.TileSquareEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Tiles.TileSquareEvent.html",
+          "hash": "y8tYzfVf+VwX4sSOOJidYQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Tiles.WallBreakEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Tiles.WallBreakEvent.html",
+          "hash": "pmXW2b1UtLvRt8Gt5yqHww=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Tiles.WallPaintEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Tiles.WallPaintEvent.html",
+          "hash": "BlxIZGuVY7xH9cnxKsa5PQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Tiles.WallPlaceEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Tiles.WallPlaceEvent.html",
+          "hash": "PJrV82NSXnWmkElwDJhIcQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Tiles.WiringActivateEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Tiles.WiringActivateEvent.html",
+          "hash": "ApkPKZfWtZzDZZJRiC9DTQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.Tiles.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.Tiles.html",
+          "hash": "zRuZZyHRzod6KSXyA4GHpg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.WorldEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.WorldEvent.html",
+          "hash": "xKBsIPir5ybyupgZ1JY+cQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.WorldLoadedEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.WorldLoadedEvent.html",
+          "hash": "8LPpUpjOBvl8bEUdrY9XMA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.WorldSaveEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.WorldSaveEvent.html",
+          "hash": "KLyLJuQ63/ShkuaD9Uu99g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.World.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.World.html",
+          "hash": "/xw4G9epaZHYa5ps3x0liA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Events.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Events.html",
+          "hash": "02YJNv2sSnpmdbHzCgtI4A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Framework.Events.EventHandlerAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Framework.Events.EventHandlerAttribute.html",
+          "hash": "y88cnvvwvLkpcZ7SwLU20w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Framework.Events.EventManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Framework.Events.EventManager.html",
+          "hash": "/vIjt4CvS2l9IZDp4m9ebg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Framework.Events.EventPriority.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Framework.Events.EventPriority.html",
+          "hash": "Ehl0mQVK4p2RTJp3Uc0QgA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Framework.Events.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Framework.Events.html",
+          "hash": "DLT4s78IzjgO0ttDVFrGUg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Framework.Extensions.BindingAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Framework.Extensions.BindingAttribute.html",
+          "hash": "oV/iG5RXl+Dx5jRuesxW/Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Framework.Extensions.BindingPriority.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Framework.Extensions.BindingPriority.html",
+          "hash": "vH8GGtfH3WuZ+PnkUN9k/Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Framework.Extensions.ExtensionManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Framework.Extensions.ExtensionManager.html",
+          "hash": "xyynbv7YcVZearg13zsGvw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Framework.Extensions.OrionExtension.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Framework.Extensions.OrionExtension.html",
+          "hash": "WlfYPdtgTlMeUjhO2IrM9g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Framework.Extensions.PluginAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Framework.Extensions.PluginAttribute.html",
+          "hash": "tFAgH3JDfoDqy36RbWp7KQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Framework.Extensions.ServiceAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Framework.Extensions.ServiceAttribute.html",
+          "hash": "sV6aQoGtAvulRHlxNYytLQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Framework.Extensions.ServiceScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Framework.Extensions.ServiceScope.html",
+          "hash": "l4bqkbEIjv+J+SyWhOtsVQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Framework.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Framework.Extensions.html",
+          "hash": "W+viSoTaNuAeAIonD8VXlA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Items.IItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Items.IItem.html",
+          "hash": "E8QGUE5flTDvATthS/m6Pg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Items.IItemExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Items.IItemExtensions.html",
+          "hash": "bcmQwrUd3LHrZd/WQLXBGw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Items.IItemService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Items.IItemService.html",
+          "hash": "hSNKB5XTLf5EctlZRF75uw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Items.ItemId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Items.ItemId.html",
+          "hash": "l0mxr2jxOrTVoYddPI95yQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Items.ItemPrefix.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Items.ItemPrefix.html",
+          "hash": "4U/GIdc052FNULzBgikxXg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Items.ItemStack.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Items.ItemStack.html",
+          "hash": "qcYVZv2Pe3zhs6/iGNy0ZA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Items.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Items.html",
+          "hash": "Oa6BBbjd839nyWZM3ScBDg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Npcs.INpc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Npcs.INpc.html",
+          "hash": "WAAFmp3OvmXtn+gShsxhhA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Npcs.INpcService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Npcs.INpcService.html",
+          "hash": "j4Yl+CJjZDLq4ar3Iqe7Iw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Npcs.NpcId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Npcs.NpcId.html",
+          "hash": "YBJwYyBdmANpOp+LhK3/0Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Npcs.NpcIdExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Npcs.NpcIdExtensions.html",
+          "hash": "BrU4aHZPZ0YmgGBT1pbv/A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Npcs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Npcs.html",
+          "hash": "ZbpZlwvQ5vfwPo2c1wSjsg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.OrionKernel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.OrionKernel.html",
+          "hash": "vF/+VQS9GnRlCbRYJoPQBQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Client.ClientConnectPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Client.ClientConnectPacket.html",
+          "hash": "MhYy/buDiN4+bSWCxDGFkA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Client.ClientPasswordPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Client.ClientPasswordPacket.html",
+          "hash": "rJVzCjovqTiysKuLwRSfXg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Client.ClientUuidPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Client.ClientUuidPacket.html",
+          "hash": "xZh3ZQ7AdjazYqc59BNp3w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Client.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Client.html",
+          "hash": "61pkVS7l4zjpvObWbWqaww=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.IPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.IPacket.html",
+          "hash": "G+Bm20enmNYjnLmb5BdNwQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.IPacketExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.IPacketExtensions.html",
+          "hash": "QR/1AySzCwWP7419i0Hmzw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Modules.ChatModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Modules.ChatModule.html",
+          "hash": "/WKGHswtln8/HHwwbHRn9Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Modules.IModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Modules.IModule.html",
+          "hash": "xckmF4ihANN/F3SArVNDmQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Modules.IModuleExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Modules.IModuleExtensions.html",
+          "hash": "26w206A6ht93s2ryRSObJg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Modules.ModuleId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Modules.ModuleId.html",
+          "hash": "DOsDBdsq39wxaEvzFTg+sw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Modules.ModuleIdExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Modules.ModuleIdExtensions.html",
+          "hash": "6LqrrpCLIWMAy9sCDBuFWw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Modules.ModulePacket-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Modules.ModulePacket-1.html",
+          "hash": "6jxv1n1XDrO2HFb7aF09Qg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Modules.UnknownModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Modules.UnknownModule.html",
+          "hash": "IbH1uC1SDKsvu7C/xCLYCA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Modules.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Modules.html",
+          "hash": "DNkNlREmrUmVFYYI4zmuUQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Npcs.NpcBuffPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Npcs.NpcBuffPacket.html",
+          "hash": "WrQ+jR4jgqN1hpHqU3tEdQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Npcs.NpcCatchPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Npcs.NpcCatchPacket.html",
+          "hash": "PEKv7E8UbuLBUosqZMlplw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Npcs.NpcFishPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Npcs.NpcFishPacket.html",
+          "hash": "ex/7BAszEsEJmsARUlY+yQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Npcs.NpcNamePacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Npcs.NpcNamePacket.html",
+          "hash": "cWQof9xvQQgzHKVeelPgHQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Npcs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Npcs.html",
+          "hash": "Iwq/DmYej6tAQte+Huo65A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.PacketContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.PacketContext.html",
+          "hash": "o844k5Mcud8CxrKmKRnPLg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.PacketId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.PacketId.html",
+          "hash": "++fCO3ZQUa4n/BYoAmOYzA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.PacketIdExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.PacketIdExtensions.html",
+          "hash": "bj5v9rRIXQMsUhCge5XLAw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Players.DodgeType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Players.DodgeType.html",
+          "hash": "yOyNUz2bh2t/8aQp+d5nJw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Players.PlayerBuffPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Players.PlayerBuffPacket.html",
+          "hash": "DnSwYFGU8jdUxPQInGsbnQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Players.PlayerDodgePacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Players.PlayerDodgePacket.html",
+          "hash": "7EiisXGox5P2Us8lUl25VQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Players.PlayerHealthEffectPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Players.PlayerHealthEffectPacket.html",
+          "hash": "c4wD1DdfMDR1cbJKwWGW3Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Players.PlayerHealthPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Players.PlayerHealthPacket.html",
+          "hash": "cgEnwJx9ChsN90ScN3q2Nw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Players.PlayerJoinPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Players.PlayerJoinPacket.html",
+          "hash": "fOUWbGkvEcrNG8fUnCZoqQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Players.PlayerManaEffectPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Players.PlayerManaEffectPacket.html",
+          "hash": "eVBC0QYxUi//7Jy9r8uGyA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Players.PlayerManaPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Players.PlayerManaPacket.html",
+          "hash": "8yUvvcZNmw/OobIOH5TQ+g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Players.PlayerPvpPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Players.PlayerPvpPacket.html",
+          "hash": "QdLBHL6dYk1c+WkrbRjwTA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Players.PlayerStealthPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Players.PlayerStealthPacket.html",
+          "hash": "uqYaEjcDi+7chJwK6giCrw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Players.PlayerTeamPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Players.PlayerTeamPacket.html",
+          "hash": "W2Ygfq9DGPsjAjFlARwZvw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Players.PlayerTeleportPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Players.PlayerTeleportPacket.html",
+          "hash": "fOrf7jPzdwOUHTjDWFzxiQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Players.TeleportationType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Players.TeleportationType.html",
+          "hash": "G1vK9zLuWrIUcq0kkM89LA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Players.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Players.html",
+          "hash": "OAGmbLRKmbX9zs8Fi/M5SQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Server.ServerChatPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Server.ServerChatPacket.html",
+          "hash": "nOOXsQ++sky1KWK0VV1gdA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Server.ServerCombatNumberPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Server.ServerCombatNumberPacket.html",
+          "hash": "aj5l57Kk4hXqaVbPLJykFA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Server.ServerCombatTextPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Server.ServerCombatTextPacket.html",
+          "hash": "6Mm8pjcjhhKoXRoQUGuIYA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Server.ServerDisconnectPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Server.ServerDisconnectPacket.html",
+          "hash": "AnWkvjAdHo2flyXVNSYAsQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Server.ServerIndexPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Server.ServerIndexPacket.html",
+          "hash": "xkptfQ80oiv4u2O8Fd6xMg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Server.ServerPasswordedPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Server.ServerPasswordedPacket.html",
+          "hash": "Rx20ipIa/vv+LqUGXd6/Ag=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.Server.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.Server.html",
+          "hash": "36wQIm2ibC8cV446PKXZkw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.UnknownPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.UnknownPacket.html",
+          "hash": "YJ6lP0rdb+zYLXRLPldMEA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.World.Chests.ChestInventoryPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.World.Chests.ChestInventoryPacket.html",
+          "hash": "BfyXVpHN0FDdsJX076EcMw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.World.Chests.ChestNamePacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.World.Chests.ChestNamePacket.html",
+          "hash": "s/DHYw9eLiTrrTaSRYAupA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.World.Chests.ChestOpenPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.World.Chests.ChestOpenPacket.html",
+          "hash": "Cq6Sbw3xOa2t3QAwk57ZZQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.World.Chests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.World.Chests.html",
+          "hash": "4eOklIpCk7EOqrFCt8r3Ow=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.World.Signs.SignReadPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.World.Signs.SignReadPacket.html",
+          "hash": "En0yWa886eccmJPvR9q03w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.World.Signs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.World.Signs.html",
+          "hash": "p0JXl978hm0drSULNhJGXg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.World.Tiles.BlockPaintPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.World.Tiles.BlockPaintPacket.html",
+          "hash": "QWHHP1GoHRo6jmsB1GhKng=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.World.Tiles.TileLiquidPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.World.Tiles.TileLiquidPacket.html",
+          "hash": "y3sP7xz1Hn1Pu79HOvKbuQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.World.Tiles.TileModification.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.World.Tiles.TileModification.html",
+          "hash": "hmkAk4RpBSs/nEeNiz/n+A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.World.Tiles.TileModifyPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.World.Tiles.TileModifyPacket.html",
+          "hash": "lf8Ej37J05W9SO8huNe+JQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.World.Tiles.TileSquarePacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.World.Tiles.TileSquarePacket.html",
+          "hash": "2CYU6nlH8B8qnUT9/z82QA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.World.Tiles.WallPaintPacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.World.Tiles.WallPaintPacket.html",
+          "hash": "0xyxPbTasRMDm3XcpGcoSA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.World.Tiles.WireActivatePacket.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.World.Tiles.WireActivatePacket.html",
+          "hash": "y7IiG2Poykz7NZGginSN2g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.World.Tiles.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.World.Tiles.html",
+          "hash": "5OT/5H/pmcDchCrVZRFfZA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Packets.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Packets.html",
+          "hash": "sf0WDSDC2luPgIOXJsPksA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Players.CharacterDifficulty.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Players.CharacterDifficulty.html",
+          "hash": "4hvq3Q4rNUNqF0DrPqPUWg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Players.IPlayer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Players.IPlayer.html",
+          "hash": "7RwzxTS1r6/GEXBXTVg/2A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Players.IPlayerExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Players.IPlayerExtensions.html",
+          "hash": "nk7EVUnOdWelVHZWmjIKhQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Players.IPlayerService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Players.IPlayerService.html",
+          "hash": "cKX84KksKsovH15IntYZPA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Players.IPlayerServiceExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Players.IPlayerServiceExtensions.html",
+          "hash": "ffRcbnq0nIYTh/Fxu63tXQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Players.PlayerTeam.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Players.PlayerTeam.html",
+          "hash": "EKJr0C64l+F6FHxQAeA+aQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Players.PlayerTeamExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Players.PlayerTeamExtensions.html",
+          "hash": "vSVLfSuOj95JhTJpt7pCFg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Players.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Players.html",
+          "hash": "IMn9E0LPsBfGDwrvPVmnzw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Projectiles.IProjectile.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Projectiles.IProjectile.html",
+          "hash": "Xq87d0scs7MJ90S/tmfpNA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Projectiles.IProjectileService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Projectiles.IProjectileService.html",
+          "hash": "g2lqw+AWAmysnW7w69fBsQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Projectiles.ProjectileId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Projectiles.ProjectileId.html",
+          "hash": "9UrBtPqyTt14lyR3weWgnw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.Projectiles.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.Projectiles.html",
+          "hash": "ldWyBq4rCMZQU61DfX1Q5w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Chests.IChest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Chests.IChest.html",
+          "hash": "ApxiVGso8yVcAE7F+O4ClQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Chests.IChestService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Chests.IChestService.html",
+          "hash": "KAogK9p5QxZohdPUMGjOtw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Chests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Chests.html",
+          "hash": "gaYLk+PslbSs6Lby2SGi8A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.IWorld.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.IWorld.html",
+          "hash": "xyF24wVgE9ODiw2Vw9xtxQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.IWorldService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.IWorldService.html",
+          "hash": "N85dJIQFIWGDroKAQVrzrA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Signs.ISign.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Signs.ISign.html",
+          "hash": "FFm5WbvfgQ8xzKJw7pHegQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Signs.ISignService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Signs.ISignService.html",
+          "hash": "WblksUbuz5DkKiNMCEDbMw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Signs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Signs.html",
+          "hash": "lLjtLlSzt1uTEDtf5FARrA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.TileEntities.ITileEntity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.TileEntities.ITileEntity.html",
+          "hash": "0r8nzeSdt4/WMOhFQsEivg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.TileEntities.ITileEntityExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.TileEntities.ITileEntityExtensions.html",
+          "hash": "4KpjUP5WYO9yQ+EWXZiFbw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.TileEntities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.TileEntities.html",
+          "hash": "7Uvyq/+92TcfsGIfwRB8+Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Tiles.BlockId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Tiles.BlockId.html",
+          "hash": "x9/wvoPWuXXBYPBNgqYcKw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Tiles.BlockIdExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Tiles.BlockIdExtensions.html",
+          "hash": "c+jeRJXJZf7+Bvfz4txobg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Tiles.ITileSlice.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Tiles.ITileSlice.html",
+          "hash": "8uV11rSJCmBziUrx7HAW2g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Tiles.ITileSliceExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Tiles.ITileSliceExtensions.html",
+          "hash": "g/b2360vnjf8djtUskt9nA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Tiles.Liquid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Tiles.Liquid.html",
+          "hash": "Z7bL9svzdbx8iL20YXpPzQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Tiles.PaintColor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Tiles.PaintColor.html",
+          "hash": "IlTPypQ2XvvpGgvjBR2pNA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Tiles.Slope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Tiles.Slope.html",
+          "hash": "PT+GPjuFFnf1XMZk8pbeGw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Tiles.Tile.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Tiles.Tile.html",
+          "hash": "MCaWsowRHPPDCloCej78Bg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Tiles.TileSlice.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Tiles.TileSlice.html",
+          "hash": "z3aVkPzH8M2F9yuTzNjX/g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Tiles.WallId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Tiles.WallId.html",
+          "hash": "zl0K8HU9EyB+t95J+BRDLw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.Tiles.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.Tiles.html",
+          "hash": "75cPI0XseZtSuDTUfbFHmA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.WorldDifficulty.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.WorldDifficulty.html",
+          "hash": "MGKIOTiS0GQW1YV8X145Wg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.World.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.World.html",
+          "hash": "kGd3mEF2dEzE31fWphuOlQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Orion.Core.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Orion.Core.html",
+          "hash": "hWHmrgC7fA1kcLVYyvT60A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "qXzh4qgqrJoE7zY4xKBy9g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "for-api-users/getting-started.md",
+      "output": {
+        ".html": {
+          "relative_path": "for-api-users/getting-started.html",
+          "hash": "tmUGxWmbPvZcsC9UC2vtpA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "UidNotFound"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "for-api-users/plugin-template.md",
+      "output": {
+        ".html": {
+          "relative_path": "for-api-users/plugin-template.html",
+          "hash": "6QLwgNKwr4Ld56TQ142qgQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "for-api-users/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "for-api-users/toc.html",
+          "hash": "unb56BgnNsvW5+86MbGqJg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "UidNotFound"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "for-api-users/tutorials/events.md",
+      "output": {
+        ".html": {
+          "relative_path": "for-api-users/tutorials/events.html",
+          "hash": "/tDo3BVfbVLTwtlY6LtZnA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "for-api-users/tutorials/injecting-services.md",
+      "output": {
+        ".html": {
+          "relative_path": "for-api-users/tutorials/injecting-services.html",
+          "hash": "+PK3jIXwLLjmZMg5OaWnUg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "for-developers/contributing-guidelines.md",
+      "output": {
+        ".html": {
+          "relative_path": "for-developers/contributing-guidelines.html",
+          "hash": "6Wxurml82BOOjx8BnId90A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "for-developers/getting-started.md",
+      "output": {
+        ".html": {
+          "relative_path": "for-developers/getting-started.html",
+          "hash": "bgTzNQiAPU6c/5ONf22pIg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Toc",
+      "source_relative_path": "for-developers/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "for-developers/toc.html",
+          "hash": "qWjJ9TY5chJnDZb3d6ZOjw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "UidNotFound"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "TxLBrwDS9hOmjI3Bg7z90g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "dTHlBIVxGO6yRU9imI1PFQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 201,
+          "skipped_file_count": 0
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 7,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

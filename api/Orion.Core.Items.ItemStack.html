@@ -1,0 +1,687 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Struct ItemStack
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Struct ItemStack
+   ">
+    <meta name="generator" content="docfx 2.45.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Orion.Core.Items.ItemStack">
+  
+  
+  <h1 id="Orion_Core_Items_ItemStack" data-uid="Orion.Core.Items.ItemStack" class="text-break">Struct ItemStack
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a stack of items in an inventory of some sort.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="Orion.Core.Items.ItemStack.html">ItemStack</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Orion.Core.Items.html">Orion.Core.Items</a></h6>
+  <h6><strong>Assembly</strong>: Orion.Core.dll</h6>
+  <h5 id="Orion_Core_Items_ItemStack_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public struct ItemStack : IEquatable&lt;ItemStack&gt;</code></pre>
+  </div>
+  <h5 id="Orion_Core_Items_ItemStack_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>An item stack instance fully describes an inventory slot. It is composed of an <a class="xref" href="Orion.Core.Items.ItemId.html">ItemId</a>, the item
+stack size, and an <a class="xref" href="Orion.Core.Items.ItemPrefix.html">ItemPrefix</a>.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Items_ItemStack__ctor_Orion_Core_Items_ItemId_System_Int32_Orion_Core_Items_ItemPrefix_.md&amp;value=---%0Auid%3A%20Orion.Core.Items.ItemStack.%23ctor(Orion.Core.Items.ItemId%2CSystem.Int32%2COrion.Core.Items.ItemPrefix)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Items/ItemStack.cs/#L40">View Source</a>
+  </span>
+  <a id="Orion_Core_Items_ItemStack__ctor_" data-uid="Orion.Core.Items.ItemStack.#ctor*"></a>
+  <h4 id="Orion_Core_Items_ItemStack__ctor_Orion_Core_Items_ItemId_System_Int32_Orion_Core_Items_ItemPrefix_" data-uid="Orion.Core.Items.ItemStack.#ctor(Orion.Core.Items.ItemId,System.Int32,Orion.Core.Items.ItemPrefix)">ItemStack(ItemId, Int32, ItemPrefix)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Orion.Core.Items.ItemStack.html">ItemStack</a> structure with the specified item
+<code data-dev-comment-type="paramref" class="paramref">id</code> and optional <code data-dev-comment-type="paramref" class="paramref">stackSize</code> and <code data-dev-comment-type="paramref" class="paramref">prefix</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ItemStack(ItemId id, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Items.ItemId.html">ItemId</a></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>The item ID.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">stackSize</span></td>
+        <td><p>The item stack size.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Items.ItemPrefix.html">ItemPrefix</a></td>
+        <td><span class="parametername">prefix</span></td>
+        <td><p>The item prefix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Items_ItemStack_Id.md&amp;value=---%0Auid%3A%20Orion.Core.Items.ItemStack.Id%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Items/ItemStack.cs/#L51">View Source</a>
+  </span>
+  <a id="Orion_Core_Items_ItemStack_Id_" data-uid="Orion.Core.Items.ItemStack.Id*"></a>
+  <h4 id="Orion_Core_Items_ItemStack_Id" data-uid="Orion.Core.Items.ItemStack.Id">Id</h4>
+  <div class="markdown level1 summary"><p>Gets the item ID.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ItemId Id { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Items.ItemId.html">ItemId</a></td>
+        <td><p>The item ID.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Items_ItemStack_Prefix.md&amp;value=---%0Auid%3A%20Orion.Core.Items.ItemStack.Prefix%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Items/ItemStack.cs/#L63">View Source</a>
+  </span>
+  <a id="Orion_Core_Items_ItemStack_Prefix_" data-uid="Orion.Core.Items.ItemStack.Prefix*"></a>
+  <h4 id="Orion_Core_Items_ItemStack_Prefix" data-uid="Orion.Core.Items.ItemStack.Prefix">Prefix</h4>
+  <div class="markdown level1 summary"><p>Gets the item prefix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ItemPrefix Prefix { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Items.ItemPrefix.html">ItemPrefix</a></td>
+        <td><p>The item prefix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Items_ItemStack_StackSize.md&amp;value=---%0Auid%3A%20Orion.Core.Items.ItemStack.StackSize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Items/ItemStack.cs/#L57">View Source</a>
+  </span>
+  <a id="Orion_Core_Items_ItemStack_StackSize_" data-uid="Orion.Core.Items.ItemStack.StackSize*"></a>
+  <h4 id="Orion_Core_Items_ItemStack_StackSize" data-uid="Orion.Core.Items.ItemStack.StackSize">StackSize</h4>
+  <div class="markdown level1 summary"><p>Gets the item stack size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int StackSize { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The item stack size.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Items_ItemStack_Equals_Orion_Core_Items_ItemStack_.md&amp;value=---%0Auid%3A%20Orion.Core.Items.ItemStack.Equals(Orion.Core.Items.ItemStack)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Items/ItemStack.cs/#L70">View Source</a>
+  </span>
+  <a id="Orion_Core_Items_ItemStack_Equals_" data-uid="Orion.Core.Items.ItemStack.Equals*"></a>
+  <h4 id="Orion_Core_Items_ItemStack_Equals_Orion_Core_Items_ItemStack_" data-uid="Orion.Core.Items.ItemStack.Equals(Orion.Core.Items.ItemStack)">Equals(ItemStack)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Pure]
+public bool Equals(ItemStack other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Items.ItemStack.html">ItemStack</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Items_ItemStack_Equals_System_Object_.md&amp;value=---%0Auid%3A%20Orion.Core.Items.ItemStack.Equals(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Items/ItemStack.cs/#L66">View Source</a>
+  </span>
+  <a id="Orion_Core_Items_ItemStack_Equals_" data-uid="Orion.Core.Items.ItemStack.Equals*"></a>
+  <h4 id="Orion_Core_Items_ItemStack_Equals_System_Object_" data-uid="Orion.Core.Items.ItemStack.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Pure]
+public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.ValueType.Equals(System.Object)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Items_ItemStack_GetHashCode.md&amp;value=---%0Auid%3A%20Orion.Core.Items.ItemStack.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Items/ItemStack.cs/#L77">View Source</a>
+  </span>
+  <a id="Orion_Core_Items_ItemStack_GetHashCode_" data-uid="Orion.Core.Items.ItemStack.GetHashCode*"></a>
+  <h4 id="Orion_Core_Items_ItemStack_GetHashCode" data-uid="Orion.Core.Items.ItemStack.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Returns the hash code of the item stack.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Pure]
+public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The hash code of the item stack.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.ValueType.GetHashCode()</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Items_ItemStack_ToString.md&amp;value=---%0Auid%3A%20Orion.Core.Items.ItemStack.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Items/ItemStack.cs/#L84">View Source</a>
+  </span>
+  <a id="Orion_Core_Items_ItemStack_ToString_" data-uid="Orion.Core.Items.ItemStack.ToString*"></a>
+  <h4 id="Orion_Core_Items_ItemStack_ToString" data-uid="Orion.Core.Items.ItemStack.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Returns a string representation of the item stack.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Pure]
+public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>A string representation of the item stack.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.ValueType.ToString()</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Items_ItemStack_WithPrefix_Orion_Core_Items_ItemPrefix_.md&amp;value=---%0Auid%3A%20Orion.Core.Items.ItemStack.WithPrefix(Orion.Core.Items.ItemPrefix)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Items/ItemStack.cs/#L100">View Source</a>
+  </span>
+  <a id="Orion_Core_Items_ItemStack_WithPrefix_" data-uid="Orion.Core.Items.ItemStack.WithPrefix*"></a>
+  <h4 id="Orion_Core_Items_ItemStack_WithPrefix_Orion_Core_Items_ItemPrefix_" data-uid="Orion.Core.Items.ItemStack.WithPrefix(Orion.Core.Items.ItemPrefix)">WithPrefix(ItemPrefix)</h4>
+  <div class="markdown level1 summary"><p>Returns a new item stack with the given <code data-dev-comment-type="paramref" class="paramref">prefix</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Pure]
+public ItemStack WithPrefix(ItemPrefix prefix)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Items.ItemPrefix.html">ItemPrefix</a></td>
+        <td><span class="parametername">prefix</span></td>
+        <td><p>The item prefix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Items.ItemStack.html">ItemStack</a></td>
+        <td><p>A new item stack with the given <code data-dev-comment-type="paramref" class="paramref">prefix</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Items_ItemStack_WithStackSize_System_Int32_.md&amp;value=---%0Auid%3A%20Orion.Core.Items.ItemStack.WithStackSize(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Items/ItemStack.cs/#L92">View Source</a>
+  </span>
+  <a id="Orion_Core_Items_ItemStack_WithStackSize_" data-uid="Orion.Core.Items.ItemStack.WithStackSize*"></a>
+  <h4 id="Orion_Core_Items_ItemStack_WithStackSize_System_Int32_" data-uid="Orion.Core.Items.ItemStack.WithStackSize(System.Int32)">WithStackSize(Int32)</h4>
+  <div class="markdown level1 summary"><p>Returns a new item stack with the given <code data-dev-comment-type="paramref" class="paramref">stackSize</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Pure]
+public ItemStack WithStackSize(int stackSize)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">stackSize</span></td>
+        <td><p>The item stack size.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Items.ItemStack.html">ItemStack</a></td>
+        <td><p>A new item stack with the given <code data-dev-comment-type="paramref" class="paramref">stackSize</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Items_ItemStack_op_Equality_Orion_Core_Items_ItemStack_Orion_Core_Items_ItemStack_.md&amp;value=---%0Auid%3A%20Orion.Core.Items.ItemStack.op_Equality(Orion.Core.Items.ItemStack%2COrion.Core.Items.ItemStack)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Items/ItemStack.cs/#L112">View Source</a>
+  </span>
+  <a id="Orion_Core_Items_ItemStack_op_Equality_" data-uid="Orion.Core.Items.ItemStack.op_Equality*"></a>
+  <h4 id="Orion_Core_Items_ItemStack_op_Equality_Orion_Core_Items_ItemStack_Orion_Core_Items_ItemStack_" data-uid="Orion.Core.Items.ItemStack.op_Equality(Orion.Core.Items.ItemStack,Orion.Core.Items.ItemStack)">Equality(ItemStack, ItemStack)</h4>
+  <div class="markdown level1 summary"><p>Returns a value indicating whether <code data-dev-comment-type="paramref" class="paramref">left</code> and <code data-dev-comment-type="paramref" class="paramref">right</code> are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Pure]
+public static bool operator ==(ItemStack left, ItemStack right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Items.ItemStack.html">ItemStack</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>The left item stack.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Items.ItemStack.html">ItemStack</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>The right item stack.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><span class="xref">true</span> if <code data-dev-comment-type="paramref" class="paramref">left</code> is equal to <code data-dev-comment-type="paramref" class="paramref">right</code>; otherwise,
+<span class="xref">false</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Items_ItemStack_op_Inequality_Orion_Core_Items_ItemStack_Orion_Core_Items_ItemStack_.md&amp;value=---%0Auid%3A%20Orion.Core.Items.ItemStack.op_Inequality(Orion.Core.Items.ItemStack%2COrion.Core.Items.ItemStack)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Items/ItemStack.cs/#L124">View Source</a>
+  </span>
+  <a id="Orion_Core_Items_ItemStack_op_Inequality_" data-uid="Orion.Core.Items.ItemStack.op_Inequality*"></a>
+  <h4 id="Orion_Core_Items_ItemStack_op_Inequality_Orion_Core_Items_ItemStack_Orion_Core_Items_ItemStack_" data-uid="Orion.Core.Items.ItemStack.op_Inequality(Orion.Core.Items.ItemStack,Orion.Core.Items.ItemStack)">Inequality(ItemStack, ItemStack)</h4>
+  <div class="markdown level1 summary"><p>Returns a value indicating whether <code data-dev-comment-type="paramref" class="paramref">left</code> and <code data-dev-comment-type="paramref" class="paramref">right</code> are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Pure]
+public static bool operator !=(ItemStack left, ItemStack right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Items.ItemStack.html">ItemStack</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>The left item stack.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Orion.Core.Items.ItemStack.html">ItemStack</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>The right item stack.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><span class="xref">true</span> if <code data-dev-comment-type="paramref" class="paramref">left</code> is not equal to <code data-dev-comment-type="paramref" class="paramref">right</code>; otherwise,
+<span class="xref">false</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">System.IEquatable&lt;T&gt;</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Items_ItemStack.md&amp;value=---%0Auid%3A%20Orion.Core.Items.ItemStack%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Items/ItemStack.cs/#L31" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

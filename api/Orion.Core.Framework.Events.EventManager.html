@@ -1,0 +1,641 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class EventManager
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class EventManager
+   ">
+    <meta name="generator" content="docfx 2.45.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Orion.Core.Framework.Events.EventManager">
+  
+  
+  <h1 id="Orion_Core_Framework_Events_EventManager" data-uid="Orion.Core.Framework.Events.EventManager" class="text-break">Class EventManager
+  </h1>
+  <div class="markdown level0 summary"><p>Handles event handler registrations, deregistrations, and event raisings.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">EventManager</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Orion.Core.Framework.Events.html">Orion.Core.Framework.Events</a></h6>
+  <h6><strong>Assembly</strong>: Orion.Core.dll</h6>
+  <h5 id="Orion_Core_Framework_Events_EventManager_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class EventManager</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Framework_Events_EventManager_DeregisterAsyncHandler__1_System_Func___0_System_Threading_Tasks_Task__ILogger_.md&amp;value=---%0Auid%3A%20Orion.Core.Framework.Events.EventManager.DeregisterAsyncHandler%60%601(System.Func%7B%60%600%2CSystem.Threading.Tasks.Task%7D%2CILogger)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Framework/Events/EventManager.cs/#L237">View Source</a>
+  </span>
+  <a id="Orion_Core_Framework_Events_EventManager_DeregisterAsyncHandler_" data-uid="Orion.Core.Framework.Events.EventManager.DeregisterAsyncHandler*"></a>
+  <h4 id="Orion_Core_Framework_Events_EventManager_DeregisterAsyncHandler__1_System_Func___0_System_Threading_Tasks_Task__ILogger_" data-uid="Orion.Core.Framework.Events.EventManager.DeregisterAsyncHandler``1(System.Func{``0,System.Threading.Tasks.Task},ILogger)">DeregisterAsyncHandler&lt;TEvent&gt;(Func&lt;TEvent, Task&gt;, ILogger)</h4>
+  <div class="markdown level1 summary"><p>Deregisters the given asynchronous event <code data-dev-comment-type="paramref" class="paramref">handler</code> for events of type
+<code data-dev-comment-type="typeparamref" class="typeparamref">TEvent</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DeregisterAsyncHandler&lt;TEvent&gt;(Func&lt;TEvent, Task&gt; handler, ILogger log)
+    where TEvent : Event</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TEvent, <span class="xref">System.Threading.Tasks.Task</span>&gt;</td>
+        <td><span class="parametername">handler</span></td>
+        <td><p>The asynchronous event handler to deregister.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ILogger</span></td>
+        <td><span class="parametername">log</span></td>
+        <td><p>The log to log the deregistration to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEvent</span></td>
+        <td><p>The type of event.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">handler</code> or <code data-dev-comment-type="paramref" class="paramref">log</code> are <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Framework_Events_EventManager_DeregisterHandler__1_System_Action___0__ILogger_.md&amp;value=---%0Auid%3A%20Orion.Core.Framework.Events.EventManager.DeregisterHandler%60%601(System.Action%7B%60%600%7D%2CILogger)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Framework/Events/EventManager.cs/#L211">View Source</a>
+  </span>
+  <a id="Orion_Core_Framework_Events_EventManager_DeregisterHandler_" data-uid="Orion.Core.Framework.Events.EventManager.DeregisterHandler*"></a>
+  <h4 id="Orion_Core_Framework_Events_EventManager_DeregisterHandler__1_System_Action___0__ILogger_" data-uid="Orion.Core.Framework.Events.EventManager.DeregisterHandler``1(System.Action{``0},ILogger)">DeregisterHandler&lt;TEvent&gt;(Action&lt;TEvent&gt;, ILogger)</h4>
+  <div class="markdown level1 summary"><p>Deregisters the given synchronous event <code data-dev-comment-type="paramref" class="paramref">handler</code> for events of type
+<code data-dev-comment-type="typeparamref" class="typeparamref">TEvent</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DeregisterHandler&lt;TEvent&gt;(Action&lt;TEvent&gt; handler, ILogger log)
+    where TEvent : Event</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Action</span>&lt;TEvent&gt;</td>
+        <td><span class="parametername">handler</span></td>
+        <td><p>The synchronous event handler to deregister.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ILogger</span></td>
+        <td><span class="parametername">log</span></td>
+        <td><p>The log to log the deregistration to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEvent</span></td>
+        <td><p>The type of event.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">handler</code> or <code data-dev-comment-type="paramref" class="paramref">log</code> are <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Framework_Events_EventManager_DeregisterHandlers_System_Object_ILogger_.md&amp;value=---%0Auid%3A%20Orion.Core.Framework.Events.EventManager.DeregisterHandlers(System.Object%2CILogger)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Framework/Events/EventManager.cs/#L262">View Source</a>
+  </span>
+  <a id="Orion_Core_Framework_Events_EventManager_DeregisterHandlers_" data-uid="Orion.Core.Framework.Events.EventManager.DeregisterHandlers*"></a>
+  <h4 id="Orion_Core_Framework_Events_EventManager_DeregisterHandlers_System_Object_ILogger_" data-uid="Orion.Core.Framework.Events.EventManager.DeregisterHandlers(System.Object,ILogger)">DeregisterHandlers(Object, ILogger)</h4>
+  <div class="markdown level1 summary"><p>Deregisters all of the instance methods marked with <a class="xref" href="Orion.Core.Framework.Events.EventHandlerAttribute.html">EventHandlerAttribute</a> as event handlers in
+the given <code data-dev-comment-type="paramref" class="paramref">obj</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DeregisterHandlers(object obj, ILogger log)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">obj</span></td>
+        <td><p>The object whose instance methods should be deregistered.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ILogger</span></td>
+        <td><span class="parametername">log</span></td>
+        <td><p>The log to log the deregistrations to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">obj</code> or <code data-dev-comment-type="paramref" class="paramref">log</code> are <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Framework_Events_EventManager_Raise__1___0_ILogger_.md&amp;value=---%0Auid%3A%20Orion.Core.Framework.Events.EventManager.Raise%60%601(%60%600%2CILogger)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Framework/Events/EventManager.cs/#L312">View Source</a>
+  </span>
+  <a id="Orion_Core_Framework_Events_EventManager_Raise_" data-uid="Orion.Core.Framework.Events.EventManager.Raise*"></a>
+  <h4 id="Orion_Core_Framework_Events_EventManager_Raise__1___0_ILogger_" data-uid="Orion.Core.Framework.Events.EventManager.Raise``1(``0,ILogger)">Raise&lt;TEvent&gt;(TEvent, ILogger)</h4>
+  <div class="markdown level1 summary"><p>Raises the given <code data-dev-comment-type="paramref" class="paramref">evt</code>, executing all of the event handlers which apply to events of type
+<code data-dev-comment-type="typeparamref" class="typeparamref">TEvent</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Raise&lt;TEvent&gt;(TEvent evt, ILogger log)
+    where TEvent : Event</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TEvent</span></td>
+        <td><span class="parametername">evt</span></td>
+        <td><p>The event to raise.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ILogger</span></td>
+        <td><span class="parametername">log</span></td>
+        <td><p>The log to log the raising to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEvent</span></td>
+        <td><p>The type of event.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">evt</code> or <code data-dev-comment-type="paramref" class="paramref">log</code> are <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Framework_Events_EventManager_RegisterAsyncHandler__1_System_Func___0_System_Threading_Tasks_Task__ILogger_.md&amp;value=---%0Auid%3A%20Orion.Core.Framework.Events.EventManager.RegisterAsyncHandler%60%601(System.Func%7B%60%600%2CSystem.Threading.Tasks.Task%7D%2CILogger)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Framework/Events/EventManager.cs/#L86">View Source</a>
+  </span>
+  <a id="Orion_Core_Framework_Events_EventManager_RegisterAsyncHandler_" data-uid="Orion.Core.Framework.Events.EventManager.RegisterAsyncHandler*"></a>
+  <h4 id="Orion_Core_Framework_Events_EventManager_RegisterAsyncHandler__1_System_Func___0_System_Threading_Tasks_Task__ILogger_" data-uid="Orion.Core.Framework.Events.EventManager.RegisterAsyncHandler``1(System.Func{``0,System.Threading.Tasks.Task},ILogger)">RegisterAsyncHandler&lt;TEvent&gt;(Func&lt;TEvent, Task&gt;, ILogger)</h4>
+  <div class="markdown level1 summary"><p>Registers the given asynchronous event <code data-dev-comment-type="paramref" class="paramref">handler</code> for events of type
+<code data-dev-comment-type="typeparamref" class="typeparamref">TEvent</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RegisterAsyncHandler&lt;TEvent&gt;(Func&lt;TEvent, Task&gt; handler, ILogger log)
+    where TEvent : Event</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TEvent, <span class="xref">System.Threading.Tasks.Task</span>&gt;</td>
+        <td><span class="parametername">handler</span></td>
+        <td><p>The asynchronous event handler to register.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ILogger</span></td>
+        <td><span class="parametername">log</span></td>
+        <td><p>The log to log the registration to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEvent</span></td>
+        <td><p>The type of event.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">handler</code> or <code data-dev-comment-type="paramref" class="paramref">log</code> are <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Framework_Events_EventManager_RegisterHandler__1_System_Action___0__ILogger_.md&amp;value=---%0Auid%3A%20Orion.Core.Framework.Events.EventManager.RegisterHandler%60%601(System.Action%7B%60%600%7D%2CILogger)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Framework/Events/EventManager.cs/#L60">View Source</a>
+  </span>
+  <a id="Orion_Core_Framework_Events_EventManager_RegisterHandler_" data-uid="Orion.Core.Framework.Events.EventManager.RegisterHandler*"></a>
+  <h4 id="Orion_Core_Framework_Events_EventManager_RegisterHandler__1_System_Action___0__ILogger_" data-uid="Orion.Core.Framework.Events.EventManager.RegisterHandler``1(System.Action{``0},ILogger)">RegisterHandler&lt;TEvent&gt;(Action&lt;TEvent&gt;, ILogger)</h4>
+  <div class="markdown level1 summary"><p>Registers the given synchronous event <code data-dev-comment-type="paramref" class="paramref">handler</code> for events of type
+<code data-dev-comment-type="typeparamref" class="typeparamref">TEvent</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RegisterHandler&lt;TEvent&gt;(Action&lt;TEvent&gt; handler, ILogger log)
+    where TEvent : Event</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Action</span>&lt;TEvent&gt;</td>
+        <td><span class="parametername">handler</span></td>
+        <td><p>The synchronous event handler to register.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ILogger</span></td>
+        <td><span class="parametername">log</span></td>
+        <td><p>The log to log the registration to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEvent</span></td>
+        <td><p>The type of event.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">handler</code> or <code data-dev-comment-type="paramref" class="paramref">log</code> are <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Framework_Events_EventManager_RegisterHandlers_System_Object_ILogger_.md&amp;value=---%0Auid%3A%20Orion.Core.Framework.Events.EventManager.RegisterHandlers(System.Object%2CILogger)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Framework/Events/EventManager.cs/#L111">View Source</a>
+  </span>
+  <a id="Orion_Core_Framework_Events_EventManager_RegisterHandlers_" data-uid="Orion.Core.Framework.Events.EventManager.RegisterHandlers*"></a>
+  <h4 id="Orion_Core_Framework_Events_EventManager_RegisterHandlers_System_Object_ILogger_" data-uid="Orion.Core.Framework.Events.EventManager.RegisterHandlers(System.Object,ILogger)">RegisterHandlers(Object, ILogger)</h4>
+  <div class="markdown level1 summary"><p>Registers all of the instance methods marked with <a class="xref" href="Orion.Core.Framework.Events.EventHandlerAttribute.html">EventHandlerAttribute</a> as event handlers in
+the given <code data-dev-comment-type="paramref" class="paramref">obj</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RegisterHandlers(object obj, ILogger log)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">obj</span></td>
+        <td><p>The object whose instance methods should be registered.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ILogger</span></td>
+        <td><span class="parametername">log</span></td>
+        <td><p>The log to log the registrations to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">obj</code> or <code data-dev-comment-type="paramref" class="paramref">log</code> are <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Pryaxis/orion-core/new/v1.4/apiSpec/new?filename=Orion_Core_Framework_Events_EventManager.md&amp;value=---%0Auid%3A%20Orion.Core.Framework.Events.EventManager%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Pryaxis/orion-core/blob/v1.4/src/Orion.Core/Framework/Events/EventManager.cs/#L31" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
