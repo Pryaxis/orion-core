@@ -181,7 +181,7 @@ namespace Orion.Core.Framework.Events
         [EventHandler("test-async")]
         private static async Task TestHandlerAsync(TestEvent evt)
         {
-            await Task.Delay(100);
+            await Task.Delay(100).ConfigureAwait(false);
 
             evt.Value = 100;
         }
@@ -189,13 +189,13 @@ namespace Orion.Core.Framework.Events
         [EventHandler("test-async-2")]
         private static async Task TestHandler2Async(TestEvent evt)
         {
-            await Task.Delay(100);
+            await Task.Delay(100).ConfigureAwait(false);
         }
 
         [EventHandler("test-async-3")]
         private static async Task TestHandler3Async(TestEvent evt)
         {
-            await Task.Delay(100);
+            await Task.Delay(100).ConfigureAwait(false);
 
             throw new NotImplementedException();
         }
@@ -203,7 +203,7 @@ namespace Orion.Core.Framework.Events
         [EventHandler("test-async-4", IsBlocking = false)]
         private static async Task TestHandler4Async(TestEvent evt)
         {
-            await Task.Delay(1000);
+            await Task.Delay(1000).ConfigureAwait(false);
         }
 
         private class TestEvent : Event

@@ -56,7 +56,8 @@ namespace Orion.Core.Framework.Events
             var manager = new EventManager();
 
             Assert.Throws<ArgumentNullException>(
-                () => manager.RegisterAsyncHandler<TestEvent>(async evt => await Task.Delay(100), null!));
+                () => manager.RegisterAsyncHandler<TestEvent>(
+                    async evt => await Task.Delay(100).ConfigureAwait(false), null!));
         }
 
         [Fact]
@@ -105,7 +106,8 @@ namespace Orion.Core.Framework.Events
             var manager = new EventManager();
 
             Assert.Throws<ArgumentNullException>(
-                () => manager.DeregisterAsyncHandler<TestEvent>(async evt => await Task.Delay(100), null!));
+                () => manager.DeregisterAsyncHandler<TestEvent>(
+                    async evt => await Task.Delay(100).ConfigureAwait(false), null!));
         }
 
         [Fact]
@@ -158,7 +160,7 @@ namespace Orion.Core.Framework.Events
             var manager = new EventManager();
             manager.RegisterAsyncHandler<TestEvent>(async evt =>
             {
-                await Task.Delay(100);
+                await Task.Delay(100).ConfigureAwait(false);
 
                 evt.Value = 100;
             }, Logger.None);
@@ -234,7 +236,7 @@ namespace Orion.Core.Framework.Events
         {
             static async Task Handler(TestEvent evt)
             {
-                await Task.Delay(100);
+                await Task.Delay(100).ConfigureAwait(false);
 
                 evt.Value = 100;
             }
@@ -255,7 +257,8 @@ namespace Orion.Core.Framework.Events
         {
             var manager = new EventManager();
 
-            manager.DeregisterAsyncHandler<TestEvent>(async evt => await Task.Delay(100), Logger.None);
+            manager.DeregisterAsyncHandler<TestEvent>(
+                async evt => await Task.Delay(100).ConfigureAwait(false), Logger.None);
         }
 
         [Fact]
@@ -335,7 +338,7 @@ namespace Orion.Core.Framework.Events
             [EventHandler("test")]
             public async Task OnTestAsync(TestEvent evt)
             {
-                await Task.Delay(100);
+                await Task.Delay(100).ConfigureAwait(false);
 
                 evt.Value = 100;
             }
