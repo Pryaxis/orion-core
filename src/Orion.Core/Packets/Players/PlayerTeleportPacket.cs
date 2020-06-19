@@ -15,26 +15,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+using System.Runtime.InteropServices;
+
 namespace Orion.Core.Packets.Players
 {
     /// <summary>
-    /// Describes a teleport item in a <see cref="PlayerTeleportItemPacket"/>.
+    /// A packet sent to teleport a player.
     /// </summary>
-    public enum TeleportItem : byte
+    [StructLayout(LayoutKind.Explicit)]
+    public struct PlayerTeleportPacket : IPacket
     {
         /// <summary>
-        /// Indicates a teleportation potion.
+        /// Gets or sets the teleportation type.
         /// </summary>
-        TeleportationPotion = 0,
+        /// <value>The teleportation type.</value>
+        [field: FieldOffset(0)] public TeleportationType Type { get; set; }
 
-        /// <summary>
-        /// Indicates a magic conch.
-        /// </summary>
-        MagicConch = 1,
+        PacketId IPacket.Id => PacketId.PlayerTeleport;
 
-        /// <summary>
-        /// Indicates a demon conch.
-        /// </summary>
-        DemonConch = 2
+        /// <inheritdoc/>
+        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 1);
+
+        /// <inheritdoc/>
+        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 1);
     }
 }

@@ -22,35 +22,34 @@ using Xunit;
 namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerTeleportItemPacketTests
+    public class PlayerTeleportPacketTests
     {
         public static readonly byte[] Bytes = { 4, 0, 73, 2 };
 
         [Fact]
-        public void Item_Set_Get()
+        public void Type_Set_Get()
         {
-            var packet = new PlayerTeleportItemPacket();
+            var packet = new PlayerTeleportPacket();
 
-            packet.Item = TeleportItem.DemonConch;
+            packet.Type = TeleportationType.DemonConch;
 
-            Assert.Equal(TeleportItem.DemonConch, packet.Item);
+            Assert.Equal(TeleportationType.DemonConch, packet.Type);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = new PlayerTeleportItemPacket();
+            var packet = new PlayerTeleportPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
-            Assert.Equal(TeleportItem.DemonConch, packet.Item);
+            Assert.Equal(TeleportationType.DemonConch, packet.Type);
         }
 
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<PlayerTeleportItemPacket>(
-                Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<PlayerTeleportPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

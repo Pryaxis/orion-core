@@ -18,7 +18,7 @@
 namespace Orion.Core.Packets.Players
 {
     /// <summary>
-    /// Describes a dodge type in a <see cref="PlayerDodgePacket"/>.
+    /// Specifies the dodge type in a <see cref="PlayerDodgePacket"/>.
     /// </summary>
     public enum DodgeType : byte
     {
