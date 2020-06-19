@@ -16,34 +16,28 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace Orion.Core.Packets.Server
 {
     /// <summary>
     /// A packet sent from the server to the client to set the client's index.
     /// </summary>
+    [StructLayout(LayoutKind.Explicit)]
     public struct ServerIndexPacket : IPacket
     {
         /// <summary>
         /// Gets or sets the client's index.
         /// </summary>
         /// <value>The client's index.</value>
-        public byte Index { get; set; }
+        [field: FieldOffset(0)] public byte Index { get; set; }
 
         PacketId IPacket.Id => PacketId.ServerIndex;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context)
-        {
-            Index = span[0];
-            return 1;
-        }
+        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 1);
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context)
-        {
-            span[0] = Index;
-            return 1;
-        }
+        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 1);
     }
 }

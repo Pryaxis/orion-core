@@ -67,27 +67,15 @@ namespace Orion.Core.Packets.World.Chests
         /// <inheritdoc/>
         public int Read(Span<byte> span, PacketContext context)
         {
-            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 6);
-            if (context == PacketContext.Server)
-            {
-                return 6;
-            }
-
-            var nameBytes = span[6..].Read(Encoding.UTF8, out _name);
-            return 6 + nameBytes;
+            var index = span.Read(ref this.AsRefByte(0), 6);
+            return context == PacketContext.Server ? index : index + span[index..].Read(Encoding.UTF8, out _name);
         }
 
         /// <inheritdoc/>
         public int Write(Span<byte> span, PacketContext context)
         {
-            Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 6);
-            if (context == PacketContext.Client)
-            {
-                return 6;
-            }
-
-            var nameBytes = span[6..].Write(Name, Encoding.UTF8);
-            return 6 + nameBytes;
+            var index = span.Write(ref this.AsRefByte(0), 6);
+            return context == PacketContext.Client ? index : index + span[index..].Write(Name, Encoding.UTF8);
         }
     }
 }

@@ -44,6 +44,9 @@ namespace Orion.Core.Packets
         /// <param name="span">The span to read from.</param>
         /// <param name="context">The packet context to use when reading.</param>
         /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
+        /// <remarks>
+        /// Implementations may not perform any bounds checking on <paramref name="span"/>.
+        /// </remarks>
         int Read(Span<byte> span, PacketContext context);
 
         /// <summary>
@@ -53,6 +56,9 @@ namespace Orion.Core.Packets
         /// <param name="span">The span to write to.</param>
         /// <param name="context">The packet context to use when writing.</param>
         /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
+        /// <remarks>
+        /// Implementations may not perform any bounds checking on <paramref name="span"/>.
+        /// </remarks>
         int Write(Span<byte> span, PacketContext context);
     }
 

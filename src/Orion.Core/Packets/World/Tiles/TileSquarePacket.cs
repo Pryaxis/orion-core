@@ -97,15 +97,14 @@ namespace Orion.Core.Packets.World.Tiles
         public int Read(Span<byte> span, PacketContext context)
         {
             var index = 2;
-            var size = Unsafe.ReadUnaligned<short>(ref span[0]);
+            var size = Unsafe.ReadUnaligned<short>(ref MemoryMarshal.GetReference(span));
             if (size < 0)
             {
                 _data = span[index++];
                 size &= short.MaxValue;
             }
 
-            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(1), ref span[index], 4);
-            index += 4;
+            index += span[index..].Read(ref this.AsRefByte(1), 4);
 
             _tiles = new TileSlice(size, size);
             for (var i = 0; i < size; ++i)
@@ -115,6 +114,7 @@ namespace Orion.Core.Packets.World.Tiles
                     index += ReadTile(span[index..], ref _tiles[i, j]);
                 }
             }
+
             return index;
         }
 
@@ -131,9 +131,8 @@ namespace Orion.Core.Packets.World.Tiles
                 size |= ~short.MaxValue;
             }
 
-            Unsafe.WriteUnaligned(ref span[0], size);
-            Unsafe.CopyBlockUnaligned(ref span[index], ref this.AsRefByte(1), 4);
-            index += 4;
+            Unsafe.WriteUnaligned(ref MemoryMarshal.GetReference(span), size);
+            index += span[index..].Write(ref this.AsRefByte(1), 4);
 
             for (var i = 0; i < tiles.Width; ++i)
             {
@@ -142,9 +141,11 @@ namespace Orion.Core.Packets.World.Tiles
                     index += WriteTile(span[index..], ref tiles[i, j]);
                 }
             }
+
             return index;
         }
 
+        // TODO: look into optimizing this if bottleneck?
         private int ReadTile(Span<byte> span, ref Tile tile)
         {
             var index = 2;
@@ -202,6 +203,7 @@ namespace Orion.Core.Packets.World.Tiles
             return index;
         }
 
+        // TODO: look into optimizing this if bottleneck?
         private int WriteTile(Span<byte> span, ref Tile tile)
         {
             var hasWall = tile.WallId != WallId.None;

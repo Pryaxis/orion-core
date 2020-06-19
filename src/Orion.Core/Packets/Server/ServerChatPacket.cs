@@ -29,7 +29,7 @@ namespace Orion.Core.Packets.Server
     [StructLayout(LayoutKind.Explicit)]
     public struct ServerChatPacket : IPacket
     {
-        [FieldOffset(8)] private NetworkText _text;
+        [FieldOffset(8)] private NetworkText? _message;
 
         /// <summary>
         /// Gets or sets the message color.
@@ -44,8 +44,8 @@ namespace Orion.Core.Packets.Server
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public NetworkText Message
         {
-            get => _text ?? NetworkText.Empty;
-            set => _text = value ?? throw new ArgumentNullException(nameof(value));
+            get => _message ?? NetworkText.Empty;
+            set => _message = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
@@ -59,19 +59,17 @@ namespace Orion.Core.Packets.Server
         /// <inheritdoc/>
         public int Read(Span<byte> span, PacketContext context)
         {
-            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 3);
-            var numMessageBytes = span[3..].Read(Encoding.UTF8, out _text);
-            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(3), ref span[3 + numMessageBytes], 2);
-            return 3 + numMessageBytes + 2;
+            var index = span.Read(ref this.AsRefByte(0), 3);
+            index += span[index..].Read(Encoding.UTF8, out _message);
+            return index + span[index..].Read(ref this.AsRefByte(3), 2);
         }
 
         /// <inheritdoc/>
         public int Write(Span<byte> span, PacketContext context)
         {
-            Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 3);
-            var numMessageBytes = span[3..].Write(Message, Encoding.UTF8);
-            Unsafe.CopyBlockUnaligned(ref span[3 + numMessageBytes], ref this.AsRefByte(3), 2);
-            return 3 + numMessageBytes + 2;
+            var index = span.Write(ref this.AsRefByte(0), 3);
+            index += span[index..].Write(Message, Encoding.UTF8);
+            return index + span[index..].Write(ref this.AsRefByte(3), 2);
         }
     }
 }

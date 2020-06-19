@@ -42,17 +42,9 @@ namespace Orion.Core.Packets.World.Chests
         PacketId IPacket.Id => PacketId.ChestOpen;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context)
-        {
-            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 4);
-            return 4;
-        }
+        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 4);
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context)
-        {
-            Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 4);
-            return 4;
-        }
+        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 4);
     }
 }

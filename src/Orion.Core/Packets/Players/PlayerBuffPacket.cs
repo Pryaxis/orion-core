@@ -49,17 +49,9 @@ namespace Orion.Core.Packets.Players
         PacketId IPacket.Id => PacketId.PlayerBuff;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context)
-        {
-            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 7);
-            return 7;
-        }
+        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 7);
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context)
-        {
-            Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 7);
-            return 7;
-        }
+        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 7);
     }
 }

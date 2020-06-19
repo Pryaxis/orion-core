@@ -24,21 +24,22 @@ namespace Orion.Core.Packets
     /// <summary>
     /// An unknown packet.
     /// </summary>
+    [StructLayout(LayoutKind.Explicit)]
     public struct UnknownPacket : IPacket
     {
-        private unsafe fixed byte _data[ushort.MaxValue - IPacket.HeaderSize];
+        [FieldOffset(4)] private unsafe fixed byte _data[ushort.MaxValue - IPacket.HeaderSize];
 
         /// <summary>
         /// Gets or sets the packet length.
         /// </summary>
         /// <value>The packet length.</value>
-        public ushort Length { get; set; }
+        [field: FieldOffset(0)] public ushort Length { get; set; }
 
         /// <summary>
         /// Gets or sets the packet ID.
         /// </summary>
         /// <value>The packet ID.</value>
-        public PacketId Id { get; set; }
+        [field: FieldOffset(2)] public PacketId Id { get; set; }
 
         /// <summary>
         /// Gets the packet data.
@@ -50,25 +51,11 @@ namespace Orion.Core.Packets
         public unsafe int Read(Span<byte> span, PacketContext context)
         {
             Length = (ushort)span.Length;
-            if (Length == 0)
-            {
-                return 0;
-            }
-
-            Unsafe.CopyBlockUnaligned(ref _data[0], ref span[0], Length);
-            return Length;
+            return Length == 0 ? 0 : span.Read(ref this.AsRefByte(4), Length);
         }
 
         /// <inheritdoc/>
-        public unsafe int Write(Span<byte> span, PacketContext context)
-        {
-            if (Length == 0)
-            {
-                return 0;
-            }
-
-            Unsafe.CopyBlockUnaligned(ref span[0], ref _data[0], Length);
-            return Length;
-        }
+        public unsafe int Write(Span<byte> span, PacketContext context) =>
+            Length == 0 ? 0 : span.Write(ref this.AsRefByte(4), Length);
     }
 }

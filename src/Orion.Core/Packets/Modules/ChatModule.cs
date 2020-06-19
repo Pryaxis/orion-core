@@ -90,16 +90,14 @@ namespace Orion.Core.Packets.Modules
         {
             if (context == PacketContext.Server)
             {
-                var numCommandBytes = span.Read(Encoding.UTF8, out _clientCommand);
-                var numMessageBytes = span[numCommandBytes..].Read(Encoding.UTF8, out _clientMessage);
-                return numCommandBytes + numMessageBytes;
+                var index = span.Read(Encoding.UTF8, out _clientCommand);
+                return index + span[index..].Read(Encoding.UTF8, out _clientMessage);
             }
             else
             {
-                ServerAuthorIndex = span[0];
-                var numMessageBytes = span[1..].Read(Encoding.UTF8, out _serverMessage);
-                Unsafe.CopyBlockUnaligned(ref this.AsRefByte(17), ref span[1 + numMessageBytes], 3);
-                return 1 + numMessageBytes + 3;
+                var index = span.Read(ref this.AsRefByte(16), 1);
+                index += span[index..].Read(Encoding.UTF8, out _serverMessage);
+                return index + span[index..].Read(ref this.AsRefByte(17), 3);
             }
         }
 
@@ -108,16 +106,14 @@ namespace Orion.Core.Packets.Modules
         {
             if (context == PacketContext.Client)
             {
-                var numCommandBytes = span.Write(ClientCommand, Encoding.UTF8);
-                var numMessageBytes = span[numCommandBytes..].Write(ClientMessage, Encoding.UTF8);
-                return numCommandBytes + numMessageBytes;
+                var index = span.Write(ClientCommand, Encoding.UTF8);
+                return index + span[index..].Write(ClientMessage, Encoding.UTF8);
             }
             else
             {
-                span[0] = ServerAuthorIndex;
-                var numMessageBytes = span[1..].Write(ServerMessage, Encoding.UTF8);
-                Unsafe.CopyBlockUnaligned(ref span[1 + numMessageBytes], ref this.AsRefByte(17), 3);
-                return 1 + numMessageBytes + 3;
+                var index = span.Write(ref this.AsRefByte(16), 1);
+                index += span[index..].Write(ServerMessage, Encoding.UTF8);
+                return index + span[index..].Write(ref this.AsRefByte(17), 3);
             }
         }
     }

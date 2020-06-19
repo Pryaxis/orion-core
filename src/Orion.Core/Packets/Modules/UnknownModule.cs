@@ -24,21 +24,22 @@ namespace Orion.Core.Packets.Modules
     /// <summary>
     /// An unknown module.
     /// </summary>
+    [StructLayout(LayoutKind.Explicit)]
     public struct UnknownModule : IModule
     {
-        private unsafe fixed byte _data[ushort.MaxValue - IPacket.HeaderSize - IModule.HeaderSize];
+        [FieldOffset(4)] private unsafe fixed byte _data[ushort.MaxValue - IPacket.HeaderSize - IModule.HeaderSize];
 
         /// <summary>
         /// Gets or sets the module length.
         /// </summary>
         /// <value>The module length.</value>
-        public ushort Length { get; set; }
+        [field: FieldOffset(0)] public ushort Length { get; set; }
 
         /// <summary>
         /// Gets or sets the module ID.
         /// </summary>
         /// <value>The module ID.</value>
-        public ModuleId Id { get; set; }
+        [field: FieldOffset(2)] public ModuleId Id { get; set; }
 
         /// <summary>
         /// Gets the module data.
@@ -50,25 +51,11 @@ namespace Orion.Core.Packets.Modules
         public unsafe int Read(Span<byte> span, PacketContext context)
         {
             Length = (ushort)span.Length;
-            if (Length == 0)
-            {
-                return 0;
-            }
-
-            Unsafe.CopyBlockUnaligned(ref _data[0], ref span[0], Length);
-            return Length;
+            return Length == 0 ? 0 : span.Read(ref this.AsRefByte(4), Length);
         }
 
         /// <inheritdoc/>
-        public unsafe int Write(Span<byte> span, PacketContext context)
-        {
-            if (Length == 0)
-            {
-                return 0;
-            }
-
-            Unsafe.CopyBlockUnaligned(ref span[0], ref _data[0], Length);
-            return Length;
-        }
+        public unsafe int Write(Span<byte> span, PacketContext context) =>
+            Length == 0 ? 0 : span.Write(ref this.AsRefByte(4), Length);
     }
 }

@@ -17,13 +17,44 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using Orion.Core.DataStructures;
 
 namespace Orion.Core.Packets
 {
+    /// <summary>
+    /// Provides extension for the <see cref="Span{Byte}"/> structure.
+    /// </summary>
     internal static class SpanExtensions
     {
+        /// <summary>
+        /// Reads <paramref name="length"/> bytes from the <paramref name="span"/> into the given
+        /// <paramref name="destination"/>. Returns the number of bytes read.
+        /// </summary>
+        /// <param name="span">The span to read from.</param>
+        /// <param name="destination">The destination to write to.</param>
+        /// <param name="length">The number of bytes to read.</param>
+        /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int Read(this Span<byte> span, ref byte destination, int length)
+        {
+            Debug.Assert(length > 0);
+
+            Unsafe.CopyBlockUnaligned(ref destination, ref MemoryMarshal.GetReference(span), (uint)length);
+            return length;
+        }
+
+        /// <summary>
+        /// Reads an encoded string from the <paramref name="span"/> with the given <paramref name="encoding"/>. Returns
+        /// the number of bytes read.
+        /// </summary>
+        /// <param name="span">The span to read from.</param>
+        /// <param name="encoding">The encoding to use.</param>
+        /// <param name="value">The resulting string.</param>
+        /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
         public static int Read(this Span<byte> span, Encoding encoding, out string value)
         {
             Debug.Assert(encoding != null);
@@ -33,13 +64,20 @@ namespace Orion.Core.Packets
             return index + length;
         }
 
+        /// <summary>
+        /// Reads an encoded <see cref="NetworkText"/> instance from the <paramref name="span"/> with the given
+        /// <paramref name="encoding"/>. Returns the number of bytse read.
+        /// </summary>
+        /// <param name="span">The span to read from.</param>
+        /// <param name="encoding">The encoding to use.</param>
+        /// <param name="value">The resulting <see cref="NetworkText"/> instance.</param>
+        /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
         public static int Read(this Span<byte> span, Encoding encoding, out NetworkText value)
         {
             Debug.Assert(encoding != null);
 
-            var index = 0;
-            var mode = (NetworkText.Mode)span[index++];
-            index += span[index..].Read(encoding, out string text);
+            var mode = (NetworkText.Mode)span[0];
+            var index = 1 + span[1..].Read(encoding, out string text);
             var substitutions = Array.Empty<NetworkText>();
 
             byte numSubstitutions = 0;
@@ -53,10 +91,36 @@ namespace Orion.Core.Packets
             {
                 index += Read(span[index..], encoding, out substitutions[i]);
             }
+
             value = new NetworkText(mode, text, substitutions);
             return index;
         }
 
+        /// <summary>
+        /// Writes <paramref name="length"/> bytes into the <paramref name="span"/> from the given
+        /// <paramref name="source"/>. Returns the number of bytes written.
+        /// </summary>
+        /// <param name="span">The span to write to.</param>
+        /// <param name="source">The source to read from.</param>
+        /// <param name="length">The number of bytes to write.</param>
+        /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int Write(this Span<byte> span, ref byte source, int length)
+        {
+            Debug.Assert(length > 0);
+
+            Unsafe.CopyBlockUnaligned(ref MemoryMarshal.GetReference(span), ref source, (uint)length);
+            return length;
+        }
+
+        /// <summary>
+        /// Writes an encoded string to the <paramref name="span"/> with the given <paramref name="encoding"/>. Returns
+        /// the number of bytes written.
+        /// </summary>
+        /// <param name="span">The span to write to.</param>
+        /// <param name="value">The string to write.</param>
+        /// <param name="encoding">The encoding to use.</param>
+        /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
         public static int Write(this Span<byte> span, string value, Encoding encoding)
         {
             Debug.Assert(value != null);
@@ -68,14 +132,21 @@ namespace Orion.Core.Packets
             return index + length;
         }
 
+        /// <summary>
+        /// Writes an encoded <see cref="NetworkText"/> instance to the <paramref name="span"/> with the given
+        /// <paramref name="encoding"/>. Returns the number of bytes written.
+        /// </summary>
+        /// <param name="span">The span to write to.</param>
+        /// <param name="value">The <see cref="NetworkText"/> instance to write.</param>
+        /// <param name="encoding">The encoding to use.</param>
+        /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
         public static int Write(this Span<byte> span, NetworkText value, Encoding encoding)
         {
             Debug.Assert(value != null);
             Debug.Assert(encoding != null);
-
-            var index = 0;
-            span[index++] = (byte)value._mode;
-            index += span[index..].Write(value._format, encoding);
+            
+            span[0] = (byte)value._mode;
+            var index = 1 + span[1..].Write(value._format, encoding);
 
             byte numSubstitutions = 0;
             if (value._mode != NetworkText.Mode.Literal)
@@ -88,35 +159,27 @@ namespace Orion.Core.Packets
             {
                 index += span[index..].Write(value._args[i], encoding);
             }
+
             return index;
         }
 
         private static int Read7BitEncodedInt(Span<byte> span, out int value)
         {
             value = 0;
-            var shift = 0;
+
             var index = 0;
-            byte b;
-            do
+            for (; index < 5; ++index)
             {
-                if (shift == 5 * 7)
+                var b = span[index];
+                value |= (b & 0x7f) << (7 * index);
+
+                if (b < 0x80)
                 {
-                    // Not localized because this string is developer-facing.
-                    throw new ArgumentException("Invalid 7-bit encoded integer (too large)", nameof(span));
+                    return index + 1;
                 }
-
-                b = span[index++];
-                value |= (b & 0x7f) << shift;
-                shift += 7;
-            } while (b >= 0x80);
-
-            if (value < 0)
-            {
-                // Not localized because this string is developer-facing.
-                throw new ArgumentException("Invalid 7-bit encoded integer (negative)", nameof(span));
             }
 
-            return index;
+            throw new ArgumentException("7-bit encoded integer too large", nameof(span));
         }
 
         private static int Write7BitEncodedInt(Span<byte> span, int value)

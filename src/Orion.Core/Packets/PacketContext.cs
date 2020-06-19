@@ -20,6 +20,10 @@ namespace Orion.Core.Packets
     /// <summary>
     /// Describes the context with which a packet should be processed.
     /// </summary>
+    /// <remarks>
+    /// Some packets may be processed differently depending on whether the server or the client is reading or writing
+    /// the packet. This enumeration clarifies the correct action to take when reading or writing such a packet.
+    /// </remarks>
     public enum PacketContext
     {
         /// <summary>

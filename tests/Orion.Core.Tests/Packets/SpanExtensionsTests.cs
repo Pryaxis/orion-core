@@ -41,9 +41,20 @@ namespace Orion.Core.Packets
         };
 
         [Fact]
-        public void ReadString_7BitIntegerTooLarge_ThrowsArgumentException()
+        public void ReadBytes()
         {
-            var bytes = new byte[] { 255, 255, 255, 255, 255, 255 };
+            Span<byte> span = stackalloc byte[] { 255, 255, 255, 255, 255, 255, 255, 255 };
+            var bytes = new byte[8];
+
+            Assert.Equal(8, span.Read(ref bytes[0], 8));
+
+            Assert.Equal(new byte[] { 255, 255, 255, 255, 255, 255, 255, 255 }, bytes);
+        }
+
+        [Fact]
+        public void ReadString_7BitEncodedIntegerTooLarge_ThrowsArgumentException()
+        {
+            var bytes = new byte[] { 255, 255, 255, 255, 255 };
 
             Assert.Throws<ArgumentException>(() =>
             {
@@ -53,15 +64,17 @@ namespace Orion.Core.Packets
         }
 
         [Fact]
-        public void ReadString_Negative7BitInteger_ThrowsArgumentException()
+        public void WriteBytes()
         {
-            var bytes = new byte[] { 255, 255, 255, 255, 15 };
+            Span<byte> span = stackalloc byte[8];
+            var bytes = new byte[8] { 255, 255, 255, 255, 255, 255, 255, 255 };
 
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Equal(8, span.Write(ref bytes[0], 8));
+
+            for (var i = 0; i < 8; ++i)
             {
-                var span = bytes.AsSpan();
-                return span.Read(Encoding.UTF8, out string _);
-            });
+                Assert.Equal(255, span[i]);
+            }
         }
 
         [Theory]

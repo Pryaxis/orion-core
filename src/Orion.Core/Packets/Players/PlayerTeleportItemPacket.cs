@@ -16,34 +16,28 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace Orion.Core.Packets.Players
 {
     /// <summary>
     /// A packet sent to cause a player to teleport with an item.
     /// </summary>
+    [StructLayout(LayoutKind.Explicit)]
     public struct PlayerTeleportItemPacket : IPacket
     {
         /// <summary>
         /// Gets or sets the teleport item.
         /// </summary>
         /// <value>The teleport item.</value>
-        public TeleportItem Item { get; set; }
+        [field: FieldOffset(0)] public TeleportItem Item { get; set; }
 
         PacketId IPacket.Id => PacketId.PlayerTeleportItem;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context)
-        {
-            Item = (TeleportItem)span[0];
-            return 1;
-        }
+        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 1);
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context)
-        {
-            span[0] = (byte)Item;
-            return 1;
-        }
+        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 1);
     }
 }

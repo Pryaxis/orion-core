@@ -48,30 +48,19 @@ namespace Orion.Core.Packets.Npcs
         }
 
         PacketId IPacket.Id => PacketId.NpcName;
+
         /// <inheritdoc/>
         public int Read(Span<byte> span, PacketContext context)
         {
-            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 2);
-            if (context == PacketContext.Server)
-            {
-                return 2;
-            }
-
-            var nameBytes = span[2..].Read(Encoding.UTF8, out _name);
-            return 2 + nameBytes;
+            var index = span.Read(ref this.AsRefByte(0), 2);
+            return context == PacketContext.Server ? index : index + span[index..].Read(Encoding.UTF8, out _name);
         }
 
         /// <inheritdoc/>
         public int Write(Span<byte> span, PacketContext context)
         {
-            Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 2);
-            if (context == PacketContext.Client)
-            {
-                return 2;
-            }
-
-            var nameBytes = span[2..].Write(Name, Encoding.UTF8);
-            return 2 + nameBytes;
+            var index = span.Write(ref this.AsRefByte(0), 2);
+            return context == PacketContext.Client ? index : index + span[index..].Write(Name, Encoding.UTF8);
         }
     }
 }
