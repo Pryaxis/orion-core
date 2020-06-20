@@ -15,11 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.Entities
+namespace Orion.Core.Framework
 {
-    // Marks a class as wrapping `TWrapped`. Used to support `WrappedReadOnlyList`.
-    internal interface IWrapping<out TWrapped>
+    /// <summary>
+    /// Controls the scope of a service.
+    /// </summary>
+    public enum ServiceScope
     {
-        TWrapped Wrapped { get; }
+        /// <summary>
+        /// Indicates that the service should have singleton scope: i.e., only one implementation is ever constructed.
+        /// </summary>
+        Singleton,
+
+        /// <summary>
+        /// Indicates that the service should have transient scope: i.e., a new implementation is constructed each time,
+        /// and the lifetimes of the implementations are not managed.
+        /// </summary>
+        Transient
     }
 }

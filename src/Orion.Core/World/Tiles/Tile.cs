@@ -36,30 +36,80 @@ namespace Orion.Core.World.Tiles
         private const int LiquidShift = 21;
         private const int BlockFrameNumberShift = 24;
 
-        // The masks for the tile header. These follow roughly the same layout in Terraria's `Tile` class.
-        internal const uint BlockColorMask /*       */ = 0b_00000000_00000000_00000000_00011111;
-        internal const uint IsBlockActiveMask /*    */ = 0b_00000000_00000000_00000000_00100000;
-        internal const uint IsBlockActuatedMask /*  */ = 0b_00000000_00000000_00000000_01000000;
-        internal const uint HasRedWireMask /*       */ = 0b_00000000_00000000_00000000_10000000;
-        internal const uint HasBlueWireMask /*      */ = 0b_00000000_00000000_00000001_00000000;
-        internal const uint HasGreenWireMask /*     */ = 0b_00000000_00000000_00000010_00000000;
-        internal const uint IsBlockHalvedMask /*    */ = 0b_00000000_00000000_00000100_00000000;
-        internal const uint HasActuatorMask /*      */ = 0b_00000000_00000000_00001000_00000000;
-        internal const uint SlopeMask /*            */ = 0b_00000000_00000000_01110000_00000000;
-        internal const uint WallColorMask /*        */ = 0b_00000000_00011111_00000000_00000000;
-        internal const uint LiquidMask /*           */ = 0b_00000000_01100000_00000000_00000000;
-        internal const uint HasYellowWireMask /*    */ = 0b_00000000_10000000_00000000_00000000;
-        internal const uint BlockFrameNumberMask /* */ = 0b_00001111_00000000_00000000_00000000;
-        internal const uint IsCheckingLiquidMask /* */ = 0b_00010000_00000000_00000000_00000000;
-        internal const uint ShouldSkipLiquidMask /* */ = 0b_00100000_00000000_00000000_00000000;
+        /// <summary>
+        /// The <see cref="BlockColor"/> mask for the tile header..
+        /// </summary>
+        public const uint BlockColorMask /*       */ = 0b_00000000_00000000_00000000_00011111;
 
-        // Provide `internal` field access with type punning so that we can implement an `OTAPI.Tile.ITile` adapter
-        // efficiently.
-        [FieldOffset(5)] internal int _blockFrames;
-        [FieldOffset(9)] internal uint _header;
-        [FieldOffset(9)] internal short _sTileHeader;
-        [FieldOffset(11)] internal byte _bTileHeader;
-        [FieldOffset(12)] internal byte _bTileHeader3;
+        /// <summary>
+        /// The <see cref="IsBlockActive"/> mask for the tile header..
+        /// </summary>
+        public const uint IsBlockActiveMask /*    */ = 0b_00000000_00000000_00000000_00100000;
+
+        /// <summary>
+        /// The <see cref="IsBlockActuated"/> mask for the tile header..
+        /// </summary>
+        public const uint IsBlockActuatedMask /*  */ = 0b_00000000_00000000_00000000_01000000;
+
+        /// <summary>
+        /// The <see cref="HasRedWire"/> mask for the tile header..
+        /// </summary>
+        public const uint HasRedWireMask /*       */ = 0b_00000000_00000000_00000000_10000000;
+
+        /// <summary>
+        /// The <see cref="HasBlueWire"/> mask for the tile header..
+        /// </summary>
+        public const uint HasBlueWireMask /*      */ = 0b_00000000_00000000_00000001_00000000;
+
+        /// <summary>
+        /// The <see cref="HasGreenWire"/> mask for the tile header..
+        /// </summary>
+        public const uint HasGreenWireMask /*     */ = 0b_00000000_00000000_00000010_00000000;
+
+        /// <summary>
+        /// The <see cref="IsBlockHalved"/> mask for the tile header..
+        /// </summary>
+        public const uint IsBlockHalvedMask /*    */ = 0b_00000000_00000000_00000100_00000000;
+
+        /// <summary>
+        /// The <see cref="HasActuator"/> mask for the tile header..
+        /// </summary>
+        public const uint HasActuatorMask /*      */ = 0b_00000000_00000000_00001000_00000000;
+
+        /// <summary>
+        /// The <see cref="Slope"/> mask for the tile header..
+        /// </summary>
+        public const uint SlopeMask /*            */ = 0b_00000000_00000000_01110000_00000000;
+
+        /// <summary>
+        /// The <see cref="WallColor"/> mask for the tile header..
+        /// </summary>
+        public const uint WallColorMask /*        */ = 0b_00000000_00011111_00000000_00000000;
+
+        /// <summary>
+        /// The <see cref="Liquid"/> mask for the tile header..
+        /// </summary>
+        public const uint LiquidMask /*           */ = 0b_00000000_01100000_00000000_00000000;
+
+        /// <summary>
+        /// The <see cref="HasYellowWire"/> mask for the tile header..
+        /// </summary>
+        public const uint HasYellowWireMask /*    */ = 0b_00000000_10000000_00000000_00000000;
+
+        /// <summary>
+        /// The <see cref="BlockFrameNumber"/> mask for the tile header..
+        /// </summary>
+        public const uint BlockFrameNumberMask /* */ = 0b_00001111_00000000_00000000_00000000;
+
+        /// <summary>
+        /// The <see cref="IsCheckingLiquidMask"/> mask for the tile header..
+        /// </summary>
+        public const uint IsCheckingLiquidMask /* */ = 0b_00010000_00000000_00000000_00000000;
+
+        /// <summary>
+        /// The <see cref="ShouldSkipLiquidMask"/> mask for the tile header..
+        /// </summary>
+        public const uint ShouldSkipLiquidMask /* */ = 0b_00100000_00000000_00000000_00000000;
 
         /// <summary>
         /// Gets or sets the block ID.
@@ -92,16 +142,47 @@ namespace Orion.Core.World.Tiles
         [field: FieldOffset(7)] public short BlockFrameY { get; set; }
 
         /// <summary>
+        /// Gets or sets the tile's header.
+        /// </summary>
+        /// <value>The tile's header.</value>
+        [field: FieldOffset(9)] public uint Header { get; set; }
+
+        /// <summary>
+        /// Gets or sets the block's frames. <i>This is a combination of <see cref="BlockFrameX"/> and
+        /// <see cref="BlockFrameY"/>!</i>
+        /// </summary>
+        /// <value>The block's frames.</value>
+        [field: FieldOffset(5)] public int BlockFrames { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tile's first header part. <i>This is a portion of <see cref="Header"/>!</i>
+        /// </summary>
+        /// <value>The tile's first header part.</value>
+        [field: FieldOffset(9)] public short HeaderPart { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tile's second header part. <i>This is a portion of <see cref="Header"/>!</i>
+        /// </summary>
+        /// <value>The tile's second header part.</value>
+        [field: FieldOffset(11)] public byte HeaderPart2 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tile's third header part. <i>This is a portion of <see cref="Header"/>!</i>
+        /// </summary>
+        /// <value>The tile's third header part.</value>
+        [field: FieldOffset(12)] public byte HeaderPart3 { get; set; }
+
+        /// <summary>
         /// Gets or sets the block color.
         /// </summary>
         /// <value>The block color.</value>
         public PaintColor BlockColor
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (PaintColor)((_header & BlockColorMask) >> BlockColorShift);
+            readonly get => (PaintColor)((Header & BlockColorMask) >> BlockColorShift);
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => _header = (_header & ~BlockColorMask) | (((uint)value << BlockColorShift) & BlockColorMask);
+            set => Header = (Header & ~BlockColorMask) | (((uint)value << BlockColorShift) & BlockColorMask);
         }
 
         /// <summary>
@@ -111,18 +192,18 @@ namespace Orion.Core.World.Tiles
         public bool IsBlockActive
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (_header & IsBlockActiveMask) != 0;
+            readonly get => (Header & IsBlockActiveMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 if (value)
                 {
-                    _header |= IsBlockActiveMask;
+                    Header |= IsBlockActiveMask;
                 }
                 else
                 {
-                    _header &= ~IsBlockActiveMask;
+                    Header &= ~IsBlockActiveMask;
                 }
             }
         }
@@ -134,18 +215,18 @@ namespace Orion.Core.World.Tiles
         public bool IsBlockActuated
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (_header & IsBlockActuatedMask) != 0;
+            readonly get => (Header & IsBlockActuatedMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 if (value)
                 {
-                    _header |= IsBlockActuatedMask;
+                    Header |= IsBlockActuatedMask;
                 }
                 else
                 {
-                    _header &= ~IsBlockActuatedMask;
+                    Header &= ~IsBlockActuatedMask;
                 }
             }
         }
@@ -157,18 +238,18 @@ namespace Orion.Core.World.Tiles
         public bool HasRedWire
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (_header & HasRedWireMask) != 0;
+            readonly get => (Header & HasRedWireMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 if (value)
                 {
-                    _header |= HasRedWireMask;
+                    Header |= HasRedWireMask;
                 }
                 else
                 {
-                    _header &= ~HasRedWireMask;
+                    Header &= ~HasRedWireMask;
                 }
             }
         }
@@ -180,18 +261,18 @@ namespace Orion.Core.World.Tiles
         public bool HasBlueWire
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (_header & HasBlueWireMask) != 0;
+            readonly get => (Header & HasBlueWireMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 if (value)
                 {
-                    _header |= HasBlueWireMask;
+                    Header |= HasBlueWireMask;
                 }
                 else
                 {
-                    _header &= ~HasBlueWireMask;
+                    Header &= ~HasBlueWireMask;
                 }
             }
         }
@@ -203,18 +284,18 @@ namespace Orion.Core.World.Tiles
         public bool HasGreenWire
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (_header & HasGreenWireMask) != 0;
+            readonly get => (Header & HasGreenWireMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 if (value)
                 {
-                    _header |= HasGreenWireMask;
+                    Header |= HasGreenWireMask;
                 }
                 else
                 {
-                    _header &= ~HasGreenWireMask;
+                    Header &= ~HasGreenWireMask;
                 }
             }
         }
@@ -226,18 +307,18 @@ namespace Orion.Core.World.Tiles
         public bool IsBlockHalved
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (_header & IsBlockHalvedMask) != 0;
+            readonly get => (Header & IsBlockHalvedMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 if (value)
                 {
-                    _header |= IsBlockHalvedMask;
+                    Header |= IsBlockHalvedMask;
                 }
                 else
                 {
-                    _header &= ~IsBlockHalvedMask;
+                    Header &= ~IsBlockHalvedMask;
                 }
             }
         }
@@ -249,18 +330,18 @@ namespace Orion.Core.World.Tiles
         public bool HasActuator
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (_header & HasActuatorMask) != 0;
+            readonly get => (Header & HasActuatorMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 if (value)
                 {
-                    _header |= HasActuatorMask;
+                    Header |= HasActuatorMask;
                 }
                 else
                 {
-                    _header &= ~HasActuatorMask;
+                    Header &= ~HasActuatorMask;
                 }
             }
         }
@@ -272,10 +353,10 @@ namespace Orion.Core.World.Tiles
         public Slope Slope
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (Slope)((_header & SlopeMask) >> SlopeShift);
+            readonly get => (Slope)((Header & SlopeMask) >> SlopeShift);
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => _header = (_header & ~SlopeMask) | (((uint)value << SlopeShift) & SlopeMask);
+            set => Header = (Header & ~SlopeMask) | (((uint)value << SlopeShift) & SlopeMask);
         }
 
         /// <summary>
@@ -285,10 +366,10 @@ namespace Orion.Core.World.Tiles
         public PaintColor WallColor
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (PaintColor)((_header & WallColorMask) >> WallColorShift);
+            readonly get => (PaintColor)((Header & WallColorMask) >> WallColorShift);
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => _header = (_header & ~WallColorMask) | (((uint)value << WallColorShift) & WallColorMask);
+            set => Header = (Header & ~WallColorMask) | (((uint)value << WallColorShift) & WallColorMask);
         }
 
         /// <summary>
@@ -298,10 +379,10 @@ namespace Orion.Core.World.Tiles
         public Liquid Liquid
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (Liquid)((_header & LiquidMask) >> LiquidShift);
+            readonly get => (Liquid)((Header & LiquidMask) >> LiquidShift);
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => _header = (_header & ~LiquidMask) | (((uint)value << LiquidShift) & LiquidMask);
+            set => Header = (Header & ~LiquidMask) | (((uint)value << LiquidShift) & LiquidMask);
         }
 
         /// <summary>
@@ -311,18 +392,18 @@ namespace Orion.Core.World.Tiles
         public bool HasYellowWire
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (_header & HasYellowWireMask) != 0;
+            readonly get => (Header & HasYellowWireMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 if (value)
                 {
-                    _header |= HasYellowWireMask;
+                    Header |= HasYellowWireMask;
                 }
                 else
                 {
-                    _header &= ~HasYellowWireMask;
+                    Header &= ~HasYellowWireMask;
                 }
             }
         }
@@ -334,13 +415,13 @@ namespace Orion.Core.World.Tiles
         public byte BlockFrameNumber
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (byte)((_header & BlockFrameNumberMask) >> BlockFrameNumberShift);
+            readonly get => (byte)((Header & BlockFrameNumberMask) >> BlockFrameNumberShift);
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                _header =
-                    (_header & ~BlockFrameNumberMask) | (((uint)value << BlockFrameNumberShift) & BlockFrameNumberMask);
+                Header =
+                    (Header & ~BlockFrameNumberMask) | (((uint)value << BlockFrameNumberShift) & BlockFrameNumberMask);
             }
         }
 
@@ -351,18 +432,18 @@ namespace Orion.Core.World.Tiles
         public bool IsCheckingLiquid
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (_header & IsCheckingLiquidMask) != 0;
+            readonly get => (Header & IsCheckingLiquidMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 if (value)
                 {
-                    _header |= IsCheckingLiquidMask;
+                    Header |= IsCheckingLiquidMask;
                 }
                 else
                 {
-                    _header &= ~IsCheckingLiquidMask;
+                    Header &= ~IsCheckingLiquidMask;
                 }
             }
         }
@@ -374,18 +455,18 @@ namespace Orion.Core.World.Tiles
         public bool ShouldSkipLiquid
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (_header & ShouldSkipLiquidMask) != 0;
+            readonly get => (Header & ShouldSkipLiquidMask) != 0;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 if (value)
                 {
-                    _header |= ShouldSkipLiquidMask;
+                    Header |= ShouldSkipLiquidMask;
                 }
                 else
                 {
-                    _header &= ~ShouldSkipLiquidMask;
+                    Header &= ~ShouldSkipLiquidMask;
                 }
             }
         }

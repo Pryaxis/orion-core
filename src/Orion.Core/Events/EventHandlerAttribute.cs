@@ -17,7 +17,7 @@
 
 using System;
 
-namespace Orion.Core.Framework.Events
+namespace Orion.Core.Events
 {
     /// <summary>
     /// Marks a method as an event handler and specifies information about it.

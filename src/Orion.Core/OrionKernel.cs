@@ -24,18 +24,8 @@ using Serilog;
 namespace Orion.Core
 {
     /// <summary>
-    /// Represents Orion's core logic. Provides access to Orion extensions and events and publishes server-related
-    /// events.
+    /// Represents Orion's core logic. Provides access to Orion extensions and events.
     /// </summary>
-    /// <remarks>
-    /// The Orion kernel is responsible for publishing the following server-related events:
-    /// <list type="bullet">
-    /// <item><description><see cref="ServerInitializeEvent"/></description></item>
-    /// <item><description><see cref="ServerStartEvent"/></description></item>
-    /// <item><description><see cref="ServerTickEvent"/></description></item>
-    /// <item><description><see cref="ServerCommandEvent"/></description></item>
-    /// </list>
-    /// </remarks>
     public sealed class OrionKernel : IDisposable
     {
         private readonly ILogger _log;

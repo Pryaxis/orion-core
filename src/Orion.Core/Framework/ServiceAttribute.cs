@@ -17,24 +17,28 @@
 
 using System;
 
-namespace Orion.Core
+namespace Orion.Core.Framework
 {
-    public class TerrariaTestsFixture : IDisposable
+    /// <summary>
+    /// Specifies information about a service interface.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Interface, Inherited = false)]
+    public sealed class ServiceAttribute : Attribute
     {
-        private readonly Terraria.Main _main;
-
-        public TerrariaTestsFixture()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceAttribute"/> class with the specified service
+        /// <paramref name="scope"/>.
+        /// </summary>
+        /// <param name="scope">The service scope.</param>
+        public ServiceAttribute(ServiceScope scope)
         {
-            _main = new Terraria.Main();
-
-            Terraria.Localization.LanguageManager.Instance.SetLanguage("en-US");
-            Terraria.Lang.InitializeLegacyLocalization();
-            _main.Initialize();
+            Scope = scope;
         }
 
-        public void Dispose()
-        {
-            _main.Dispose();
-        }
+        /// <summary>
+        /// Gets the service scope.
+        /// </summary>
+        /// <value>The service scope.</value>
+        public ServiceScope Scope { get; }
     }
 }

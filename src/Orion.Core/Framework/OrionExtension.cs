@@ -18,7 +18,7 @@
 using System;
 using Serilog;
 
-namespace Orion.Core.Framework.Extensions
+namespace Orion.Core.Framework
 {
     /// <summary>
     /// Provides the base class for an Orion extension (service or plugin).

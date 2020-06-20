@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.Framework.Extensions
+namespace Orion.Core.Framework
 {
     /// <summary>
     /// Controls the priority of a service binding. Service bindings with higher priorities will take precedence over

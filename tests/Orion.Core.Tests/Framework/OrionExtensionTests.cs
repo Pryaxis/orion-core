@@ -21,7 +21,7 @@ using Serilog;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Core.Framework.Extensions
+namespace Orion.Core.Framework
 {
     public class OrionExtensionTests
     {

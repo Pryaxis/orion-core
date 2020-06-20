@@ -19,53 +19,41 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Framework.Events
+namespace Orion.Core.Framework
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class EventHandlerAttributeTests
+    public class PluginAttributeTests
     {
         [Fact]
         public void Ctor_NullName_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new EventHandlerAttribute(null!));
-        }
-
-        [Fact]
-        public void Priority_Set_Get()
-        {
-            var attribute = new EventHandlerAttribute("test");
-
-            attribute.Priority = EventPriority.Highest;
-
-            Assert.Equal(EventPriority.Highest, attribute.Priority);
+            Assert.Throws<ArgumentNullException>(() => new PluginAttribute(null!));
         }
 
         [Fact]
         public void Name_Get()
         {
-            var attribute = new EventHandlerAttribute("test");
+            var attribute = new PluginAttribute("test");
 
             Assert.Equal("test", attribute.Name);
         }
 
         [Fact]
-        public void IgnoreCanceled_Set_Get()
+        public void Author_SetNullValue_ThrowsArgumentNullException()
         {
-            var attribute = new EventHandlerAttribute("test");
+            var attribute = new PluginAttribute("test");
 
-            attribute.IgnoreCanceled = false;
-
-            Assert.False(attribute.IgnoreCanceled);
+            Assert.Throws<ArgumentNullException>(() => attribute.Author = null!);
         }
 
         [Fact]
-        public void IsBlocking_Set_Get()
+        public void Author_Set_Get()
         {
-            var attribute = new EventHandlerAttribute("test");
+            var attribute = new PluginAttribute("test");
 
-            attribute.IsBlocking = false;
+            attribute.Author = "test";
 
-            Assert.False(attribute.IsBlocking);
+            Assert.Equal("test", attribute.Author);
         }
     }
 }

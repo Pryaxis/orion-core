@@ -17,7 +17,7 @@
 
 using System.Collections.Generic;
 using Orion.Core.Events.World.Chests;
-using Orion.Core.Framework.Extensions;
+using Orion.Core.Framework;
 
 namespace Orion.Core.World.Chests
 {
