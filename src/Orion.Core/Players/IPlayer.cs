@@ -104,8 +104,26 @@ namespace Orion.Core.Players
     public static class IPlayerExtensions
     {
         /// <summary>
-        /// Sends the given <paramref name="packet"/> to the <paramref name="player"/>. This "overload" is provided for
-        /// convenience, but is slightly less efficient due to a struct copy.
+        /// Receives the given <paramref name="packet"/> from the player. This "overload" is provided for convenience,
+        /// but is slightly less efficient due to a struct copy.
+        /// </summary>
+        /// <typeparam name="TPacket">The type of packet.</typeparam>
+        /// <param name="player">The player.</param>
+        /// <param name="packet">The packet to receive.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
+        public static void ReceivePacket<TPacket>(this IPlayer player, TPacket packet) where TPacket : struct, IPacket
+        {
+            if (player is null)
+            {
+                throw new ArgumentNullException(nameof(player));
+            }
+
+            player.ReceivePacket(ref packet);
+        }
+
+        /// <summary>
+        /// Sends the given <paramref name="packet"/> to the player. This "overload" is provided for convenience,
+        /// but is slightly less efficient due to a struct copy.
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="player">The player.</param>
@@ -122,7 +140,7 @@ namespace Orion.Core.Players
         }
 
         /// <summary>
-        /// Disconnects the <paramref name="player"/> for the given <paramref name="reason"/>.
+        /// Disconnects the player for the given <paramref name="reason"/>.
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="reason">The reason for the disconnect.</param>
@@ -146,8 +164,7 @@ namespace Orion.Core.Players
         }
 
         /// <summary>
-        /// Sends the given <paramref name="message"/> with the specified <paramref name="color"/> to the
-        /// <paramref name="player"/>.
+        /// Sends the given <paramref name="message"/> with the specified <paramref name="color"/> to the player.
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="message">The message to send.</param>
@@ -172,7 +189,7 @@ namespace Orion.Core.Players
         }
 
         /// <summary>
-        /// Sends the given <paramref name="tiles"/> at the specified coordinates to the <paramref name="player"/>.
+        /// Sends the given <paramref name="tiles"/> at the specified coordinates to the player.
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="x">The top-left tile's X coordinate.</param>

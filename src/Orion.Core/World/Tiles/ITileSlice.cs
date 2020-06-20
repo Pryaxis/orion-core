@@ -68,16 +68,14 @@ namespace Orion.Core.World.Tiles
     public static class ITileSliceExtensions
     {
         /// <summary>
-        /// Returns a slice of the <paramref name="tiles"/> with the specified starting coordinates and dimensions.
+        /// Returns a slice of the tiles starting at the given coordinates with the specified dimensions.
         /// </summary>
         /// <param name="tiles">The tiles.</param>
         /// <param name="startX">The slice's starting X coordinate.</param>
         /// <param name="startY">The slice's starting Y coordinate.</param>
         /// <param name="width">The slice's width.</param>
         /// <param name="height">The slice's height.</param>
-        /// <returns>
-        /// The slice of the <paramref name="tiles"/> with the specified starting coordinates and dimensions.
-        /// </returns>
+        /// <returns>The slice of the tiles starting at the given coordinates with the specified dimensions.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="tiles"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="startX"/>, <paramref name="startY"/>, <paramref name="width"/>, or <paramref name="height"/>

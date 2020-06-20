@@ -33,6 +33,22 @@ namespace Orion.Core.Players
         private delegate void TileSquareCallback(ref TileSquarePacket packet);
 
         [Fact]
+        public void ReceivePacket_NullPlayer_ThrowsArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => IPlayerExtensions.ReceivePacket(null!, new TestPacket()));
+        }
+
+        [Fact]
+        public void ReceivePacket()
+        {
+            var mockPlayer = new Mock<IPlayer>();
+
+            mockPlayer.Object.ReceivePacket(new TestPacket());
+
+            mockPlayer.Verify(p => p.ReceivePacket(ref It.Ref<TestPacket>.IsAny));
+        }
+
+        [Fact]
         public void SendPacket_NullPlayer_ThrowsArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(() => IPlayerExtensions.SendPacket(null!, new TestPacket()));

@@ -103,7 +103,6 @@ namespace Orion.Core.Events
         private static readonly MethodInfo _deregisterAsyncHandler =
             typeof(IEventManager).GetMethod(nameof(IEventManager.DeregisterAsyncHandler))!;
 
-
         /// <summary>
         /// Registers all of the instance methods marked with <see cref="EventHandlerAttribute"/> as event handlers in
         /// the given <paramref name="obj"/>.

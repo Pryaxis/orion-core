@@ -64,6 +64,7 @@ namespace Orion.Core.Players
     {
         private static readonly IDictionary<PlayerTeam, Color3> _colors = new Dictionary<PlayerTeam, Color3>
         {
+            [PlayerTeam.None] = Color3.White,
             [PlayerTeam.Red] = new Color3(0xda, 0x3b, 0x3b),
             [PlayerTeam.Green] = new Color3(0x3b, 0xda, 0x55),
             [PlayerTeam.Blue] = new Color3(0x3b, 0x95, 0xda),
@@ -72,12 +73,11 @@ namespace Orion.Core.Players
         };
 
         /// <summary>
-        /// Returns the color of the <paramref name="team"/>.
+        /// Returns the team's color.
         /// </summary>
         /// <param name="team">The team.</param>
-        /// <returns>The color of the <paramref name="team"/>.</returns>
+        /// <returns>The team's color.</returns>
         [Pure]
-        public static Color3 Color(this PlayerTeam team) =>
-            _colors.TryGetValue(team, out var color) ? color : Color3.White;
+        public static Color3 Color(this PlayerTeam team) => _colors.TryGetValue(team, out var color) ? color : default;
     }
 }
