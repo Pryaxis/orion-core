@@ -36,80 +36,22 @@ namespace Orion.Core.World.Tiles
         private const int LiquidShift = 21;
         private const int BlockFrameNumberShift = 24;
 
-        /// <summary>
-        /// The <see cref="BlockColor"/> mask for the tile header..
-        /// </summary>
-        public const uint BlockColorMask /*       */ = 0b_00000000_00000000_00000000_00011111;
-
-        /// <summary>
-        /// The <see cref="IsBlockActive"/> mask for the tile header..
-        /// </summary>
-        public const uint IsBlockActiveMask /*    */ = 0b_00000000_00000000_00000000_00100000;
-
-        /// <summary>
-        /// The <see cref="IsBlockActuated"/> mask for the tile header..
-        /// </summary>
-        public const uint IsBlockActuatedMask /*  */ = 0b_00000000_00000000_00000000_01000000;
-
-        /// <summary>
-        /// The <see cref="HasRedWire"/> mask for the tile header..
-        /// </summary>
-        public const uint HasRedWireMask /*       */ = 0b_00000000_00000000_00000000_10000000;
-
-        /// <summary>
-        /// The <see cref="HasBlueWire"/> mask for the tile header..
-        /// </summary>
-        public const uint HasBlueWireMask /*      */ = 0b_00000000_00000000_00000001_00000000;
-
-        /// <summary>
-        /// The <see cref="HasGreenWire"/> mask for the tile header..
-        /// </summary>
-        public const uint HasGreenWireMask /*     */ = 0b_00000000_00000000_00000010_00000000;
-
-        /// <summary>
-        /// The <see cref="IsBlockHalved"/> mask for the tile header..
-        /// </summary>
-        public const uint IsBlockHalvedMask /*    */ = 0b_00000000_00000000_00000100_00000000;
-
-        /// <summary>
-        /// The <see cref="HasActuator"/> mask for the tile header..
-        /// </summary>
-        public const uint HasActuatorMask /*      */ = 0b_00000000_00000000_00001000_00000000;
-
-        /// <summary>
-        /// The <see cref="Slope"/> mask for the tile header..
-        /// </summary>
-        public const uint SlopeMask /*            */ = 0b_00000000_00000000_01110000_00000000;
-
-        /// <summary>
-        /// The <see cref="WallColor"/> mask for the tile header..
-        /// </summary>
-        public const uint WallColorMask /*        */ = 0b_00000000_00011111_00000000_00000000;
-
-        /// <summary>
-        /// The <see cref="Liquid"/> mask for the tile header..
-        /// </summary>
-        public const uint LiquidMask /*           */ = 0b_00000000_01100000_00000000_00000000;
-
-        /// <summary>
-        /// The <see cref="HasYellowWire"/> mask for the tile header..
-        /// </summary>
-        public const uint HasYellowWireMask /*    */ = 0b_00000000_10000000_00000000_00000000;
-
-        /// <summary>
-        /// The <see cref="BlockFrameNumber"/> mask for the tile header..
-        /// </summary>
-        public const uint BlockFrameNumberMask /* */ = 0b_00001111_00000000_00000000_00000000;
-
-        /// <summary>
-        /// The <see cref="IsCheckingLiquidMask"/> mask for the tile header..
-        /// </summary>
-        public const uint IsCheckingLiquidMask /* */ = 0b_00010000_00000000_00000000_00000000;
-
-        /// <summary>
-        /// The <see cref="ShouldSkipLiquidMask"/> mask for the tile header..
-        /// </summary>
-        public const uint ShouldSkipLiquidMask /* */ = 0b_00100000_00000000_00000000_00000000;
+        // The masks for the tile header.
+        private const uint BlockColorMask /*       */ = 0b_00000000_00000000_00000000_00011111;
+        private const uint IsBlockActiveMask /*    */ = 0b_00000000_00000000_00000000_00100000;
+        private const uint IsBlockActuatedMask /*  */ = 0b_00000000_00000000_00000000_01000000;
+        private const uint HasRedWireMask /*       */ = 0b_00000000_00000000_00000000_10000000;
+        private const uint HasBlueWireMask /*      */ = 0b_00000000_00000000_00000001_00000000;
+        private const uint HasGreenWireMask /*     */ = 0b_00000000_00000000_00000010_00000000;
+        private const uint IsBlockHalvedMask /*    */ = 0b_00000000_00000000_00000100_00000000;
+        private const uint HasActuatorMask /*      */ = 0b_00000000_00000000_00001000_00000000;
+        private const uint SlopeMask /*            */ = 0b_00000000_00000000_01110000_00000000;
+        private const uint WallColorMask /*        */ = 0b_00000000_00011111_00000000_00000000;
+        private const uint LiquidMask /*           */ = 0b_00000000_01100000_00000000_00000000;
+        private const uint HasYellowWireMask /*    */ = 0b_00000000_10000000_00000000_00000000;
+        private const uint BlockFrameNumberMask /* */ = 0b_00001111_00000000_00000000_00000000;
+        private const uint IsCheckingLiquidMask /* */ = 0b_00010000_00000000_00000000_00000000;
+        private const uint ShouldSkipLiquidMask /* */ = 0b_00100000_00000000_00000000_00000000;
 
         /// <summary>
         /// Gets or sets the block ID.
@@ -146,31 +88,6 @@ namespace Orion.Core.World.Tiles
         /// </summary>
         /// <value>The tile's header.</value>
         [field: FieldOffset(9)] public uint Header { get; set; }
-
-        /// <summary>
-        /// Gets or sets the block's frames. <i>This is a combination of <see cref="BlockFrameX"/> and
-        /// <see cref="BlockFrameY"/>!</i>
-        /// </summary>
-        /// <value>The block's frames.</value>
-        [field: FieldOffset(5)] public int BlockFrames { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tile's first header part. <i>This is a portion of <see cref="Header"/>!</i>
-        /// </summary>
-        /// <value>The tile's first header part.</value>
-        [field: FieldOffset(9)] public short HeaderPart { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tile's second header part. <i>This is a portion of <see cref="Header"/>!</i>
-        /// </summary>
-        /// <value>The tile's second header part.</value>
-        [field: FieldOffset(11)] public byte HeaderPart2 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tile's third header part. <i>This is a portion of <see cref="Header"/>!</i>
-        /// </summary>
-        /// <value>The tile's third header part.</value>
-        [field: FieldOffset(12)] public byte HeaderPart3 { get; set; }
 
         /// <summary>
         /// Gets or sets the block color.

@@ -28,7 +28,7 @@ namespace Orion.Core.World.Tiles
     /// <remarks>
     /// Implementations are required to be thread-safe.
     /// 
-    /// A tile slice can be used to efficiently pass tiles by reference in, e.g., a<see cref="TileSquarePacket"/>
+    /// A tile slice can be used to efficiently pass tiles by reference in, e.g., a <see cref="TileSquarePacket"/>
     /// instance or the <see cref="IPlayerExtensions.SendTiles(IPlayer, int, int, ITileSlice)"/> extension method.
     /// 
     /// The <see cref="ITileSliceExtensions.Slice(ITileSlice, int, int, int, int)"/> extension method allows zero-copy
@@ -43,7 +43,7 @@ namespace Orion.Core.World.Tiles
         /// <param name="y">The Y coordinate.</param>
         /// <returns>A reference to the tile at the given coordinates.</returns>
         /// <remarks>
-        /// For optimization purposes, implementations may not be required to perform any range checking. With some
+        /// For optimization purposes, implementations may not be required to perform any bounds checking. With some
         /// implementations, an <see cref="IndexOutOfRangeException"/> or <see cref="AccessViolationException"/> may be
         /// expected.
         /// </remarks>
