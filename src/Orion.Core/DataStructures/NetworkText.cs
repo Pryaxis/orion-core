@@ -106,7 +106,7 @@ namespace Orion.Core.DataStructures
         {
             Mode.Literal => _format,
             Mode.Formatted => string.Format(CultureInfo.InvariantCulture, _format, _args),
-            Mode.Localized => Terraria.Localization.Language.GetTextValue(_format, _args),
+            Mode.Localized => string.Format(CultureInfo.InvariantCulture, _format, _args),
 
             // Not localized because this string is developer-facing.
             _ => throw new InvalidOperationException("Invalid network text mode")

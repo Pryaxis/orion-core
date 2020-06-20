@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Orion.Core.Events.Server;
 using Orion.Core.Framework.Events;
 using Orion.Core.Framework.Extensions;
 using Serilog;
@@ -48,10 +47,10 @@ namespace Orion.Core
             Extensions = new ExtensionManager(this, log);
             Extensions.Load(typeof(OrionKernel).Assembly);
 
-            OTAPI.Hooks.Game.PreInitialize = PreInitializeHandler;
-            OTAPI.Hooks.Game.Started = StartedHandler;
-            OTAPI.Hooks.Game.PreUpdate = PreUpdateHandler;
-            OTAPI.Hooks.Command.Process = ProcessHandler;
+            //OTAPI.Hooks.Game.PreInitialize = PreInitializeHandler;
+            //OTAPI.Hooks.Game.Started = StartedHandler;
+            //OTAPI.Hooks.Game.PreUpdate = PreUpdateHandler;
+            //OTAPI.Hooks.Command.Process = ProcessHandler;
         }
 
         /// <summary>
@@ -73,17 +72,17 @@ namespace Orion.Core
         {
             Extensions.Dispose();
 
-            OTAPI.Hooks.Game.PreInitialize = null;
-            OTAPI.Hooks.Game.Started = null;
-            OTAPI.Hooks.Game.PreUpdate = null;
-            OTAPI.Hooks.Command.Process = null;
+            //OTAPI.Hooks.Game.PreInitialize = null;
+            //OTAPI.Hooks.Game.Started = null;
+            //OTAPI.Hooks.Game.PreUpdate = null;
+            //OTAPI.Hooks.Command.Process = null;
         }
 
         // =============================================================================================================
         // OTAPI hooks
         //
 
-        private void PreInitializeHandler()
+        /*private void PreInitializeHandler()
         {
             var evt = new ServerInitializeEvent();
             Events.Raise(evt, _log);
@@ -106,6 +105,6 @@ namespace Orion.Core
             var evt = new ServerCommandEvent(input);
             Events.Raise(evt, _log);
             return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
-        }
+        }*/
     }
 }
