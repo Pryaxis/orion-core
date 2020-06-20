@@ -27,24 +27,24 @@ namespace Orion.Core.Framework
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OrionExtension"/> class with the specified
-        /// <paramref name="kernel"/> and <paramref name="log"/>.
+        /// <paramref name="server"/> and <paramref name="log"/>.
         /// </summary>
-        /// <param name="kernel">The kernel.</param>
+        /// <param name="server">The server.</param>
         /// <param name="log">The extension-specific log to log to.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="kernel"/> or <paramref name="log"/> are <see langword="null"/>.
+        /// <paramref name="server"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        protected OrionExtension(OrionKernel kernel, ILogger log)
+        protected OrionExtension(IServer server, ILogger log)
         {
-            Kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
+            Server = server ?? throw new ArgumentNullException(nameof(server));
             Log = log ?? throw new ArgumentNullException(nameof(log));
         }
 
         /// <summary>
-        /// Gets the kernel.
+        /// Gets the server.
         /// </summary>
-        /// <value>The kernel.</value>
-        public OrionKernel Kernel { get; }
+        /// <value>The server.</value>
+        public IServer Server { get; }
 
         /// <summary>
         /// Gets the extension-specific log.

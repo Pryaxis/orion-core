@@ -26,7 +26,7 @@ namespace Orion.Core.Framework
     public class OrionExtensionTests
     {
         [Fact]
-        public void Ctor_NullKernel_ThrowsArgumentNullException()
+        public void Ctor_NullServer_ThrowsArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(() => new TestExtension(null!, Logger.None));
         }
@@ -34,34 +34,34 @@ namespace Orion.Core.Framework
         [Fact]
         public void Ctor_NullLog_ThrowsArgumentNullException()
         {
-            using var kernel = new OrionKernel(Logger.None);
+            var server = Mock.Of<IServer>();
 
-            Assert.Throws<ArgumentNullException>(() => new TestExtension(kernel, null!));
+            Assert.Throws<ArgumentNullException>(() => new TestExtension(server, null!));
         }
 
         [Fact]
-        public void Kernel_Get()
+        public void Server_Get()
         {
-            using var kernel = new OrionKernel(Logger.None);
+            var server = Mock.Of<IServer>();
             var log = Mock.Of<ILogger>();
-            using var service = new TestExtension(kernel, log);
+            using var extension = new TestExtension(server, log);
 
-            Assert.Same(kernel, service.Kernel);
+            Assert.Same(server, extension.Server);
         }
 
         [Fact]
         public void Log_Get()
         {
-            using var kernel = new OrionKernel(Logger.None);
+            var server = Mock.Of<IServer>();
             var log = Mock.Of<ILogger>();
-            using var service = new TestExtension(kernel, log);
+            using var extension = new TestExtension(server, log);
 
-            Assert.Same(log, service.Log);
+            Assert.Same(log, extension.Log);
         }
 
         public class TestExtension : OrionExtension
         {
-            public TestExtension(OrionKernel kernel, ILogger log) : base(kernel, log) { }
+            public TestExtension(IServer server, ILogger log) : base(server, log) { }
         }
     }
 }

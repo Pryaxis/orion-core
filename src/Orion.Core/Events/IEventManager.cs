@@ -24,7 +24,7 @@ using Serilog;
 namespace Orion.Core.Events
 {
     /// <summary>
-    /// Handles event handler registration, deregistration, and event raising.
+    /// Manages events. Provides access to events and event handler registration/deregistration.
     /// </summary>
     public interface IEventManager
     {
