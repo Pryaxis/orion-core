@@ -15,18 +15,36 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Core.Entities;
+using Orion.Core.Events.World;
+using Orion.Core.Events.World.Tiles;
+using Orion.Core.Framework;
 using Orion.Core.World.Tiles;
 
 namespace Orion.Core.World
 {
     /// <summary>
-    /// Represents a Terraria world.
+    /// Represents a world. Provides access to the tiles and publishes world and tile-related events.
     /// </summary>
     /// <remarks>
     /// Implementations are required to be thread-safe.
+    /// 
+    /// The world is responsible for publishing the following world and tile-related events:
+    /// <list type="bullet">
+    /// <item><description><see cref="WorldLoadedEvent"/></description></item>
+    /// <item><description><see cref="WorldSaveEvent"/></description></item>
+    /// <item><description><see cref="BlockBreakEvent"/></description></item>
+    /// <item><description><see cref="BlockPlaceEvent"/></description></item>
+    /// <item><description><see cref="WallBreakEvent"/></description></item>
+    /// <item><description><see cref="WallPlaceEvent"/></description></item>
+    /// <item><description><see cref="TileSquareEvent"/></description></item>
+    /// <item><description><see cref="TileLiquidEvent"/></description></item>
+    /// <item><description><see cref="WiringActivateEvent"/></description></item>
+    /// <item><description><see cref="BlockPaintEvent"/></description></item>
+    /// <item><description><see cref="WallPaintEvent"/></description></item>
+    /// </list>
     /// </remarks>
-    public interface IWorld : ITileSlice, IAnnotatable
+    [Service(ServiceScope.Singleton)]
+    public interface IWorld : ITileSlice
     {
         /// <summary>
         /// Gets the world's name.

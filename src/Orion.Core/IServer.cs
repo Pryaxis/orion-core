@@ -89,6 +89,6 @@ namespace Orion.Core
         /// Gets the world service.
         /// </summary>
         /// <value>The world service.</value>
-        IWorldService World { get; }
+        IWorld World { get; }
     }
 }
