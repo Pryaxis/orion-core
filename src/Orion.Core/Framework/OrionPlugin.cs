@@ -21,20 +21,20 @@ using Serilog;
 namespace Orion.Core.Framework
 {
     /// <summary>
-    /// Provides the base class for an Orion extension (service or plugin).
+    /// Provides the base class for an Orion plugin.
     /// </summary>
-    public abstract class OrionExtension : IDisposable
+    public abstract class OrionPlugin : IDisposable
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrionExtension"/> class with the specified
+        /// Initializes a new instance of the <see cref="OrionPlugin"/> class with the specified
         /// <paramref name="server"/> and <paramref name="log"/>.
         /// </summary>
         /// <param name="server">The server.</param>
-        /// <param name="log">The extension-specific log to log to.</param>
+        /// <param name="log">The plugin-specific log to log to.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="server"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        protected OrionExtension(IServer server, ILogger log)
+        protected OrionPlugin(IServer server, ILogger log)
         {
             Server = server ?? throw new ArgumentNullException(nameof(server));
             Log = log ?? throw new ArgumentNullException(nameof(log));
@@ -47,13 +47,13 @@ namespace Orion.Core.Framework
         public IServer Server { get; }
 
         /// <summary>
-        /// Gets the extension-specific log.
+        /// Gets the plugin-specific log.
         /// </summary>
-        /// <value>The extension-specific log.</value>
+        /// <value>The plugin-specific log.</value>
         public ILogger Log { get; }
 
         /// <summary>
-        /// Disposes the extension, releasing any resources associated with it.
+        /// Disposes the plugin, releasing any resources associated with it.
         /// </summary>
         public virtual void Dispose() { }
     }

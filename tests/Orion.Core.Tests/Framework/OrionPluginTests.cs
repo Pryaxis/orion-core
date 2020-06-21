@@ -23,12 +23,12 @@ using Xunit;
 
 namespace Orion.Core.Framework
 {
-    public class OrionExtensionTests
+    public class OrionPluginTests
     {
         [Fact]
         public void Ctor_NullServer_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new TestExtension(null!, Logger.None));
+            Assert.Throws<ArgumentNullException>(() => new TestOrionPlugin(null!, Logger.None));
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace Orion.Core.Framework
         {
             var server = Mock.Of<IServer>();
 
-            Assert.Throws<ArgumentNullException>(() => new TestExtension(server, null!));
+            Assert.Throws<ArgumentNullException>(() => new TestOrionPlugin(server, null!));
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace Orion.Core.Framework
         {
             var server = Mock.Of<IServer>();
             var log = Mock.Of<ILogger>();
-            using var extension = new TestExtension(server, log);
+            using var extension = new TestOrionPlugin(server, log);
 
             Assert.Same(server, extension.Server);
         }
@@ -54,14 +54,14 @@ namespace Orion.Core.Framework
         {
             var server = Mock.Of<IServer>();
             var log = Mock.Of<ILogger>();
-            using var extension = new TestExtension(server, log);
+            using var extension = new TestOrionPlugin(server, log);
 
             Assert.Same(log, extension.Log);
         }
 
-        public class TestExtension : OrionExtension
+        public class TestOrionPlugin : OrionPlugin
         {
-            public TestExtension(IServer server, ILogger log) : base(server, log) { }
+            public TestOrionPlugin(IServer server, ILogger log) : base(server, log) { }
         }
     }
 }
