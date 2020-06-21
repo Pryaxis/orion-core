@@ -34,36 +34,14 @@ namespace Orion.Core.Events.Npcs
         }
 
         [Fact]
-        public void Id_Set_Get()
+        public void ItemStack_Set_Get()
         {
             var npc = Mock.Of<INpc>();
             var evt = new NpcLootEvent(npc);
 
-            evt.Id = ItemId.Sdmg;
+            evt.ItemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
 
-            Assert.Equal(ItemId.Sdmg, evt.Id);
-        }
-
-        [Fact]
-        public void StackSize_Set_Get()
-        {
-            var npc = Mock.Of<INpc>();
-            var evt = new NpcLootEvent(npc);
-
-            evt.StackSize = 1;
-
-            Assert.Equal(1, evt.StackSize);
-        }
-
-        [Fact]
-        public void Prefix_Set_Get()
-        {
-            var npc = Mock.Of<INpc>();
-            var evt = new NpcLootEvent(npc);
-
-            evt.Prefix = ItemPrefix.Unreal;
-
-            Assert.Equal(ItemPrefix.Unreal, evt.Prefix);
+            Assert.Equal(new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal), evt.ItemStack);
         }
     }
 }

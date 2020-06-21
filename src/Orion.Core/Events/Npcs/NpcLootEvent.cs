@@ -36,21 +36,9 @@ namespace Orion.Core.Events.Npcs
         public NpcLootEvent(INpc npc) : base(npc) { }
 
         /// <summary>
-        /// Gets or sets the item ID of the loot being dropped.
+        /// Gets or sets the item stack being dropped.
         /// </summary>
-        /// <value>The item ID of the loot being dropped.</value>
-        public ItemId Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the stack size of the loot being dropped.
-        /// </summary>
-        /// <value>The stack size of the loot being dropped.</value>
-        public int StackSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the prefix of the loot being dropped.
-        /// </summary>
-        /// <value>The prefix of the loot being dropped.</value>
-        public ItemPrefix Prefix { get; set; }
+        /// <value>The item stack being dropped.</value>
+        public ItemStack ItemStack { get; set; }
     }
 }
