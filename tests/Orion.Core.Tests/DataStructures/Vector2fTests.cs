@@ -73,6 +73,17 @@ namespace Orion.Core.DataStructures
         }
 
         [Fact]
+        public void Deconstruct()
+        {
+            var vector = new Vector2f(1.23f, 4.56f);
+
+            var (x, y) = vector;
+
+            Assert.Equal(1.23f, x);
+            Assert.Equal(4.56f, y);
+        }
+
+        [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Equality_ReturnsTrue()
         {

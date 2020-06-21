@@ -78,6 +78,17 @@ namespace Orion.Core.DataStructures
         public override string ToString() => $"({X}, {Y})";
 
         /// <summary>
+        /// Deconstructs the vector.
+        /// </summary>
+        /// <param name="x">The X component.</param>
+        /// <param name="y">The Y component.</param>
+        public void Deconstruct(out float x, out float y)
+        {
+            x = X;
+            y = Y;
+        }
+
+        /// <summary>
         /// Returns a value indicating whether <paramref name="left"/> is equal to <paramref name="right"/>.
         /// </summary>
         /// <param name="left">The left vector.</param>

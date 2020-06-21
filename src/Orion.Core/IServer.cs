@@ -25,7 +25,7 @@ namespace Orion.Core
     /// Represents the server. Provides access to Orion extensions and events and publishes server-related events.
     /// </summary>
     /// <remarks>
-    /// The Orion kernel is responsible for publishing the following server-related events:
+    /// The server is responsible for publishing the following server-related events:
     /// <list type="bullet">
     /// <item><description><see cref="ServerInitializeEvent"/></description></item>
     /// <item><description><see cref="ServerStartEvent"/></description></item>
