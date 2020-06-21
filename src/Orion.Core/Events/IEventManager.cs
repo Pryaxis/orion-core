@@ -19,6 +19,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Orion.Core.Framework;
 using Serilog;
 
 namespace Orion.Core.Events
@@ -26,6 +27,7 @@ namespace Orion.Core.Events
     /// <summary>
     /// Manages events. Provides access to events and event handler registration/deregistration.
     /// </summary>
+    [Service(ServiceScope.Singleton)]
     public interface IEventManager
     {
         /// <summary>

@@ -15,9 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using Orion.Core.Events;
 using Orion.Core.Events.Server;
 using Orion.Core.Framework;
+using Orion.Core.Items;
+using Orion.Core.Npcs;
+using Orion.Core.Players;
+using Orion.Core.Projectiles;
+using Orion.Core.World;
+using Orion.Core.World.Chests;
+using Orion.Core.World.Signs;
 
 namespace Orion.Core
 {
@@ -25,6 +33,8 @@ namespace Orion.Core
     /// Represents the server. Provides access to Orion extensions and events and publishes server-related events.
     /// </summary>
     /// <remarks>
+    /// Implementations must be thread-safe.
+    /// 
     /// The server is responsible for publishing the following server-related events:
     /// <list type="bullet">
     /// <item><description><see cref="ServerInitializeEvent"/></description></item>
@@ -36,15 +46,51 @@ namespace Orion.Core
     public interface IServer
     {
         /// <summary>
-        /// Gets the extension manager.
-        /// </summary>
-        /// <value>The extension manager.</value>
-        IExtensionManager Extensions { get; }
-
-        /// <summary>
         /// Gets the event manager.
         /// </summary>
         /// <value>The event manager.</value>
         IEventManager Events { get; }
+
+        /// <summary>
+        /// Gets the item service.
+        /// </summary>
+        /// <value>The item service.</value>
+        IItemService Items { get; }
+
+        /// <summary>
+        /// Gets the NPC service.
+        /// </summary>
+        /// <value>The NPC service.</value>
+        INpcService Npcs { get; }
+
+        /// <summary>
+        /// Gets the player service.
+        /// </summary>
+        /// <value>The player service.</value>
+        IPlayerService Players { get; }
+
+        /// <summary>
+        /// Gets the projectile service.
+        /// </summary>
+        /// <value>The projectile service.</value>
+        IProjectileService Projectiles { get; }
+
+        /// <summary>
+        /// Gets the chest service.
+        /// </summary>
+        /// <value>The chest service.</value>
+        IChestService Chests { get; }
+
+        /// <summary>
+        /// Gets the sign service.
+        /// </summary>
+        /// <value>The sign service.</value>
+        ISignService Signs { get; }
+
+        /// <summary>
+        /// Gets the world service.
+        /// </summary>
+        /// <value>The world service.</value>
+        IWorldService World { get; }
     }
 }
