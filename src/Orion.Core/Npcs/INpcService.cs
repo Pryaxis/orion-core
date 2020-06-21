@@ -41,14 +41,8 @@ namespace Orion.Core.Npcs
     /// </list>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
-    public interface INpcService
+    public interface INpcService : IReadOnlyList<INpc>
     {
-        /// <summary>
-        /// Gets the NPCs.
-        /// </summary>
-        /// <value>The NPCs.</value>
-        IReadOnlyList<INpc> Npcs { get; }
-
         /// <summary>
         /// Spawns an NPC with the given <paramref name="id"/> at the specified <paramref name="position"/>. Returns the
         /// resulting NPC.
