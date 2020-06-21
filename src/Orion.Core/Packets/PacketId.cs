@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Orion.Core.Packets.Client;
+using Orion.Core.Packets.Items;
 using Orion.Core.Packets.Npcs;
 using Orion.Core.Packets.Players;
 using Orion.Core.Packets.Server;
@@ -47,6 +48,7 @@ namespace Orion.Core.Packets
         PlayerHealthEffect = 35,
         ServerPassworded = 37,
         ClientPassword = 38,
+        ItemDisown = 39,
         PlayerMana = 42,
         PlayerManaEffect = 43,
         PlayerTeam = 45,
@@ -96,6 +98,7 @@ namespace Orion.Core.Packets
             [PacketId.PlayerHealthEffect] = typeof(PlayerHealthEffectPacket),
             [PacketId.ServerPassworded] = typeof(ServerPasswordedPacket),
             [PacketId.ClientPassword] = typeof(ClientPasswordPacket),
+            [PacketId.ItemDisown] = typeof(ItemDisownPacket),
             [PacketId.PlayerTeam] = typeof(PlayerTeamPacket),
             [PacketId.SignRead] = typeof(SignReadPacket),
             [PacketId.TileLiquid] = typeof(TileLiquidPacket),
