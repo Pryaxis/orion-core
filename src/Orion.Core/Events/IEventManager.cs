@@ -131,6 +131,44 @@ namespace Orion.Core.Events
         public static void DeregisterHandlers(this IEventManager eventManager, object obj, ILogger log) =>
             InvokeHandlers(eventManager, obj, log, _deregisterHandler, _deregisterAsyncHandler);
 
+        /// <summary>
+        /// Forwards the given <paramref name="evt"/> as <paramref name="newEvt"/>.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of event.</typeparam>
+        /// <param name="eventManager">The event manager.</param>
+        /// <param name="evt">The event to forward.</param>
+        /// <param name="newEvt">The event to use when forwarding.</param>
+        /// <param name="log">The log to log the forwarding to.</param>
+        public static void Forward<TEvent>(this IEventManager eventManager, Event evt, TEvent newEvt, ILogger log)
+            where TEvent : Event
+        {
+            if (eventManager is null)
+            {
+                throw new ArgumentNullException(nameof(eventManager));
+            }
+
+            if (evt is null)
+            {
+                throw new ArgumentNullException(nameof(evt));
+            }
+
+            if (newEvt is null)
+            {
+                throw new ArgumentNullException(nameof(newEvt));
+            }
+
+            if (log is null)
+            {
+                throw new ArgumentNullException(nameof(log));
+            }
+
+            eventManager.Raise(newEvt, log);
+            if (newEvt.IsCanceled)
+            {
+                evt.Cancel(newEvt.CancellationReason);
+            }
+        }
+
         private static void InvokeHandlers(
             IEventManager eventManager, object obj, ILogger log, MethodInfo method, MethodInfo asyncMethod)
         {

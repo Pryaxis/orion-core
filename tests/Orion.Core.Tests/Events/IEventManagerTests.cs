@@ -58,21 +58,21 @@ namespace Orion.Core.Events
         [Fact]
         public void RegisterHandlers()
         {
-            var mockEventManager = new Mock<IEventManager>();
+            var eventManager = Mock.Of<IEventManager>();
             var log = Mock.Of<ILogger>();
-            mockEventManager
+            Mock.Get(eventManager)
                 .Setup(em => em.RegisterHandler(
                     It.Is<Action<TestEvent>>(h => h.Method.Name == "OnTest"), log));
-            mockEventManager
+            Mock.Get(eventManager)
                 .Setup(em => em.RegisterHandler(
                     It.Is<Action<TestEvent>>(h => h.Method.Name == "OnPrivateTest"), log));
-            mockEventManager
+            Mock.Get(eventManager)
                 .Setup(em => em.RegisterAsyncHandler(
                     It.Is<Func<TestEvent, Task>>(h => h.Method.Name == "OnTestAsync"), log));
 
-            mockEventManager.Object.RegisterHandlers(new TestClass(), log);
+            eventManager.RegisterHandlers(new TestClass(), log);
 
-            mockEventManager.VerifyAll();
+            Mock.Get(eventManager).VerifyAll();
         }
 
         [Fact]
@@ -103,21 +103,93 @@ namespace Orion.Core.Events
         [Fact]
         public void DeregisterHandlers()
         {
-            var mockEventManager = new Mock<IEventManager>();
+            var eventManager = Mock.Of<IEventManager>();
             var log = Mock.Of<ILogger>();
-            mockEventManager
+            Mock.Get(eventManager)
                 .Setup(em => em.DeregisterHandler(
                     It.Is<Action<TestEvent>>(h => h.Method.Name == "OnTest"), log));
-            mockEventManager
+            Mock.Get(eventManager)
                 .Setup(em => em.DeregisterHandler(
                     It.Is<Action<TestEvent>>(h => h.Method.Name == "OnPrivateTest"), log));
-            mockEventManager
+            Mock.Get(eventManager)
                 .Setup(em => em.DeregisterAsyncHandler(
                     It.Is<Func<TestEvent, Task>>(h => h.Method.Name == "OnTestAsync"), log));
 
-            mockEventManager.Object.DeregisterHandlers(new TestClass(), log);
+            eventManager.DeregisterHandlers(new TestClass(), log);
 
-            mockEventManager.VerifyAll();
+            Mock.Get(eventManager).VerifyAll();
+        }
+
+        [Fact]
+        public void Forward_NullEventManager_ThrowsArgumentNullException()
+        {
+            var evt = new TestEvent();
+            var newEvt = new TestEvent();
+            var log = Mock.Of<ILogger>();
+
+            Assert.Throws<ArgumentNullException>(() => IEventManagerExtensions.Forward(null!, evt, newEvt, log));
+        }
+
+        [Fact]
+        public void Forward_NullEvt_ThrowsArgumentNullException()
+        {
+            var eventManager = Mock.Of<IEventManager>();
+            var newEvt = new TestEvent();
+            var log = Mock.Of<ILogger>();
+
+            Assert.Throws<ArgumentNullException>(() => eventManager.Forward(null!, newEvt, log));
+        }
+
+        [Fact]
+        public void Forward_NullNewEvt_ThrowsArgumentNullException()
+        {
+            var eventManager = Mock.Of<IEventManager>();
+            var evt = new TestEvent();
+            var log = Mock.Of<ILogger>();
+
+            Assert.Throws<ArgumentNullException>(() => eventManager.Forward<TestEvent>(evt, null!, log));
+        }
+
+        [Fact]
+        public void Forward_NullLog_ThrowsArgumentNullException()
+        {
+            var eventManager = Mock.Of<IEventManager>();
+            var evt = new TestEvent();
+            var newEvt = new TestEvent();
+
+            Assert.Throws<ArgumentNullException>(() => eventManager.Forward(evt, newEvt, null!));
+        }
+
+        [Fact]
+        public void Forward_NotCanceled()
+        {
+            var eventManager = Mock.Of<IEventManager>();
+            var evt = new TestEvent();
+            var newEvt = new TestEvent();
+            var log = Mock.Of<ILogger>();
+
+            eventManager.Forward(evt, newEvt, log);
+
+            Mock.Get(eventManager)
+                .Verify(em => em.Raise(newEvt, log));
+        }
+
+        [Fact]
+        public void Forward_Canceled()
+        {
+            var eventManager = Mock.Of<IEventManager>();
+            var evt = new TestEvent();
+            var newEvt = new TestEvent();
+            var log = Mock.Of<ILogger>();
+            Mock.Get(eventManager)
+                .Setup(em => em.Raise(newEvt, log))
+                .Callback<TestEvent, ILogger>((evt, log) => evt.Cancel());
+
+            eventManager.Forward(evt, newEvt, log);
+
+            Assert.True(evt.IsCanceled);
+
+            Mock.Get(eventManager).VerifyAll();
         }
 
         [Event("test")]
