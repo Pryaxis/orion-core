@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 using Moq;
 using Orion.Core.DataStructures;
 using Orion.Core.Packets;
@@ -45,13 +44,13 @@ namespace Orion.Core.Players
         [Fact]
         public void BroadcastPacket_Ref()
         {
-            var mockPlayer = new Mock<IPlayer>();
-            var playerService = Mock.Of<IPlayerService>(ps => ps.Count == 1 && ps[0] == mockPlayer.Object);
+            var playerService = Mock.Of<IPlayerService>(ps => ps.Count == 1 && ps[0] == Mock.Of<IPlayer>());
 
             var packet = new TestPacket();
             playerService.BroadcastPacket(ref packet);
 
-            mockPlayer.Verify(p => p.SendPacket(ref It.Ref<TestPacket>.IsAny));
+            Mock.Get(playerService[0])
+                .Verify(p => p.SendPacket(ref It.Ref<TestPacket>.IsAny));
         }
 
         [Fact]
@@ -64,13 +63,13 @@ namespace Orion.Core.Players
         [Fact]
         public void BroadcastPacket()
         {
-            var mockPlayer = new Mock<IPlayer>();
-            var playerService = Mock.Of<IPlayerService>(ps => ps.Count == 1 && ps[0] == mockPlayer.Object);
+            var playerService = Mock.Of<IPlayerService>(ps => ps.Count == 1 && ps[0] == Mock.Of<IPlayer>());
 
             var packet = new TestPacket();
             playerService.BroadcastPacket(packet);
 
-            mockPlayer.Verify(p => p.SendPacket(ref It.Ref<TestPacket>.IsAny));
+            Mock.Get(playerService[0])
+                .Verify(p => p.SendPacket(ref It.Ref<TestPacket>.IsAny));
         }
 
         [Fact]
@@ -91,8 +90,8 @@ namespace Orion.Core.Players
         [Fact]
         public void BroadcastMessage()
         {
-            var mockPlayer = new Mock<IPlayer>();
-            mockPlayer
+            var playerService = Mock.Of<IPlayerService>(ps => ps.Count == 1 && ps[0] == Mock.Of<IPlayer>());
+            Mock.Get(playerService[0])
                 .Setup(p => p.SendPacket(ref It.Ref<ServerChatPacket>.IsAny))
                 .Callback((ServerChatCallback)((ref ServerChatPacket packet) =>
                 {
@@ -100,11 +99,10 @@ namespace Orion.Core.Players
                     Assert.Equal(Color3.White, packet.Color);
                     Assert.Equal(-1, packet.LineWidth);
                 }));
-            var playerService = Mock.Of<IPlayerService>(ps => ps.Count == 1 && ps[0] == mockPlayer.Object);
 
             playerService.BroadcastMessage("test", Color3.White);
 
-            mockPlayer.Verify(p => p.SendPacket(ref It.Ref<ServerChatPacket>.IsAny));
+            Mock.Get(playerService[0]).VerifyAll();
         }
 
         [Fact]
@@ -136,8 +134,8 @@ namespace Orion.Core.Players
         public void BroadcastTiles()
         {
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
-            var mockPlayer = new Mock<IPlayer>();
-            mockPlayer
+            var playerService = Mock.Of<IPlayerService>(ps => ps.Count == 1 && ps[0] == Mock.Of<IPlayer>());
+            Mock.Get(playerService[0])
                 .Setup(p => p.SendPacket(ref It.Ref<TileSquarePacket>.IsAny))
                 .Callback((TileSquareCallback)((ref TileSquarePacket packet) =>
                 {
@@ -145,11 +143,10 @@ namespace Orion.Core.Players
                     Assert.Equal(456, packet.Y);
                     Assert.Same(tiles, packet.Tiles);
                 }));
-            var playerService = Mock.Of<IPlayerService>(ps => ps.Count == 1 && ps[0] == mockPlayer.Object);
 
             playerService.BroadcastTiles(123, 456, tiles);
 
-            mockPlayer.Verify(p => p.SendPacket(ref It.Ref<TileSquarePacket>.IsAny));
+            Mock.Get(playerService[0]).VerifyAll();
         }
 
         private struct TestPacket : IPacket

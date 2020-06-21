@@ -41,11 +41,11 @@ namespace Orion.Core.Players
         [Fact]
         public void ReceivePacket()
         {
-            var mockPlayer = new Mock<IPlayer>();
+            var player = Mock.Of<IPlayer>();
 
-            mockPlayer.Object.ReceivePacket(new TestPacket());
+            player.ReceivePacket(new TestPacket());
 
-            mockPlayer.Verify(p => p.ReceivePacket(ref It.Ref<TestPacket>.IsAny));
+            Mock.Get(player).VerifyAll();
         }
 
         [Fact]
@@ -57,11 +57,11 @@ namespace Orion.Core.Players
         [Fact]
         public void SendPacket()
         {
-            var mockPlayer = new Mock<IPlayer>();
+            var player = Mock.Of<IPlayer>();
 
-            mockPlayer.Object.SendPacket(new TestPacket());
+            player.SendPacket(new TestPacket());
 
-            mockPlayer.Verify(p => p.SendPacket(ref It.Ref<TestPacket>.IsAny));
+            Mock.Get(player).VerifyAll();
         }
 
         [Fact]
@@ -81,17 +81,17 @@ namespace Orion.Core.Players
         [Fact]
         public void Disconnect()
         {
-            var mockPlayer = new Mock<IPlayer>();
-            mockPlayer
+            var player = Mock.Of<IPlayer>();
+            Mock.Get(player)
                 .Setup(p => p.SendPacket(ref It.Ref<ServerDisconnectPacket>.IsAny))
                 .Callback((ServerDisconnectCallback)((ref ServerDisconnectPacket packet) =>
                 {
                     Assert.Equal("test", packet.Reason);
                 }));
 
-            mockPlayer.Object.Disconnect("test");
+            player.Disconnect("test");
 
-            mockPlayer.Verify(p => p.SendPacket(ref It.Ref<ServerDisconnectPacket>.IsAny));
+            Mock.Get(player).VerifyAll();
         }
 
         [Fact]
@@ -111,8 +111,8 @@ namespace Orion.Core.Players
         [Fact]
         public void SendMessage()
         {
-            var mockPlayer = new Mock<IPlayer>();
-            mockPlayer
+            var player = Mock.Of<IPlayer>();
+            Mock.Get(player)
                 .Setup(p => p.SendPacket(ref It.Ref<ServerChatPacket>.IsAny))
                 .Callback((ServerChatCallback)((ref ServerChatPacket packet) =>
                 {
@@ -121,9 +121,9 @@ namespace Orion.Core.Players
                     Assert.Equal(-1, packet.LineWidth);
                 }));
 
-            mockPlayer.Object.SendMessage("test", Color3.White);
+            player.SendMessage("test", Color3.White);
 
-            mockPlayer.Verify(p => p.SendPacket(ref It.Ref<ServerChatPacket>.IsAny));
+            Mock.Get(player).VerifyAll();
         }
 
         [Fact]
@@ -155,8 +155,8 @@ namespace Orion.Core.Players
         public void SendTiles()
         {
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
-            var mockPlayer = new Mock<IPlayer>();
-            mockPlayer
+            var player = Mock.Of<IPlayer>();
+            Mock.Get(player)
                 .Setup(p => p.SendPacket(ref It.Ref<TileSquarePacket>.IsAny))
                 .Callback((TileSquareCallback)((ref TileSquarePacket packet) =>
                 {
@@ -165,9 +165,9 @@ namespace Orion.Core.Players
                     Assert.Same(tiles, packet.Tiles);
                 }));
 
-            mockPlayer.Object.SendTiles(123, 456, tiles);
+            player.SendTiles(123, 456, tiles);
 
-            mockPlayer.Verify(p => p.SendPacket(ref It.Ref<TileSquarePacket>.IsAny));
+            Mock.Get(player).VerifyAll();
         }
 
         private struct TestPacket : IPacket

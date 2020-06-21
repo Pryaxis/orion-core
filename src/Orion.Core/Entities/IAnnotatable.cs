@@ -24,6 +24,8 @@ namespace Orion.Core.Entities
     /// Provides annotation support.
     /// </summary>
     /// <remarks>
+    /// Implementations must be thread-safe.
+    /// 
     /// This interface is used to allow consumers to attach custom state to objects without having to rely on the
     /// <see cref="ConditionalWeakTable{TKey, TValue}"/> class.
     /// </remarks>

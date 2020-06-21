@@ -50,6 +50,6 @@ namespace Orion.Core.Npcs
         /// <param name="id">The NPC ID to spawn.</param>
         /// <param name="position">The position to spawn the NPC at.</param>
         /// <returns>The resulting NPC, or <see langword="null"/> if none was spawned.</returns>
-        INpc? SpawnNpc(NpcId id, Vector2f position);
+        INpc? Spawn(NpcId id, Vector2f position);
     }
 }

@@ -44,6 +44,6 @@ namespace Orion.Core.Items
         /// <param name="itemStack">The item stack to spawn.</param>
         /// <param name="position">The position to spawn the item at.</param>
         /// <returns>The resulting item.</returns>
-        IItem SpawnItem(ItemStack itemStack, Vector2f position);
+        IItem Spawn(ItemStack itemStack, Vector2f position);
     }
 }
