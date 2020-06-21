@@ -66,10 +66,10 @@ namespace Orion.Core.Items
     public static class IItemExtensions
     {
         /// <summary>
-        /// Returns the <paramref name="item"/> as an item stack instance.
+        /// Returns the item as an item stack instance.
         /// </summary>
         /// <param name="item">The item.</param>
-        /// <returns>The <paramref name="item"/> as an item stack instance.</returns>
+        /// <returns>The item as an item stack instance.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
         [Pure]
         public static ItemStack AsItemStack(this IItem item)

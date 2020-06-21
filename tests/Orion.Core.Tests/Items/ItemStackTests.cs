@@ -83,6 +83,18 @@ namespace Orion.Core.Items
         }
 
         [Fact]
+        public void Deconstruct()
+        {
+            var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
+
+            var (id, stackSize, prefix) = itemStack;
+
+            Assert.Equal(ItemId.Sdmg, id);
+            Assert.Equal(1, stackSize);
+            Assert.Equal(ItemPrefix.Unreal, prefix);
+        }
+
+        [Fact]
         public void WithStackSize()
         {
             var itemStack = new ItemStack(ItemId.Sdmg, 5, ItemPrefix.Unreal);

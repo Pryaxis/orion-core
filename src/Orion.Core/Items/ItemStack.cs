@@ -85,6 +85,19 @@ namespace Orion.Core.Items
         public override string ToString() => $"{Id} x{StackSize} ({Prefix})";
 
         /// <summary>
+        /// Deconstructs the item stack.
+        /// </summary>
+        /// <param name="id">The item ID.</param>
+        /// <param name="stackSize">The item stack size.</param>
+        /// <param name="prefix">The item prefix.</param>
+        public void Deconstruct(out ItemId id, out int stackSize, out ItemPrefix prefix)
+        {
+            id = Id;
+            stackSize = StackSize;
+            prefix = Prefix;
+        }
+
+        /// <summary>
         /// Returns a new item stack with the given <paramref name="stackSize"/>.
         /// </summary>
         /// <param name="stackSize">The item stack size.</param>
