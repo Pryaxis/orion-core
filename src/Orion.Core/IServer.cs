@@ -28,7 +28,7 @@ using Orion.Core.World.Signs;
 namespace Orion.Core
 {
     /// <summary>
-    /// Represents the server. Provides access to Orion extensions and events and publishes server-related events.
+    /// Represents the server. Provides access to Orion services and publishes server-related events.
     /// </summary>
     /// <remarks>
     /// Implementations must be thread-safe.
@@ -86,9 +86,9 @@ namespace Orion.Core
         ISignService Signs { get; }
 
         /// <summary>
-        /// Gets the world service.
+        /// Gets the world.
         /// </summary>
-        /// <value>The world service.</value>
+        /// <value>The world.</value>
         IWorld World { get; }
     }
 }
