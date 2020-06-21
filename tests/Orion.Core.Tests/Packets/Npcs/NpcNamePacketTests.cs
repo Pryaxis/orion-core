@@ -24,8 +24,8 @@ namespace Orion.Core.Packets.Npcs
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class NpcNamePacketTests
     {
-        public static readonly byte[] ServerBytes = { 5, 0, 69, 5, 0 };
-        public static readonly byte[] ClientBytes = { 14, 0, 69, 5, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
+        private readonly byte[] _serverBytes = { 5, 0, 69, 5, 0 };
+        private readonly byte[] _clientBytes = { 18, 0, 69, 5, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97, 1, 0, 0, 0 };
 
         [Fact]
         public void NpcIndex_Set_Get()
@@ -64,10 +64,20 @@ namespace Orion.Core.Packets.Npcs
         }
 
         [Fact]
+        public void Variant_Set_Get()
+        {
+            var packet = new NpcNamePacket();
+
+            packet.Variant = 1;
+
+            Assert.Equal(1, packet.Variant);
+        }
+
+        [Fact]
         public void Read_AsServer()
         {
             var packet = new NpcNamePacket();
-            var span = ServerBytes.AsSpan(IPacket.HeaderSize..);
+            var span = _serverBytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(5, packet.NpcIndex);
@@ -77,23 +87,24 @@ namespace Orion.Core.Packets.Npcs
         public void Read_AsClient()
         {
             var packet = new NpcNamePacket();
-            var span = ClientBytes.AsSpan(IPacket.HeaderSize..);
+            var span = _clientBytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Client));
 
             Assert.Equal(5, packet.NpcIndex);
             Assert.Equal("Terraria", packet.Name);
+            Assert.Equal(1, packet.Variant);
         }
 
         [Fact]
         public void RoundTrip_AsServer()
         {
-            TestUtils.RoundTripPacket<NpcNamePacket>(ServerBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<NpcNamePacket>(_serverBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_AsClient()
         {
-            TestUtils.RoundTripPacket<NpcNamePacket>(ClientBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Client);
+            TestUtils.RoundTripPacket<NpcNamePacket>(_clientBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Client);
         }
     }
 }

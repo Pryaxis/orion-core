@@ -46,20 +46,38 @@ namespace Orion.Core.Packets.Npcs
             set => _name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        /// <summary>
+        /// Gets or sets the NPC's variant.
+        /// </summary>
+        /// <value>The NPC's variant.</value>
+        [field: FieldOffset(2)] public int Variant { get; set; }
+
         PacketId IPacket.Id => PacketId.NpcName;
 
         /// <inheritdoc/>
         public int Read(Span<byte> span, PacketContext context)
         {
             var index = span.Read(ref this.AsRefByte(0), 2);
-            return context == PacketContext.Server ? index : index + span[index..].Read(Encoding.UTF8, out _name);
+            if (context == PacketContext.Server)
+            {
+                return index;
+            }
+
+            index += span[index..].Read(Encoding.UTF8, out _name);
+            return index + span[index..].Read(ref this.AsRefByte(2), 4);
         }
 
         /// <inheritdoc/>
         public int Write(Span<byte> span, PacketContext context)
         {
             var index = span.Write(ref this.AsRefByte(0), 2);
-            return context == PacketContext.Client ? index : index + span[index..].Write(Name, Encoding.UTF8);
+            if (context == PacketContext.Client)
+            {
+                return index;
+            }
+
+            index += span[index..].Write(Name, Encoding.UTF8);
+            return index + span[index..].Write(ref this.AsRefByte(2), 4);
         }
     }
 }

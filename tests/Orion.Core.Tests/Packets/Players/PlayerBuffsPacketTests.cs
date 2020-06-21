@@ -25,7 +25,8 @@ namespace Orion.Core.Packets.Players
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class PlayerBuffsPacketTests
     {
-        private readonly byte[] _bytes = {
+        private readonly byte[] _bytes =
+        {
             48, 0, 50, 5, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
             0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0
         };
