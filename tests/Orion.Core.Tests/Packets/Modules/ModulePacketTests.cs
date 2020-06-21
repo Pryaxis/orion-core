@@ -22,13 +22,13 @@ namespace Orion.Core.Packets.Modules
 {
     public class ModulePacketTests
     {
-        public static readonly byte[] Bytes = { 5, 0, 82, 255, 255 };
+        private readonly byte[] _bytes = { 5, 0, 82, 255, 255 };
 
         [Fact]
         public void Read()
         {
             var packet = new ModulePacket<TestModule>();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
         }
 
@@ -36,7 +36,7 @@ namespace Orion.Core.Packets.Modules
         public void Read_AsUnknownModule()
         {
             var packet = new ModulePacket<UnknownModule>();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal((ModuleId)65535, packet.Module.Id);
@@ -46,14 +46,14 @@ namespace Orion.Core.Packets.Modules
         public void RoundTrip()
         {
             TestUtils.RoundTripPacket<ModulePacket<TestModule>>(
-                Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_AsUnknownModule()
         {
             TestUtils.RoundTripPacket<ModulePacket<UnknownModule>>(
-                Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
 
         private struct TestModule : IModule

@@ -25,7 +25,7 @@ namespace Orion.Core.Packets.Server
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ServerCombatNumberPacketTests
     {
-        public static readonly byte[] Bytes = { 18, 0, 81, 0, 0, 200, 66, 0, 0, 128, 67, 255, 255, 255, 210, 4, 0, 0 };
+        private readonly byte[] _bytes = { 18, 0, 81, 0, 0, 200, 66, 0, 0, 128, 67, 255, 255, 255, 210, 4, 0, 0 };
 
         [Fact]
         public void Position_Set_Get()
@@ -61,7 +61,7 @@ namespace Orion.Core.Packets.Server
         public void Read()
         {
             var packet = new ServerCombatNumberPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(new Vector2f(100, 256), packet.Position);
@@ -73,7 +73,7 @@ namespace Orion.Core.Packets.Server
         public void RoundTrip()
         {
             TestUtils.RoundTripPacket<ServerCombatNumberPacket>(
-                Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Orion.Core.Packets.Players
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class PlayerBuffPacketTests
     {
-        public static readonly byte[] Bytes = { 10, 0, 55, 5, 1, 0, 60, 0, 0, 0 };
+        private readonly byte[] _bytes = { 10, 0, 55, 5, 1, 0, 60, 0, 0, 0 };
 
         [Fact]
         public void PlayerIndex_Set_Get()
@@ -61,7 +61,7 @@ namespace Orion.Core.Packets.Players
         public void Read()
         {
             var packet = new PlayerBuffPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(5, packet.PlayerIndex);
@@ -72,7 +72,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<PlayerBuffPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<PlayerBuffPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

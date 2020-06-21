@@ -24,7 +24,7 @@ namespace Orion.Core.Packets.Players
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class PlayerDodgePacketTests
     {
-        public static readonly byte[] Bytes = { 5, 0, 62, 5, 1 };
+        private readonly byte[] _bytes = { 5, 0, 62, 5, 1 };
 
         [Fact]
         public void PlayerIndex_Set_Get()
@@ -50,7 +50,7 @@ namespace Orion.Core.Packets.Players
         public void Read()
         {
             var packet = new PlayerDodgePacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(5, packet.PlayerIndex);
@@ -60,7 +60,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<PlayerDodgePacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<PlayerDodgePacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

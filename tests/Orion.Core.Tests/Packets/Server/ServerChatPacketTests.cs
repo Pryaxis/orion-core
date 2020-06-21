@@ -25,7 +25,7 @@ namespace Orion.Core.Packets.Server
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ServerChatPacketTests
     {
-        public static readonly byte[] Bytes =
+        private readonly byte[] _bytes =
         {
             18, 0, 107, 255, 255, 255, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97, 100, 0
         };
@@ -80,7 +80,7 @@ namespace Orion.Core.Packets.Server
         public void Read()
         {
             var packet = new ServerChatPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(Color3.White, packet.Color);
@@ -91,7 +91,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ServerChatPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ServerChatPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

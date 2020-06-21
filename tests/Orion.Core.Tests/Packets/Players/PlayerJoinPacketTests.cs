@@ -22,20 +22,20 @@ namespace Orion.Core.Packets.Players
 {
     public class PlayerJoinPacketTests
     {
-        public static readonly byte[] Bytes = { 3, 0, 6 };
+        private readonly byte[] _bytes = { 3, 0, 6 };
 
         [Fact]
         public void Read()
         {
             var packet = new PlayerJoinPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
         }
 
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<PlayerJoinPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<PlayerJoinPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

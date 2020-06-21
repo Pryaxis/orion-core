@@ -25,7 +25,7 @@ namespace Orion.Core.Packets.World.Tiles
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class WallPaintPacketTests
     {
-        public static readonly byte[] Bytes = { 8, 0, 64, 0, 1, 100, 0, 1 };
+        private readonly byte[] _bytes = { 8, 0, 64, 0, 1, 100, 0, 1 };
 
         [Fact]
         public void X_Set_Get()
@@ -61,7 +61,7 @@ namespace Orion.Core.Packets.World.Tiles
         public void Read()
         {
             var packet = new WallPaintPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(256, packet.X);
@@ -72,7 +72,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<WallPaintPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<WallPaintPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

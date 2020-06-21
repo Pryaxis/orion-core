@@ -26,7 +26,7 @@ namespace Orion.Core.Packets.Client
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ServerDisconnectPacketTests
     {
-        public static readonly byte[] Bytes =
+        private readonly byte[] _bytes =
         {
             21, 0, 2, 2, 15, 67, 76, 73, 46, 75, 105, 99, 107, 77, 101, 115, 115, 97, 103, 101, 0
         };
@@ -61,7 +61,7 @@ namespace Orion.Core.Packets.Client
         public void Read()
         {
             var packet = new ServerDisconnectPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(NetworkText.Localized("CLI.KickMessage"), packet.Reason);
@@ -70,7 +70,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ServerDisconnectPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ServerDisconnectPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

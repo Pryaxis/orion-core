@@ -24,8 +24,8 @@ namespace Orion.Core.Packets.Modules
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class UnknownModuleTests
     {
-        public static readonly byte[] Bytes = { 13, 0, 82, 255, 255, 0, 1, 2, 3, 4, 5, 6, 7 };
-        public static readonly byte[] EmptyBytes = { 5, 0, 82, 255, 255 };
+        private readonly byte[] _bytes = { 13, 0, 82, 255, 255, 0, 1, 2, 3, 4, 5, 6, 7 };
+        private readonly byte[] _emptyBytes = { 5, 0, 82, 255, 255 };
 
         [Fact]
         public void Length_Set_Get()
@@ -61,7 +61,7 @@ namespace Orion.Core.Packets.Modules
         public unsafe void Read()
         {
             var module = new UnknownModule();
-            var span = Bytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
+            var span = _bytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
             Assert.Equal(span.Length, module.Read(span, PacketContext.Server));
 
             Assert.Equal(8, module.Length);
@@ -75,7 +75,7 @@ namespace Orion.Core.Packets.Modules
         public unsafe void Read_Empty()
         {
             var module = new UnknownModule();
-            var span = EmptyBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
+            var span = _emptyBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
             Assert.Equal(span.Length, module.Read(span, PacketContext.Server));
 
             Assert.Equal(0, module.Length);
@@ -85,14 +85,14 @@ namespace Orion.Core.Packets.Modules
         public void RoundTrip()
         {
             TestUtils.RoundTripModule<UnknownModule>(
-                Bytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Server);
+                _bytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_Empty()
         {
             TestUtils.RoundTripModule<UnknownModule>(
-                EmptyBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Server);
+                _emptyBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Server);
         }
     }
 }

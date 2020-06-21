@@ -24,7 +24,7 @@ namespace Orion.Core.Packets.Client
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ClientUuidPacketTests
     {
-        public static readonly byte[] Bytes = { 12, 0, 68, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
+        private readonly byte[] _bytes = { 12, 0, 68, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
 
         [Fact]
         public void Uuid_Get_Default()
@@ -56,7 +56,7 @@ namespace Orion.Core.Packets.Client
         public void Read()
         {
             var packet = new ClientUuidPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal("Terraria", packet.Uuid);
@@ -65,7 +65,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ClientUuidPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ClientUuidPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

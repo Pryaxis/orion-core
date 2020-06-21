@@ -25,7 +25,7 @@ namespace Orion.Core.Packets.Npcs
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class NpcFishPacketTests
     {
-        public static readonly byte[] Bytes = { 9, 0, 130, 100, 0, 0, 1, 108, 2 };
+        private readonly byte[] _bytes = { 9, 0, 130, 100, 0, 0, 1, 108, 2 };
 
         [Fact]
         public void X_Set_Get()
@@ -61,7 +61,7 @@ namespace Orion.Core.Packets.Npcs
         public void Read()
         {
             var packet = new NpcFishPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(100, packet.X);
@@ -72,7 +72,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<NpcFishPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<NpcFishPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Orion.Core.Packets.Players
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class PlayerHealthPacketTests
     {
-        public static readonly byte[] Bytes = { 8, 0, 16, 5, 100, 0, 244, 1 };
+        private readonly byte[] _bytes = { 8, 0, 16, 5, 100, 0, 244, 1 };
 
         [Fact]
         public void PlayerIndex_Set_Get()
@@ -60,7 +60,7 @@ namespace Orion.Core.Packets.Players
         public void Read()
         {
             var packet = new PlayerHealthPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(5, packet.PlayerIndex);
@@ -71,7 +71,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<PlayerHealthPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<PlayerHealthPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

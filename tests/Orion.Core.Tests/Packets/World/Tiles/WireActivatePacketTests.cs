@@ -24,7 +24,7 @@ namespace Orion.Core.Packets.World.Tiles
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class WireActivatePacketTests
     {
-        public static readonly byte[] Bytes = { 7, 0, 59, 0, 1, 100, 0 };
+        private readonly byte[] _bytes = { 7, 0, 59, 0, 1, 100, 0 };
 
         [Fact]
         public void X_Set_Get()
@@ -50,7 +50,7 @@ namespace Orion.Core.Packets.World.Tiles
         public void Read()
         {
             var packet = new WireActivatePacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(256, packet.X);
@@ -60,7 +60,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<WireActivatePacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<WireActivatePacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

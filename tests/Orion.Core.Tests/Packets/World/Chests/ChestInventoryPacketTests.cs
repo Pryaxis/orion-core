@@ -25,7 +25,7 @@ namespace Orion.Core.Packets.World.Chests
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ChestInventoryPacketTests
     {
-        public static readonly byte[] Bytes = { 11, 0, 32, 5, 0, 2, 1, 0, 82, 17, 6 };
+        private readonly byte[] _bytes = { 11, 0, 32, 5, 0, 2, 1, 0, 82, 17, 6 };
 
         [Fact]
         public void ChestIndex_Set_Get()
@@ -81,7 +81,7 @@ namespace Orion.Core.Packets.World.Chests
         public void Read()
         {
             var packet = new ChestInventoryPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(5, packet.ChestIndex);
@@ -94,7 +94,7 @@ namespace Orion.Core.Packets.World.Chests
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ChestInventoryPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ChestInventoryPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

@@ -26,13 +26,13 @@ namespace Orion.Core.Packets.World.Tiles
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class TileSquarePacketTests
     {
-        public static readonly byte[] Bytes =
+        private readonly byte[] _bytes =
         {
             41, 0, 20, 3, 0, 100, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 4, 0, 1, 0, 2, 0, 4, 0, 1, 0, 8, 0, 255, 1, 0, 4, 1,
             0, 8, 1, 240, 131, 0, 0
         };
 
-        public static readonly byte[] ExtraDataBytes = { 12, 0, 20, 1, 128, 1, 100, 0, 0, 1, 0, 0 };
+        private readonly byte[] _extraDataBytes = { 12, 0, 20, 1, 128, 1, 100, 0, 0, 1, 0, 0 };
 
         [Fact]
         public void X_Set_Get()
@@ -95,7 +95,7 @@ namespace Orion.Core.Packets.World.Tiles
         public void Read()
         {
             var packet = new TileSquarePacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(100, packet.X);
@@ -108,7 +108,7 @@ namespace Orion.Core.Packets.World.Tiles
         public void Read_ExtraData()
         {
             var packet = new TileSquarePacket();
-            var span = ExtraDataBytes.AsSpan(IPacket.HeaderSize..);
+            var span = _extraDataBytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(100, packet.X);
@@ -120,14 +120,14 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<TileSquarePacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<TileSquarePacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_ExtraData()
         {
             TestUtils.RoundTripPacket<TileSquarePacket>(
-                ExtraDataBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _extraDataBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

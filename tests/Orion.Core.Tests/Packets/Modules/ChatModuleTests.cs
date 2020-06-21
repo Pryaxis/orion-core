@@ -25,12 +25,12 @@ namespace Orion.Core.Packets.Modules
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ChatModuleTests
     {
-        public static readonly byte[] ServerBytes =
+        private readonly byte[] _serverBytes =
         {
             23, 0, 82, 1, 0, 3, 83, 97, 121, 13, 47, 99, 111, 109, 109, 97, 110, 100, 32, 116, 101, 115, 116
         };
 
-        public static readonly byte[] ClientBytes = { 15, 0, 82, 1, 0, 1, 0, 4, 116, 101, 115, 116, 255, 255, 255 };
+        private readonly byte[] _clientBytes = { 15, 0, 82, 1, 0, 1, 0, 4, 116, 101, 115, 116, 255, 255, 255 };
 
         [Fact]
         public void ClientCommand_Get_Default()
@@ -134,7 +134,7 @@ namespace Orion.Core.Packets.Modules
         public unsafe void Read_AsServer()
         {
             var module = new ChatModule();
-            var span = ServerBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
+            var span = _serverBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
             Assert.Equal(span.Length, module.Read(span, PacketContext.Server));
 
             Assert.Equal("Say", module.ClientCommand);
@@ -145,7 +145,7 @@ namespace Orion.Core.Packets.Modules
         public unsafe void Read_AsClient()
         {
             var module = new ChatModule();
-            var span = ClientBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
+            var span = _clientBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
             Assert.Equal(span.Length, module.Read(span, PacketContext.Client));
 
             Assert.Equal(1, module.ServerAuthorIndex);
@@ -157,14 +157,14 @@ namespace Orion.Core.Packets.Modules
         public void RoundTrip_AsServer()
         {
             TestUtils.RoundTripModule<ChatModule>(
-                ServerBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Server);
+                _serverBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_AsClient()
         {
             TestUtils.RoundTripModule<ChatModule>(
-                ClientBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Client);
+                _clientBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Client);
         }
     }
 }

@@ -24,11 +24,8 @@ namespace Orion.Core.Packets.World.Chests
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ChestNamePacketTests
     {
-        public static readonly byte[] ServerBytes = { 9, 0, 69, 5, 0, 0, 1, 100, 0 };
-
-        public static readonly byte[] ClientBytes = {
-            18, 0, 69, 5, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97
-        };
+        private readonly byte[] _serverBytes = { 9, 0, 69, 5, 0, 0, 1, 100, 0 };
+        private readonly byte[] _clientBytes = { 18, 0, 69, 5, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
 
         [Fact]
         public void ChestIndex_Set_Get()
@@ -90,7 +87,7 @@ namespace Orion.Core.Packets.World.Chests
         public void Read_AsServer()
         {
             var packet = new ChestNamePacket();
-            var span = ServerBytes.AsSpan(IPacket.HeaderSize..);
+            var span = _serverBytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(5, packet.ChestIndex);
@@ -102,7 +99,7 @@ namespace Orion.Core.Packets.World.Chests
         public void Read_AsClient()
         {
             var packet = new ChestNamePacket();
-            var span = ClientBytes.AsSpan(IPacket.HeaderSize..);
+            var span = _clientBytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Client));
 
             Assert.Equal(5, packet.ChestIndex);
@@ -114,13 +111,13 @@ namespace Orion.Core.Packets.World.Chests
         [Fact]
         public void RoundTrip_AsServer()
         {
-            TestUtils.RoundTripPacket<ChestNamePacket>(ServerBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ChestNamePacket>(_serverBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_AsClient()
         {
-            TestUtils.RoundTripPacket<ChestNamePacket>(ClientBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Client);
+            TestUtils.RoundTripPacket<ChestNamePacket>(_clientBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Client);
         }
     }
 }

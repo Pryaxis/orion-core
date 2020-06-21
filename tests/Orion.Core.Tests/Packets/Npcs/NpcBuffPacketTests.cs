@@ -25,7 +25,7 @@ namespace Orion.Core.Packets.Npcs
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class NpcBuffPacketTests
     {
-        public static readonly byte[] Bytes = { 9, 0, 53, 1, 0, 20, 0, 60, 0 };
+        private readonly byte[] _bytes = { 9, 0, 53, 1, 0, 20, 0, 60, 0 };
 
         [Fact]
         public void NpcIndex_Set_Get()
@@ -61,7 +61,7 @@ namespace Orion.Core.Packets.Npcs
         public void Read()
         {
             var packet = new NpcBuffPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(1, packet.NpcIndex);
@@ -72,7 +72,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<NpcBuffPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<NpcBuffPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

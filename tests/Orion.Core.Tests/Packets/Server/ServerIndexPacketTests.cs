@@ -24,7 +24,7 @@ namespace Orion.Core.Packets.Server
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ServerIndexPacketTests
     {
-        public static readonly byte[] Bytes = { 4, 0, 3, 5 };
+        private readonly byte[] _bytes = { 4, 0, 3, 5 };
 
         [Fact]
         public void Index_Set_Get()
@@ -40,7 +40,7 @@ namespace Orion.Core.Packets.Server
         public void Read()
         {
             var packet = new ServerIndexPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(5, packet.Index);
@@ -49,7 +49,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ServerIndexPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ServerIndexPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

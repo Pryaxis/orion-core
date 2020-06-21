@@ -25,7 +25,7 @@ namespace Orion.Core.Packets.World.Tiles
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class TileLiquidPacketTests
     {
-        public static readonly byte[] Bytes = { 9, 0, 48, 0, 1, 100, 0, 255, 2 };
+        private readonly byte[] _bytes = { 9, 0, 48, 0, 1, 100, 0, 255, 2 };
 
         [Fact]
         public void X_Set_Get()
@@ -71,7 +71,7 @@ namespace Orion.Core.Packets.World.Tiles
         public void Read()
         {
             var packet = new TileLiquidPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(256, packet.X);
@@ -83,7 +83,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<TileLiquidPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<TileLiquidPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

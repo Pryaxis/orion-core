@@ -24,8 +24,8 @@ namespace Orion.Core.Packets
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class UnknownPacketTests
     {
-        public static readonly byte[] Bytes = { 11, 0, 255, 0, 1, 2, 3, 4, 5, 6, 7 };
-        public static readonly byte[] EmptyBytes = { 3, 0, 255 };
+        private readonly byte[] _bytes = { 11, 0, 255, 0, 1, 2, 3, 4, 5, 6, 7 };
+        private readonly byte[] _emptyBytes = { 3, 0, 255 };
 
         [Fact]
         public void Length_Set_Get()
@@ -61,7 +61,7 @@ namespace Orion.Core.Packets
         public unsafe void Read()
         {
             var packet = new UnknownPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(8, packet.Length);
@@ -75,7 +75,7 @@ namespace Orion.Core.Packets
         public unsafe void Read_Empty()
         {
             var packet = new UnknownPacket();
-            var span = EmptyBytes.AsSpan(IPacket.HeaderSize..);
+            var span = _emptyBytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(0, packet.Length);
@@ -84,13 +84,13 @@ namespace Orion.Core.Packets
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<UnknownPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<UnknownPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_Empty()
         {
-            TestUtils.RoundTripPacket<UnknownPacket>(EmptyBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<UnknownPacket>(_emptyBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

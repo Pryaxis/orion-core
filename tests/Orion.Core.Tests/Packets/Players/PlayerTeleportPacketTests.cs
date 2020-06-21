@@ -24,7 +24,7 @@ namespace Orion.Core.Packets.Players
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class PlayerTeleportPacketTests
     {
-        public static readonly byte[] Bytes = { 4, 0, 73, 2 };
+        private readonly byte[] _bytes = { 4, 0, 73, 2 };
 
         [Fact]
         public void Type_Set_Get()
@@ -40,7 +40,7 @@ namespace Orion.Core.Packets.Players
         public void Read()
         {
             var packet = new PlayerTeleportPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(TeleportationType.DemonConch, packet.Type);
@@ -49,7 +49,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<PlayerTeleportPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<PlayerTeleportPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }
