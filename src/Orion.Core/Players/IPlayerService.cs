@@ -64,22 +64,20 @@ namespace Orion.Core.Players
         /// Broadcasts the given <paramref name="packet"/> reference to all active players.
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
-        /// <param name="playerService">The player service.</param>
+        /// <param name="players">The player service.</param>
         /// <param name="packet">The packet reference to send. <i>This must be on the stack!</i></param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="playerService"/> is <see langword="null"/>.
-        /// </exception>
-        public static void BroadcastPacket<TPacket>(this IPlayerService playerService, ref TPacket packet)
+        /// <exception cref="ArgumentNullException"><paramref name="players"/> is <see langword="null"/>.</exception>
+        public static void BroadcastPacket<TPacket>(this IPlayerService players, ref TPacket packet)
             where TPacket : struct, IPacket
         {
-            if (playerService is null)
+            if (players is null)
             {
-                throw new ArgumentNullException(nameof(playerService));
+                throw new ArgumentNullException(nameof(players));
             }
 
-            for (var i = 0; i < playerService.Count; ++i)
+            for (var i = 0; i < players.Count; ++i)
             {
-                playerService[i].SendPacket(ref packet);
+                players[i].SendPacket(ref packet);
             }
         }
 
@@ -88,22 +86,20 @@ namespace Orion.Core.Players
         /// convenience, but is slightly less efficient due to a struct copy.
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
-        /// <param name="playerService">The player service.</param>
+        /// <param name="players">The player service.</param>
         /// <param name="packet">The packet to send.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="playerService"/> is <see langword="null"/>.
-        /// </exception>
-        public static void BroadcastPacket<TPacket>(this IPlayerService playerService, TPacket packet)
+        /// <exception cref="ArgumentNullException"><paramref name="players"/> is <see langword="null"/>.</exception>
+        public static void BroadcastPacket<TPacket>(this IPlayerService players, TPacket packet)
             where TPacket : struct, IPacket
         {
-            if (playerService is null)
+            if (players is null)
             {
-                throw new ArgumentNullException(nameof(playerService));
+                throw new ArgumentNullException(nameof(players));
             }
 
-            for (var i = 0; i < playerService.Count; ++i)
+            for (var i = 0; i < players.Count; ++i)
             {
-                playerService[i].SendPacket(ref packet);
+                players[i].SendPacket(ref packet);
             }
         }
 
@@ -111,17 +107,15 @@ namespace Orion.Core.Players
         /// Broadcasts the given <paramref name="message"/> with the specified <paramref name="color"/> to all active
         /// players.
         /// </summary>
-        /// <param name="playerService">The player service.</param>
+        /// <param name="players">The player service.</param>
         /// <param name="message">The message to broadcast.</param>
         /// <param name="color">The color to broadcast the message as.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="playerService"/> or <paramref name="message"/> are <see langword="null"/>.
-        /// </exception>
-        public static void BroadcastMessage(this IPlayerService playerService, NetworkText message, Color3 color)
+        /// <exception cref="ArgumentNullException"><paramref name="players"/> is <see langword="null"/>.</exception>
+        public static void BroadcastMessage(this IPlayerService players, NetworkText message, Color3 color)
         {
-            if (playerService is null)
+            if (players is null)
             {
-                throw new ArgumentNullException(nameof(playerService));
+                throw new ArgumentNullException(nameof(players));
             }
 
             if (message is null)
@@ -130,28 +124,28 @@ namespace Orion.Core.Players
             }
 
             var packet = new ServerChatPacket { Color = color, Message = message, LineWidth = -1 };
-            for (var i = 0; i < playerService.Count; ++i)
+            for (var i = 0; i < players.Count; ++i)
             {
-                playerService[i].SendPacket(ref packet);
+                players[i].SendPacket(ref packet);
             }
         }
 
         /// <summary>
         /// Broadcasts the given <paramref name="tiles"/> at the specified coordinates to all active players.
         /// </summary>
-        /// <param name="playerService">The player service.</param>
+        /// <param name="players">The player service.</param>
         /// <param name="x">The top-left tile's X coordinate.</param>
         /// <param name="y">The top-left tile's Y coordinate.</param>
         /// <param name="tiles">The tiles to broadcast.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="playerService"/> or <paramref name="tiles"/> are <see langword="null"/>.
+        /// <paramref name="players"/> or <paramref name="tiles"/> are <see langword="null"/>.
         /// </exception>
         /// <exception cref="NotSupportedException"><paramref name="tiles"/> is not square.</exception>
-        public static void BroadcastTiles(this IPlayerService playerService, int x, int y, ITileSlice tiles)
+        public static void BroadcastTiles(this IPlayerService players, int x, int y, ITileSlice tiles)
         {
-            if (playerService is null)
+            if (players is null)
             {
-                throw new ArgumentNullException(nameof(playerService));
+                throw new ArgumentNullException(nameof(players));
             }
 
             if (tiles is null)
@@ -167,9 +161,9 @@ namespace Orion.Core.Players
             }
 
             var packet = new TileSquarePacket { X = (short)x, Y = (short)y, Tiles = tiles };
-            for (var i = 0; i < playerService.Count; ++i)
+            for (var i = 0; i < players.Count; ++i)
             {
-                playerService[i].SendPacket(ref packet);
+                players[i].SendPacket(ref packet);
             }
         }
     }
