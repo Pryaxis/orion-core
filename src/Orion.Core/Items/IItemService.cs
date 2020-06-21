@@ -35,14 +35,8 @@ namespace Orion.Core.Items
     /// </list>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
-    public interface IItemService
+    public interface IItemService : IReadOnlyList<IItem>
     {
-        /// <summary>
-        /// Gets the items.
-        /// </summary>
-        /// <value>The items.</value>
-        IReadOnlyList<IItem> Items { get; }
-
         /// <summary>
         /// Spawns the given <paramref name="itemStack"/> at the specified <paramref name="position"/>. Returns the
         /// resulting item.
