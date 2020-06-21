@@ -33,12 +33,7 @@ namespace Orion.Core.World.Signs
     /// </list>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
-    public interface ISignService
+    public interface ISignService : IReadOnlyList<ISign>
     {
-        /// <summary>
-        /// Gets the signs.
-        /// </summary>
-        /// <value>The signs.</value>
-        IReadOnlyList<ISign> Signs { get; }
     }
 }

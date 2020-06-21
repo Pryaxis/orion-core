@@ -34,12 +34,7 @@ namespace Orion.Core.World.Chests
     /// </list>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
-    public interface IChestService
+    public interface IChestService : IReadOnlyList<IChest>
     {
-        /// <summary>
-        /// Gets the chests.
-        /// </summary>
-        /// <value>The chests.</value>
-        IReadOnlyList<IChest> Chests { get; }
     }
 }

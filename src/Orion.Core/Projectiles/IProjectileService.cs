@@ -35,14 +35,8 @@ namespace Orion.Core.Projectiles
     /// </list>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
-    public interface IProjectileService
+    public interface IProjectileService : IReadOnlyList<IProjectile>
     {
-        /// <summary>
-        /// Gets the projectiles.
-        /// </summary>
-        /// <value>The projectiles.</value>
-        IReadOnlyList<IProjectile> Projectiles { get; }
-
         /// <summary>
         /// Spawns a projectile with the given <paramref name="id"/> at the specified <paramref name="position"/> with
         /// the specified <paramref name="velocity"/>, <paramref name="damage"/>, and <paramref name="knockback"/>.

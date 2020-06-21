@@ -46,8 +46,7 @@ namespace Orion.Core.Players
         public void BroadcastPacket_Ref()
         {
             var mockPlayer = new Mock<IPlayer>();
-            var playerService = Mock.Of<IPlayerService>(
-                ps => ps.Players == Mock.Of<IReadOnlyList<IPlayer>>(p => p.Count == 1 && p[0] == mockPlayer.Object));
+            var playerService = Mock.Of<IPlayerService>(ps => ps.Count == 1 && ps[0] == mockPlayer.Object);
 
             var packet = new TestPacket();
             playerService.BroadcastPacket(ref packet);
@@ -66,8 +65,7 @@ namespace Orion.Core.Players
         public void BroadcastPacket()
         {
             var mockPlayer = new Mock<IPlayer>();
-            var playerService = Mock.Of<IPlayerService>(
-                ps => ps.Players == Mock.Of<IReadOnlyList<IPlayer>>(p => p.Count == 1 && p[0] == mockPlayer.Object));
+            var playerService = Mock.Of<IPlayerService>(ps => ps.Count == 1 && ps[0] == mockPlayer.Object);
 
             var packet = new TestPacket();
             playerService.BroadcastPacket(packet);
@@ -102,8 +100,7 @@ namespace Orion.Core.Players
                     Assert.Equal(Color3.White, packet.Color);
                     Assert.Equal(-1, packet.LineWidth);
                 }));
-            var playerService = Mock.Of<IPlayerService>(
-                ps => ps.Players == Mock.Of<IReadOnlyList<IPlayer>>(p => p.Count == 1 && p[0] == mockPlayer.Object));
+            var playerService = Mock.Of<IPlayerService>(ps => ps.Count == 1 && ps[0] == mockPlayer.Object);
 
             playerService.BroadcastMessage("test", Color3.White);
 
@@ -148,8 +145,7 @@ namespace Orion.Core.Players
                     Assert.Equal(456, packet.Y);
                     Assert.Same(tiles, packet.Tiles);
                 }));
-            var playerService = Mock.Of<IPlayerService>(
-                ps => ps.Players == Mock.Of<IReadOnlyList<IPlayer>>(p => p.Count == 1 && p[0] == mockPlayer.Object));
+            var playerService = Mock.Of<IPlayerService>(ps => ps.Count == 1 && ps[0] == mockPlayer.Object);
 
             playerService.BroadcastTiles(123, 456, tiles);
 

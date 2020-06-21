@@ -51,13 +51,8 @@ namespace Orion.Core.Players
     /// </list>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
-    public interface IPlayerService
+    public interface IPlayerService : IReadOnlyList<IPlayer>
     {
-        /// <summary>
-        /// Gets the players.
-        /// </summary>
-        /// <value>The players.</value>
-        IReadOnlyList<IPlayer> Players { get; }
     }
 
     /// <summary>
@@ -82,10 +77,9 @@ namespace Orion.Core.Players
                 throw new ArgumentNullException(nameof(playerService));
             }
 
-            var players = playerService.Players;
-            for (var i = 0; i < players.Count; ++i)
+            for (var i = 0; i < playerService.Count; ++i)
             {
-                players[i].SendPacket(ref packet);
+                playerService[i].SendPacket(ref packet);
             }
         }
 
@@ -107,10 +101,9 @@ namespace Orion.Core.Players
                 throw new ArgumentNullException(nameof(playerService));
             }
 
-            var players = playerService.Players;
-            for (var i = 0; i < players.Count; ++i)
+            for (var i = 0; i < playerService.Count; ++i)
             {
-                players[i].SendPacket(ref packet);
+                playerService[i].SendPacket(ref packet);
             }
         }
 
@@ -137,7 +130,10 @@ namespace Orion.Core.Players
             }
 
             var packet = new ServerChatPacket { Color = color, Message = message, LineWidth = -1 };
-            playerService.BroadcastPacket(ref packet);
+            for (var i = 0; i < playerService.Count; ++i)
+            {
+                playerService[i].SendPacket(ref packet);
+            }
         }
 
         /// <summary>
@@ -171,7 +167,10 @@ namespace Orion.Core.Players
             }
 
             var packet = new TileSquarePacket { X = (short)x, Y = (short)y, Tiles = tiles };
-            playerService.BroadcastPacket(ref packet);
+            for (var i = 0; i < playerService.Count; ++i)
+            {
+                playerService[i].SendPacket(ref packet);
+            }
         }
     }
 }
