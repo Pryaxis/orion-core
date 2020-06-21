@@ -33,17 +33,5 @@ namespace Orion.Core.Collections
         /// <param name="index">The index.</param>
         /// <returns>The element at the given <paramref name="index"/>.</returns>
         T this[int index] { get; set; }
-
-        // Provide default implementations for `GetEnumerator` as they should be consistent.
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            for (var i = 0; i < Count; ++i)
-            {
-                yield return this[i];
-            }
-        }
-
-        [ExcludeFromCodeCoverage]
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
