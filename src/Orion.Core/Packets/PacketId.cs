@@ -77,6 +77,7 @@ namespace Orion.Core.Packets
         Module = 82,
         PlayerStealth = 84,
         InstancedItemInfo = 90,
+        GemLockToggle = 105,
         ServerChat = 107,
         ServerCombatText = 119,
         NpcFish = 130
@@ -131,6 +132,7 @@ namespace Orion.Core.Packets
             [PacketId.ServerCombatNumber] = typeof(ServerCombatNumberPacket),
             [PacketId.PlayerStealth] = typeof(PlayerStealthPacket),
             [PacketId.InstancedItemInfo] = typeof(InstancedItemInfoPacket),
+            [PacketId.GemLockToggle] = typeof(GemLockTogglePacket),
             [PacketId.ServerChat] = typeof(ServerChatPacket),
             [PacketId.ServerCombatText] = typeof(ServerCombatTextPacket),
             [PacketId.NpcFish] = typeof(NpcFishPacket)
