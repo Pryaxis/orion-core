@@ -48,6 +48,12 @@ namespace Orion.Core.Items
         ItemPrefix Prefix { get; }
 
         /// <summary>
+        /// Gets or sets the item's damage.
+        /// </summary>
+        /// <value>The item's damage.</value>
+        int Damage { get; set; }
+
+        /// <summary>
         /// Sets the item's <paramref name="id"/>. This will update the item accordingly. 
         /// </summary>
         /// <param name="id">The item ID to set the item to.</param>
