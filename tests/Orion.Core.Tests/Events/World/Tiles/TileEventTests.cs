@@ -65,7 +65,9 @@ namespace Orion.Core.Events.World.Tiles
 
         private class TestTileEvent : TileEvent
         {
-            public TestTileEvent(IWorld world, IPlayer? player, int x, int y) : base(world, player, x, y) { }
+            public TestTileEvent(IWorld world, IPlayer? player, int x, int y) : base(world, player, x, y)
+            {
+            }
         }
     }
 }

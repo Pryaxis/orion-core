@@ -23,5 +23,7 @@ namespace Orion.Core.Events.Server
     /// An event that occurs when a server tick (update) occurs.
     /// </summary>
     [Event("server-tick", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class ServerTickEvent : Event { }
+    public sealed class ServerTickEvent : Event
+    {
+    }
 }

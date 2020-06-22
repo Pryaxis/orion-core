@@ -34,6 +34,8 @@ namespace Orion.Core.Events.World.Tiles
         /// <param name="player">The player activating the wiring, or <see langword="null"/> for none.</param>
         /// <param name="x">The wiring's X coordinate.</param>
         /// <param name="y">The wiring's Y coordinate.</param>
-        public WiringActivateEvent(IWorld world, IPlayer? player, int x, int y) : base(world, player, x, y) { }
+        public WiringActivateEvent(IWorld world, IPlayer? player, int x, int y) : base(world, player, x, y)
+        {
+        }
     }
 }

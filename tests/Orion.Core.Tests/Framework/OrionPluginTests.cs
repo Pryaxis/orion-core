@@ -61,7 +61,9 @@ namespace Orion.Core.Framework
 
         public class TestOrionPlugin : OrionPlugin
         {
-            public TestOrionPlugin(IServer server, ILogger log) : base(server, log) { }
+            public TestOrionPlugin(IServer server, ILogger log) : base(server, log)
+            {
+            }
         }
     }
 }

@@ -35,5 +35,11 @@ namespace Orion.Core.Players
                 Assert.Equal(Terraria.Main.teamColor[i].B, color.B);
             }
         }
+
+        [Fact]
+        public void Color_InvalidTeam()
+        {
+            Assert.Equal(default, ((PlayerTeam)255).Color());
+        }
     }
 }

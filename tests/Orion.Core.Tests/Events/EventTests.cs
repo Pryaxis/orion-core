@@ -86,6 +86,8 @@ namespace Orion.Core.Events
         }
 
         [Event("test")]
-        private class TestEvent : Event { }
+        private class TestEvent : Event
+        {
+        }
     }
 }

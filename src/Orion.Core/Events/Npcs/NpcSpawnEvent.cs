@@ -32,6 +32,8 @@ namespace Orion.Core.Events.Npcs
         /// </summary>
         /// <param name="npc">The NPC being spawned.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
-        public NpcSpawnEvent(INpc npc) : base(npc) { }
+        public NpcSpawnEvent(INpc npc) : base(npc)
+        {
+        }
     }
 }

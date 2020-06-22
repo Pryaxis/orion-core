@@ -41,7 +41,9 @@ namespace Orion.Core.Events.World.Chests
 
         private class TestChestEvent : ChestEvent
         {
-            public TestChestEvent(IChest chest) : base(chest) { }
+            public TestChestEvent(IChest chest) : base(chest)
+            {
+            }
         }
     }
 }

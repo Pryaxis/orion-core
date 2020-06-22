@@ -21,5 +21,7 @@ namespace Orion.Core.Events.Server
     /// An event that occurs when the server starts accepting connections.
     /// </summary>
     [Event("server-start")]
-    public sealed class ServerStartEvent : Event { }
+    public sealed class ServerStartEvent : Event
+    {
+    }
 }

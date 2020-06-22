@@ -44,7 +44,9 @@ namespace Orion.Core.Events.Packets
 
         private class TestPacketEvent<TPacket> : PacketEvent<TPacket> where TPacket : struct, IPacket
         {
-            public TestPacketEvent(ref TPacket packet) : base(ref packet) { }
+            public TestPacketEvent(ref TPacket packet) : base(ref packet)
+            {
+            }
         }
     }
 }

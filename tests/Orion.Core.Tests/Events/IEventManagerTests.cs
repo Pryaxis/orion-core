@@ -216,15 +216,21 @@ namespace Orion.Core.Events
             }
 
             [EventHandler("test")]
-            public void OnTest_MissingParam() { }
+            public void OnTest_MissingParam()
+            {
+            }
 
             [EventHandler("test")]
             [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Testing")]
-            public void OnTest_TooManyParams(TestEvent evt, int x) { }
+            public void OnTest_TooManyParams(TestEvent evt, int x)
+            {
+            }
 
             [EventHandler("test")]
             [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Testing")]
-            public void OnTest_InvalidParamType(int x) { }
+            public void OnTest_InvalidParamType(int x)
+            {
+            }
 
             [EventHandler("test")]
             [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Testing")]

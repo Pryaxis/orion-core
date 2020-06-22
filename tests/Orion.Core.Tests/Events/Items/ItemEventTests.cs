@@ -41,7 +41,9 @@ namespace Orion.Core.Events.Items
 
         private class TestItemEvent : ItemEvent
         {
-            public TestItemEvent(IItem item) : base(item) { }
+            public TestItemEvent(IItem item) : base(item)
+            {
+            }
         }
     }
 }

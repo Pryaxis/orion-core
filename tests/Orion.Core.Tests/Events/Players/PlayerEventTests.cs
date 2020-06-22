@@ -41,7 +41,9 @@ namespace Orion.Core.Events.Players
 
         private class TestPlayerEvent : PlayerEvent
         {
-            public TestPlayerEvent(IPlayer player) : base(player) { }
+            public TestPlayerEvent(IPlayer player) : base(player)
+            {
+            }
         }
     }
 }

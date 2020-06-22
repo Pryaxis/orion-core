@@ -34,7 +34,9 @@ namespace Orion.Core.Events.Items
         /// </summary>
         /// <param name="item">The item whose defaults are being set.</param>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
-        public ItemDefaultsEvent(IItem item) : base(item) { }
+        public ItemDefaultsEvent(IItem item) : base(item)
+        {
+        }
 
         /// <summary>
         /// Gets or sets the item ID that the item's defaults are being set to.

@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Moq;
+using Orion.Core.Projectiles;
 using Xunit;
 
 namespace Orion.Core.Events.Projectiles
@@ -26,6 +28,13 @@ namespace Orion.Core.Events.Projectiles
         public void Ctor_NullProjectile_ThrowsArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(() => new ProjectileTickEvent(null!));
+        }
+
+        [Fact]
+        public void Ctor()
+        {
+            var projectile = Mock.Of<IProjectile>();
+            _ = new ProjectileTickEvent(projectile);
         }
     }
 }

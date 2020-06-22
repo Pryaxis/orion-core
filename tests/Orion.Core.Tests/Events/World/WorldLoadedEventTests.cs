@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Moq;
+using Orion.Core.World;
 using Xunit;
 
 namespace Orion.Core.Events.World
@@ -26,6 +28,13 @@ namespace Orion.Core.Events.World
         public void Ctor_NullWorld()
         {
             Assert.Throws<ArgumentNullException>(() => new WorldLoadedEvent(null!));
+        }
+
+        [Fact]
+        public void Ctor()
+        {
+            var world = Mock.Of<IWorld>();
+            _ = new WorldLoadedEvent(world);
         }
     }
 }

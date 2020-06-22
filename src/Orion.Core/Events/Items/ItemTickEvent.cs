@@ -33,6 +33,8 @@ namespace Orion.Core.Events.Items
         /// </summary>
         /// <param name="item">The item being ticked.</param>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
-        public ItemTickEvent(IItem item) : base(item) { }
+        public ItemTickEvent(IItem item) : base(item)
+        {
+        }
     }
 }

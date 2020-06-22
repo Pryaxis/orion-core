@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Moq;
+using Orion.Core.Players;
 using Xunit;
 
 namespace Orion.Core.Events.Players
@@ -26,6 +28,13 @@ namespace Orion.Core.Events.Players
         public void Ctor_NullPlayer_ThrowsArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(() => new PlayerQuitEvent(null!));
+        }
+
+        [Fact]
+        public void Ctor()
+        {
+            var player = Mock.Of<IPlayer>();
+            _ = new PlayerQuitEvent(player);
         }
     }
 }

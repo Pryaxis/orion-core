@@ -55,6 +55,8 @@ namespace Orion.Core.Framework
         /// <summary>
         /// Disposes the plugin, releasing any resources associated with it.
         /// </summary>
-        public virtual void Dispose() { }
+        public virtual void Dispose()
+        {
+        }
     }
 }

@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Moq;
+using Orion.Core.Items;
 using Xunit;
 
 namespace Orion.Core.Events.Items
@@ -26,6 +28,13 @@ namespace Orion.Core.Events.Items
         public void Ctor_NullItem_ThrowsArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(() => new ItemTickEvent(null!));
+        }
+
+        [Fact]
+        public void Ctor()
+        {
+            var item = Mock.Of<IItem>();
+            _ = new ItemTickEvent(item);
         }
     }
 }

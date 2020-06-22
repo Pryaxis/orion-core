@@ -41,7 +41,9 @@ namespace Orion.Core.Events.World.Signs
 
         private class TestSignEvent : SignEvent
         {
-            public TestSignEvent(ISign sign) : base(sign) { }
+            public TestSignEvent(ISign sign) : base(sign)
+            {
+            }
         }
     }
 }

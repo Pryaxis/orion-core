@@ -33,6 +33,8 @@ namespace Orion.Core.Events.Npcs
         /// </summary>
         /// <param name="npc">The NPC being ticked.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
-        public NpcTickEvent(INpc npc) : base(npc) { }
+        public NpcTickEvent(INpc npc) : base(npc)
+        {
+        }
     }
 }

@@ -32,6 +32,8 @@ namespace Orion.Core.Events.World
         /// </summary>
         /// <param name="world">The world being saved.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
-        public WorldSaveEvent(IWorld world) : base(world) { }
+        public WorldSaveEvent(IWorld world) : base(world)
+        {
+        }
     }
 }

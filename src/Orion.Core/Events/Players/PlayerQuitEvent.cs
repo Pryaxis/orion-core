@@ -32,6 +32,8 @@ namespace Orion.Core.Events.Players
         /// </summary>
         /// <param name="player">The player that quit.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerQuitEvent(IPlayer player) : base(player) { }
+        public PlayerQuitEvent(IPlayer player) : base(player)
+        {
+        }
     }
 }

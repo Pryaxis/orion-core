@@ -33,6 +33,8 @@ namespace Orion.Core.Events.Players
         /// </summary>
         /// <param name="player">The player being ticked.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerTickEvent(IPlayer player) : base(player) { }
+        public PlayerTickEvent(IPlayer player) : base(player)
+        {
+        }
     }
 }

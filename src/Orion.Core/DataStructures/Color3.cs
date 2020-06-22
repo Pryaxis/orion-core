@@ -32,13 +32,13 @@ namespace Orion.Core.DataStructures
         /// Gets the color black.
         /// </summary>
         /// <value>The color black.</value>
-        [ExcludeFromCodeCoverage] public static Color3 Black { get; } = new Color3(0x00, 0x00, 0x00);
+        public static Color3 Black { [ExcludeFromCodeCoverage] get; } = new Color3(0x00, 0x00, 0x00);
 
         /// <summary>
         /// Gets the color white.
         /// </summary>
         /// <value>The color white.</value>
-        [ExcludeFromCodeCoverage] public static Color3 White { get; } = new Color3(0xff, 0xff, 0xff);
+        public static Color3 White { [ExcludeFromCodeCoverage] get; } = new Color3(0xff, 0xff, 0xff);
 
         /// <summary>
         /// Gets the red component.

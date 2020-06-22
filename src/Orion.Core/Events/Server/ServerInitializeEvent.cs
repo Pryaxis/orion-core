@@ -21,5 +21,7 @@ namespace Orion.Core.Events.Server
     /// An event that occurs when the server is initializing.
     /// </summary>
     [Event("server-init")]
-    public sealed class ServerInitializeEvent : Event { }
+    public sealed class ServerInitializeEvent : Event
+    {
+    }
 }

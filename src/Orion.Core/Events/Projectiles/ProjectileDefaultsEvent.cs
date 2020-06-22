@@ -34,7 +34,9 @@ namespace Orion.Core.Events.Projectiles
         /// </summary>
         /// <param name="projectile">The projectile whose defaults are being set.</param>
         /// <exception cref="ArgumentNullException"><paramref name="projectile"/> is <see langword="null"/>.</exception>
-        public ProjectileDefaultsEvent(IProjectile projectile) : base(projectile) { }
+        public ProjectileDefaultsEvent(IProjectile projectile) : base(projectile)
+        {
+        }
 
         /// <summary>
         /// Gets or sets the projectile ID that the projectile's defaults are being set to.

@@ -32,6 +32,8 @@ namespace Orion.Core.Events.Players
         /// </summary>
         /// <param name="player">The player joining.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerJoinEvent(IPlayer player) : base(player) { }
+        public PlayerJoinEvent(IPlayer player) : base(player)
+        {
+        }
     }
 }

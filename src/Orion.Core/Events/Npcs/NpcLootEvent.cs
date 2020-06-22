@@ -33,7 +33,9 @@ namespace Orion.Core.Events.Npcs
         /// </summary>
         /// <param name="npc">The NPC dropping loot.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
-        public NpcLootEvent(INpc npc) : base(npc) { }
+        public NpcLootEvent(INpc npc) : base(npc)
+        {
+        }
 
         /// <summary>
         /// Gets or sets the item stack being dropped.

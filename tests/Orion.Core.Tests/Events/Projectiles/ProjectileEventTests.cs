@@ -41,7 +41,9 @@ namespace Orion.Core.Events.Projectiles
 
         private class TestProjectileEvent : ProjectileEvent
         {
-            public TestProjectileEvent(IProjectile projectile) : base(projectile) { }
+            public TestProjectileEvent(IProjectile projectile) : base(projectile)
+            {
+            }
         }
     }
 }

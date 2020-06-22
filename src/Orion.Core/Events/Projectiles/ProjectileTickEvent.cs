@@ -33,6 +33,8 @@ namespace Orion.Core.Events.Projectiles
         /// </summary>
         /// <param name="projectile">The projectile being ticked.</param>
         /// <exception cref="ArgumentNullException"><paramref name="projectile"/> is <see langword="null"/>.</exception>
-        public ProjectileTickEvent(IProjectile projectile) : base(projectile) { }
+        public ProjectileTickEvent(IProjectile projectile) : base(projectile)
+        {
+        }
     }
 }

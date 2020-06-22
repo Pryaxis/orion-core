@@ -32,6 +32,8 @@ namespace Orion.Core.Events.World
         /// </summary>
         /// <param name="world">The world that was loaded.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
-        public WorldLoadedEvent(IWorld world) : base(world) { }
+        public WorldLoadedEvent(IWorld world) : base(world)
+        {
+        }
     }
 }

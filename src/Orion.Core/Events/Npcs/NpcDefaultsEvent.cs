@@ -34,7 +34,9 @@ namespace Orion.Core.Events.Npcs
         /// </summary>
         /// <param name="npc">The NPC whose defaults are being set.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
-        public NpcDefaultsEvent(INpc npc) : base(npc) { }
+        public NpcDefaultsEvent(INpc npc) : base(npc)
+        {
+        }
 
         /// <summary>
         /// Gets or sets the NPC ID that the NPC's defaults are being set to.

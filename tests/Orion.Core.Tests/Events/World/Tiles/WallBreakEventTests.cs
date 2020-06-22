@@ -18,6 +18,7 @@
 using System;
 using Moq;
 using Orion.Core.Players;
+using Orion.Core.World;
 using Xunit;
 
 namespace Orion.Core.Events.World.Tiles
@@ -30,6 +31,14 @@ namespace Orion.Core.Events.World.Tiles
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new WallBreakEvent(null!, player, 256, 100));
+        }
+
+        [Fact]
+        public void Ctor()
+        {
+            var world = Mock.Of<IWorld>();
+            var player = Mock.Of<IPlayer>();
+            _ = new WallBreakEvent(world, player, 256, 100);
         }
     }
 }

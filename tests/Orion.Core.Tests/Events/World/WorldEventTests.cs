@@ -41,7 +41,9 @@ namespace Orion.Core.Events.World
 
         private class TestWorldEvent : WorldEvent
         {
-            public TestWorldEvent(IWorld world) : base(world) { }
+            public TestWorldEvent(IWorld world) : base(world)
+            {
+            }
         }
     }
 }

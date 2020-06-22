@@ -36,6 +36,8 @@ namespace Orion.Core.Events.World.Tiles
         /// <param name="x">The wall's X coordinate.</param>
         /// <param name="y">The wall's Y coordinate.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
-        public WallBreakEvent(IWorld world, IPlayer? player, int x, int y) : base(world, player, x, y) { }
+        public WallBreakEvent(IWorld world, IPlayer? player, int x, int y) : base(world, player, x, y)
+        {
+        }
     }
 }

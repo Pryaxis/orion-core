@@ -32,6 +32,8 @@ namespace Orion.Core.Events.Npcs
         /// </summary>
         /// <param name="npc">The NPC that was killed.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
-        public NpcKilledEvent(INpc npc) : base(npc) { }
+        public NpcKilledEvent(INpc npc) : base(npc)
+        {
+        }
     }
 }
