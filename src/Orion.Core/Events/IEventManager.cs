@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -27,6 +28,9 @@ namespace Orion.Core.Events
     /// <summary>
     /// Manages events. Provides access to events and event handler registration/deregistration.
     /// </summary>
+    /// <remarks>
+    /// Implementations must be thread-safe.
+    /// </remarks>
     [Service(ServiceScope.Singleton)]
     public interface IEventManager
     {
@@ -187,6 +191,9 @@ namespace Orion.Core.Events
                 throw new ArgumentNullException(nameof(log));
             }
 
+            Debug.Assert(method != null);
+            Debug.Assert(asyncMethod != null);
+
             foreach (var handlerMethod in obj
                 .GetType()
                 .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
@@ -195,7 +202,6 @@ namespace Orion.Core.Events
                 var parameters = handlerMethod.GetParameters();
                 if (parameters.Length != 1)
                 {
-                    // Not localized because this string is developer-facing.
                     log.Warning("Skipping method {HandlerMethod}: does not have one parameter", handlerMethod);
                     continue;
                 }
@@ -203,7 +209,6 @@ namespace Orion.Core.Events
                 var eventType = parameters[0].ParameterType;
                 if (!eventType.IsSubclassOf(typeof(Event)))
                 {
-                    // Not localized because this string is developer-facing.
                     log.Warning(
                         "Skipping method {HandlerMethod}: parameter type not derived from `Event`", handlerMethod);
                     continue;
@@ -224,7 +229,6 @@ namespace Orion.Core.Events
                 }
                 else
                 {
-                    // Not localized because this string is developer-facing.
                     log.Warning(
                         "Skipping method {HandlerMethod}: return type is `{ReturnType}`", handlerMethod, returnType);
                 }

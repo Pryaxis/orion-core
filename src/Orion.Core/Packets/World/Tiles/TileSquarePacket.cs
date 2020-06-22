@@ -83,7 +83,6 @@ namespace Orion.Core.Packets.World.Tiles
 
                 if (value.Width != value.Height)
                 {
-                    // Not localized because this string is developer-facing.
                     throw new ArgumentException("Value is not a square", nameof(value));
                 }
 

@@ -90,28 +90,24 @@ namespace Orion.Core.World.Tiles
 
             if (startX < 0 || startX >= tiles.Width)
             {
-                // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(
                     nameof(startX), $"Start X out of range (expected: 0 to {tiles.Width - 1})");
             }
 
             if (startY < 0 || startY >= tiles.Height)
             {
-                // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(
                     nameof(startY), $"Start Y out of range (expected: 0 to {tiles.Height - 1})");
             }
 
             if (width <= 0 || startX + width > tiles.Width)
             {
-                // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(
                     nameof(width), $"Width out of range (expected: 1 to {tiles.Width - startX})");
             }
 
             if (height <= 0 || startY + height > tiles.Height)
             {
-                // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(
                     nameof(height), $"Height out of range (expected: 1 to {tiles.Height - startY})");
             }

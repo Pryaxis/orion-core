@@ -42,7 +42,6 @@ namespace Orion.Core.Events
         /// <exception cref="InvalidOperationException">The event is not canceled.</exception>
         [NotLogged]
         public string CancellationReason =>
-            // Not localized because this string is developer-facing.
             _cancellationReason ?? throw new InvalidOperationException("Event is not canceled");
 
         /// <summary>
@@ -63,7 +62,6 @@ namespace Orion.Core.Events
         {
             if (_cancellationReason is null)
             {
-                // Not localized because this string is developer-facing.
                 throw new InvalidOperationException("Event is not canceled");
             }
 

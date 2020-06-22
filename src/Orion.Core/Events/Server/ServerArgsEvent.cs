@@ -46,8 +46,7 @@ namespace Orion.Core.Events.Server
 
             if (args.Any(a => a == null))
             {
-                // Not localized because this string is developer-facing.
-                throw new ArgumentException("Arguments contains null", nameof(args));
+                throw new ArgumentException("Args contains null", nameof(args));
             }
 
             // Preprocess the arguments.
@@ -88,8 +87,7 @@ namespace Orion.Core.Events.Server
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                // Not localized because this string is developer-facing.
-                throw new ArgumentException("Parameter cannot be null or whitespace", nameof(name));
+                throw new ArgumentException("Name is null or whitespace", nameof(name));
             }
 
             return _bools.Contains(name);
@@ -109,8 +107,7 @@ namespace Orion.Core.Events.Server
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                // Not localized because this string is developer-facing.
-                throw new ArgumentException("Parameter cannot be null or whitespace", nameof(name));
+                throw new ArgumentException("Name is null or whitespace", nameof(name));
             }
 
             return _values.TryGetValue(name, out value);

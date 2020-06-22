@@ -52,7 +52,6 @@ namespace Orion.Core.Events.World.Tiles
 
             if (tiles.Width != tiles.Height)
             {
-                // Not localized because this string is developer-facing.
                 throw new ArgumentException("Tiles is not a square", nameof(tiles));
             }
 

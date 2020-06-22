@@ -46,7 +46,6 @@ namespace Orion.Core.Entities
                 {
                     if (!(boxObj is Box<T> box))
                     {
-                        // Not localized because this string is developer-facing.
                         var expectedType = boxObj.GetType().GetGenericArguments()[0];
                         throw new ArgumentException(
                             $"Invalid annotation type (expected: `{expectedType}`, actual: `{typeof(T)}`)");

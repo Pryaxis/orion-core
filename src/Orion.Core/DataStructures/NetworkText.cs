@@ -108,7 +108,6 @@ namespace Orion.Core.DataStructures
             Mode.Formatted => string.Format(CultureInfo.InvariantCulture, _format, _args),
             Mode.Localized => string.Format(CultureInfo.InvariantCulture, _format, _args),
 
-            // Not localized because this string is developer-facing.
             _ => throw new InvalidOperationException("Invalid network text mode")
         };
 
@@ -166,7 +165,6 @@ namespace Orion.Core.DataStructures
 
             if (args.Any(a => a == null))
             {
-                // Not localized because this string is developer-facing.
                 throw new ArgumentException("Args contains null", nameof(args));
             }
 

@@ -44,7 +44,6 @@ namespace Orion.Core.Buffs
         {
             if (ticks < 0)
             {
-                // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(nameof(ticks), "Ticks is negative");
             }
 
@@ -63,7 +62,6 @@ namespace Orion.Core.Buffs
         {
             if (duration < TimeSpan.Zero)
             {
-                // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(nameof(duration), "Duration is negative");
             }
 
@@ -128,7 +126,6 @@ namespace Orion.Core.Buffs
         {
             if (ticks < 0)
             {
-                // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(nameof(ticks), "Ticks is negative");
             }
 
@@ -146,7 +143,6 @@ namespace Orion.Core.Buffs
         {
             if (duration < TimeSpan.Zero)
             {
-                // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(nameof(duration), "Duration is negative");
             }
 

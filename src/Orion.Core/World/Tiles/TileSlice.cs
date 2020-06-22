@@ -41,13 +41,11 @@ namespace Orion.Core.World.Tiles
         {
             if (width < 0)
             {
-                // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(nameof(width), "Width is negative");
             }
 
             if (height < 0)
             {
-                // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(nameof(height), "Height is negative");
             }
 

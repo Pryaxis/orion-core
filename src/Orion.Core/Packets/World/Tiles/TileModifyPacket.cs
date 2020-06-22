@@ -61,7 +61,6 @@ namespace Orion.Core.Packets.World.Tiles
             {
                 if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock)
                 {
-                    // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve placing a block");
                 }
 
@@ -72,7 +71,6 @@ namespace Orion.Core.Packets.World.Tiles
             {
                 if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock)
                 {
-                    // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve placing a block");
                 }
 
@@ -94,7 +92,6 @@ namespace Orion.Core.Packets.World.Tiles
             {
                 if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock)
                 {
-                    // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve placing a block");
                 }
 
@@ -105,7 +102,6 @@ namespace Orion.Core.Packets.World.Tiles
             {
                 if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock)
                 {
-                    // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve placing a block");
                 }
 
@@ -126,7 +122,6 @@ namespace Orion.Core.Packets.World.Tiles
             {
                 if (Modification != TileModification.PlaceWall && Modification != TileModification.ReplaceWall)
                 {
-                    // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve placing a wall");
                 }
 
@@ -137,7 +132,6 @@ namespace Orion.Core.Packets.World.Tiles
             {
                 if (Modification != TileModification.PlaceWall && Modification != TileModification.ReplaceWall)
                 {
-                    // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve placing a wall");
                 }
 
@@ -156,10 +150,8 @@ namespace Orion.Core.Packets.World.Tiles
         {
             get
             {
-                if (Modification != TileModification.SlopeBlock &&
-                        Modification != TileModification.SlopeAndHammerBlock)
+                if (Modification != TileModification.SlopeBlock && Modification != TileModification.SlopeAndHammerBlock)
                 {
-                    // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve sloping a block");
                 }
 
@@ -168,10 +160,8 @@ namespace Orion.Core.Packets.World.Tiles
 
             set
             {
-                if (Modification != TileModification.SlopeBlock &&
-                        Modification != TileModification.SlopeAndHammerBlock)
+                if (Modification != TileModification.SlopeBlock && Modification != TileModification.SlopeAndHammerBlock)
                 {
-                    // Not localized because this string is developer-facing.
                     throw new InvalidOperationException("Modification does not involve sloping a block");
                 }
 
@@ -192,10 +182,9 @@ namespace Orion.Core.Packets.World.Tiles
             get
             {
                 if (Modification != TileModification.BreakBlock && Modification != TileModification.BreakWall &&
-                        Modification != TileModification.BreakBlockItemless &&
-                        Modification != TileModification.BreakContainer)
+                    Modification != TileModification.BreakBlockItemless &&
+                    Modification != TileModification.BreakContainer)
                 {
-                    // Not localized because this string is developer-facing.
                     throw new InvalidOperationException(
                         "Modification does not involve breaking a block, wall, or container");
                 }
@@ -206,10 +195,9 @@ namespace Orion.Core.Packets.World.Tiles
             set
             {
                 if (Modification != TileModification.BreakBlock && Modification != TileModification.BreakWall &&
-                        Modification != TileModification.BreakBlockItemless &&
-                        Modification != TileModification.BreakContainer)
+                    Modification != TileModification.BreakBlockItemless &&
+                    Modification != TileModification.BreakContainer)
                 {
-                    // Not localized because this string is developer-facing.
                     throw new InvalidOperationException(
                         "Modification does not involve breaking a block, wall, or container");
                 }
