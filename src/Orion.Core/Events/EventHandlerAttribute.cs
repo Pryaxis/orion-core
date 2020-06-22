@@ -68,4 +68,36 @@ namespace Orion.Core.Events
         /// </value>
         public bool IsBlocking { get; set; } = true;
     }
+
+    /// <summary>
+    /// Controls the priority of a synchronous event handler. Event handlers with higher priorities will be run before
+    /// event handlers with lower priorities.
+    /// </summary>
+    public enum EventPriority
+    {
+        /// <summary>
+        /// Indicates that the event handler should have the highest priority.
+        /// </summary>
+        Highest,
+
+        /// <summary>
+        /// Indicates that the event handler should have high priority.
+        /// </summary>
+        High,
+
+        /// <summary>
+        /// Indicates that the event handler should have normal priority. This is the default priority.
+        /// </summary>
+        Normal,
+
+        /// <summary>
+        /// Indicates that the event handler should have low priority.
+        /// </summary>
+        Low,
+
+        /// <summary>
+        /// Indicates that the event handler should have the lowest priority.
+        /// </summary>
+        Lowest
+    }
 }

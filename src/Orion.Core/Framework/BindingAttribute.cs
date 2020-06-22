@@ -62,4 +62,36 @@ namespace Orion.Core.Framework
         /// <value>The binding priority.</value>
         public BindingPriority Priority { get; set; } = BindingPriority.Normal;
     }
+
+    /// <summary>
+    /// Controls the priority of a service binding. Service bindings with higher priorities will take precedence over
+    /// service bindings with lower priorities.
+    /// </summary>
+    public enum BindingPriority
+    {
+        /// <summary>
+        /// Indicates that the service binding should have the lowest priority.
+        /// </summary>
+        Lowest,
+
+        /// <summary>
+        /// Indicates that the service binding should have low priority.
+        /// </summary>
+        Low,
+
+        /// <summary>
+        /// Indicates that the service binding should have normal priority. This is the default priority.
+        /// </summary>
+        Normal,
+
+        /// <summary>
+        /// Indicates that the service binding should have high priority.
+        /// </summary>
+        High,
+
+        /// <summary>
+        /// Indicates that the service binding should have the highest priority.
+        /// </summary>
+        Highest
+    }
 }

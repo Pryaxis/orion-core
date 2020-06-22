@@ -41,4 +41,23 @@ namespace Orion.Core.Framework
         /// <value>The service scope.</value>
         public ServiceScope Scope { get; }
     }
+
+    /// <summary>
+    /// Controls the scope of a service. This encompasses the construction policy and lifetime management of the
+    /// service.
+    /// </summary>
+    public enum ServiceScope
+    {
+        /// <summary>
+        /// Indicates that the service should have singleton scope: i.e., only one implementation is ever constructed,
+        /// and the lifetime of the implementation is limited to that of the container's.
+        /// </summary>
+        Singleton,
+
+        /// <summary>
+        /// Indicates that the service should have transient scope: i.e., a new implementation is constructed each time,
+        /// and the lifetimes of the implementations are not managed.
+        /// </summary>
+        Transient
+    }
 }
