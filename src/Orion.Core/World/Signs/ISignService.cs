@@ -17,7 +17,6 @@
 
 using System.Collections.Generic;
 using Orion.Core.Events.World.Signs;
-using Orion.Core.Framework;
 
 namespace Orion.Core.World.Signs
 {

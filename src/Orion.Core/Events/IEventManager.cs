@@ -20,7 +20,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Orion.Core.Framework;
 using Serilog;
 
 namespace Orion.Core.Events

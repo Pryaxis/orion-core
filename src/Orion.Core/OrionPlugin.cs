@@ -18,7 +18,7 @@
 using System;
 using Serilog;
 
-namespace Orion.Core.Framework
+namespace Orion.Core
 {
     /// <summary>
     /// Provides the base class for an Orion plugin.

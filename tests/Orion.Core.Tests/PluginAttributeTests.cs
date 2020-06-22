@@ -19,7 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Framework
+namespace Orion.Core
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class PluginAttributeTests

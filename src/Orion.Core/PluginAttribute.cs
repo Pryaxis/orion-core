@@ -17,7 +17,7 @@
 
 using System;
 
-namespace Orion.Core.Framework
+namespace Orion.Core
 {
     /// <summary>
     /// Specifies information about a plugin.

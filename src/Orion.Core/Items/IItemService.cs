@@ -18,7 +18,6 @@
 using System.Collections.Generic;
 using Orion.Core.DataStructures;
 using Orion.Core.Events.Items;
-using Orion.Core.Framework;
 
 namespace Orion.Core.Items
 {

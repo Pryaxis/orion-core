@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using Orion.Core.DataStructures;
 using Orion.Core.Events.Packets;
 using Orion.Core.Events.Players;
-using Orion.Core.Framework;
 using Orion.Core.Packets;
 using Orion.Core.Packets.Server;
 using Orion.Core.Packets.World.Tiles;

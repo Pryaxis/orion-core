@@ -17,7 +17,7 @@
 
 using Xunit;
 
-namespace Orion.Core.Framework
+namespace Orion.Core
 {
     public class ServiceAttributeTests
     {
