@@ -17,20 +17,20 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Orion.Core.Items;
+using Orion.Core.World.TileEntities;
 using Xunit;
 
 namespace Orion.Core.Packets.World.TileEntities
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ItemFrameInfoPacketTests
+    public class TileEntityPlacePacketTests
     {
-        private readonly byte[] _bytes = { 12, 0, 89, 0, 1, 100, 0, 17, 6, 82, 1, 0 };
+        private readonly byte[] _bytes = { 8, 0, 87, 0, 1, 100, 0, 1 };
 
         [Fact]
         public void X_Set_Get()
         {
-            var packet = new ItemFrameInfoPacket();
+            var packet = new TileEntityPlacePacket();
 
             packet.X = 256;
 
@@ -40,7 +40,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Y_Set_Get()
         {
-            var packet = new ItemFrameInfoPacket();
+            var packet = new TileEntityPlacePacket();
 
             packet.Y = 100;
 
@@ -50,51 +50,29 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Id_Set_Get()
         {
-            var packet = new ItemFrameInfoPacket();
+            var packet = new TileEntityPlacePacket();
 
-            packet.Id = ItemId.Sdmg;
+            packet.Id = TileEntityId.ItemFrame;
 
-            Assert.Equal(ItemId.Sdmg, packet.Id);
-        }
-
-        [Fact]
-        public void Prefix_Set_Get()
-        {
-            var packet = new ItemFrameInfoPacket();
-
-            packet.Prefix = ItemPrefix.Unreal;
-
-            Assert.Equal(ItemPrefix.Unreal, packet.Prefix);
-        }
-
-        [Fact]
-        public void StackSize_Set_Get()
-        {
-            var packet = new ItemFrameInfoPacket();
-
-            packet.StackSize = 1;
-
-            Assert.Equal(1, packet.StackSize);
+            Assert.Equal(TileEntityId.ItemFrame, packet.Id);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = new ItemFrameInfoPacket();
+            var packet = new TileEntityPlacePacket();
             var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(256, packet.X);
             Assert.Equal(100, packet.Y);
-            Assert.Equal(ItemId.Sdmg, packet.Id);
-            Assert.Equal(ItemPrefix.Unreal, packet.Prefix);
-            Assert.Equal(1, packet.StackSize);
+            Assert.Equal(TileEntityId.ItemFrame, packet.Id);
         }
 
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ItemFrameInfoPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<TileEntityPlacePacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }
