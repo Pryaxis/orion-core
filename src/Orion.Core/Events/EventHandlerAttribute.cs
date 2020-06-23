@@ -57,16 +57,6 @@ namespace Orion.Core.Events
         /// value is <see langword="true"/>.
         /// </value>
         public bool IgnoreCanceled { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the event handler is blocking. <i>This is only applicable for
-        /// asynchronous event handlers!</i>
-        /// </summary>
-        /// <value>
-        /// <see langword="true"/> if the event handler is blocking; otherwise, <see langword="false"/>. The default
-        /// value is <see langword="true"/>.
-        /// </value>
-        public bool IsBlocking { get; set; } = true;
     }
 
     /// <summary>
