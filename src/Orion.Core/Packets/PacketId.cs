@@ -23,6 +23,7 @@ using Orion.Core.Packets.Items;
 using Orion.Core.Packets.Npcs;
 using Orion.Core.Packets.Players;
 using Orion.Core.Packets.Server;
+using Orion.Core.Packets.World;
 using Orion.Core.Packets.World.Chests;
 using Orion.Core.Packets.World.Signs;
 using Orion.Core.Packets.World.Tiles;
@@ -74,6 +75,7 @@ namespace Orion.Core.Packets
         NpcCatch = 70,
         NpcRelease = 71,
         PlayerTeleport = 73,
+        AnglerQuestComplete = 75,
         ServerCombatNumber = 81,
         Module = 82,
         PlayerStealth = 84,
@@ -131,6 +133,7 @@ namespace Orion.Core.Packets
             [PacketId.NpcCatch] = typeof(NpcCatchPacket),
             [PacketId.NpcRelease] = typeof(NpcReleasePacket),
             [PacketId.PlayerTeleport] = typeof(PlayerTeleportPacket),
+            [PacketId.AnglerQuestComplete] = typeof(AnglerQuestCompletePacket),
             [PacketId.ServerCombatNumber] = typeof(ServerCombatNumberPacket),
             [PacketId.PlayerStealth] = typeof(PlayerStealthPacket),
             [PacketId.InstancedItemInfo] = typeof(InstancedItemInfoPacket),
