@@ -26,6 +26,7 @@ using Orion.Core.Packets.Server;
 using Orion.Core.Packets.World;
 using Orion.Core.Packets.World.Chests;
 using Orion.Core.Packets.World.Signs;
+using Orion.Core.Packets.World.TileEntities;
 using Orion.Core.Packets.World.Tiles;
 
 namespace Orion.Core.Packets
@@ -80,6 +81,7 @@ namespace Orion.Core.Packets
         ServerCombatNumber = 81,
         Module = 82,
         PlayerStealth = 84,
+        ItemFrameInfo = 89,
         InstancedItemInfo = 90,
         GemLockToggle = 105,
         ServerChat = 107,
@@ -138,6 +140,7 @@ namespace Orion.Core.Packets
             [PacketId.AnglerQuestComplete] = typeof(AnglerQuestCompletePacket),
             [PacketId.ServerCombatNumber] = typeof(ServerCombatNumberPacket),
             [PacketId.PlayerStealth] = typeof(PlayerStealthPacket),
+            [PacketId.ItemFrameInfo] = typeof(ItemFrameInfoPacket),
             [PacketId.InstancedItemInfo] = typeof(InstancedItemInfoPacket),
             [PacketId.GemLockToggle] = typeof(GemLockTogglePacket),
             [PacketId.ServerChat] = typeof(ServerChatPacket),
