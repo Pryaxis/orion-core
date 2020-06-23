@@ -53,10 +53,10 @@ Orion will have better APIs than the current Terraria server API. Here is a non-
 
 ### Other Improvements
 
-Here is a non-exhaustive list of other improvements:
+Here is a non-exhaustive list of other planned improvements:
 
-* Plugins will be unloadable (since they are required to not have `static` state). This means that hot reloading of _some_ plugins is now viable.
-* Orion will use resource strings. This means that localization will now be possible.
+* Unloadable plugins. This means that hot reloading of _some_ plugins (i.e., plugins which do not provide interface overridings) is viable.
+* Resource strings. This means that localization is possible.
 
 ## Developers
 
