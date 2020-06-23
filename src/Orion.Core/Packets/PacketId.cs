@@ -87,6 +87,7 @@ namespace Orion.Core.Packets
         GemLockToggle = 105,
         ServerChat = 107,
         ServerCombatText = 119,
+        MannequinInventory = 121,
         WeaponRackInfo = 123,
         NpcFish = 130,
         PlateInfo = 133,
@@ -149,6 +150,7 @@ namespace Orion.Core.Packets
             [PacketId.GemLockToggle] = typeof(GemLockTogglePacket),
             [PacketId.ServerChat] = typeof(ServerChatPacket),
             [PacketId.ServerCombatText] = typeof(ServerCombatTextPacket),
+            [PacketId.MannequinInventory] = typeof(MannequinInventoryPacket),
             [PacketId.WeaponRackInfo] = typeof(WeaponRackInfoPacket),
             [PacketId.NpcFish] = typeof(NpcFishPacket),
             [PacketId.PlateInfo] = typeof(PlateInfoPacket)
