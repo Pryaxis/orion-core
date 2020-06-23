@@ -87,7 +87,8 @@ namespace Orion.Core.Packets
         GemLockToggle = 105,
         ServerChat = 107,
         ServerCombatText = 119,
-        NpcFish = 130
+        NpcFish = 130,
+        PlateInfo = 133,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
@@ -147,7 +148,8 @@ namespace Orion.Core.Packets
             [PacketId.GemLockToggle] = typeof(GemLockTogglePacket),
             [PacketId.ServerChat] = typeof(ServerChatPacket),
             [PacketId.ServerCombatText] = typeof(ServerCombatTextPacket),
-            [PacketId.NpcFish] = typeof(NpcFishPacket)
+            [PacketId.NpcFish] = typeof(NpcFishPacket),
+            [PacketId.PlateInfo] = typeof(PlateInfoPacket)
         };
 
         /// <summary>
