@@ -89,6 +89,7 @@ namespace Orion.Core.Packets
         ServerCombatText = 119,
         MannequinInventory = 121,
         WeaponRackInfo = 123,
+        HatRackInventory = 124,
         NpcFish = 130,
         PlateInfo = 133,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -152,6 +153,7 @@ namespace Orion.Core.Packets
             [PacketId.ServerCombatText] = typeof(ServerCombatTextPacket),
             [PacketId.MannequinInventory] = typeof(MannequinInventoryPacket),
             [PacketId.WeaponRackInfo] = typeof(WeaponRackInfoPacket),
+            [PacketId.HatRackInventory] = typeof(HatRackInventoryPacket),
             [PacketId.NpcFish] = typeof(NpcFishPacket),
             [PacketId.PlateInfo] = typeof(PlateInfoPacket)
         };

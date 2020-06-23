@@ -22,10 +22,10 @@ using Orion.Core.Items;
 namespace Orion.Core.Packets.World.TileEntities
 {
     /// <summary>
-    /// A packet sent to set a mannequin's inventory.
+    /// A packet sent to set a hat rack's inventory.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct MannequinInventoryPacket : IPacket
+    public struct HatRackInventoryPacket : IPacket
     {
         /// <summary>
         /// Gets or sets the player index. <i>This is unused!</i>
@@ -63,7 +63,7 @@ namespace Orion.Core.Packets.World.TileEntities
         /// <value>The item prefix.</value>
         [field: FieldOffset(10)] public ItemPrefix Prefix { get; set; }
 
-        PacketId IPacket.Id => PacketId.MannequinInventory;
+        PacketId IPacket.Id => PacketId.HatRackInventory;
 
         /// <inheritdoc/>
         public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 11);
