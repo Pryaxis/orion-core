@@ -6,6 +6,4 @@
   items:
     - name: "Tutorial: Events"
       href: tutorials/events.md
-    - name: "Tutorial: Injecting Services"
-      href: tutorials/injecting-services.md
       
