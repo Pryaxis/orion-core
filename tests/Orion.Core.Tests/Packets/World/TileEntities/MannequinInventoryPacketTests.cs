@@ -96,7 +96,7 @@ namespace Orion.Core.Packets.World.TileEntities
 
             Assert.Equal(5, packet.PlayerIndex);
             Assert.Equal(2, packet.TileEntityIndex);
-            Assert.Equal(3, packet.Slot);
+            Assert.Equal(2, packet.Slot);
             Assert.Equal(ItemId.Sdmg, packet.Id);
             Assert.Equal(1, packet.StackSize);
             Assert.Equal(ItemPrefix.Unreal, packet.Prefix);
