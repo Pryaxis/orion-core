@@ -11,13 +11,12 @@ If you followed the [Getting Started](xref:getting_started_api) page, then you s
 ```csharp
 using System;
 using Orion.Core;
-using Orion.Core.Framework.Extensions;
 using Serilog;
 
 namespace Example
 {
     [Plugin("example", Author = "Pryaxis")]
-    public sealed class ExamplePlugin : OrionExtension
+    public sealed class ExamplePlugin : OrionPlugin
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ExamplePlugin"/> class.
@@ -26,7 +25,7 @@ namespace Example
         /// This is where you perform initialization logic, such as registering
         /// event handlers, reading configurations, etc.
         /// </summary>
-        public ExamplePlugin(OrionKernel kernel, ILogger log) : base(kernel, log)
+        public ExamplePlugin(IServer server, ILogger log) : base(server, log)
         {
             Console.WriteLine("Hello, world!");
         }
@@ -48,7 +47,7 @@ namespace Example
 
 &nbsp;
 
-This plugin simply prints `Hello, world!` and `Goodbye, world!` upon initialization and disposal, respectively. The [`Plugin`](xref:Orion.Core.Framework.Extensions.PluginAttribute) attribute specifies the plugin name (which should be unique among all plugins, and is used for logging/debugging purposes) and optionally the plugin author.
+This plugin simply prints `Hello, world!` and `Goodbye, world!` upon initialization and disposal, respectively. The [`Plugin`](xref:Orion.Core.PluginAttribute) attribute specifies the plugin name (which should be unique among all plugins, and is used for logging/debugging purposes) and optionally the plugin author.
 
 ## Using your Plugin
 
@@ -60,9 +59,9 @@ Orion instantiates all plugins using [Ninject](https://www.nuget.org/packages/Ni
 
 1. The `plugins/` directory is scanned for .NET assemblies. For each .NET assembly:
     1. All service interfaces are loaded.
-    2. All service bindings are loaded, and for each interface, the binding with the highest [`BindingPriority`](xref:Orion.Core.Framework.Extensions.BindingPriority) is used.
+    2. All service bindings are loaded, and for each interface, the binding with the highest [`BindingPriority`](xref:Orion.Core.BindingPriority) is used.
     3. All plugin types are loaded.
-2. Each service interface is bound to a single service binding via Ninject, with the scope specified by the [`Service`](xref:Orion.Core.Framework.Extensions.ServiceAttribute) attribute placed on the service interface.
+2. Each service interface is bound to a single service binding via Ninject, with the scope specified by the [`Service`](xref:Orion.Core.ServiceAttribute) attribute placed on the service interface.
 3. Each plugin is constructed via Ninject.
 
 This allows plugins to define overriding service bindings, and to have dependencies on other plugins.
