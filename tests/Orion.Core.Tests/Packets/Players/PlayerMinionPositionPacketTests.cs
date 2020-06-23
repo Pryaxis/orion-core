@@ -17,50 +17,51 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Orion.Core.DataStructures;
 using Xunit;
 
-namespace Orion.Core.Packets.World
+namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class OldOnesArmyStartPacketTests
+    public class PlayerMinionPositionPacketTests
     {
-        private readonly byte[] _bytes = { 7, 0, 113, 0, 1, 100, 0 };
+        private readonly byte[] _bytes = { 12, 0, 99, 5, 0, 0, 200, 66, 0, 0, 128, 67 };
 
         [Fact]
-        public void X_Set_Get()
+        public void PlayerIndex_Set_Get()
         {
-            var packet = new OldOnesArmyStartPacket();
+            var packet = new PlayerMinionPositionPacket();
 
-            packet.X = 256;
+            packet.PlayerIndex = 5;
 
-            Assert.Equal(256, packet.X);
+            Assert.Equal(5, packet.PlayerIndex);
         }
 
         [Fact]
-        public void Y_Set_Get()
+        public void Position_Set_Get()
         {
-            var packet = new OldOnesArmyStartPacket();
+            var packet = new PlayerMinionPositionPacket();
 
-            packet.Y = 100;
+            packet.Position = new Vector2f(100, 256);
 
-            Assert.Equal(100, packet.Y);
+            Assert.Equal(new Vector2f(100, 256), packet.Position);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = new OldOnesArmyStartPacket();
+            var packet = new PlayerMinionPositionPacket();
             var span = _bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
-            Assert.Equal(256, packet.X);
-            Assert.Equal(100, packet.Y);
+            Assert.Equal(5, packet.PlayerIndex);
+            Assert.Equal(new Vector2f(100, 256), packet.Position);
         }
 
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<OldOnesArmyStartPacket>(
+            TestUtils.RoundTripPacket<PlayerMinionPositionPacket>(
                 _bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

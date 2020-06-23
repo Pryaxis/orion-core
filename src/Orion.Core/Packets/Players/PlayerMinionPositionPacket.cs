@@ -17,21 +17,34 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Orion.Core.DataStructures;
 
-namespace Orion.Core.Packets.World
+namespace Orion.Core.Packets.Players
 {
     /// <summary>
-    /// A packet sent from the server to the client to end the Old One's Army event.
+    /// A packet sent to set a player's minion position.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct OldOnesArmyEndPacket : IPacket
+    public struct PlayerMinionPositionPacket : IPacket
     {
-        PacketId IPacket.Id => PacketId.OldOnesArmyEnd;
+        /// <summary>
+        /// Gets or sets the player index.
+        /// </summary>
+        /// <value>The player index.</value>
+        [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the player's minion position.
+        /// </summary>
+        /// <value>The player's minion position.</value>
+        [field: FieldOffset(1)] public Vector2f Position { get; set; }
+
+        PacketId IPacket.Id => PacketId.PlayerMinionPosition;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => 0;
+        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 9);
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => 0;
+        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 9);
     }
 }
