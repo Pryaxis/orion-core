@@ -16,9 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 using Orion.Core.Buffs;
 using Orion.Core.DataStructures;
 
