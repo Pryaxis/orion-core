@@ -52,6 +52,12 @@ namespace Orion.Core.World
         string Name { get; }
 
         /// <summary>
+        /// Gets or sets the world's evil.
+        /// </summary>
+        /// <value>The world's evil.</value>
+        WorldEvil Evil { get; set; }
+
+        /// <summary>
         /// Gets or sets the world's difficulty.
         /// </summary>
         /// <value>The world's difficulty.</value>
