@@ -122,10 +122,10 @@ namespace Orion.Core.Players
                 throw new ArgumentNullException(nameof(message));
             }
 
-            var packet = new ServerChatPacket { Color = color, Message = message, LineWidth = -1 };
+            _ = new ServerChatPacket { Color = color, Message = message, LineWidth = -1 };
             for (var i = 0; i < players.Count; ++i)
             {
-                players[i].SendPacket(ref packet);
+                //players[i].SendPacket(ref packet);
             }
         }
 
@@ -158,10 +158,10 @@ namespace Orion.Core.Players
                 throw new NotSupportedException("Tiles is not square");
             }
 
-            var packet = new TileSquarePacket { X = (short)x, Y = (short)y, Tiles = tiles };
+            _ = new TileSquarePacket { X = (short)x, Y = (short)y, Tiles = tiles };
             for (var i = 0; i < players.Count; ++i)
             {
-                players[i].SendPacket(ref packet);
+                //players[i].SendPacket(ref packet);
             }
         }
     }

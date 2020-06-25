@@ -23,27 +23,25 @@ namespace Orion.Core.Packets.Client
     /// <summary>
     /// A packet sent from the client to the server to connect.
     /// </summary>
-    public struct ClientConnectPacket : IPacket
+    public sealed class ClientConnectPacket : IPacket
     {
-        private string? _version;
+        private string _version = string.Empty;
 
         /// <summary>
-        /// Gets or sets the client's version.
+        /// Gets or sets the client's version. This is of the form <c>"Terraria###"</c>, where <c>###</c> is the
+        /// internal version number.
         /// </summary>
         /// <value>The client's version.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Version
         {
-            get => _version ?? string.Empty;
+            get => _version;
             set => _version = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         PacketId IPacket.Id => PacketId.ClientConnect;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(Encoding.UTF8, out _version);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(Version, Encoding.UTF8);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(Encoding.UTF8, out _version);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(Version, Encoding.UTF8);
     }
 }

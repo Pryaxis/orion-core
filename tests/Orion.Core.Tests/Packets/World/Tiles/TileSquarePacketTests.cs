@@ -94,9 +94,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read()
         {
-            var packet = new TileSquarePacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileSquarePacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
@@ -107,9 +105,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_ExtraData()
         {
-            var packet = new TileSquarePacket();
-            var span = _extraDataBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileSquarePacket>(_extraDataBytes, PacketContext.Server);
 
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
@@ -120,14 +116,14 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<TileSquarePacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<TileSquarePacket>(_bytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_ExtraData()
         {
             TestUtils.RoundTripPacket<TileSquarePacket>(
-                _extraDataBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _extraDataBytes, PacketContext.Server);
         }
     }
 }

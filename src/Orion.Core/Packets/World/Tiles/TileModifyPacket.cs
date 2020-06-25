@@ -24,9 +24,10 @@ namespace Orion.Core.Packets.World.Tiles
     /// <summary>
     /// A packet sent to modify a tile.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct TileModifyPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    public sealed class TileModifyPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
         [FieldOffset(5)] private ushort _data;
         [FieldOffset(7)] private byte _data2;
 
@@ -208,10 +209,7 @@ namespace Orion.Core.Packets.World.Tiles
 
         PacketId IPacket.Id => PacketId.TileModify;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 8);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 8);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 8);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 8);
     }
 }

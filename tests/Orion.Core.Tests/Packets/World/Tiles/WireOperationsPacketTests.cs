@@ -79,9 +79,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read()
         {
-            var packet = new WireOperationsPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<WireOperationsPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(256, packet.StartX);
             Assert.Equal(100, packet.StartY);
@@ -93,7 +91,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<WireOperationsPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<WireOperationsPacket>(_bytes, PacketContext.Server);
         }
     }
 }

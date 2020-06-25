@@ -24,47 +24,31 @@ namespace Orion.Core.Packets.Modules
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class UnknownModuleTests
     {
-        private readonly byte[] _bytes = { 13, 0, 82, 255, 255, 0, 1, 2, 3, 4, 5, 6, 7 };
-        private readonly byte[] _emptyBytes = { 5, 0, 82, 255, 255 };
+        private readonly byte[] _bytes = { 255, 255, 0, 1, 2, 3, 4, 5, 6, 7 };
+        private readonly byte[] _emptyBytes = { 255, 255 };
 
         [Fact]
-        public void Length_Set_Get()
+        public void Data_Get()
         {
-            var packet = new UnknownModule();
+            var module = new UnknownModule(10, (ModuleId)65535);
 
-            packet.Length = 8;
-
-            Assert.Equal(8, packet.Length);
+            Assert.Equal(8, module.Data.Length);
         }
 
         [Fact]
-        public void Id_Set_Get()
+        public void Id_Get()
         {
-            var packet = new UnknownModule();
+            var module = new UnknownModule(10, (ModuleId)65535);
 
-            packet.Id = (ModuleId)65535;
-
-            Assert.Equal((ModuleId)65535, packet.Id);
+            Assert.Equal((ModuleId)65535, module.Id);
         }
 
         [Fact]
-        public void Data()
+        public void Read()
         {
-            var packet = new UnknownModule { Length = 8 };
+            var module = TestUtils.ReadModule<UnknownModule>(_bytes, PacketContext.Server);
 
-            packet.Data[0] = 123;
-
-            Assert.Equal(123, packet.Data[0]);
-        }
-
-        [Fact]
-        public unsafe void Read()
-        {
-            var module = new UnknownModule();
-            var span = _bytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
-            Assert.Equal(span.Length, module.Read(span, PacketContext.Server));
-
-            Assert.Equal(8, module.Length);
+            Assert.Equal(8, module.Data.Length);
             for (var i = 0; i < 8; ++i)
             {
                 Assert.Equal(i, module.Data[i]);
@@ -72,27 +56,23 @@ namespace Orion.Core.Packets.Modules
         }
 
         [Fact]
-        public unsafe void Read_Empty()
+        public void Read_Empty()
         {
-            var module = new UnknownModule();
-            var span = _emptyBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
-            Assert.Equal(span.Length, module.Read(span, PacketContext.Server));
+            var module = TestUtils.ReadModule<UnknownModule>(_emptyBytes, PacketContext.Server);
 
-            Assert.Equal(0, module.Length);
+            Assert.Equal(0, module.Data.Length);
         }
 
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripModule<UnknownModule>(
-                _bytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Server);
+            TestUtils.RoundTripModule(_bytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_Empty()
         {
-            TestUtils.RoundTripModule<UnknownModule>(
-                _emptyBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Server);
+            TestUtils.RoundTripModule(_emptyBytes, PacketContext.Server);
         }
     }
 }

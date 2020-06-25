@@ -24,9 +24,11 @@ namespace Orion.Core.Packets.World.TileEntities
     /// <summary>
     /// A packet sent to set a hat rack's inventory.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct HatRackInventoryPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 11)]
+    public sealed class HatRackInventoryPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the player index. <i>This is unused!</i>
         /// </summary>
@@ -65,10 +67,7 @@ namespace Orion.Core.Packets.World.TileEntities
 
         PacketId IPacket.Id => PacketId.HatRackInventory;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 11);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 11);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 11);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 11);
     }
 }

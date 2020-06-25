@@ -23,38 +23,42 @@ namespace Orion.Core.Packets
     /// <summary>
     /// An unknown packet.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct UnknownPacket : IPacket
+    public class UnknownPacket : IPacket
     {
-        [FieldOffset(4)] private unsafe fixed byte _data[ushort.MaxValue - IPacket.HeaderSize];
+        private readonly byte[] _data;
 
         /// <summary>
-        /// Gets or sets the packet length.
+        /// Initializes a new instance of the <see cref="UnknownPacket"/> class with the specified packet
+        /// <paramref name="length"/> and <paramref name="id"/>.
         /// </summary>
-        /// <value>The packet length.</value>
-        [field: FieldOffset(0)] public ushort Length { get; set; }
-
-        /// <summary>
-        /// Gets or sets the packet ID.
-        /// </summary>
-        /// <value>The packet ID.</value>
-        [field: FieldOffset(2)] public PacketId Id { get; set; }
-
-        /// <summary>
-        /// Gets the packet data.
-        /// </summary>
-        /// <value>The packet data.</value>
-        public unsafe Span<byte> Data => MemoryMarshal.CreateSpan(ref _data[0], Length);
-
-        /// <inheritdoc/>
-        public unsafe int Read(Span<byte> span, PacketContext context)
+        /// <param name="length">The packet length.</param>
+        /// <param name="id">The packet ID.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="length"/> is too small.</exception>
+        public UnknownPacket(ushort length, PacketId id)
         {
-            Length = (ushort)span.Length;
-            return Length == 0 ? 0 : span.Read(ref this.AsRefByte(4), Length);
+            if (length < IPacket.HeaderSize)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(length), $"Length is too small (expected: >= {IPacket.HeaderSize})");
+            }
+
+            _data = new byte[length - IPacket.HeaderSize];
+            Id = id;
         }
 
         /// <inheritdoc/>
-        public unsafe int Write(Span<byte> span, PacketContext context) =>
-            Length == 0 ? 0 : span.Write(ref this.AsRefByte(4), Length);
+        public PacketId Id { get; }
+
+        /// <summary>
+        /// Gets the packet's data.
+        /// </summary>
+        /// <value>The packet's data.</value>
+        public Span<byte> Data => _data;
+
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) =>
+            _data.Length == 0 ? 0 : span.Read(ref _data[0], _data.Length);
+
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) =>
+            _data.Length == 0 ? 0 : span.Write(ref _data[0], _data.Length);
     }
 }

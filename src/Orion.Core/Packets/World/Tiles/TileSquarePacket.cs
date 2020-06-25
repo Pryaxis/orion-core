@@ -25,8 +25,8 @@ namespace Orion.Core.Packets.World.Tiles
     /// <summary>
     /// A packet sent to set a square of tiles.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct TileSquarePacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public sealed class TileSquarePacket : IPacket
     {
         // The shifts for the tile header.
         private const int SlopeShift = 12;
@@ -50,6 +50,7 @@ namespace Orion.Core.Packets.World.Tiles
         private static readonly TileSlice _emptyTiles = new TileSlice(0, 0);
 
         [FieldOffset(0)] private byte _data;
+        [FieldOffset(1)] private byte _bytes;
         [FieldOffset(8)] private ITileSlice? _tiles;
 
         /// <summary>
@@ -93,7 +94,7 @@ namespace Orion.Core.Packets.World.Tiles
         PacketId IPacket.Id => PacketId.TileSquare;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context)
+        int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
             var index = 2;
             var size = Unsafe.ReadUnaligned<short>(ref MemoryMarshal.GetReference(span));
@@ -103,7 +104,7 @@ namespace Orion.Core.Packets.World.Tiles
                 size &= short.MaxValue;
             }
 
-            index += span[index..].Read(ref this.AsRefByte(1), 4);
+            index += span[index..].Read(ref _bytes, 4);
 
             _tiles = new TileSlice(size, size);
             for (var i = 0; i < size; ++i)
@@ -118,7 +119,7 @@ namespace Orion.Core.Packets.World.Tiles
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context)
+        int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
             var tiles = Tiles;
 
@@ -131,7 +132,7 @@ namespace Orion.Core.Packets.World.Tiles
             }
 
             Unsafe.WriteUnaligned(ref MemoryMarshal.GetReference(span), size);
-            index += span[index..].Write(ref this.AsRefByte(1), 4);
+            index += span[index..].Write(ref _bytes, 4);
 
             for (var i = 0; i < tiles.Width; ++i)
             {

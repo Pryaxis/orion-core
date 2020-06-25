@@ -24,9 +24,11 @@ namespace Orion.Core.Packets.World.TileEntities
     /// <summary>
     /// A packet sent from the client to the server to set an item frame.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct ItemFrameInfoPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 9)]
+    public sealed class ItemFrameInfoPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the item frame's X coordinate.
         /// </summary>
@@ -59,10 +61,7 @@ namespace Orion.Core.Packets.World.TileEntities
 
         PacketId IPacket.Id => PacketId.ItemFrameInfo;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 9);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 9);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 9);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 9);
     }
 }

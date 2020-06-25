@@ -23,9 +23,11 @@ namespace Orion.Core.Packets.World.Tiles
     /// <summary>
     /// A packet sent from the client to the server to toggle a gem lock.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct GemLockTogglePacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 5)]
+    public sealed class GemLockTogglePacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the gem lock's X coordinate.
         /// </summary>
@@ -46,10 +48,7 @@ namespace Orion.Core.Packets.World.Tiles
 
         PacketId IPacket.Id => PacketId.GemLockToggle;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 5);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 5);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 5);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 5);
     }
 }

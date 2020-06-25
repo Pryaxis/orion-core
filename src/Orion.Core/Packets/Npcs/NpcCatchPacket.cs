@@ -24,8 +24,10 @@ namespace Orion.Core.Packets.Npcs
     /// A packet sent from the client to the server to catch an NPC.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct NpcCatchPacket : IPacket
+    public sealed class NpcCatchPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
@@ -40,10 +42,7 @@ namespace Orion.Core.Packets.Npcs
 
         PacketId IPacket.Id => PacketId.NpcCatch;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 3);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 3);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 3);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 3);
     }
 }

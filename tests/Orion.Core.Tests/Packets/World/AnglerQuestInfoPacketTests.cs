@@ -24,7 +24,7 @@ namespace Orion.Core.Packets.World
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class AnglerQuestInfoPacketTests
     {
-        private readonly byte[] _bytes = { 3, 0, 74, 10, 1 };
+        private readonly byte[] _bytes = { 5, 0, 74, 10, 1 };
 
         [Fact]
         public void Quest_Set_Get()
@@ -49,16 +49,14 @@ namespace Orion.Core.Packets.World
         [Fact]
         public void Read()
         {
-            var packet = new AnglerQuestInfoPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            _ = TestUtils.ReadPacket<AnglerQuestInfoPacket>(_bytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip()
         {
             TestUtils.RoundTripPacket<AnglerQuestInfoPacket>(
-                _bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _bytes, PacketContext.Server);
         }
     }
 }

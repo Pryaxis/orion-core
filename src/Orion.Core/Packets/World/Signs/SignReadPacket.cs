@@ -23,9 +23,11 @@ namespace Orion.Core.Packets.World.Signs
     /// <summary>
     /// A packet sent from the client to the server to read a sign.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct SignReadPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 4)]
+    public sealed class SignReadPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the sign's X coordinate.
         /// </summary>
@@ -40,10 +42,7 @@ namespace Orion.Core.Packets.World.Signs
 
         PacketId IPacket.Id => PacketId.SignRead;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 4);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 4);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 4);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 4);
     }
 }

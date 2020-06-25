@@ -25,8 +25,10 @@ namespace Orion.Core.Packets.Npcs
     /// A packet sent to buff an NPC.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct NpcBuffPacket : IPacket
+    public sealed class NpcBuffPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
@@ -47,10 +49,7 @@ namespace Orion.Core.Packets.Npcs
 
         PacketId IPacket.Id => PacketId.NpcBuff;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 6);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 6);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 6);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 6);
     }
 }

@@ -24,9 +24,11 @@ namespace Orion.Core.Packets.Server
     /// <summary>
     /// A packet sent from the server to the client to show a combat number.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct ServerCombatNumberPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 15)]
+    public sealed class ServerCombatNumberPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the combat number's position.
         /// </summary>
@@ -47,10 +49,7 @@ namespace Orion.Core.Packets.Server
 
         PacketId IPacket.Id => PacketId.ServerCombatNumber;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 15);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 15);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 15);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 15);
     }
 }

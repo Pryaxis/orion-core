@@ -23,9 +23,11 @@ namespace Orion.Core.Packets.Players
     /// <summary>
     /// A packet sent to set a player's minion target.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct PlayerMinionTargetPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 3)]
+    public sealed class PlayerMinionTargetPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -40,10 +42,7 @@ namespace Orion.Core.Packets.Players
 
         PacketId IPacket.Id => PacketId.PlayerMinionTarget;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 3);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 3);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 3);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 3);
     }
 }

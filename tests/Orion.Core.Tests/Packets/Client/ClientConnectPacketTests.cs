@@ -27,14 +27,6 @@ namespace Orion.Core.Packets.Client
         private readonly byte[] _bytes = { 15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52 };
 
         [Fact]
-        public void Version_Get_Default()
-        {
-            var packet = new ClientConnectPacket();
-
-            Assert.Equal(string.Empty, packet.Version);
-        }
-
-        [Fact]
         public void Version_SetNullValue_ThrowsArgumentNullException()
         {
             var packet = new ClientConnectPacket();
@@ -55,9 +47,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void Read()
         {
-            var packet = new ClientConnectPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<ClientConnectPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal("Terraria194", packet.Version);
         }
@@ -65,7 +55,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ClientConnectPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ClientConnectPacket>(_bytes, PacketContext.Server);
         }
     }
 }

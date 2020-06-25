@@ -24,9 +24,9 @@ namespace Orion.Core.Packets.Server
     /// <summary>
     /// A packet sent from the server to the client to disconnect the client.
     /// </summary>
-    public struct ServerDisconnectPacket : IPacket
+    public sealed class ServerDisconnectPacket : IPacket
     {
-        private NetworkText? _reason;
+        private NetworkText _reason = NetworkText.Empty;
 
         /// <summary>
         /// Gets or sets the disconnect reason.
@@ -35,16 +35,13 @@ namespace Orion.Core.Packets.Server
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public NetworkText Reason
         {
-            get => _reason ?? NetworkText.Empty;
+            get => _reason;
             set => _reason = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         PacketId IPacket.Id => PacketId.ServerDisconnect;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(Encoding.UTF8, out _reason);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(Reason, Encoding.UTF8);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(Encoding.UTF8, out _reason);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(_reason, Encoding.UTF8);
     }
 }

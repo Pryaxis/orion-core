@@ -27,14 +27,6 @@ namespace Orion.Core.Packets.Client
         private readonly byte[] _bytes = { 12, 0, 38, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
 
         [Fact]
-        public void Password_Get_Default()
-        {
-            var packet = new ClientPasswordPacket();
-
-            Assert.Equal(string.Empty, packet.Password);
-        }
-
-        [Fact]
         public void Password_SetNullValue_ThrowsArgumentNullException()
         {
             var packet = new ClientPasswordPacket();
@@ -55,9 +47,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void Read()
         {
-            var packet = new ClientPasswordPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<ClientPasswordPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal("Terraria", packet.Password);
         }
@@ -65,7 +55,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ClientPasswordPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ClientPasswordPacket>(_bytes, PacketContext.Server);
         }
     }
 }

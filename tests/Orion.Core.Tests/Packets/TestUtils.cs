@@ -23,58 +23,84 @@ namespace Orion.Core.Packets
 {
     public static class TestUtils
     {
-        // Tests a packet round trip by reading, writing, reading the written packet, writing that read packet, and then
-        // comparing the two written byte sequences. This resmoves any boundary conditions where data is in a different
-        // form than would be normally expected.
+        public static TPacket ReadPacket<TPacket>(Span<byte> span, PacketContext context) where TPacket : IPacket
+        {
+            var packetLength = IPacket.Read(span, context, out var packet);
+            Assert.IsType<TPacket>(packet);
+            Assert.Equal(span.Length, packetLength);
+
+            return (TPacket)packet;
+        }
+
+        public static TModule ReadModule<TModule>(Span<byte> span, PacketContext context) where TModule : IModule
+        {
+            var moduleLength = IModule.Read(span, context, out var module);
+            Assert.IsType<TModule>(module);
+            Assert.Equal(span.Length, moduleLength);
+
+            return (TModule)module;
+        }
+
+        /// <summary>
+        /// Tests a packet round trip by reading, writing, re-reading, and then re-writing the packet, comparing the
+        /// written byte sequences.
+        /// </summary>
+        /// <param name="span">The span to read from, initially.</param>
+        /// <param name="context">The packet context to use.</param>
         public static void RoundTripPacket<TPacket>(Span<byte> span, PacketContext context)
-            where TPacket : struct, IPacket
         {
             var otherContext = context == PacketContext.Server ? PacketContext.Client : PacketContext.Server;
 
-            // Read packet.
-            var packet = new TPacket();
-            Assert.Equal(span.Length, packet.Read(span, context));
+            // Read the packet.
+            IPacket.Read(span, context, out var packet);
 
             // Write the packet.
-            var bytes = new byte[ushort.MaxValue - IPacket.HeaderSize];
+            var bytes = new byte[ushort.MaxValue];
             var packetLength = packet.Write(bytes, otherContext);
 
             // Read the packet again.
-            Assert.Equal(packetLength, packet.Read(bytes.AsSpan(..packetLength), context));
+            IPacket.Read(span, context, out var packet2);
 
             // Write the packet again.
-            var bytes2 = new byte[ushort.MaxValue - IPacket.HeaderSize];
-            var packetLength2 = packet.Write(bytes2, otherContext);
+            var bytes2 = new byte[ushort.MaxValue];
+            var packetLength2 = packet2.Write(bytes2, otherContext);
 
             Assert.Equal(packetLength, packetLength2);
-            Assert.Equal(bytes, bytes2);
+            for (var i = 0; i < packetLength; ++i)
+            {
+                Assert.True(bytes[i] == bytes2[i], $"Expected: {bytes[i]}\nActual:   {bytes2[i]}\n  at position {i}");
+            }
         }
 
-        // Tests a module round trip by reading, writing, reading the written module, writing that read module, and then
-        // comparing the two written byte sequences. This resmoves any boundary conditions where data is in a different
-        // form than would be normally expected.
-        public static void RoundTripModule<TModule>(Span<byte> span, PacketContext context)
-            where TModule : struct, IModule
+        /// <summary>
+        /// Tests a packet round trip by reading, writing, re-reading, and then re-writing the packet, comparing the
+        /// written byte sequences.
+        /// </summary>
+        /// <param name="span">The span to read from, initially.</param>
+        /// <param name="context">The packet context to use.</param>
+        public static void RoundTripModule(Span<byte> span, PacketContext context)
         {
             var otherContext = context == PacketContext.Server ? PacketContext.Client : PacketContext.Server;
 
-            // Read module.
-            var module = new TModule();
-            Assert.Equal(span.Length, module.Read(span, context));
+            // Read the packet.
+            IModule.Read(span, context, out var module);
 
-            // Write the module.
-            var bytes = new byte[ushort.MaxValue - IPacket.HeaderSize - IModule.HeaderSize];
+            // Write the packet.
+            var bytes = new byte[ushort.MaxValue];
             var moduleLength = module.Write(bytes, otherContext);
 
-            // Read the module again.
-            Assert.Equal(moduleLength, module.Read(bytes.AsSpan(..moduleLength), context));
+            // Read the packet again.
+            IModule.Read(span, context, out var module2);
 
-            // Write the module again.
-            var bytes2 = new byte[ushort.MaxValue - IPacket.HeaderSize - IModule.HeaderSize];
-            var moduleLength2 = module.Write(bytes2, otherContext);
+            // Write the packet again.
+            var bytes2 = new byte[ushort.MaxValue];
+            var moduleLength2 = module2.Write(bytes2, otherContext);
 
             Assert.Equal(moduleLength, moduleLength2);
-            Assert.Equal(bytes, bytes2);
+            for (var i = 0; i < moduleLength; ++i)
+            {
+                Assert.True(bytes[i] == bytes2[i], $"Expected: {bytes[i]}\nActual:   {bytes2[i]}\n  at position {i}");
+            }
         }
     }
 }

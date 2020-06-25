@@ -90,9 +90,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Read()
         {
-            var packet = new MannequinInventoryPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<MannequinInventoryPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.PlayerIndex);
             Assert.Equal(2, packet.TileEntityIndex);
@@ -106,7 +104,7 @@ namespace Orion.Core.Packets.World.TileEntities
         public void RoundTrip()
         {
             TestUtils.RoundTripPacket<MannequinInventoryPacket>(
-                _bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _bytes, PacketContext.Server);
         }
     }
 }

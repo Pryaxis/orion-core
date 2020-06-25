@@ -49,9 +49,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void Read()
         {
-            var packet = new PlayerManaEffectPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<PlayerManaEffectPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.PlayerIndex);
             Assert.Equal(100, packet.Amount);
@@ -61,7 +59,7 @@ namespace Orion.Core.Packets.Players
         public void RoundTrip()
         {
             TestUtils.RoundTripPacket<PlayerManaEffectPacket>(
-                _bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _bytes, PacketContext.Server);
         }
     }
 }

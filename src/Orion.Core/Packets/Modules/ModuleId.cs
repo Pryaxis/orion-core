@@ -30,23 +30,4 @@ namespace Orion.Core.Packets.Modules
         Chat = 1
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
-
-    /// <summary>
-    /// Provides extensions for the <see cref="ModuleId"/> enumeration.
-    /// </summary>
-    public static class ModuleIdExtensions
-    {
-        private static readonly IDictionary<ModuleId, Type> _types = new Dictionary<ModuleId, Type>
-        {
-            [ModuleId.Chat] = typeof(ChatModule)
-        };
-
-        /// <summary>
-        /// Gets the corresponding type for the module <paramref name="id"/>.
-        /// </summary>
-        /// <param name="id">The module ID.</param>
-        /// <returns>The corresponding type for the module <paramref name="id"/>.</returns>
-        [Pure]
-        public static Type Type(this ModuleId id) => _types.TryGetValue(id, out var type) ? type : typeof(UnknownModule);
-    }
 }

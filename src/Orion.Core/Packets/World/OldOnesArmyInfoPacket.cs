@@ -23,9 +23,11 @@ namespace Orion.Core.Packets.World
     /// <summary>
     /// A packet sent from the server to the client to set the Old One's Army event information.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct OldOnesArmyInfoPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 4)]
+    public sealed class OldOnesArmyInfoPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the number of ticks before the next wave.
         /// </summary>
@@ -34,10 +36,7 @@ namespace Orion.Core.Packets.World
 
         PacketId IPacket.Id => PacketId.OldOnesArmyInfo;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 4);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 4);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 4);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 4);
     }
 }

@@ -25,12 +25,14 @@ namespace Orion.Core.Packets.Modules
     /// <summary>
     /// A module sent for chat.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct ChatModule : IModule
+    [StructLayout(LayoutKind.Explicit, Size = 32)]
+    public sealed class ChatModule : IModule
     {
-        [FieldOffset(0)] private string? _clientCommand;
-        [FieldOffset(8)] private string? _clientMessage;
-        [FieldOffset(24)] private NetworkText? _serverMessage;
+        [FieldOffset(0)] private string _clientCommand = string.Empty;
+        [FieldOffset(8)] private string _clientMessage = string.Empty;
+        [FieldOffset(16)] private byte _bytes;
+        [FieldOffset(17)] private byte _bytes2;
+        [FieldOffset(24)] private NetworkText _serverMessage = NetworkText.Empty;
 
         /// <summary>
         /// Gets or sets the command. This is only applicable if read in <see cref="PacketContext.Server"/> or written
@@ -40,7 +42,7 @@ namespace Orion.Core.Packets.Modules
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string ClientCommand
         {
-            get => _clientCommand ?? string.Empty;
+            get => _clientCommand;
             set => _clientCommand = value ?? throw new ArgumentNullException(nameof(value));
         }
 
@@ -52,7 +54,7 @@ namespace Orion.Core.Packets.Modules
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string ClientMessage
         {
-            get => _clientMessage ?? string.Empty;
+            get => _clientMessage;
             set => _clientMessage = value ?? throw new ArgumentNullException(nameof(value));
         }
 
@@ -71,7 +73,7 @@ namespace Orion.Core.Packets.Modules
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public NetworkText ServerMessage
         {
-            get => _serverMessage ?? NetworkText.Empty;
+            get => _serverMessage;
             set => _serverMessage = value ?? throw new ArgumentNullException(nameof(value));
         }
 
@@ -85,34 +87,34 @@ namespace Orion.Core.Packets.Modules
         ModuleId IModule.Id => ModuleId.Chat;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context)
+        public int ReadBody(Span<byte> span, PacketContext context)
         {
             if (context == PacketContext.Server)
             {
-                var index = span.Read(Encoding.UTF8, out _clientCommand);
-                return index + span[index..].Read(Encoding.UTF8, out _clientMessage);
+                var length = span.Read(Encoding.UTF8, out _clientCommand);
+                return length + span[length..].Read(Encoding.UTF8, out _clientMessage);
             }
             else
             {
-                var index = span.Read(ref this.AsRefByte(16), 1);
-                index += span[index..].Read(Encoding.UTF8, out _serverMessage);
-                return index + span[index..].Read(ref this.AsRefByte(17), 3);
+                var length = span.Read(ref _bytes, 1);
+                length += span[length..].Read(Encoding.UTF8, out _serverMessage);
+                return length + span[length..].Read(ref _bytes2, 3);
             }
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context)
+        public int WriteBody(Span<byte> span, PacketContext context)
         {
             if (context == PacketContext.Client)
             {
-                var index = span.Write(ClientCommand, Encoding.UTF8);
-                return index + span[index..].Write(ClientMessage, Encoding.UTF8);
+                var length = span.Write(ClientCommand, Encoding.UTF8);
+                return length + span[length..].Write(ClientMessage, Encoding.UTF8);
             }
             else
             {
-                var index = span.Write(ref this.AsRefByte(16), 1);
-                index += span[index..].Write(ServerMessage, Encoding.UTF8);
-                return index + span[index..].Write(ref this.AsRefByte(17), 3);
+                var length = span.Write(ref _bytes, 1);
+                length += span[length..].Write(ServerMessage, Encoding.UTF8);
+                return length + span[length..].Write(ref _bytes2, 3);
             }
         }
     }

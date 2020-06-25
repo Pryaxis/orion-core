@@ -27,14 +27,6 @@ namespace Orion.Core.Packets.Client
         private readonly byte[] _bytes = { 12, 0, 68, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
 
         [Fact]
-        public void Uuid_Get_Default()
-        {
-            var packet = new ClientUuidPacket();
-
-            Assert.Equal(string.Empty, packet.Uuid);
-        }
-
-        [Fact]
         public void Uuid_SetNullValue_ThrowsArgumentNullException()
         {
             var packet = new ClientUuidPacket();
@@ -55,9 +47,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void Read()
         {
-            var packet = new ClientUuidPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<ClientUuidPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal("Terraria", packet.Uuid);
         }
@@ -65,7 +55,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ClientUuidPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ClientUuidPacket>(_bytes, PacketContext.Server);
         }
     }
 }

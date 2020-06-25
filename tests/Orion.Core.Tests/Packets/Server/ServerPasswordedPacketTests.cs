@@ -27,15 +27,13 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void Read()
         {
-            var packet = new ServerPasswordedPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            _ = TestUtils.ReadPacket<ServerPasswordedPacket>(_bytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ServerPasswordedPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ServerPasswordedPacket>(_bytes, PacketContext.Server);
         }
     }
 }

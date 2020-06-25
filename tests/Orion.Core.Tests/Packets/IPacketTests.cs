@@ -23,23 +23,29 @@ namespace Orion.Core.Packets
     public class IPacketTests
     {
         [Fact]
-        public void WriteWithHeader()
+        public void Write_NullPacket_ThrowsArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => IPacketExtensions.Write(null!, default, PacketContext.Server));
+        }
+
+        [Fact]
+        public void Write()
         {
             var bytes = new byte[4];
             var packet = new TestPacket();
 
-            Assert.Equal(4, packet.WriteWithHeader(bytes, PacketContext.Server));
+            Assert.Equal(4, packet.Write(bytes, PacketContext.Server));
 
             Assert.Equal(new byte[] { 4, 0, 255, 42 }, bytes);
         }
 
-        private struct TestPacket : IPacket
+        private class TestPacket : IPacket
         {
             public PacketId Id => (PacketId)255;
 
-            public int Read(Span<byte> span, PacketContext context) => throw new NotImplementedException();
+            int IPacket.ReadBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
 
-            public int Write(Span<byte> span, PacketContext context)
+            int IPacket.WriteBody(Span<byte> span, PacketContext context)
             {
                 span[0] = 42;
                 return 1;

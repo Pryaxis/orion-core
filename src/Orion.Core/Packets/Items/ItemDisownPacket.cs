@@ -24,8 +24,10 @@ namespace Orion.Core.Packets.Items
     /// A packet sent from the server to the client to disown an item.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct ItemDisownPacket : IPacket
+    public sealed class ItemDisownPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the item index.
         /// </summary>
@@ -34,10 +36,7 @@ namespace Orion.Core.Packets.Items
 
         PacketId IPacket.Id => PacketId.ItemDisown;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 2);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 2);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 2);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 2);
     }
 }

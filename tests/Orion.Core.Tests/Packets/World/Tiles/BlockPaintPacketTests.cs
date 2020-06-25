@@ -60,9 +60,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read()
         {
-            var packet = new BlockPaintPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<BlockPaintPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(256, packet.X);
             Assert.Equal(100, packet.Y);
@@ -72,7 +70,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<BlockPaintPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<BlockPaintPacket>(_bytes, PacketContext.Server);
         }
     }
 }

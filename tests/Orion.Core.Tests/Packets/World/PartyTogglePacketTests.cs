@@ -29,15 +29,13 @@ namespace Orion.Core.Packets.World
         [Fact]
         public void Read()
         {
-            var packet = new PartyTogglePacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            _ = TestUtils.ReadPacket<PartyTogglePacket>(_bytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<PartyTogglePacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<PartyTogglePacket>(_bytes, PacketContext.Server);
         }
     }
 }

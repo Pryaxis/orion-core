@@ -25,10 +25,11 @@ namespace Orion.Core.Packets.Players
     /// <summary>
     /// A packet sent to set a player's buffs.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct PlayerBuffsPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 45)]
+    public sealed class PlayerBuffsPacket : IPacket
     {
-        [field: FieldOffset(1)] private unsafe fixed short _buffs[22];
+        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(1)] private BuffId _buffIds;
 
         /// <summary>
         /// Gets or sets the player index.
@@ -40,14 +41,11 @@ namespace Orion.Core.Packets.Players
         /// Gets the buff IDs.
         /// </summary>
         /// <value>The buff IDs.</value>
-        public unsafe Span<BuffId> Ids => MemoryMarshal.CreateSpan(ref Unsafe.As<short, BuffId>(ref _buffs[0]), 22);
+        public unsafe Span<BuffId> Ids => MemoryMarshal.CreateSpan(ref _buffIds, 22);
 
         PacketId IPacket.Id => PacketId.PlayerBuffs;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 45);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 45);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 45);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 45);
     }
 }

@@ -38,8 +38,8 @@ namespace Orion.Core.Events.Packets
             public int Value;
 
             public PacketId Id => throw new NotImplementedException();
-            public int Read(Span<byte> span, PacketContext context) => throw new NotImplementedException();
-            public int Write(Span<byte> span, PacketContext context) => throw new NotImplementedException();
+            int IPacket.ReadBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
+            int IPacket.WriteBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
         }
 
         private class TestPacketEvent<TPacket> : PacketEvent<TPacket> where TPacket : struct, IPacket

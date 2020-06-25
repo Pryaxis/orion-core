@@ -24,9 +24,11 @@ namespace Orion.Core.Packets.World.Tiles
     /// <summary>
     /// A packet sent to set a tile's liquid.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct TileLiquidPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 6)]
+    public sealed class TileLiquidPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the tile's X coordinate.
         /// </summary>
@@ -53,10 +55,7 @@ namespace Orion.Core.Packets.World.Tiles
 
         PacketId IPacket.Id => PacketId.TileLiquid;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 6);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 6);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 6);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 6);
     }
 }

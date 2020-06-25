@@ -24,9 +24,9 @@ namespace Orion.Core.Packets.Client
     /// <summary>
     /// A packet sent from the client to the server to inform the server of its UUID.
     /// </summary>
-    public struct ClientUuidPacket : IPacket
+    public sealed class ClientUuidPacket : IPacket
     {
-        private string? _uuid;
+        private string _uuid = string.Empty;
 
         /// <summary>
         /// Gets or sets the client's UUID.
@@ -36,16 +36,13 @@ namespace Orion.Core.Packets.Client
         [LogMasked]
         public string Uuid
         {
-            get => _uuid ?? string.Empty;
+            get => _uuid;
             set => _uuid = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         PacketId IPacket.Id => PacketId.ClientUuid;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(Encoding.UTF8, out _uuid);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(Uuid, Encoding.UTF8);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(Encoding.UTF8, out _uuid);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(Uuid, Encoding.UTF8);
     }
 }

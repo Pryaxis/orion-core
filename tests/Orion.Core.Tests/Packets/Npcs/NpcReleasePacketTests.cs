@@ -70,9 +70,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Read()
         {
-            var packet = new NpcReleasePacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<NpcReleasePacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(1600, packet.X);
             Assert.Equal(4096, packet.Y);
@@ -83,7 +81,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<NpcReleasePacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<NpcReleasePacket>(_bytes, PacketContext.Server);
         }
     }
 }

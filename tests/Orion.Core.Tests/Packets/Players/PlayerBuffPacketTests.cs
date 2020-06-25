@@ -60,9 +60,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void Read()
         {
-            var packet = new PlayerBuffPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<PlayerBuffPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.PlayerIndex);
             Assert.Equal(BuffId.ObsidianSkin, packet.Id);
@@ -72,7 +70,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<PlayerBuffPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<PlayerBuffPacket>(_bytes, PacketContext.Server);
         }
     }
 }

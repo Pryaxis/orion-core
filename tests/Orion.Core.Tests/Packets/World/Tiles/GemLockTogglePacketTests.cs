@@ -59,9 +59,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read()
         {
-            var packet = new GemLockTogglePacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<GemLockTogglePacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(256, packet.X);
             Assert.Equal(100, packet.Y);
@@ -71,7 +69,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<GemLockTogglePacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<GemLockTogglePacket>(_bytes, PacketContext.Server);
         }
     }
 }

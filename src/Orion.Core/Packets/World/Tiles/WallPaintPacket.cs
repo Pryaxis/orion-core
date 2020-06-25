@@ -24,9 +24,11 @@ namespace Orion.Core.Packets.World.Tiles
     /// <summary>
     /// A packet sent to paint a wall.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct WallPaintPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 5)]
+    public sealed class WallPaintPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the wall's X coordinate.
         /// </summary>
@@ -47,10 +49,7 @@ namespace Orion.Core.Packets.World.Tiles
 
         PacketId IPacket.Id => PacketId.WallPaint;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 5);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 5);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 5);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 5);
     }
 }

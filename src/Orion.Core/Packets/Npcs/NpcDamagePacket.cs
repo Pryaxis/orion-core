@@ -24,8 +24,10 @@ namespace Orion.Core.Packets.Npcs
     /// A packet sent to damage an NPC.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct NpcDamagePacket : IPacket
+    public sealed class NpcDamagePacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
@@ -59,11 +61,8 @@ namespace Orion.Core.Packets.Npcs
 
         PacketId IPacket.Id => PacketId.NpcDamage;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 10);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 10);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 10);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 10);
 
         /// <summary>
         /// Specifies the hit direction in a <see cref="NpcDamagePacket"/>.

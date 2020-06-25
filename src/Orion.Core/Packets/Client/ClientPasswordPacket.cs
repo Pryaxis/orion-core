@@ -24,9 +24,9 @@ namespace Orion.Core.Packets.Client
     /// <summary>
     /// A packet sent from the client to the server to send a password.
     /// </summary>
-    public struct ClientPasswordPacket : IPacket
+    public sealed class ClientPasswordPacket : IPacket
     {
-        private string? _password;
+        private string _password = string.Empty;
 
         /// <summary>
         /// Gets or sets the client's password.
@@ -36,16 +36,13 @@ namespace Orion.Core.Packets.Client
         [LogMasked]
         public string Password
         {
-            get => _password ?? string.Empty;
+            get => _password;
             set => _password = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         PacketId IPacket.Id => PacketId.ClientPassword;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(Encoding.UTF8, out _password);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(Password, Encoding.UTF8);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(Encoding.UTF8, out _password);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(Password, Encoding.UTF8);
     }
 }

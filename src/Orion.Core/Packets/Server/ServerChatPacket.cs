@@ -25,10 +25,12 @@ namespace Orion.Core.Packets.Server
     /// <summary>
     /// A packet sent from the server to the client to show chat.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct ServerChatPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public sealed class ServerChatPacket : IPacket
     {
-        [FieldOffset(8)] private NetworkText? _message;
+        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(3)] private byte _bytes2;
+        [FieldOffset(8)] private NetworkText _message = NetworkText.Empty;
 
         /// <summary>
         /// Gets or sets the message color.
@@ -43,7 +45,7 @@ namespace Orion.Core.Packets.Server
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public NetworkText Message
         {
-            get => _message ?? NetworkText.Empty;
+            get => _message;
             set => _message = value ?? throw new ArgumentNullException(nameof(value));
         }
 
@@ -56,19 +58,19 @@ namespace Orion.Core.Packets.Server
         PacketId IPacket.Id => PacketId.ServerChat;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context)
+        int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
-            var index = span.Read(ref this.AsRefByte(0), 3);
+            var index = span.Read(ref _bytes, 3);
             index += span[index..].Read(Encoding.UTF8, out _message);
-            return index + span[index..].Read(ref this.AsRefByte(3), 2);
+            return index + span[index..].Read(ref _bytes2, 2);
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context)
+        int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
-            var index = span.Write(ref this.AsRefByte(0), 3);
+            var index = span.Write(ref _bytes, 3);
             index += span[index..].Write(Message, Encoding.UTF8);
-            return index + span[index..].Write(ref this.AsRefByte(3), 2);
+            return index + span[index..].Write(ref _bytes2, 2);
         }
     }
 }

@@ -23,9 +23,11 @@ namespace Orion.Core.Packets.World.Tiles
     /// <summary>
     /// A packet sent from the client to the server to perform wire operations.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct WireOperationsPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 9)]
+    public sealed class WireOperationsPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the operation's starting X coordinate.
         /// </summary>
@@ -58,11 +60,8 @@ namespace Orion.Core.Packets.World.Tiles
 
         PacketId IPacket.Id => PacketId.WireOperations;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 9);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 9);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 9);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 9);
 
         /// <summary>
         /// Specifies the wire operations in a <see cref="WireOperationsPacket"/>.

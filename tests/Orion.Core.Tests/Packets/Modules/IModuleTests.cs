@@ -37,9 +37,9 @@ namespace Orion.Core.Packets.Modules
         {
             public ModuleId Id => (ModuleId)65535;
 
-            public int Read(Span<byte> span, PacketContext context) => throw new NotImplementedException();
+            public int ReadBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
 
-            public int Write(Span<byte> span, PacketContext context)
+            public int WriteBody(Span<byte> span, PacketContext context)
             {
                 span[0] = 42;
                 return 1;

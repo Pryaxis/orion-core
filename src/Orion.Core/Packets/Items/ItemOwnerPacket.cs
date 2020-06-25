@@ -24,8 +24,10 @@ namespace Orion.Core.Packets.Items
     /// A packet sent to set an item's owner.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct ItemOwnerPacket : IPacket
+    public sealed class ItemOwnerPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the item's index.
         /// </summary>
@@ -40,10 +42,7 @@ namespace Orion.Core.Packets.Items
 
         PacketId IPacket.Id => PacketId.ItemOwner;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 3);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 3);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 3);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 3);
     }
 }

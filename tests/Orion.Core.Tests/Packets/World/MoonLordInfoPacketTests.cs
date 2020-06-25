@@ -39,9 +39,7 @@ namespace Orion.Core.Packets.World
         [Fact]
         public void Read()
         {
-            var packet = new MoonLordInfoPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<MoonLordInfoPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(3600, packet.TicksBeforeSpawn);
         }
@@ -49,7 +47,7 @@ namespace Orion.Core.Packets.World
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<MoonLordInfoPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<MoonLordInfoPacket>(_bytes, PacketContext.Server);
         }
     }
 }

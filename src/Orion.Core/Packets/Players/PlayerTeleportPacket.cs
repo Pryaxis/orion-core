@@ -23,9 +23,11 @@ namespace Orion.Core.Packets.Players
     /// <summary>
     /// A packet sent to teleport a player.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct PlayerTeleportPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 1)]
+    public sealed class PlayerTeleportPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the teleportation type.
         /// </summary>
@@ -34,10 +36,7 @@ namespace Orion.Core.Packets.Players
 
         PacketId IPacket.Id => PacketId.PlayerTeleport;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 1);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 1);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 1);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 1);
     }
 }

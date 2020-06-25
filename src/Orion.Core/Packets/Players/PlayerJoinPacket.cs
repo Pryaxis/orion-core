@@ -22,14 +22,11 @@ namespace Orion.Core.Packets.Players
     /// <summary>
     /// A packet sent from the client to the server to join the server.
     /// </summary>
-    public struct PlayerJoinPacket : IPacket
+    public sealed class PlayerJoinPacket : IPacket
     {
         PacketId IPacket.Id => PacketId.PlayerJoin;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => 0;
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => 0;
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => 0;
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => 0;
     }
 }

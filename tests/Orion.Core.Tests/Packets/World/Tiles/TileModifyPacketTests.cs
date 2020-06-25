@@ -232,9 +232,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakBlock()
         {
-            var packet = new TileModifyPacket();
-            var span = _breakBlockBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakBlockBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.BreakBlock, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -245,9 +243,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakBlockFailure()
         {
-            var packet = new TileModifyPacket();
-            var span = _breakBlockFailureBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakBlockFailureBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.BreakBlock, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -258,9 +254,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_PlaceBlock()
         {
-            var packet = new TileModifyPacket();
-            var span = _placeBlockBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_placeBlockBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.PlaceBlock, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -272,9 +266,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakWall()
         {
-            var packet = new TileModifyPacket();
-            var span = _breakWallBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakWallBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.BreakWall, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -285,9 +277,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakWallFailure()
         {
-            var packet = new TileModifyPacket();
-            var span = _breakWallFailureBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakWallFailureBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.BreakWall, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -298,9 +288,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_PlaceWall()
         {
-            var packet = new TileModifyPacket();
-            var span = _placeWallBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_placeWallBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.PlaceWall, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -311,9 +299,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakBlockItemless()
         {
-            var packet = new TileModifyPacket();
-            var span = _breakBlockItemlessBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakBlockItemlessBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.BreakBlockItemless, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -324,9 +310,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakBlockItemlessFailure()
         {
-            var packet = new TileModifyPacket();
-            var span = _breakBlockItemlessFailureBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakBlockItemlessFailureBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.BreakBlockItemless, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -337,9 +321,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_PlaceRedWire()
         {
-            var packet = new TileModifyPacket();
-            var span = _placeRedWireBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_placeRedWireBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.PlaceRedWire, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -349,9 +331,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakRedWire()
         {
-            var packet = new TileModifyPacket();
-            var span = _breakRedWireBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakRedWireBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.BreakRedWire, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -361,9 +341,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_HammerBlock()
         {
-            var packet = new TileModifyPacket();
-            var span = _hammerBlockBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_hammerBlockBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.HammerBlock, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -373,9 +351,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_PlaceActuator()
         {
-            var packet = new TileModifyPacket();
-            var span = _placeActuatorBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_placeActuatorBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.PlaceActuator, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -385,9 +361,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakActuator()
         {
-            var packet = new TileModifyPacket();
-            var span = _breakActuatorBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakActuatorBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.BreakActuator, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -397,9 +371,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_PlaceBlueWire()
         {
-            var packet = new TileModifyPacket();
-            var span = _placeBlueWireBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_placeBlueWireBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.PlaceBlueWire, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -409,9 +381,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakBlueWire()
         {
-            var packet = new TileModifyPacket();
-            var span = _breakBlueWireBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakBlueWireBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.BreakBlueWire, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -421,9 +391,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_PlaceGreenWire()
         {
-            var packet = new TileModifyPacket();
-            var span = _placeGreenWireBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_placeGreenWireBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.PlaceGreenWire, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -433,9 +401,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakGreenWire()
         {
-            var packet = new TileModifyPacket();
-            var span = _breakGreenWireBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakGreenWireBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.BreakGreenWire, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -445,9 +411,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_SlopeBlock()
         {
-            var packet = new TileModifyPacket();
-            var span = _slopeBlockBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_slopeBlockBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.SlopeBlock, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -458,9 +422,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_ModifyTrack()
         {
-            var packet = new TileModifyPacket();
-            var span = _modifyTrackBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_modifyTrackBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.ModifyTrack, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -470,9 +432,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_PlaceYellowWire()
         {
-            var packet = new TileModifyPacket();
-            var span = _placeYellowWireBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_placeYellowWireBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.PlaceYellowWire, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -482,9 +442,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakYellowWire()
         {
-            var packet = new TileModifyPacket();
-            var span = _breakYellowWireBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakYellowWireBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.BreakYellowWire, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -494,9 +452,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_ModifyLogicGate()
         {
-            var packet = new TileModifyPacket();
-            var span = _modifyLogicGateBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_modifyLogicGateBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.ModifyLogicGate, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -506,9 +462,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_ActuateBlock()
         {
-            var packet = new TileModifyPacket();
-            var span = _actuateBlockBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_actuateBlockBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.ActuateBlock, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -518,9 +472,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakContainer()
         {
-            var packet = new TileModifyPacket();
-            var span = _breakContainerBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakContainerBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.BreakContainer, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -531,9 +483,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_ReplaceBlock()
         {
-            var packet = new TileModifyPacket();
-            var span = _replaceBlockBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_replaceBlockBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.ReplaceBlock, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -545,9 +495,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_ReplaceWall()
         {
-            var packet = new TileModifyPacket();
-            var span = _replaceWallBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_replaceWallBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.ReplaceWall, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -558,9 +506,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_SlopeAndHammerBlock()
         {
-            var packet = new TileModifyPacket();
-            var span = _slopeAndHammerBlockBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileModifyPacket>(_slopeAndHammerBlockBytes, PacketContext.Server);
 
             Assert.Equal(TileModification.SlopeAndHammerBlock, packet.Modification);
             Assert.Equal(100, packet.X);
@@ -572,189 +518,189 @@ namespace Orion.Core.Packets.World.Tiles
         public void RoundTrip_BreakBlock()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _breakBlockBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _breakBlockBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakBlockFailure()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _breakBlockFailureBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _breakBlockFailureBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_PlaceBlock()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _placeBlockBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _placeBlockBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakWall()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _breakWallBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _breakWallBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakWallFailure()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _breakWallFailureBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _breakWallFailureBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_PlaceWall()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _placeWallBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _placeWallBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakBlockItemless()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _breakBlockItemlessBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _breakBlockItemlessBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakBlockItemlessFailure()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _breakBlockItemlessFailureBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _breakBlockItemlessFailureBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_PlaceRedWire()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _placeRedWireBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _placeRedWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakRedWire()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _breakRedWireBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _breakRedWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_HammerBlock()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _hammerBlockBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _hammerBlockBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_PlaceActuator()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _placeActuatorBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _placeActuatorBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakActuator()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _breakActuatorBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _breakActuatorBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_PlaceBlueWire()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _placeBlueWireBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _placeBlueWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakBlueWire()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _breakBlueWireBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _breakBlueWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_PlaceGreenWire()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _placeGreenWireBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _placeGreenWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakGreenWire()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _breakGreenWireBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _breakGreenWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_SlopeBlock()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _slopeBlockBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _slopeBlockBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_ModifyTrack()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _modifyTrackBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _modifyTrackBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_PlaceYellowWire()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _placeYellowWireBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _placeYellowWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakYellowWire()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _breakYellowWireBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _breakYellowWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_ModifyLogicGate()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _modifyLogicGateBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _modifyLogicGateBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_ActuateBlock()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _actuateBlockBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _actuateBlockBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakContainer()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _breakContainerBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _breakContainerBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_ReplaceBlock()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _replaceBlockBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _replaceBlockBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_ReplaceWall()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _replaceWallBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _replaceWallBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_SlopeAndHammerBlock()
         {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                _slopeAndHammerBlockBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _slopeAndHammerBlockBytes, PacketContext.Server);
         }
     }
 }

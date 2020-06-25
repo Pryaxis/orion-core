@@ -25,8 +25,10 @@ namespace Orion.Core.Packets.Npcs
     /// A packet sent from the client to the server to fish an NPC.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct NpcFishPacket : IPacket
+    public sealed class NpcFishPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the NPC's X coordinate.
         /// </summary>
@@ -47,10 +49,7 @@ namespace Orion.Core.Packets.Npcs
 
         PacketId IPacket.Id => PacketId.NpcFish;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 6);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 6);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 6);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 6);
     }
 }

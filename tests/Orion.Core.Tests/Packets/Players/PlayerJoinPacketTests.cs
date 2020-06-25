@@ -27,15 +27,13 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void Read()
         {
-            var packet = new PlayerJoinPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            _ = TestUtils.ReadPacket<PlayerJoinPacket>(_bytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<PlayerJoinPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<PlayerJoinPacket>(_bytes, PacketContext.Server);
         }
     }
 }

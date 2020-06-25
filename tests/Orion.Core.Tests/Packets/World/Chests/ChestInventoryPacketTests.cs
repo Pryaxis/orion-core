@@ -80,9 +80,7 @@ namespace Orion.Core.Packets.World.Chests
         [Fact]
         public void Read()
         {
-            var packet = new ChestInventoryPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<ChestInventoryPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.ChestIndex);
             Assert.Equal(2, packet.Slot);
@@ -94,7 +92,7 @@ namespace Orion.Core.Packets.World.Chests
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ChestInventoryPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ChestInventoryPacket>(_bytes, PacketContext.Server);
         }
     }
 }

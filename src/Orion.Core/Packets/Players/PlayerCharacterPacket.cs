@@ -27,8 +27,8 @@ namespace Orion.Core.Packets.Players
     /// <summary>
     /// A packet sent to set a player's character.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct PlayerCharacterPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 43)]
+    public sealed class PlayerCharacterPacket : IPacket
     {
         private const ushort HideAccessorySlot1Mask /*  */ = 0b_00000000_00001000;
         private const ushort HideAccessorySlot2Mask /*  */ = 0b_00000000_00010000;
@@ -50,7 +50,9 @@ namespace Orion.Core.Packets.Players
         private const byte IsUsingBiomeTorchesMask /*  */ = 0b_00000001;
         private const byte IsFightingTheTorchGodMask /* */ = 0b_00000010;
 
+        [FieldOffset(0)] private byte _bytes;
         [FieldOffset(8)] private string? _name;
+        [FieldOffset(16)] private byte _bytes2;
         [FieldOffset(17)] private ushort _hideAccessorySlotsFlags;
         [FieldOffset(19)] private byte _hideMiscSlotsFlags;
         [FieldOffset(41)] private byte _difficultyFlags;
@@ -293,20 +295,18 @@ namespace Orion.Core.Packets.Players
 
         PacketId IPacket.Id => PacketId.PlayerCharacter;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context)
+        int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
-            var index = span.Read(ref this.AsRefByte(0), 3);
+            var index = span.Read(ref _bytes, 3);
             index += span[index..].Read(Encoding.UTF8, out _name);
-            return index + span[index..].Read(ref this.AsRefByte(16), 27);
+            return index + span[index..].Read(ref _bytes2, 27);
         }
 
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context)
+        int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
-            var index = span.Write(ref this.AsRefByte(0), 3);
+            var index = span.Write(ref _bytes, 3);
             index += span[index..].Write(Name, Encoding.UTF8);
-            return index + span[index..].Write(ref this.AsRefByte(16), 27);
+            return index + span[index..].Write(ref _bytes2, 27);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

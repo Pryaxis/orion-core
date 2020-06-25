@@ -78,9 +78,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void Read()
         {
-            var packet = new ClientStatusPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<ClientStatusPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(15, packet.MaxStatus);
             Assert.Equal(NetworkText.Localized("LegacyInterface.44"), packet.StatusText);
@@ -91,7 +89,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ClientStatusPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ClientStatusPacket>(_bytes, PacketContext.Server);
         }
     }
 }

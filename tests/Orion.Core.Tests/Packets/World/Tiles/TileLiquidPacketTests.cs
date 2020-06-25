@@ -70,9 +70,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read()
         {
-            var packet = new TileLiquidPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<TileLiquidPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(256, packet.X);
             Assert.Equal(100, packet.Y);
@@ -83,7 +81,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<TileLiquidPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<TileLiquidPacket>(_bytes, PacketContext.Server);
         }
     }
 }

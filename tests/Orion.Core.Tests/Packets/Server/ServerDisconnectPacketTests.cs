@@ -60,9 +60,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void Read()
         {
-            var packet = new ServerDisconnectPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<ServerDisconnectPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(NetworkText.Localized("CLI.KickMessage"), packet.Reason);
         }
@@ -70,7 +68,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ServerDisconnectPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ServerDisconnectPacket>(_bytes, PacketContext.Server);
         }
     }
 }

@@ -24,14 +24,11 @@ namespace Orion.Core.Packets.World
     /// A packet sent from the server to the client to end the Old One's Army event.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct OldOnesArmyEndPacket : IPacket
+    public sealed class OldOnesArmyEndPacket : IPacket
     {
         PacketId IPacket.Id => PacketId.OldOnesArmyEnd;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => 0;
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => 0;
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => 0;
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => 0;
     }
 }

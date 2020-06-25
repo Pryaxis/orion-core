@@ -25,8 +25,10 @@ namespace Orion.Core.Packets.Players
     /// A packet sent to buff a player.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct PlayerBuffPacket : IPacket
+    public sealed class PlayerBuffPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -47,10 +49,7 @@ namespace Orion.Core.Packets.Players
 
         PacketId IPacket.Id => PacketId.PlayerBuff;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 7);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 7);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 7);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 7);
     }
 }

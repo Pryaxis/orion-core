@@ -39,9 +39,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void Read()
         {
-            var packet = new PlayerTeleportPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<PlayerTeleportPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(TeleportationType.DemonConch, packet.Type);
         }
@@ -49,7 +47,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<PlayerTeleportPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<PlayerTeleportPacket>(_bytes, PacketContext.Server);
         }
     }
 }

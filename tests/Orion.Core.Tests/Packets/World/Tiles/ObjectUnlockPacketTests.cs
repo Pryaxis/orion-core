@@ -59,9 +59,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read()
         {
-            var packet = new ObjectUnlockPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<ObjectUnlockPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(UnlockType.Chest, packet.Type);
             Assert.Equal(256, packet.X);
@@ -71,7 +69,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ObjectUnlockPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ObjectUnlockPacket>(_bytes, PacketContext.Server);
         }
     }
 }

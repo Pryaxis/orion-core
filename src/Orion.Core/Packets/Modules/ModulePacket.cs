@@ -23,29 +23,38 @@ namespace Orion.Core.Packets.Modules
     /// <summary>
     /// A packet sent in the form of a module.
     /// </summary>
-    /// <typeparam name="TModule">The type of module.</typeparam>
-    public struct ModulePacket<TModule> : IPacket where TModule : struct, IModule
+    public sealed class ModulePacket : IPacket
     {
+        private IModule _module = EmptyModule.Instance;
+
         /// <summary>
-        /// The module.
+        /// Gets or sets the module.
         /// </summary>
-        public TModule Module;
+        /// <value>The module.</value>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
+        public IModule Module
+        {
+            get => _module;
+            set => _module = value ?? throw new ArgumentNullException(nameof(value));
+        }
 
         PacketId IPacket.Id => PacketId.Module;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context)
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => IModule.Read(span, context, out _module);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => _module.Write(span, context);
+
+        private sealed class EmptyModule : IModule
         {
-            // If `TModule` is `UnknownModule`, then we need to set the `Id` property appropriately.
-            if (typeof(TModule) == typeof(UnknownModule))
+            public static EmptyModule Instance { get; } = new EmptyModule();
+
+            private EmptyModule()
             {
-                Unsafe.As<TModule, UnknownModule>(ref Module).Id = Unsafe.ReadUnaligned<ModuleId>(ref span[0]);
             }
 
-            return IModule.HeaderSize + Module.Read(span[IModule.HeaderSize..], context);
-        }
+            ModuleId IModule.Id => (ModuleId)65535;
 
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => Module.WriteWithHeader(span, context);
+            int IModule.ReadBody(Span<byte> span, PacketContext context) => 0;
+            int IModule.WriteBody(Span<byte> span, PacketContext context) => 0;
+        }
     }
 }

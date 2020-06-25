@@ -27,40 +27,24 @@ namespace Orion.Core.Packets.Modules
         [Fact]
         public void Read()
         {
-            var packet = new ModulePacket<TestModule>();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
-        }
+            var packet = TestUtils.ReadPacket<ModulePacket>(_bytes, PacketContext.Server);
 
-        [Fact]
-        public void Read_AsUnknownModule()
-        {
-            var packet = new ModulePacket<UnknownModule>();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
-
-            Assert.Equal((ModuleId)65535, packet.Module.Id);
+            Assert.IsType<UnknownModule>(packet.Module);
+            Assert.Equal((ModuleId)65535, ((UnknownModule)packet.Module).Id);
+            Assert.Equal(0, ((UnknownModule)packet.Module).Data.Length);
         }
 
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ModulePacket<TestModule>>(
-                _bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
-        }
-
-        [Fact]
-        public void RoundTrip_AsUnknownModule()
-        {
-            TestUtils.RoundTripPacket<ModulePacket<UnknownModule>>(
-                _bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ModulePacket>(_bytes, PacketContext.Server);
         }
 
         private struct TestModule : IModule
         {
             public ModuleId Id => (ModuleId)65535;
-            public int Read(Span<byte> span, PacketContext context) => 0;
-            public int Write(Span<byte> span, PacketContext context) => 0;
+            public int ReadBody(Span<byte> span, PacketContext context) => 0;
+            public int WriteBody(Span<byte> span, PacketContext context) => 0;
         }
     }
 }

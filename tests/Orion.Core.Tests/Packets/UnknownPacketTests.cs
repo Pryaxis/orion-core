@@ -28,43 +28,27 @@ namespace Orion.Core.Packets
         private readonly byte[] _emptyBytes = { 3, 0, 255 };
 
         [Fact]
-        public void Length_Set_Get()
+        public void Data_Get()
         {
-            var packet = new UnknownPacket();
+            var packet = new UnknownPacket(11, (PacketId)255);
 
-            packet.Length = 8;
-
-            Assert.Equal(8, packet.Length);
+            Assert.Equal(8, packet.Data.Length);
         }
 
         [Fact]
         public void Id_Set_Get()
         {
-            var packet = new UnknownPacket();
-
-            packet.Id = (PacketId)255;
+            var packet = new UnknownPacket(11, (PacketId)255);
 
             Assert.Equal((PacketId)255, packet.Id);
         }
 
         [Fact]
-        public void Data_Get()
+        public void Read()
         {
-            var packet = new UnknownPacket { Length = 8 };
+            var packet = TestUtils.ReadPacket<UnknownPacket>(_bytes, PacketContext.Server);
 
-            packet.Data[0] = 123;
-
-            Assert.Equal(123, packet.Data[0]);
-        }
-
-        [Fact]
-        public unsafe void Read()
-        {
-            var packet = new UnknownPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
-
-            Assert.Equal(8, packet.Length);
+            Assert.Equal(8, packet.Data.Length);
             for (var i = 0; i < 8; ++i)
             {
                 Assert.Equal(i, packet.Data[i]);
@@ -72,25 +56,23 @@ namespace Orion.Core.Packets
         }
 
         [Fact]
-        public unsafe void Read_Empty()
+        public void Read_Empty()
         {
-            var packet = new UnknownPacket();
-            var span = _emptyBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<UnknownPacket>(_emptyBytes, PacketContext.Server);
 
-            Assert.Equal(0, packet.Length);
+            Assert.Equal(0, packet.Data.Length);
         }
 
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<UnknownPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<UnknownPacket>(_bytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_Empty()
         {
-            TestUtils.RoundTripPacket<UnknownPacket>(_emptyBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<UnknownPacket>(_emptyBytes, PacketContext.Server);
         }
     }
 }

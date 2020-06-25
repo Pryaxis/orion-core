@@ -60,9 +60,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Read()
         {
-            var packet = new NpcBuffPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<NpcBuffPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(1, packet.NpcIndex);
             Assert.Equal(BuffId.Poisoned, packet.Id);
@@ -72,7 +70,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<NpcBuffPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<NpcBuffPacket>(_bytes, PacketContext.Server);
         }
     }
 }

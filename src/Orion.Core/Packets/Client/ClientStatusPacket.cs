@@ -27,13 +27,15 @@ namespace Orion.Core.Packets.Client
     /// A packet sent from the server to the client to set the client's status.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct ClientStatusPacket : IPacket
+    public sealed class ClientStatusPacket : IPacket
     {
         private const byte HidePercentageMask /* */ = 0b_00000001;
         private const byte HasShadowsMask     /* */ = 0b_00000010;
 
-        [field: FieldOffset(8)] private NetworkText? _statusText;
-        [field: FieldOffset(4)] private byte _flags;
+        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(8)] private NetworkText? _statusText;
+        [FieldOffset(4)] private byte _bytes2;
+        [FieldOffset(4)] private byte _flags;
 
         /// <summary>
         /// Gets or sets the client's maximum status.
@@ -102,20 +104,18 @@ namespace Orion.Core.Packets.Client
 
         PacketId IPacket.Id => PacketId.ClientStatus;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context)
+        int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
-            var index = span.Read(ref this.AsRefByte(0), 4);
-            index += span[index..].Read(Encoding.UTF8, out _statusText);
-            return index + span[index..].Read(ref this.AsRefByte(4), 1);
+            var length = span.Read(ref _bytes, 4);
+            length += span[length..].Read(Encoding.UTF8, out _statusText);
+            return length + span[length..].Read(ref _bytes2, 1);
         }
 
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context)
+        int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
-            var index = span.Write(ref this.AsRefByte(0), 4);
-            index += span[index..].Write(StatusText, Encoding.UTF8);
-            return index + span[index..].Write(ref this.AsRefByte(4), 1);
+            var length = span.Write(ref _bytes, 4);
+            length += span[length..].Write(StatusText, Encoding.UTF8);
+            return length + span[length..].Write(ref _bytes2, 1);
         }
     }
 }

@@ -22,14 +22,11 @@ namespace Orion.Core.Packets.Server
     /// <summary>
     /// A packet sent from the server to the client to indicate that the server is passworded.
     /// </summary>
-    public struct ServerPasswordedPacket : IPacket
+    public sealed class ServerPasswordedPacket : IPacket
     {
         PacketId IPacket.Id => PacketId.ServerPassworded;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => 0;
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => 0;
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => 0;
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => 0;
     }
 }

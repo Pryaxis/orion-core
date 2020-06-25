@@ -23,9 +23,11 @@ namespace Orion.Core.Packets.Players
     /// <summary>
     /// A packet sent to show a player's dodge.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct PlayerDodgePacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 2)]
+    public sealed class PlayerDodgePacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -40,10 +42,7 @@ namespace Orion.Core.Packets.Players
 
         PacketId IPacket.Id => PacketId.PlayerDodge;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 2);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 2);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 2);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 2);
     }
 }

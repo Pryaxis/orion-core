@@ -25,10 +25,11 @@ namespace Orion.Core.Packets.Server
     /// <summary>
     /// A packet sent from the server to the client to show combat text.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct ServerCombatTextPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 24)]
+    public sealed class ServerCombatTextPacket : IPacket
     {
-        [field: FieldOffset(16)] private NetworkText? _text;
+        [FieldOffset(0)] private byte _bytes;
+        [field: FieldOffset(16)] private NetworkText _text = NetworkText.Empty;
 
         /// <summary>
         /// Gets or sets the combat text's position.
@@ -55,18 +56,16 @@ namespace Orion.Core.Packets.Server
 
         PacketId IPacket.Id => PacketId.ServerCombatText;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context)
+        int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
-            var index = span.Read(ref this.AsRefByte(0), 11);
-            return index + span[index..].Read(Encoding.UTF8, out _text);
+            var length = span.Read(ref _bytes, 11);
+            return length + span[length..].Read(Encoding.UTF8, out _text);
         }
 
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context)
+        int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
-            var index = span.Write(ref this.AsRefByte(0), 11);
-            return index + span[index..].Write(Text, Encoding.UTF8);
+            var length = span.Write(ref _bytes, 11);
+            return length + span[length..].Write(Text, Encoding.UTF8);
         }
     }
 }

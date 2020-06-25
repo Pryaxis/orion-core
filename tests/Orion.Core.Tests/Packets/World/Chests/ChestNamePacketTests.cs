@@ -86,9 +86,7 @@ namespace Orion.Core.Packets.World.Chests
         [Fact]
         public void Read_AsServer()
         {
-            var packet = new ChestNamePacket();
-            var span = _serverBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<ChestNamePacket>(_serverBytes, PacketContext.Server);
 
             Assert.Equal(5, packet.ChestIndex);
             Assert.Equal(256, packet.X);
@@ -98,9 +96,7 @@ namespace Orion.Core.Packets.World.Chests
         [Fact]
         public void Read_AsClient()
         {
-            var packet = new ChestNamePacket();
-            var span = _clientBytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Client));
+            var packet = TestUtils.ReadPacket<ChestNamePacket>(_clientBytes, PacketContext.Client);
 
             Assert.Equal(5, packet.ChestIndex);
             Assert.Equal(256, packet.X);
@@ -111,13 +107,13 @@ namespace Orion.Core.Packets.World.Chests
         [Fact]
         public void RoundTrip_AsServer()
         {
-            TestUtils.RoundTripPacket<ChestNamePacket>(_serverBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ChestNamePacket>(_serverBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_AsClient()
         {
-            TestUtils.RoundTripPacket<ChestNamePacket>(_clientBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Client);
+            TestUtils.RoundTripPacket<ChestNamePacket>(_clientBytes, PacketContext.Client);
         }
     }
 }

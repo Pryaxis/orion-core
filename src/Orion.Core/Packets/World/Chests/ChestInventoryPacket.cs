@@ -24,9 +24,11 @@ namespace Orion.Core.Packets.World.Chests
     /// <summary>
     /// A packet sent to set a chest's inventory.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct ChestInventoryPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    public sealed class ChestInventoryPacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the chest index.
         /// </summary>
@@ -59,10 +61,7 @@ namespace Orion.Core.Packets.World.Chests
 
         PacketId IPacket.Id => PacketId.ChestInventory;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 8);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 8);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 8);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 8);
     }
 }

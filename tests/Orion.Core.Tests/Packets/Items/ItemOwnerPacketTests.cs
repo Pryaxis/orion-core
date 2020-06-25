@@ -49,9 +49,7 @@ namespace Orion.Core.Packets.Items
         [Fact]
         public void Read()
         {
-            var packet = new ItemOwnerPacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            var packet = TestUtils.ReadPacket<ItemOwnerPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(10, packet.ItemIndex);
             Assert.Equal(5, packet.OwnerIndex);
@@ -60,7 +58,7 @@ namespace Orion.Core.Packets.Items
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ItemOwnerPacket>(_bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ItemOwnerPacket>(_bytes, PacketContext.Server);
         }
     }
 }

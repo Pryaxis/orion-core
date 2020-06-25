@@ -27,16 +27,14 @@ namespace Orion.Core.Packets.World
         [Fact]
         public void Read()
         {
-            var packet = new AnglerQuestCompletePacket();
-            var span = _bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+            _ = TestUtils.ReadPacket<AnglerQuestCompletePacket>(_bytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip()
         {
             TestUtils.RoundTripPacket<AnglerQuestCompletePacket>(
-                _bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                _bytes, PacketContext.Server);
         }
     }
 }

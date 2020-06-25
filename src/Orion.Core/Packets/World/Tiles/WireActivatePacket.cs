@@ -23,9 +23,11 @@ namespace Orion.Core.Packets.World.Tiles
     /// <summary>
     /// A packet sent to activate a wire.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct WireActivatePacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 4)]
+    public sealed class WireActivatePacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+
         /// <summary>
         /// Gets or sets the wire's X coordinate.
         /// </summary>
@@ -40,10 +42,7 @@ namespace Orion.Core.Packets.World.Tiles
 
         PacketId IPacket.Id => PacketId.WireActivate;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => span.Read(ref this.AsRefByte(0), 4);
-
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => span.Write(ref this.AsRefByte(0), 4);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 4);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 4);
     }
 }

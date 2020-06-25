@@ -23,38 +23,42 @@ namespace Orion.Core.Packets.Modules
     /// <summary>
     /// An unknown module.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct UnknownModule : IModule
+    public sealed class UnknownModule : IModule
     {
-        [FieldOffset(4)] private unsafe fixed byte _data[ushort.MaxValue - IPacket.HeaderSize - IModule.HeaderSize];
+        private readonly byte[] _data;
 
         /// <summary>
-        /// Gets or sets the module length.
+        /// Initializes a new instance of the <see cref="UnknownModule"/> class with the specified module
+        /// <paramref name="length"/> and <paramref name="id"/>.
         /// </summary>
-        /// <value>The module length.</value>
-        [field: FieldOffset(0)] public ushort Length { get; set; }
-
-        /// <summary>
-        /// Gets or sets the module ID.
-        /// </summary>
-        /// <value>The module ID.</value>
-        [field: FieldOffset(2)] public ModuleId Id { get; set; }
-
-        /// <summary>
-        /// Gets the module data.
-        /// </summary>
-        /// <value>The module data.</value>
-        public unsafe Span<byte> Data => MemoryMarshal.CreateSpan(ref _data[0], Length);
-
-        /// <inheritdoc/>
-        public unsafe int Read(Span<byte> span, PacketContext context)
+        /// <param name="length">The module length.</param>
+        /// <param name="id">The module ID.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="length"/> is too small.</exception>
+        public UnknownModule(ushort length, ModuleId id)
         {
-            Length = (ushort)span.Length;
-            return Length == 0 ? 0 : span.Read(ref this.AsRefByte(4), Length);
+            if (length < IModule.HeaderSize)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(length), $"Length is too small (expected: >= {IModule.HeaderSize})");
+            }
+
+            _data = new byte[length - IModule.HeaderSize];
+            Id = id;
         }
 
         /// <inheritdoc/>
-        public unsafe int Write(Span<byte> span, PacketContext context) =>
-            Length == 0 ? 0 : span.Write(ref this.AsRefByte(4), Length);
+        public ModuleId Id { get; }
+
+        /// <summary>
+        /// Gets the module's data.
+        /// </summary>
+        /// <value>The module's data.</value>
+        public unsafe Span<byte> Data => _data;
+
+        int IModule.ReadBody(Span<byte> span, PacketContext context) =>
+            _data.Length == 0 ? 0 : span.Read(ref _data[0], _data.Length);
+
+        int IModule.WriteBody(Span<byte> span, PacketContext context) =>
+            _data.Length == 0 ? 0 : span.Write(ref _data[0], _data.Length);
     }
 }

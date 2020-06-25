@@ -25,10 +25,11 @@ namespace Orion.Core.Packets.World.Chests
     /// A packet sent from the client to the server to request a chest's name or from the server to the client to set a
     /// chest's name.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct ChestNamePacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public sealed class ChestNamePacket : IPacket
     {
-        [field: FieldOffset(8)] private string? _name;
+        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(8)] private string _name = string.Empty;
 
         /// <summary>
         /// Gets or sets the chest index. If <c>-1</c> and read in <see cref="PacketContext.Server"/>, then the chest
@@ -57,24 +58,22 @@ namespace Orion.Core.Packets.World.Chests
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Name
         {
-            get => _name ?? string.Empty;
+            get => _name;
             set => _name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         PacketId IPacket.Id => PacketId.ChestName;
 
-        /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context)
+        int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
-            var index = span.Read(ref this.AsRefByte(0), 6);
-            return context == PacketContext.Server ? index : index + span[index..].Read(Encoding.UTF8, out _name);
+            var length = span.Read(ref _bytes, 6);
+            return context == PacketContext.Server ? length : length + span[length..].Read(Encoding.UTF8, out _name);
         }
 
-        /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context)
+        int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
-            var index = span.Write(ref this.AsRefByte(0), 6);
-            return context == PacketContext.Client ? index : index + span[index..].Write(Name, Encoding.UTF8);
+            var length = span.Write(ref _bytes, 6);
+            return context == PacketContext.Client ? length : length + span[length..].Write(Name, Encoding.UTF8);
         }
     }
 }

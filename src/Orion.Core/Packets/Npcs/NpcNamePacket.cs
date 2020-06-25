@@ -26,8 +26,11 @@ namespace Orion.Core.Packets.Npcs
     /// NPC's name.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct NpcNamePacket : IPacket
+    public sealed class NpcNamePacket : IPacket
     {
+        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(2)] private byte _bytes2;
+
         [field: FieldOffset(8)] private string? _name;
 
         /// <summary>
@@ -55,29 +58,29 @@ namespace Orion.Core.Packets.Npcs
         PacketId IPacket.Id => PacketId.NpcName;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context)
+        int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
-            var index = span.Read(ref this.AsRefByte(0), 2);
+            var length = span.Read(ref _bytes, 2);
             if (context == PacketContext.Server)
             {
-                return index;
+                return length;
             }
 
-            index += span[index..].Read(Encoding.UTF8, out _name);
-            return index + span[index..].Read(ref this.AsRefByte(2), 4);
+            length += span[length..].Read(Encoding.UTF8, out _name);
+            return length + span[length..].Read(ref _bytes2, 4);
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context)
+        int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
-            var index = span.Write(ref this.AsRefByte(0), 2);
+            var length = span.Write(ref _bytes, 2);
             if (context == PacketContext.Client)
             {
-                return index;
+                return length;
             }
 
-            index += span[index..].Write(Name, Encoding.UTF8);
-            return index + span[index..].Write(ref this.AsRefByte(2), 4);
+            length += span[length..].Write(Name, Encoding.UTF8);
+            return length + span[length..].Write(ref _bytes2, 4);
         }
     }
 }
