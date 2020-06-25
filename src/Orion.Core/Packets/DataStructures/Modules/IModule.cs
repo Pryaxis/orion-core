@@ -21,7 +21,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Orion.Core.Packets.Modules
+namespace Orion.Core.Packets.DataStructures.Modules
 {
     /// <summary>
     /// Represents a module, a specific form of communication between the server and its clients.

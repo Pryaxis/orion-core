@@ -17,7 +17,7 @@
 
 using System;
 
-namespace Orion.Core.Packets.Modules
+namespace Orion.Core.Packets.DataStructures.Modules
 {
     /// <summary>
     /// An unknown module.

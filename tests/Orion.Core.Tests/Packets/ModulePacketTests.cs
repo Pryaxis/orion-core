@@ -16,9 +16,10 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Orion.Core.Packets.DataStructures.Modules;
 using Xunit;
 
-namespace Orion.Core.Packets.Modules
+namespace Orion.Core.Packets
 {
     public class ModulePacketTests
     {

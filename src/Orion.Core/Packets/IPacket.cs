@@ -22,7 +22,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Orion.Core.Packets.Client;
 using Orion.Core.Packets.Items;
-using Orion.Core.Packets.Modules;
 using Orion.Core.Packets.Npcs;
 using Orion.Core.Packets.Players;
 using Orion.Core.Packets.Server;

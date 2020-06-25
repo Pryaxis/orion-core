@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.Packets.Modules
+namespace Orion.Core.Packets.DataStructures.Modules
 {
     /// <summary>
     /// Specifies a module ID.

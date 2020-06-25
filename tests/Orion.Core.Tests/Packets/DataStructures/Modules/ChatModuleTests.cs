@@ -20,7 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.DataStructures;
 using Xunit;
 
-namespace Orion.Core.Packets.Modules
+namespace Orion.Core.Packets.DataStructures.Modules
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ChatModuleTests

@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Orion.Core.DataStructures;
 
-namespace Orion.Core.Packets.Modules
+namespace Orion.Core.Packets.DataStructures.Modules
 {
     /// <summary>
     /// A module sent for chat.

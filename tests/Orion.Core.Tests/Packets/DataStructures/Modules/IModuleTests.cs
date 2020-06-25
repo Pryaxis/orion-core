@@ -18,7 +18,7 @@
 using System;
 using Xunit;
 
-namespace Orion.Core.Packets.Modules
+namespace Orion.Core.Packets.DataStructures.Modules
 {
     public class IModuleTests
     {
