@@ -26,28 +26,29 @@ namespace Orion.Core.Events.Packets
     public class PacketReceiveEventTests
     {
         [Fact]
+        public void Ctor_NullPacket_ThrowsArgumentNullException()
+        {
+            var sender = Mock.Of<IPlayer>();
+
+            Assert.Throws<ArgumentNullException>(() => new PacketReceiveEvent(null!, sender));
+        }
+
+        [Fact]
         public void Ctor_NullSender_ThrowsArgumentNullException()
         {
-            var packet = new TestPacket();
+            var packet = Mock.Of<IPacket>();
 
-            Assert.Throws<ArgumentNullException>(() => new PacketReceiveEvent<TestPacket>(ref packet, null!));
+            Assert.Throws<ArgumentNullException>(() => new PacketReceiveEvent(packet, null!));
         }
 
         [Fact]
         public void Sender_Get()
         {
-            var packet = new TestPacket();
+            var packet = Mock.Of<IPacket>();
             var sender = Mock.Of<IPlayer>();
-            var evt = new PacketReceiveEvent<TestPacket>(ref packet, sender);
+            var evt = new PacketReceiveEvent(packet, sender);
 
             Assert.Same(sender, evt.Sender);
-        }
-
-        private struct TestPacket : IPacket
-        {
-            public PacketId Id => throw new NotImplementedException();
-            int IPacket.ReadBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
-            int IPacket.WriteBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
         }
     }
 }

@@ -116,13 +116,13 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<TileSquarePacket>(_bytes, PacketContext.Server);
+            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_ExtraData()
         {
-            TestUtils.RoundTripPacket<TileSquarePacket>(
+            TestUtils.RoundTripPacket(
                 _extraDataBytes, PacketContext.Server);
         }
     }

@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
@@ -58,7 +57,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<NpcCatchPacket>(_bytes, PacketContext.Server);
+            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
         }
     }
 }

@@ -68,7 +68,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ServerDisconnectPacket>(_bytes, PacketContext.Server);
+            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
         }
     }
 }

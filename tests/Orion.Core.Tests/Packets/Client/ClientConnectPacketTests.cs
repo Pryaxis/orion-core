@@ -55,7 +55,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ClientConnectPacket>(_bytes, PacketContext.Server);
+            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
         }
     }
 }

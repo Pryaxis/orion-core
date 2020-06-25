@@ -89,7 +89,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ServerCombatTextPacket>(_bytes, PacketContext.Server);
+            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
         }
     }
 }

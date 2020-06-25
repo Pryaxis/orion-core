@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Runtime.CompilerServices;
 using Orion.Core.Packets;
 
@@ -23,26 +24,23 @@ namespace Orion.Core.Events.Packets
     /// <summary>
     /// Provides the base class for a packet-related event.
     /// </summary>
-    public abstract unsafe class PacketEvent<TPacket> : Event where TPacket : struct, IPacket
+    public abstract class PacketEvent : Event
     {
-        // Store a pointer to the packet. This is quite unsafe and requires callers to ensure that the `TPacket` is
-        // stored on the stack. However, this lets us save on a struct copy.
-        private readonly void* _packetPtr;
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="PacketEvent{TPacket}"/> class with the specified
-        /// <paramref name="packet"/> reference.
+        /// Initializes a new instance of the <see cref="PacketEvent"/> class with the specified
+        /// <paramref name="packet"/>.
         /// </summary>
-        /// <param name="packet">The packet reference. <i>This must be on the stack!</i></param>
-        public PacketEvent(ref TPacket packet)
+        /// <param name="packet">The packet.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null"/>.</exception>
+        public PacketEvent(IPacket packet)
         {
-            _packetPtr = Unsafe.AsPointer(ref packet);
+            Packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
 
         /// <summary>
-        /// Gets a reference to the packet.
+        /// Gets the packet involved in the event.
         /// </summary>
-        /// <value>A reference to the packet.</value>
-        public ref TPacket Packet => ref Unsafe.AsRef<TPacket>(_packetPtr);
+        /// <value>The packet involved in the event.</value>
+        public IPacket Packet { get; }
     }
 }

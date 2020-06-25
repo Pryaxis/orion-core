@@ -37,7 +37,7 @@ namespace Orion.Core.Packets.Modules
         [Fact]
         public void RoundTrip()
         {
-            TestUtils.RoundTripPacket<ModulePacket>(_bytes, PacketContext.Server);
+            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
         }
 
         private struct TestModule : IModule

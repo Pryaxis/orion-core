@@ -94,13 +94,13 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void RoundTrip_AsServer()
         {
-            TestUtils.RoundTripPacket<NpcNamePacket>(_serverBytes, PacketContext.Server);
+            TestUtils.RoundTripPacket(_serverBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_AsClient()
         {
-            TestUtils.RoundTripPacket<NpcNamePacket>(_clientBytes, PacketContext.Client);
+            TestUtils.RoundTripPacket(_clientBytes, PacketContext.Client);
         }
     }
 }

@@ -28,31 +28,6 @@ namespace Orion.Core.Players
 {
     public class IPlayerServiceTests
     {
-        private delegate void ServerChatCallback(ref ServerChatPacket packet);
-        private delegate void TileSquareCallback(ref TileSquarePacket packet);
-
-        [Fact]
-        public void BroadcastPacket_Ref_NullPlayers_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                var packet = new TestPacket();
-                IPlayerServiceExtensions.BroadcastPacket(null!, ref packet);
-            });
-        }
-
-        [Fact]
-        public void BroadcastPacket_Ref()
-        {
-            var players = Mock.Of<IPlayerService>(p => p.Count == 1 && p[0] == Mock.Of<IPlayer>());
-
-            var packet = new TestPacket();
-            players.BroadcastPacket(ref packet);
-
-            Mock.Get(players[0])
-                .Verify(p => p.SendPacket(ref It.Ref<TestPacket>.IsAny));
-        }
-
         [Fact]
         public void BroadcastPacket_NullPlayers_ThrowsArgumentNullException()
         {
@@ -69,7 +44,7 @@ namespace Orion.Core.Players
             players.BroadcastPacket(packet);
 
             Mock.Get(players[0])
-                .Verify(p => p.SendPacket(ref It.Ref<TestPacket>.IsAny));
+                .Verify(p => p.SendPacket(packet));
         }
 
         [Fact]
@@ -90,19 +65,14 @@ namespace Orion.Core.Players
         [Fact]
         public void BroadcastMessage()
         {
-            /*var players = Mock.Of<IPlayerService>(p => p.Count == 1 && p[0] == Mock.Of<IPlayer>());
+            var players = Mock.Of<IPlayerService>(p => p.Count == 1 && p[0] == Mock.Of<IPlayer>());
             Mock.Get(players[0])
-                .Setup(p => p.SendPacket(ref It.Ref<ServerChatPacket>.IsAny))
-                .Callback((ServerChatCallback)((ref ServerChatPacket packet) =>
-                {
-                    Assert.Equal("test", packet.Message);
-                    Assert.Equal(Color3.White, packet.Color);
-                    Assert.Equal(-1, packet.LineWidth);
-                }));
+                .Setup(p => p.SendPacket(
+                    It.Is<ServerChatPacket>(p => p.Message == "test" && p.Color == Color3.White && p.LineWidth == -1)));
 
             players.BroadcastMessage("test", Color3.White);
 
-            Mock.Get(players[0]).VerifyAll();*/
+            Mock.Get(players[0]).VerifyAll();
         }
 
         [Fact]
@@ -133,25 +103,20 @@ namespace Orion.Core.Players
         [Fact]
         public void BroadcastTiles()
         {
-            /*var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
+            var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
             var players = Mock.Of<IPlayerService>(p => p.Count == 1 && p[0] == Mock.Of<IPlayer>());
             Mock.Get(players[0])
-                .Setup(p => p.SendPacket(ref It.Ref<TileSquarePacket>.IsAny))
-                .Callback((TileSquareCallback)((ref TileSquarePacket packet) =>
-                {
-                    Assert.Equal(123, packet.X);
-                    Assert.Equal(456, packet.Y);
-                    Assert.Same(tiles, packet.Tiles);
-                }));
+                .Setup(p => p.SendPacket(It.Is<TileSquarePacket>(p => p.X == 123 && p.Y == 456 && p.Tiles == tiles)));
 
             players.BroadcastTiles(123, 456, tiles);
 
-            Mock.Get(players[0]).VerifyAll(); */
+            Mock.Get(players[0]).VerifyAll();
         }
 
-        private struct TestPacket : IPacket
+        private sealed class TestPacket : IPacket
         {
             public PacketId Id => throw new NotImplementedException();
+
             int IPacket.ReadBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
             int IPacket.WriteBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
         }

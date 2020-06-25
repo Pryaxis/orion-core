@@ -28,42 +28,6 @@ namespace Orion.Core.Players
 {
     public class IPlayerTests
     {
-        private delegate void ServerDisconnectCallback(ref ServerDisconnectPacket packet);
-        private delegate void ServerChatCallback(ref ServerChatPacket packet);
-        private delegate void TileSquareCallback(ref TileSquarePacket packet);
-
-        [Fact]
-        public void ReceivePacket_NullPlayer_ThrowsArgumentNullException()
-        {
-            //Assert.Throws<ArgumentNullException>(() => IPlayerExtensions.ReceivePacket(null!, new TestPacket()));
-        }
-
-        [Fact]
-        public void ReceivePacket()
-        {
-            /*var player = Mock.Of<IPlayer>();
-
-            player.ReceivePacket(new TestPacket());
-
-            Mock.Get(player).VerifyAll();*/
-        }
-
-        [Fact]
-        public void SendPacket_NullPlayer_ThrowsArgumentNullException()
-        {
-            //Assert.Throws<ArgumentNullException>(() => IPlayerExtensions.SendPacket(null!, new TestPacket()));
-        }
-
-        [Fact]
-        public void SendPacket()
-        {
-            /*var player = Mock.Of<IPlayer>();
-
-            player.SendPacket(new TestPacket());
-
-            Mock.Get(player).VerifyAll();*/
-        }
-
         [Fact]
         public void Disconnect_NullPlayer_ThrowsArgumentNullException()
         {
@@ -81,17 +45,13 @@ namespace Orion.Core.Players
         [Fact]
         public void Disconnect()
         {
-            /*var player = Mock.Of<IPlayer>();
+            var player = Mock.Of<IPlayer>();
             Mock.Get(player)
-                .Setup(p => p.SendPacket(ref It.Ref<ServerDisconnectPacket>.IsAny))
-                .Callback((ServerDisconnectCallback)((ref ServerDisconnectPacket packet) =>
-                {
-                    Assert.Equal("test", packet.Reason);
-                }));
+                .Setup(p => p.SendPacket(It.Is<ServerDisconnectPacket>(p => p.Reason == "test")));
 
             player.Disconnect("test");
 
-            Mock.Get(player).VerifyAll();*/
+            Mock.Get(player).VerifyAll();
         }
 
         [Fact]
@@ -111,19 +71,14 @@ namespace Orion.Core.Players
         [Fact]
         public void SendMessage()
         {
-            /*var player = Mock.Of<IPlayer>();
+            var player = Mock.Of<IPlayer>();
             Mock.Get(player)
-                .Setup(p => p.SendPacket(ref It.Ref<ServerChatPacket>.IsAny))
-                .Callback((ServerChatCallback)((ref ServerChatPacket packet) =>
-                {
-                    Assert.Equal("test", packet.Message);
-                    Assert.Equal(Color3.White, packet.Color);
-                    Assert.Equal(-1, packet.LineWidth);
-                }));
+                .Setup(p => p.SendPacket(
+                    It.Is<ServerChatPacket>(p => p.Message == "test" && p.Color == Color3.White && p.LineWidth == -1)));
 
             player.SendMessage("test", Color3.White);
 
-            Mock.Get(player).VerifyAll();*/
+            Mock.Get(player).VerifyAll();
         }
 
         [Fact]
@@ -154,25 +109,20 @@ namespace Orion.Core.Players
         [Fact]
         public void SendTiles()
         {
-            /*var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
+            var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
             var player = Mock.Of<IPlayer>();
             Mock.Get(player)
-                .Setup(p => p.SendPacket(ref It.Ref<TileSquarePacket>.IsAny))
-                .Callback((TileSquareCallback)((ref TileSquarePacket packet) =>
-                {
-                    Assert.Equal(123, packet.X);
-                    Assert.Equal(456, packet.Y);
-                    Assert.Same(tiles, packet.Tiles);
-                }));
+                .Setup(p => p.SendPacket(It.Is<TileSquarePacket>(p => p.X == 123 && p.Y == 456 && p.Tiles == tiles)));
 
             player.SendTiles(123, 456, tiles);
 
-            Mock.Get(player).VerifyAll();*/
+            Mock.Get(player).VerifyAll();
         }
 
         private sealed class TestPacket : IPacket
         {
             public PacketId Id => throw new NotImplementedException();
+
             int IPacket.ReadBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
             int IPacket.WriteBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
         }

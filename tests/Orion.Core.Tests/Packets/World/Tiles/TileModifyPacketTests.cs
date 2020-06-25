@@ -517,189 +517,189 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void RoundTrip_BreakBlock()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _breakBlockBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakBlockFailure()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _breakBlockFailureBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_PlaceBlock()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _placeBlockBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakWall()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _breakWallBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakWallFailure()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _breakWallFailureBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_PlaceWall()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _placeWallBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakBlockItemless()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _breakBlockItemlessBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakBlockItemlessFailure()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _breakBlockItemlessFailureBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_PlaceRedWire()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _placeRedWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakRedWire()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _breakRedWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_HammerBlock()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _hammerBlockBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_PlaceActuator()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _placeActuatorBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakActuator()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _breakActuatorBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_PlaceBlueWire()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _placeBlueWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakBlueWire()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _breakBlueWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_PlaceGreenWire()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _placeGreenWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakGreenWire()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _breakGreenWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_SlopeBlock()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _slopeBlockBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_ModifyTrack()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _modifyTrackBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_PlaceYellowWire()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _placeYellowWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakYellowWire()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _breakYellowWireBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_ModifyLogicGate()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _modifyLogicGateBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_ActuateBlock()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _actuateBlockBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_BreakContainer()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _breakContainerBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_ReplaceBlock()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _replaceBlockBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_ReplaceWall()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _replaceWallBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_SlopeAndHammerBlock()
         {
-            TestUtils.RoundTripPacket<TileModifyPacket>(
+            TestUtils.RoundTripPacket(
                 _slopeAndHammerBlockBytes, PacketContext.Server);
         }
     }

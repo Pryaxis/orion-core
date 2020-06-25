@@ -25,18 +25,19 @@ namespace Orion.Core.Events.Packets
     /// <summary>
     /// An event that occurs when a packet is being received. This event can be canceled.
     /// </summary>
-    /// <typeparam name="TPacket">The type of packet.</typeparam>
     [Event("packet-recv", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class PacketReceiveEvent<TPacket> : PacketEvent<TPacket> where TPacket : struct, IPacket
+    public sealed class PacketReceiveEvent : PacketEvent
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PacketReceiveEvent{TPacket}"/> class with the specified
-        /// <paramref name="packet"/> reference and <paramref name="sender"/>.
+        /// Initializes a new instance of the <see cref="PacketReceiveEvent"/> class with the specified
+        /// <paramref name="packet"/> and <paramref name="sender"/>.
         /// </summary>
-        /// <param name="packet">The packet reference being received. <i>This must be on the stack!</i></param>
+        /// <param name="packet">The packet being received.</param>
         /// <param name="sender">The packet's sender.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="sender"/> is <see langword="null"/>.</exception>
-        public PacketReceiveEvent(ref TPacket packet, IPlayer sender) : base(ref packet)
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="packet"/> or <paramref name="sender"/> are <see langword="null"/>.
+        /// </exception>
+        public PacketReceiveEvent(IPacket packet, IPlayer sender) : base(packet)
         {
             Sender = sender ?? throw new ArgumentNullException(nameof(sender));
         }

@@ -47,7 +47,7 @@ namespace Orion.Core.Packets
         /// </summary>
         /// <param name="span">The span to read from, initially.</param>
         /// <param name="context">The packet context to use.</param>
-        public static void RoundTripPacket<TPacket>(Span<byte> span, PacketContext context)
+        public static void RoundTripPacket(Span<byte> span, PacketContext context)
         {
             var otherContext = context == PacketContext.Server ? PacketContext.Client : PacketContext.Server;
 

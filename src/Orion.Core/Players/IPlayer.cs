@@ -84,18 +84,16 @@ namespace Orion.Core.Players
         PlayerTeam Team { get; set; }
 
         /// <summary>
-        /// Receives the given <paramref name="packet"/> reference from the player.
+        /// Receives the given <paramref name="packet"/> from the player.
         /// </summary>
-        /// <typeparam name="TPacket">The type of packet.</typeparam>
-        /// <param name="packet">The packet reference to receive. <i>This must be on the stack!</i></param>
-        void ReceivePacket<TPacket>(ref TPacket packet) where TPacket : struct, IPacket;
+        /// <param name="packet">The packet to receive.</param>
+        void ReceivePacket(IPacket packet);
 
         /// <summary>
-        /// Sends the given <paramref name="packet"/> reference to the player.
-        /// </summary>
-        /// <typeparam name="TPacket">The type of packet.</typeparam>
-        /// <param name="packet">The packet reference to send. <i>This must be on the stack!</i></param>
-        void SendPacket<TPacket>(ref TPacket packet) where TPacket : struct, IPacket;
+        /// Sends the given <paramref name="packet"/> to the player.
+        /// </summary>>
+        /// <param name="packet">The packet to send.</param>
+        void SendPacket(IPacket packet);
     }
 
     /// <summary>
@@ -103,42 +101,6 @@ namespace Orion.Core.Players
     /// </summary>
     public static class IPlayerExtensions
     {
-        /// <summary>
-        /// Receives the given <paramref name="packet"/> from the player. This "overload" is provided for convenience,
-        /// but is slightly less efficient due to a struct copy.
-        /// </summary>
-        /// <typeparam name="TPacket">The type of packet.</typeparam>
-        /// <param name="player">The player.</param>
-        /// <param name="packet">The packet to receive.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public static void ReceivePacket<TPacket>(this IPlayer player, TPacket packet) where TPacket : struct, IPacket
-        {
-            if (player is null)
-            {
-                throw new ArgumentNullException(nameof(player));
-            }
-
-            player.ReceivePacket(ref packet);
-        }
-
-        /// <summary>
-        /// Sends the given <paramref name="packet"/> to the player. This "overload" is provided for convenience,
-        /// but is slightly less efficient due to a struct copy.
-        /// </summary>
-        /// <typeparam name="TPacket">The type of packet.</typeparam>
-        /// <param name="player">The player.</param>
-        /// <param name="packet">The packet to send.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public static void SendPacket<TPacket>(this IPlayer player, TPacket packet) where TPacket : struct, IPacket
-        {
-            if (player is null)
-            {
-                throw new ArgumentNullException(nameof(player));
-            }
-
-            player.SendPacket(ref packet);
-        }
-
         /// <summary>
         /// Disconnects the player for the given <paramref name="reason"/>.
         /// </summary>
@@ -159,8 +121,8 @@ namespace Orion.Core.Players
                 throw new ArgumentNullException(nameof(reason));
             }
 
-            _ = new ServerDisconnectPacket { Reason = reason };
-            //player.SendPacket(new ServerDisconnectPacket { Reason = reason });
+            var packet = new ServerDisconnectPacket { Reason = reason };
+            player.SendPacket(packet);
         }
 
         /// <summary>
@@ -184,8 +146,8 @@ namespace Orion.Core.Players
                 throw new ArgumentNullException(nameof(message));
             }
 
-            _ = new ServerChatPacket { Color = color, Message = message, LineWidth = -1 };
-            //player.SendPacket(ref packet);
+            var packet = new ServerChatPacket { Color = color, Message = message, LineWidth = -1 };
+            player.SendPacket(packet);
         }
 
         /// <summary>
@@ -217,8 +179,8 @@ namespace Orion.Core.Players
                 throw new NotSupportedException("Tiles is not square");
             }
 
-            _ = new TileSquarePacket { X = (short)x, Y = (short)y, Tiles = tiles };
-            //player.SendPacket(ref packet);
+            var packet = new TileSquarePacket { X = (short)x, Y = (short)y, Tiles = tiles };
+            player.SendPacket(packet);
         }
     }
 }

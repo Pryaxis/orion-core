@@ -15,20 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using Orion.Core.Packets.Client;
-using Orion.Core.Packets.Items;
-using Orion.Core.Packets.Npcs;
-using Orion.Core.Packets.Players;
-using Orion.Core.Packets.Server;
-using Orion.Core.Packets.World;
-using Orion.Core.Packets.World.Chests;
-using Orion.Core.Packets.World.Signs;
-using Orion.Core.Packets.World.TileEntities;
-using Orion.Core.Packets.World.Tiles;
-
 namespace Orion.Core.Packets
 {
     /// <summary>

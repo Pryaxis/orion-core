@@ -107,13 +107,13 @@ namespace Orion.Core.Packets.World.Chests
         [Fact]
         public void RoundTrip_AsServer()
         {
-            TestUtils.RoundTripPacket<ChestNamePacket>(_serverBytes, PacketContext.Server);
+            TestUtils.RoundTripPacket(_serverBytes, PacketContext.Server);
         }
 
         [Fact]
         public void RoundTrip_AsClient()
         {
-            TestUtils.RoundTripPacket<ChestNamePacket>(_clientBytes, PacketContext.Client);
+            TestUtils.RoundTripPacket(_clientBytes, PacketContext.Client);
         }
     }
 }

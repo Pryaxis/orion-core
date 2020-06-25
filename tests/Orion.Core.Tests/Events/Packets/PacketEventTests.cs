@@ -17,6 +17,7 @@
 
 using System;
 using System.Runtime.CompilerServices;
+using Moq;
 using Orion.Core.Packets;
 using Xunit;
 
@@ -25,26 +26,23 @@ namespace Orion.Core.Events.Packets
     public class PacketEventTests
     {
         [Fact]
+        public void Ctor_NullPacket_ThrowsArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => new TestPacketEvent(null!));
+        }
+
+        [Fact]
         public void Packet_Get()
         {
-            var packet = new TestPacket();
-            var evt = new TestPacketEvent<TestPacket>(ref packet);
+            var packet = Mock.Of<IPacket>();
+            var evt = new TestPacketEvent(packet);
 
-            Assert.True(Unsafe.AreSame(ref packet, ref evt.Packet));
+            Assert.Same(packet, evt.Packet);
         }
 
-        public struct TestPacket : IPacket
+        private class TestPacketEvent : PacketEvent
         {
-            public int Value;
-
-            public PacketId Id => throw new NotImplementedException();
-            int IPacket.ReadBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
-            int IPacket.WriteBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
-        }
-
-        private class TestPacketEvent<TPacket> : PacketEvent<TPacket> where TPacket : struct, IPacket
-        {
-            public TestPacketEvent(ref TPacket packet) : base(ref packet)
+            public TestPacketEvent(IPacket packet) : base(packet)
             {
             }
         }
