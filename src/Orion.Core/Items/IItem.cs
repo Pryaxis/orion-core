@@ -39,7 +39,7 @@ namespace Orion.Core.Items
         /// Gets or sets the item's stack size.
         /// </summary>
         /// <value>The item's stack size.</value>
-        int StackSize { get; set; }
+        short StackSize { get; set; }
 
         /// <summary>
         /// Gets the item's prefix.
@@ -85,7 +85,7 @@ namespace Orion.Core.Items
                 throw new ArgumentNullException(nameof(item));
             }
 
-            return new ItemStack(item.Id, item.StackSize, item.Prefix);
+            return new ItemStack(item.Id, item.Prefix, item.StackSize);
         }
     }
 }

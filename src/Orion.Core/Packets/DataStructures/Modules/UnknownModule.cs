@@ -33,7 +33,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
         /// <param name="length">The module length.</param>
         /// <param name="id">The module ID.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="length"/> is too small.</exception>
-        public UnknownModule(ushort length, ModuleId id)
+        public UnknownModule(int length, ModuleId id)
         {
             if (length < IModule.HeaderSize)
             {

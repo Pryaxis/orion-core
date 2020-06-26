@@ -23,17 +23,17 @@ namespace Orion.Core.Packets.DataStructures.Modules
     public class IModuleTests
     {
         [Fact]
-        public void WriteWithHeader()
+        public void Write()
         {
             var bytes = new byte[3];
             var module = new TestModule();
 
-            Assert.Equal(3, module.WriteWithHeader(bytes, PacketContext.Server));
+            Assert.Equal(3, module.Write(bytes, PacketContext.Server));
 
             Assert.Equal(new byte[] { 255, 255, 42 }, bytes);
         }
 
-        private struct TestModule : IModule
+        private sealed class TestModule : IModule
         {
             public ModuleId Id => (ModuleId)65535;
 

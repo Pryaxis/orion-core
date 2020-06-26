@@ -32,7 +32,7 @@ namespace Orion.Core.Events.World.Chests
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(
-                () => new ChestInventoryEvent(null!, player, 1, new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal)));
+                () => new ChestInventoryEvent(null!, player, 1, new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1)));
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace Orion.Core.Events.World.Chests
             var chest = Mock.Of<IChest>();
 
             Assert.Throws<ArgumentNullException>(
-                () => new ChestInventoryEvent(chest, null!, 1, new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal)));
+                () => new ChestInventoryEvent(chest, null!, 1, new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1)));
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace Orion.Core.Events.World.Chests
         {
             var chest = Mock.Of<IChest>();
             var player = Mock.Of<IPlayer>();
-            var evt = new ChestInventoryEvent(chest, player, 1, new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal));
+            var evt = new ChestInventoryEvent(chest, player, 1, new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1));
 
             Assert.Same(player, evt.Player);
         }
@@ -59,7 +59,7 @@ namespace Orion.Core.Events.World.Chests
         {
             var chest = Mock.Of<IChest>();
             var player = Mock.Of<IPlayer>();
-            var evt = new ChestInventoryEvent(chest, player, 1, new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal));
+            var evt = new ChestInventoryEvent(chest, player, 1, new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1));
 
             Assert.Equal(1, evt.Slot);
         }
@@ -69,9 +69,9 @@ namespace Orion.Core.Events.World.Chests
         {
             var chest = Mock.Of<IChest>();
             var player = Mock.Of<IPlayer>();
-            var evt = new ChestInventoryEvent(chest, player, 1, new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal));
+            var evt = new ChestInventoryEvent(chest, player, 1, new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1));
 
-            Assert.Equal(new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal), evt.ItemStack);
+            Assert.Equal(new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1), evt.ItemStack);
         }
     }
 }

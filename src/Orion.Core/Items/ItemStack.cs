@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Runtime.InteropServices;
 
 namespace Orion.Core.Items
 {
@@ -28,16 +29,17 @@ namespace Orion.Core.Items
     /// An item stack instance fully describes an inventory slot. It is composed of an <see cref="ItemId"/>, the item
     /// stack size, and an <see cref="ItemPrefix"/>.
     /// </remarks>
+    [StructLayout(LayoutKind.Explicit)]
     public readonly struct ItemStack : IEquatable<ItemStack>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemStack"/> structure with the specified item
-        /// <paramref name="id"/> and optional <paramref name="stackSize"/> and <paramref name="prefix"/>.
+        /// <paramref name="id"/> and optional <paramref name="prefix"/> and <paramref name="stackSize"/>.
         /// </summary>
         /// <param name="id">The item ID.</param>
-        /// <param name="stackSize">The item stack size.</param>
         /// <param name="prefix">The item prefix.</param>
-        public ItemStack(ItemId id, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None)
+        /// <param name="stackSize">The item stack size.</param>
+        public ItemStack(ItemId id, ItemPrefix prefix = ItemPrefix.None, short stackSize = 1)
         {
             Id = id;
             StackSize = stackSize;
@@ -48,19 +50,25 @@ namespace Orion.Core.Items
         /// Gets the item ID.
         /// </summary>
         /// <value>The item ID.</value>
-        public ItemId Id { get; }
-
-        /// <summary>
-        /// Gets the item stack size.
-        /// </summary>
-        /// <value>The item stack size.</value>
-        public int StackSize { get; }
+        [field: FieldOffset(0)] public ItemId Id { get; }
 
         /// <summary>
         /// Gets the item prefix.
         /// </summary>
         /// <value>The item prefix.</value>
-        public ItemPrefix Prefix { get; }
+        [field: FieldOffset(2)] public ItemPrefix Prefix { get; }
+
+        /// <summary>
+        /// Gets the item stack size.
+        /// </summary>
+        /// <value>The item stack size.</value>
+        [field: FieldOffset(3)] public short StackSize { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the item stack is empty.
+        /// </summary>
+        /// <value><see langword="true"/> if the item stack is empty; otherwise, <see langword="false"/>.</value>
+        public bool IsEmpty => Id == ItemId.None || StackSize == 0;
 
         /// <inheritdoc/>
         [Pure]
@@ -88,30 +96,14 @@ namespace Orion.Core.Items
         /// Deconstructs the item stack.
         /// </summary>
         /// <param name="id">The item ID.</param>
-        /// <param name="stackSize">The item stack size.</param>
         /// <param name="prefix">The item prefix.</param>
-        public void Deconstruct(out ItemId id, out int stackSize, out ItemPrefix prefix)
+        /// <param name="stackSize">The item stack size.</param>
+        public void Deconstruct(out ItemId id, out ItemPrefix prefix, out int stackSize)
         {
             id = Id;
             stackSize = StackSize;
             prefix = Prefix;
         }
-
-        /// <summary>
-        /// Returns a new item stack with the given <paramref name="stackSize"/>.
-        /// </summary>
-        /// <param name="stackSize">The item stack size.</param>
-        /// <returns>A new item stack with the given <paramref name="stackSize"/>.</returns>
-        [Pure]
-        public ItemStack WithStackSize(int stackSize) => new ItemStack(Id, stackSize, Prefix);
-
-        /// <summary>
-        /// Returns a new item stack with the given <paramref name="prefix"/>.
-        /// </summary>
-        /// <param name="prefix">The item prefix.</param>
-        /// <returns>A new item stack with the given <paramref name="prefix"/>.</returns>
-        [Pure]
-        public ItemStack WithPrefix(ItemPrefix prefix) => new ItemStack(Id, StackSize, prefix);
 
         /// <summary>
         /// Returns a value indicating whether <paramref name="left"/> and <paramref name="right"/> are equal.

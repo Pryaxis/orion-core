@@ -34,7 +34,7 @@ namespace Orion.Core.Items
         {
             var item = Mock.Of<IItem>(i => i.Id == ItemId.Sdmg && i.StackSize == 1 && i.Prefix == ItemPrefix.Unreal);
 
-            Assert.Equal(new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal), item.AsItemStack());
+            Assert.Equal(new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1), item.AsItemStack());
         }
     }
 }

@@ -17,7 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -28,16 +27,16 @@ namespace Orion.Core.Packets.DataStructures.Modules
     /// </summary>
     public interface IModule
     {
+        /// <summary>
+        /// The module's header size.
+        /// </summary>
+        public const int HeaderSize = sizeof(ModuleId);
+
         private static readonly IDictionary<ModuleId, Func<IModule>> _constructors =
             new Dictionary<ModuleId, Func<IModule>>
             {
                 [ModuleId.Chat] = () => new ChatModule(),
             };
-
-        /// <summary>
-        /// The module's header size.
-        /// </summary>
-        public const int HeaderSize = sizeof(ModuleId);
 
         /// <summary>
         /// Gets the module's ID.
@@ -81,14 +80,10 @@ namespace Orion.Core.Packets.DataStructures.Modules
         public static int Read(Span<byte> span, PacketContext context, out IModule module)
         {
             // Since we know that the span must have space for the module header, we read it with zero bounds checking.
-            var moduleLength = (ushort)span.Length;
             var id = Unsafe.ReadUnaligned<ModuleId>(ref MemoryMarshal.GetReference(span));
 
-            module = _constructors.TryGetValue(id, out var ctor) ? ctor() : new UnknownModule(moduleLength, id);
-            var moduleBodyLength = module.ReadBody(span[HeaderSize..], context);
-            Debug.Assert(moduleBodyLength + HeaderSize == moduleLength);
-
-            return moduleLength;
+            module = _constructors.TryGetValue(id, out var ctor) ? ctor() : new UnknownModule(span.Length, id);
+            return HeaderSize + module.ReadBody(span[HeaderSize..], context);
         }
     }
 
@@ -105,6 +100,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
         /// <param name="span">The span to write to.</param>
         /// <param name="context">The packet context to use when writing.</param>
         /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="module"/> is <see langword="null"/>.</exception>
         public static int Write(this IModule module, Span<byte> span, PacketContext context)
         {
             if (module is null)
@@ -118,23 +114,6 @@ namespace Orion.Core.Packets.DataStructures.Modules
             Unsafe.WriteUnaligned(ref MemoryMarshal.GetReference(span), module.Id);
 
             return moduleLength;
-        }
-
-        /// <summary>
-        /// Writes the <paramref name="module"/> reference to the given <paramref name="span"/> with the specified
-        /// packet <paramref name="context"/>, including the module header. Returns the number of bytes written to the
-        /// <paramref name="span"/>.
-        /// </summary>
-        /// <typeparam name="TModule">The type of module.</typeparam>
-        /// <param name="module">The module reference.</param>
-        /// <param name="span">The span to write to.</param>
-        /// <param name="context">The packet context to use when writing.</param>
-        /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
-        public static int WriteWithHeader<TModule>(ref this TModule module, Span<byte> span, PacketContext context)
-            where TModule : struct, IModule
-        {
-            Unsafe.WriteUnaligned(ref span[0], module.Id);
-            return IModule.HeaderSize + module.WriteBody(span[IModule.HeaderSize..], context);
         }
     }
 }

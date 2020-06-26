@@ -38,6 +38,11 @@ namespace Orion.Core.Packets
     /// </summary>
     public interface IPacket
     {
+        /// <summary>
+        /// The packet header size.
+        /// </summary>
+        public const int HeaderSize = sizeof(ushort) + sizeof(PacketId);
+
         private static readonly IDictionary<PacketId, Func<IPacket>> _constructors =
             new Dictionary<PacketId, Func<IPacket>>
             {
@@ -110,11 +115,6 @@ namespace Orion.Core.Packets
             };
 
         /// <summary>
-        /// The packet header size.
-        /// </summary>
-        public const int HeaderSize = sizeof(ushort) + sizeof(PacketId);
-
-        /// <summary>
         /// Gets the packet's ID.
         /// </summary>
         /// <value>The packet's ID.</value>
@@ -180,6 +180,7 @@ namespace Orion.Core.Packets
         /// <param name="span">The span to write to.</param>
         /// <param name="context">The packet context to use when writing.</param>
         /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null"/>.</exception>
         public static int Write(this IPacket packet, Span<byte> span, PacketContext context)
         {
             if (packet is null)

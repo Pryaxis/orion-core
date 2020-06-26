@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Runtime.CompilerServices;
 using Orion.Core.Packets;
 
 namespace Orion.Core.Events.Packets

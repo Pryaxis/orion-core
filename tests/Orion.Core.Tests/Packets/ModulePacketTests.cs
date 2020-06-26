@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using Orion.Core.Packets.DataStructures.Modules;
 using Xunit;
 
@@ -39,13 +38,6 @@ namespace Orion.Core.Packets
         public void RoundTrip()
         {
             TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
-
-        private struct TestModule : IModule
-        {
-            public ModuleId Id => (ModuleId)65535;
-            public int ReadBody(Span<byte> span, PacketContext context) => 0;
-            public int WriteBody(Span<byte> span, PacketContext context) => 0;
         }
     }
 }
