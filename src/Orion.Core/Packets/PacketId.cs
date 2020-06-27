@@ -69,6 +69,7 @@ namespace Orion.Core.Packets
         ServerCombatNumber = 81,
         Module = 82,
         PlayerStealth = 84,
+        TileEntityInfo = 86,
         TileEntityPlace = 87,
         ItemFrameInfo = 89,
         InstancedItemInfo = 90,

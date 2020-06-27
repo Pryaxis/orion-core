@@ -92,6 +92,7 @@ namespace Orion.Core.Packets
                 [PacketId.ServerCombatNumber] = () => new ServerCombatNumberPacket(),
                 [PacketId.Module] = () => new ModulePacket(),
                 [PacketId.PlayerStealth] = () => new PlayerStealthPacket(),
+                [PacketId.TileEntityInfo] = () => new TileEntityInfoPacket(),
                 [PacketId.TileEntityPlace] = () => new TileEntityPlacePacket(),
                 [PacketId.ItemFrameInfo] = () => new ItemFrameInfoPacket(),
                 [PacketId.InstancedItemInfo] = () => new InstancedItemInfoPacket(),
