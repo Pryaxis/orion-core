@@ -68,6 +68,7 @@ namespace Orion.Core.Packets
         AnglerQuestComplete = 75,
         ServerCombatNumber = 81,
         Module = 82,
+        NpcKillCount = 83,
         PlayerStealth = 84,
         TileEntityInfo = 86,
         TileEntityPlace = 87,
