@@ -415,12 +415,10 @@ namespace Orion.Core.Entities
         };
 
         /// <summary>
-        /// Returns a value indicating whether the buff <paramref name="id"/> is a debuff.
+        /// Returns a value indicating whether the buff ID is a debuff.
         /// </summary>
         /// <param name="id">The buff ID.</param>
-        /// <returns>
-        /// <see langword="true"/> if the buff <paramref name="id"/> is a debuff; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if the buff ID is a debuff; otherwise, <see langword="false"/>.</returns>
         [Pure]
         public static bool IsDebuff(this BuffId id) => _debuffs.Contains(id);
     }

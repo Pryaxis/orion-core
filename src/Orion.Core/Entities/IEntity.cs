@@ -30,6 +30,10 @@ namespace Orion.Core.Entities
     /// Many Terraria objects are entities and have common properties such as position, velocity, etc. Entities are
     /// annotatable, allowing consumers to easily attach custom state to them.
     /// 
+    /// Technically, an entity might actually refer to an entity <i>slot</i>, as entity objects are reused for entities
+    /// which occupy the same index in the world. This means that certain state, such as annotations, may be left over
+    /// from the previous entity.
+    /// 
     /// There are three types of entities:
     /// <list type="number">
     /// <item>
@@ -41,7 +45,7 @@ namespace Orion.Core.Entities
     /// </description>
     /// </item>
     /// <item>
-    /// <description>Entities which are concrete and active: the entity exists in the world.</description>
+    /// <description>Entities which are concrete <i>and</i> active: the entity exists in the world.</description>
     /// </item>
     /// </list>
     /// 
@@ -94,13 +98,11 @@ namespace Orion.Core.Entities
     public static class IEntityExtensions
     {
         /// <summary>
-        /// Returns a value indicating whether the <paramref name="entity"/> is concrete: i.e., whether the entity
-        /// <i>can</i> exist in the world.
+        /// Returns a value indicating whether the entity is concrete: i.e., whether the entity <i>can</i> exist in the
+        /// world.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        /// <returns>
-        /// <see langword="true"/> if the <paramref name="entity"/> is concrete; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if the entity is concrete; otherwise, <see langword="false"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="entity"/> is <see langword="null"/>.</exception>
         [Pure]
         public static bool IsConcrete(this IEntity entity)
