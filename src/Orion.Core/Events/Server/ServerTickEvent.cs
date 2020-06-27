@@ -25,5 +25,18 @@ namespace Orion.Core.Events.Server
     [Event("server-tick", LoggingLevel = LogEventLevel.Verbose, IsCancelable = false)]
     public sealed class ServerTickEvent : Event
     {
+        /// <summary>
+        /// Gets the sole <see cref="ServerTickEvent"/> instance.
+        /// </summary>
+        /// <value>The sole <see cref="ServerTickEvent"/> instance.</value>
+        /// <remarks>
+        /// This property is used to cache a <see cref="ServerTickEvent"/> instance to help lower the amount of garbage
+        /// that is generated.
+        /// </remarks>
+        public static ServerTickEvent Instance { get; } = new ServerTickEvent();
+
+        private ServerTickEvent()
+        {
+        }
     }
 }

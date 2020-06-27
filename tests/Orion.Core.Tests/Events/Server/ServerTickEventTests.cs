@@ -15,21 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Moq;
-using Orion.Core.World;
 using Xunit;
 
-namespace Orion.Core.Events.World
+namespace Orion.Core.Events.Server
 {
-    public class WorldEventTests
+    public class ServerTickEventTests
     {
         [Fact]
-        public void World_Get()
+        public void Instance_Get()
         {
-            var world = Mock.Of<IWorld>();
-            var evt = new Mock<WorldEvent>(world).Object;
+            var evt = ServerTickEvent.Instance;
 
-            Assert.Same(world, evt.World);
+            Assert.NotNull(evt);
+        }
+
+        [Fact]
+        public void Instance_Get_MultipleTimes_ReturnsSameInstance()
+        {
+            var evt = ServerTickEvent.Instance;
+            var evt2 = ServerTickEvent.Instance;
+
+            Assert.Same(evt, evt2);
         }
     }
 }
