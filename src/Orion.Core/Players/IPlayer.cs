@@ -90,10 +90,24 @@ namespace Orion.Core.Players
         void ReceivePacket(IPacket packet);
 
         /// <summary>
+        /// Receives the given <paramref name="packet"/> from the player.
+        /// </summary>
+        /// <typeparam name="TPacket">The type of packet.</typeparam>
+        /// <param name="packet">The packet to receive.</param>
+        void ReceivePacket<TPacket>(TPacket packet) where TPacket : struct, IPacket;
+
+        /// <summary>
         /// Sends the given <paramref name="packet"/> to the player.
         /// </summary>>
         /// <param name="packet">The packet to send.</param>
         void SendPacket(IPacket packet);
+
+        /// <summary>
+        /// Sends the given <paramref name="packet"/> to the player.
+        /// </summary>
+        /// <typeparam name="TPacket">The type of packet.</typeparam>
+        /// <param name="packet">The packet to send.</param>
+        void SendPacket<TPacket>(TPacket packet) where TPacket : struct, IPacket;
     }
 
     /// <summary>
