@@ -16,19 +16,20 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics.CodeAnalysis;
+using Orion.Core.Buffs;
 using Xunit;
 
-namespace Orion.Core.Packets.Server
+namespace Orion.Core.Packets.Npcs
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ServerHostPacketTests
+    public class NpcRemoveBuffPacketTests
     {
-        private readonly byte[] _bytes = { 5, 0, 139, 5, 1 };
+        private readonly byte[] _bytes = { 7, 0, 137, 5, 0, 20, 0 };
 
         [Fact]
         public void Index_Set_Get()
         {
-            var packet = new ServerHostPacket();
+            var packet = new NpcRemoveBuffPacket();
 
             packet.Index = 5;
 
@@ -36,22 +37,22 @@ namespace Orion.Core.Packets.Server
         }
 
         [Fact]
-        public void IsHost_Set_Get()
+        public void Id_Set_Get()
         {
-            var packet = new ServerHostPacket();
+            var packet = new NpcRemoveBuffPacket();
 
-            packet.IsHost = true;
+            packet.Id = BuffId.Poisoned;
 
-            Assert.True(packet.IsHost);
+            Assert.Equal(BuffId.Poisoned, packet.Id);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<ServerHostPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<NpcRemoveBuffPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.Index);
-            Assert.True(packet.IsHost);
+            Assert.Equal(BuffId.Poisoned, packet.Id);
         }
     }
 }

@@ -114,6 +114,7 @@ namespace Orion.Core.Packets
                 [PacketId.HatRackInventory] = () => new HatRackInventoryPacket(),
                 [PacketId.NpcFish] = () => new NpcFishPacket(),
                 [PacketId.PlateInfo] = () => new PlateInfoPacket(),
+                [PacketId.NpcRemoveBuff] = () => new NpcRemoveBuffPacket(),
                 [PacketId.ServerHost] = () => new ServerHostPacket()
             };
 
