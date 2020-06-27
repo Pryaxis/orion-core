@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using Moq;
 using Orion.Core.Players;
 using Xunit;
@@ -25,25 +24,12 @@ namespace Orion.Core.Events.Players
     public class PlayerEventTests
     {
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new TestPlayerEvent(null!));
-        }
-
-        [Fact]
         public void Player_Get()
         {
             var player = Mock.Of<IPlayer>();
-            var evt = new TestPlayerEvent(player);
+            var evt = new Mock<PlayerEvent>(player).Object;
 
             Assert.Same(player, evt.Player);
-        }
-
-        private class TestPlayerEvent : PlayerEvent
-        {
-            public TestPlayerEvent(IPlayer player) : base(player)
-            {
-            }
         }
     }
 }

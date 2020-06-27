@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using Moq;
 using Orion.Core.Npcs;
 using Orion.Core.Players;
+using Orion.Core.Utils;
 using Xunit;
 
 namespace Orion.Core.Events.Npcs
@@ -30,32 +31,24 @@ namespace Orion.Core.Events.Npcs
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new NpcFishEvent(null!, 100, 256, NpcId.HemogoblinShark));
+            Assert.Throws<ArgumentNullException>(
+                () => new NpcFishEvent(null!, new Vector2f(1.23f, 4.56f), NpcId.HemogoblinShark));
         }
 
         [Fact]
-        public void X_Get()
+        public void Position_Get()
         {
             var player = Mock.Of<IPlayer>();
-            var evt = new NpcFishEvent(player, 100, 256, NpcId.HemogoblinShark);
+            var evt = new NpcFishEvent(player, new Vector2f(1.23f, 4.56f), NpcId.HemogoblinShark);
 
-            Assert.Equal(100, evt.X);
-        }
-
-        [Fact]
-        public void Y_Get()
-        {
-            var player = Mock.Of<IPlayer>();
-            var evt = new NpcFishEvent(player, 100, 256, NpcId.HemogoblinShark);
-
-            Assert.Equal(256, evt.Y);
+            Assert.Equal(new Vector2f(1.23f, 4.56f), evt.Position);
         }
 
         [Fact]
         public void Id_Get()
         {
             var player = Mock.Of<IPlayer>();
-            var evt = new NpcFishEvent(player, 100, 256, NpcId.HemogoblinShark);
+            var evt = new NpcFishEvent(player, new Vector2f(1.23f, 4.56f), NpcId.HemogoblinShark);
 
             Assert.Equal(NpcId.HemogoblinShark, evt.Id);
         }

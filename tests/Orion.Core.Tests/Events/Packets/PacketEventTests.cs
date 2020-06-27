@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using Moq;
 using Orion.Core.Packets;
 using Xunit;
@@ -25,25 +24,12 @@ namespace Orion.Core.Events.Packets
     public class PacketEventTests
     {
         [Fact]
-        public void Ctor_NullPacket_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new TestPacketEvent<IPacket>(null!));
-        }
-
-        [Fact]
         public void Packet_Get()
         {
             var packet = Mock.Of<IPacket>();
-            var evt = new TestPacketEvent<IPacket>(packet);
+            var evt = new Mock<PacketEvent<IPacket>>(packet).Object;
 
             Assert.Same(packet, evt.Packet);
-        }
-
-        private class TestPacketEvent<TPacket> : PacketEvent<TPacket> where TPacket : IPacket
-        {
-            public TestPacketEvent(IPacket packet) : base(packet)
-            {
-            }
         }
     }
 }

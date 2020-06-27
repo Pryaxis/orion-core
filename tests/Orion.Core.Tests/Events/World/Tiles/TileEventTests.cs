@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using Moq;
 using Orion.Core.Players;
 using Orion.Core.World;
@@ -26,19 +25,11 @@ namespace Orion.Core.Events.World.Tiles
     public class TileEventTests
     {
         [Fact]
-        public void Ctor_NullWorld_ThrowsArgumentNullException()
-        {
-            var player = Mock.Of<IPlayer>();
-
-            Assert.Throws<ArgumentNullException>(() => new TestTileEvent(null!, player, 123, 456));
-        }
-
-        [Fact]
         public void Player_Get()
         {
             var world = Mock.Of<IWorld>();
             var player = Mock.Of<IPlayer>();
-            var evt = new TestTileEvent(world, player, 123, 456);
+            var evt = new Mock<TileEvent>(world, player, 123, 456).Object;
 
             Assert.Same(player, evt.Player);
         }
@@ -48,7 +39,7 @@ namespace Orion.Core.Events.World.Tiles
         {
             var world = Mock.Of<IWorld>();
             var player = Mock.Of<IPlayer>();
-            var evt = new TestTileEvent(world, player, 123, 456);
+            var evt = new Mock<TileEvent>(world, player, 123, 456).Object;
 
             Assert.Equal(123, evt.X);
         }
@@ -58,16 +49,9 @@ namespace Orion.Core.Events.World.Tiles
         {
             var world = Mock.Of<IWorld>();
             var player = Mock.Of<IPlayer>();
-            var evt = new TestTileEvent(world, player, 123, 456);
+            var evt = new Mock<TileEvent>(world, player, 123, 456).Object;
 
             Assert.Equal(456, evt.Y);
-        }
-
-        private class TestTileEvent : TileEvent
-        {
-            public TestTileEvent(IWorld world, IPlayer? player, int x, int y) : base(world, player, x, y)
-            {
-            }
         }
     }
 }

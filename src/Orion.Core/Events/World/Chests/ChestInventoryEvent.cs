@@ -31,17 +31,17 @@ namespace Orion.Core.Events.World.Chests
         /// <summary>
         /// Initializes a new instance of the <see cref="ChestInventoryEvent"/> class with the specified
         /// <paramref name="chest"/>, <paramref name="player"/>, inventory <paramref name="slot"/>, and
-        /// <paramref name="itemStack"/>.
+        /// <paramref name="item"/>.
         /// </summary>
         /// <param name="chest">The chest whose inventory is being modified.</param>
         /// <param name="player">The player modifying the chest's inventory.</param>
         /// <param name="slot">The inventory slot being modified.</param>
-        /// <param name="itemStack">The new item stack.</param>
-        public ChestInventoryEvent(IChest chest, IPlayer player, int slot, ItemStack itemStack) : base(chest)
+        /// <param name="item">The item.</param>
+        public ChestInventoryEvent(IChest chest, IPlayer player, int slot, ItemStack item) : base(chest)
         {
             Player = player ?? throw new ArgumentNullException(nameof(player));
             Slot = slot;
-            ItemStack = itemStack;
+            Item = item;
         }
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace Orion.Core.Events.World.Chests
         public int Slot { get; }
 
         /// <summary>
-        /// Gets the new item stack.
+        /// Gets the item.
         /// </summary>
-        /// <value>The new item stack.</value>
-        public ItemStack ItemStack { get; }
+        /// <value>The item.</value>
+        public ItemStack Item { get; }
     }
 }

@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using Moq;
 using Orion.Core.Npcs;
 using Xunit;
@@ -25,25 +24,12 @@ namespace Orion.Core.Events.Npcs
     public class NpcEventTests
     {
         [Fact]
-        public void Ctor_NullNpc_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new TestNpcEvent(null!));
-        }
-
-        [Fact]
         public void Npc_Get()
         {
             var npc = Mock.Of<INpc>();
-            var evt = new TestNpcEvent(npc);
+            var evt = new Mock<NpcEvent>(npc).Object;
 
             Assert.Same(npc, evt.Npc);
-        }
-
-        private class TestNpcEvent : NpcEvent
-        {
-            public TestNpcEvent(INpc npc) : base(npc)
-            {
-            }
         }
     }
 }

@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using Moq;
 using Orion.Core.World.Signs;
 using Xunit;
@@ -25,25 +24,12 @@ namespace Orion.Core.Events.World.Signs
     public class SignEventTests
     {
         [Fact]
-        public void Ctor_NullSign_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new TestSignEvent(null!));
-        }
-
-        [Fact]
         public void Sign_Get()
         {
             var sign = Mock.Of<ISign>();
-            var evt = new TestSignEvent(sign);
+            var evt = new Mock<SignEvent>(sign).Object;
 
             Assert.Same(sign, evt.Sign);
-        }
-
-        private class TestSignEvent : SignEvent
-        {
-            public TestSignEvent(ISign sign) : base(sign)
-            {
-            }
         }
     }
 }

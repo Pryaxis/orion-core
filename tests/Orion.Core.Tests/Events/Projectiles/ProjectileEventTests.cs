@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using Moq;
 using Orion.Core.Projectiles;
 using Xunit;
@@ -25,25 +24,12 @@ namespace Orion.Core.Events.Projectiles
     public class ProjectileEventTests
     {
         [Fact]
-        public void Ctor_NullProjectile_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new TestProjectileEvent(null!));
-        }
-
-        [Fact]
         public void Projectile_Get()
         {
             var projectile = Mock.Of<IProjectile>();
-            var evt = new TestProjectileEvent(projectile);
+            var evt = new Mock<ProjectileEvent>(projectile).Object;
 
             Assert.Same(projectile, evt.Projectile);
-        }
-
-        private class TestProjectileEvent : ProjectileEvent
-        {
-            public TestProjectileEvent(IProjectile projectile) : base(projectile)
-            {
-            }
         }
     }
 }

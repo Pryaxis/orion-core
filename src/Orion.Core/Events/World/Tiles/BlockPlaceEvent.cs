@@ -42,7 +42,7 @@ namespace Orion.Core.Events.World.Tiles
         /// <param name="isReplacement">Whether the block placing is a replacement.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public BlockPlaceEvent(IWorld world, IPlayer? player, int x, int y, BlockId id, int style, bool isReplacement)
-                : base(world, player, x, y)
+            : base(world, player, x, y)
         {
             Id = id;
             Style = style;

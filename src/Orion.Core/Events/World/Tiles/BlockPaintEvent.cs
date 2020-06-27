@@ -39,7 +39,7 @@ namespace Orion.Core.Events.World.Tiles
         /// <param name="color">The block color being painted.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public BlockPaintEvent(IWorld world, IPlayer? player, int x, int y, PaintColor color)
-                : base(world, player, x, y)
+            : base(world, player, x, y)
         {
             Color = color;
         }

@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using Moq;
 using Orion.Core.Items;
 using Xunit;
@@ -25,25 +24,12 @@ namespace Orion.Core.Events.Items
     public class ItemEventTests
     {
         [Fact]
-        public void Ctor_NullItem_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new TestItemEvent(null!));
-        }
-
-        [Fact]
         public void Item_Get()
         {
             var item = Mock.Of<IItem>();
-            var evt = new TestItemEvent(item);
+            var evt = new Mock<ItemEvent>(item).Object;
 
             Assert.Same(item, evt.Item);
-        }
-
-        private class TestItemEvent : ItemEvent
-        {
-            public TestItemEvent(IItem item) : base(item)
-            {
-            }
         }
     }
 }

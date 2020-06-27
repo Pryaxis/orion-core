@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using Moq;
 using Orion.Core.World;
 using Xunit;
@@ -25,25 +24,12 @@ namespace Orion.Core.Events.World
     public class WorldEventTests
     {
         [Fact]
-        public void Ctor_NullWorld_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new TestWorldEvent(null!));
-        }
-
-        [Fact]
         public void World_Get()
         {
             var world = Mock.Of<IWorld>();
-            var evt = new TestWorldEvent(world);
+            var evt = new Mock<WorldEvent>().Object;
 
             Assert.Same(world, evt.World);
-        }
-
-        private class TestWorldEvent : WorldEvent
-        {
-            public TestWorldEvent(IWorld world) : base(world)
-            {
-            }
         }
     }
 }

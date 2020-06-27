@@ -38,9 +38,9 @@ namespace Orion.Core.Events.Npcs
         }
 
         /// <summary>
-        /// Gets or sets the item stack being dropped.
+        /// Gets or sets the item being dropped.
         /// </summary>
-        /// <value>The item stack being dropped.</value>
-        public ItemStack ItemStack { get; set; }
+        /// <value>The item being dropped.</value>
+        public ItemStack Item { get; set; }
     }
 }

@@ -41,7 +41,7 @@ namespace Orion.Core.Events.World.Tiles
         /// <param name="isReplacement">Whether the wall placing is a replacement.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public WallPlaceEvent(IWorld world, IPlayer? player, int x, int y, WallId id, bool isReplacement)
-                : base(world, player, x, y)
+            : base(world, player, x, y)
         {
             Id = id;
             IsReplacement = isReplacement;

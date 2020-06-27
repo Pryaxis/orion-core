@@ -19,6 +19,7 @@ using System;
 using Orion.Core.Events.Players;
 using Orion.Core.Npcs;
 using Orion.Core.Players;
+using Orion.Core.Utils;
 
 namespace Orion.Core.Events.Npcs
 {
@@ -30,31 +31,23 @@ namespace Orion.Core.Events.Npcs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcFishEvent"/> class with the specified
-        /// <paramref name="player"/>, NPC coordinates, and NPC <paramref name="id"/>.
+        /// <paramref name="player"/>, NPC <paramref name="position"/>, and NPC <paramref name="id"/>.
         /// </summary>
         /// <param name="player">The player fishing the NPC.</param>
-        /// <param name="x">The NPC's X coordinate.</param>
-        /// <param name="y">The NPC's Y coordinate.</param>
+        /// <param name="position">The fished NPC's position.</param>
         /// <param name="id">The NPC ID being fished.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public NpcFishEvent(IPlayer player, int x, int y, NpcId id) : base(player)
+        public NpcFishEvent(IPlayer player, Vector2f position, NpcId id) : base(player)
         {
-            X = x;
-            Y = y;
+            Position = position;
             Id = id;
         }
 
         /// <summary>
-        /// Gets the NPC's X coordinate.
+        /// Gets the fished NPC's position.
         /// </summary>
-        /// <value>The NPC's X coordinate.</value>
-        public int X { get; }
-
-        /// <summary>
-        /// Gets the NPC's Y coordinate.
-        /// </summary>
-        /// <value>The NPC's Y coordinate.</value>
-        public int Y { get; }
+        /// <value>The fished NPC's position.</value>
+        public Vector2f Position { get; }
 
         /// <summary>
         /// Gets the NPC ID being fished.

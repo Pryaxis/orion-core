@@ -65,13 +65,13 @@ namespace Orion.Core.Events.World.Chests
         }
 
         [Fact]
-        public void ItemStack_Get()
+        public void Item_Get()
         {
             var chest = Mock.Of<IChest>();
             var player = Mock.Of<IPlayer>();
             var evt = new ChestInventoryEvent(chest, player, 1, new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1));
 
-            Assert.Equal(new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1), evt.ItemStack);
+            Assert.Equal(new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1), evt.Item);
         }
     }
 }
