@@ -40,7 +40,10 @@ namespace Orion.Core.Events
         /// Gets or sets the event handler's name. This is used for logging.
         /// </summary>
         /// <value>The event handler's name.</value>
-        /// <remarks>The naming convention for event handlers is <c>kebab-case</c>.</remarks>
+        /// <remarks>
+        /// The naming convention for event handlers is <c>kebab-case</c>. Names should be unique among the event
+        /// handlers of a certain type of event.
+        /// </remarks>
         public string Name { get; }
 
         /// <summary>

@@ -36,7 +36,7 @@ namespace Orion.Core.Events
         public bool IsCanceled => _cancellationReason != null;
 
         /// <summary>
-        /// Gets the event's cancellation reason. This is only applicable if the event is canceled.
+        /// Gets the event's cancellation reason. <i>This is only applicable if the event is canceled!</i>
         /// </summary>
         /// <value>The event's cancellation reason.</value>
         /// <exception cref="InvalidOperationException">The event is not canceled.</exception>
@@ -55,7 +55,7 @@ namespace Orion.Core.Events
         }
 
         /// <summary>
-        /// Uncancels the event. This is only applicable if the event is canceled.
+        /// Uncancels the event. <i>This is only applicable if the event is canceled!</i>
         /// </summary>
         /// <exception cref="InvalidOperationException">The event is not canceled.</exception>
         public void Uncancel()

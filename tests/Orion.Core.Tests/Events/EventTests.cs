@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Moq;
 using Xunit;
 
 namespace Orion.Core.Events
@@ -25,7 +26,7 @@ namespace Orion.Core.Events
         [Fact]
         public void IsCanceled_Get_ReturnsTrue()
         {
-            var evt = new TestEvent();
+            var evt = Mock.Of<Event>();
 
             evt.Cancel();
 
@@ -35,7 +36,7 @@ namespace Orion.Core.Events
         [Fact]
         public void IsCanceled_Get_ReturnsFalse()
         {
-            var evt = new TestEvent();
+            var evt = Mock.Of<Event>();
 
             Assert.False(evt.IsCanceled);
         }
@@ -43,7 +44,7 @@ namespace Orion.Core.Events
         [Fact]
         public void CancellationReason_Get()
         {
-            var evt = new TestEvent();
+            var evt = Mock.Of<Event>();
 
             evt.Cancel("test");
 
@@ -53,7 +54,7 @@ namespace Orion.Core.Events
         [Fact]
         public void CancellationReason_GetNotCanceled_ThrowsInvalidOperationException()
         {
-            var evt = new TestEvent();
+            var evt = Mock.Of<Event>();
 
             Assert.Throws<InvalidOperationException>(() => evt.CancellationReason);
         }
@@ -61,7 +62,7 @@ namespace Orion.Core.Events
         [Fact]
         public void Cancel_NullReason_ThrowsArgumentNullException()
         {
-            var evt = new TestEvent();
+            var evt = Mock.Of<Event>();
 
             Assert.Throws<ArgumentNullException>(() => evt.Cancel(null!));
         }
@@ -69,7 +70,7 @@ namespace Orion.Core.Events
         [Fact]
         public void Uncancel_NotCanceled_ThrowsInvalidOperationException()
         {
-            var evt = new TestEvent();
+            var evt = Mock.Of<Event>();
 
             Assert.Throws<InvalidOperationException>(() => evt.Uncancel());
         }
@@ -77,17 +78,12 @@ namespace Orion.Core.Events
         [Fact]
         public void Uncancel()
         {
-            var evt = new TestEvent();
+            var evt = Mock.Of<Event>();
             evt.Cancel("test");
 
             evt.Uncancel();
 
             Assert.False(evt.IsCanceled);
-        }
-
-        [Event("test")]
-        private class TestEvent : Event
-        {
         }
     }
 }

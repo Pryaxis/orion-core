@@ -41,7 +41,9 @@ namespace Orion.Core.Events
         /// Gets the event's name. This is used for logging.
         /// </summary>
         /// <value>The event's name.</value>
-        /// <remarks>The naming convention for events is <c>kebab-case</c>.</remarks>
+        /// <remarks>
+        /// The naming convention for events is <c>kebab-case</c>. Names should be globally unique.
+        /// </remarks>
         public string Name { get; }
 
         /// <summary>

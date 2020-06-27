@@ -34,8 +34,7 @@ namespace Orion.Core.Events
     public interface IEventManager
     {
         /// <summary>
-        /// Registers the given synchronous event <paramref name="handler"/> for events of type
-        /// <typeparamref name="TEvent"/>.
+        /// Registers the given synchronous event <paramref name="handler"/> for events of a certain type.
         /// </summary>
         /// <typeparam name="TEvent">The type of event.</typeparam>
         /// <param name="handler">The synchronous event handler to register.</param>
@@ -46,8 +45,7 @@ namespace Orion.Core.Events
         void RegisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event;
 
         /// <summary>
-        /// Registers the given asynchronous event <paramref name="handler"/> for events of type
-        /// <typeparamref name="TEvent"/>.
+        /// Registers the given asynchronous event <paramref name="handler"/> for events of a certain type.
         /// </summary>
         /// <typeparam name="TEvent">The type of event.</typeparam>
         /// <param name="handler">The asynchronous event handler to register.</param>
@@ -58,8 +56,7 @@ namespace Orion.Core.Events
         void RegisterAsyncHandler<TEvent>(Func<TEvent, Task> handler, ILogger log) where TEvent : Event;
 
         /// <summary>
-        /// Deregisters the given synchronous event <paramref name="handler"/> for events of type
-        /// <typeparamref name="TEvent"/>.
+        /// Deregisters the given synchronous event <paramref name="handler"/> for events of a certain type.
         /// </summary>
         /// <typeparam name="TEvent">The type of event.</typeparam>
         /// <param name="handler">The synchronous event handler to deregister.</param>
@@ -70,8 +67,7 @@ namespace Orion.Core.Events
         void DeregisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event;
 
         /// <summary>
-        /// Deregisters the given asynchronous event <paramref name="handler"/> for events of type
-        /// <typeparamref name="TEvent"/>.
+        /// Deregisters the given asynchronous event <paramref name="handler"/> for events of a certain type.
         /// </summary>
         /// <typeparam name="TEvent">The type of event.</typeparam>
         /// <param name="handler">The asynchronous event handler to deregister.</param>
@@ -82,8 +78,8 @@ namespace Orion.Core.Events
         void DeregisterAsyncHandler<TEvent>(Func<TEvent, Task> handler, ILogger log) where TEvent : Event;
 
         /// <summary>
-        /// Raises the given <paramref name="evt"/>, executing all of the event handlers which apply for events of type
-        /// <typeparamref name="TEvent"/>.
+        /// Raises the given <paramref name="evt"/>, executing all of the event handlers which apply for events of a
+        /// certain type.
         /// </summary>
         /// <typeparam name="TEvent">The type of event.</typeparam>
         /// <param name="evt">The event to raise.</param>
@@ -142,6 +138,10 @@ namespace Orion.Core.Events
         /// <param name="evt">The event to forward.</param>
         /// <param name="newEvt">The event to use when forwarding.</param>
         /// <param name="log">The log to log the forwarding to.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="eventManager"/>, <paramref name="evt"/>, <paramref name="newEvt"/>, or
+        /// <paramref name="log"/> are <see langword="null"/>.
+        /// </exception>
         public static void Forward<TEvent>(this IEventManager eventManager, Event evt, TEvent newEvt, ILogger log)
             where TEvent : Event
         {
@@ -209,7 +209,7 @@ namespace Orion.Core.Events
                 if (!eventType.IsSubclassOf(typeof(Event)))
                 {
                     log.Warning(
-                        "Skipping method {HandlerMethod}: parameter type not derived from `Event`", handlerMethod);
+                        "Skipping method {HandlerMethod}: parameter type is not derived from `Event`", handlerMethod);
                     continue;
                 }
 
