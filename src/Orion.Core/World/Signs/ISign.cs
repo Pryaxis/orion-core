@@ -33,6 +33,6 @@ namespace Orion.Core.World.Signs
         /// </summary>
         /// <value>The sign's text.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        string Text { get; set; }
+        public string Text { get; set; }
     }
 }

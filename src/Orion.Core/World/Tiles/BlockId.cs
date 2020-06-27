@@ -1011,12 +1011,10 @@ namespace Orion.Core.World.Tiles
         };
 
         /// <summary>
-        /// Returns a value indicating whether the block <paramref name="id"/> has frames.
+        /// Returns a value indicating whether the block ID has frames.
         /// </summary>
         /// <param name="id">The block ID.</param>
-        /// <returns>
-        /// <see langword="true"/> if the block <paramref name="id"/> has frames; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><see langword="true"/> if the block ID has frames; otherwise, <see langword="false"/>.</returns>
         [Pure]
         public static bool HasFrames(this BlockId id) => _frames.Contains(id);
     }

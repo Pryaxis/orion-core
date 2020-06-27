@@ -23,6 +23,12 @@ namespace Orion.Core.Utils
     public class Vector2fTests
     {
         [Fact]
+        public void Cctor()
+        {
+            _ = Vector2f.Zero;
+        }
+
+        [Fact]
         public void X_Get()
         {
             var vector = new Vector2f(1.23f, 4.56f);

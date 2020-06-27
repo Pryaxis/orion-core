@@ -25,14 +25,14 @@ namespace Orion.Core.Utils
     /// <summary>
     /// Represents a two float component vector.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
     public readonly struct Vector2f : IEquatable<Vector2f>
     {
         /// <summary>
         /// Gets the zero vector.
         /// </summary>
         /// <value>The zero vector.</value>
-        public static Vector2f Zero { [ExcludeFromCodeCoverage] get; } = new Vector2f(0, 0);
+        public static Vector2f Zero { get; } = new Vector2f(0, 0);
 
         /// <summary>
         /// Gets the X component.

@@ -31,12 +31,12 @@ namespace Orion.Core.Projectiles
         /// Gets the projectile's ID.
         /// </summary>
         /// <value>The projectile's ID.</value>
-        ProjectileId Id { get; }
+        public ProjectileId Id { get; }
 
         /// <summary>
         /// Sets the projectile's <paramref name="id"/>. This will update the projectile accordingly. 
         /// </summary>
         /// <param name="id">The projectile ID to set the projectile to.</param>
-        void SetId(ProjectileId id);
+        public void SetId(ProjectileId id);
     }
 }

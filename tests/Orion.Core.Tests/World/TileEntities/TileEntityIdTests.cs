@@ -21,7 +21,7 @@ using Xunit;
 
 namespace Orion.Core.World.TileEntities
 {
-    // These tests depend on Terraria state.
+    // These tests depend on Terraria state: `AllTileEntityIdsCovered`.
     [Collection("TerrariaTestsCollection")]
     public class TileEntityIdTests
     {

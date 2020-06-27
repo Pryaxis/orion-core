@@ -16,28 +16,29 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Orion.Core.World.Tiles;
 using Xunit;
 
-namespace Orion.Core.World.Tiles
+namespace Orion.Core.Packets.DataStructures
 {
-    public class TileSliceTests
+    public class NetworkTileSliceTests
     {
         [Fact]
         public void Ctor_NegativeWidth_ThrowsArgumentOutOfRangeException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new TileSlice(-1, 2));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new NetworkTileSlice(-1, 2));
         }
 
         [Fact]
         public void Ctor_NegativeHeight_ThrowsArgumentOutOfRangeException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new TileSlice(1, -1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new NetworkTileSlice(1, -1));
         }
 
         [Fact]
         public void Item_Get()
         {
-            var tiles = new TileSlice(1, 2);
+            var tiles = new NetworkTileSlice(1, 2);
 
             tiles[0, 0].BlockId = BlockId.Stone;
 
@@ -47,7 +48,7 @@ namespace Orion.Core.World.Tiles
         [Fact]
         public void Width_Get()
         {
-            var tiles = new TileSlice(1, 2);
+            var tiles = new NetworkTileSlice(1, 2);
 
             Assert.Equal(1, tiles.Width);
         }
@@ -55,7 +56,7 @@ namespace Orion.Core.World.Tiles
         [Fact]
         public void Height_Get()
         {
-            var tiles = new TileSlice(1, 2);
+            var tiles = new NetworkTileSlice(1, 2);
 
             Assert.Equal(2, tiles.Height);
         }

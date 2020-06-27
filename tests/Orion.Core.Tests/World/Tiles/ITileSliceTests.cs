@@ -18,6 +18,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using Moq;
+using Orion.Core.Packets.DataStructures;
 using Xunit;
 
 namespace Orion.Core.World.Tiles
@@ -73,8 +74,8 @@ namespace Orion.Core.World.Tiles
         [Fact]
         public void Slice_Item_Get()
         {
-            // Use the concrete `TileSlice` here since we can't mock ref returns right now.
-            var tiles = new TileSlice(10, 10);
+            // Use a concrete `ITileSlice` implementation since we can't mock ref returns right now.
+            var tiles = new NetworkTileSlice(10, 10);
 
             var slice = tiles.Slice(5, 5, 1, 2);
 

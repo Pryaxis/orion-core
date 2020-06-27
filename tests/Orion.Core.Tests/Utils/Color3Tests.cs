@@ -23,6 +23,12 @@ namespace Orion.Core.Utils
     public class Color3Tests
     {
         [Fact]
+        public void Cctor()
+        {
+            _ = Color3.White;
+        }
+
+        [Fact]
         public void R_Get()
         {
             var color = new Color3(1, 2, 3);

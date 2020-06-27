@@ -47,19 +47,19 @@ namespace Orion.Core.World.Tiles
         /// implementations, an <see cref="IndexOutOfRangeException"/> or <see cref="AccessViolationException"/> may be
         /// expected.
         /// </remarks>
-        ref Tile this[int x, int y] { get; }
+        public ref Tile this[int x, int y] { get; }
 
         /// <summary>
         /// Gets the slice's width.
         /// </summary>
         /// <value>The slice's width.</value>
-        int Width { get; }
+        public int Width { get; }
 
         /// <summary>
         /// Gets the slice's height.
         /// </summary>
         /// <value>The slice's height.</value>
-        int Height { get; }
+        public int Height { get; }
     }
 
     /// <summary>
@@ -137,6 +137,7 @@ namespace Orion.Core.World.Tiles
             }
 
             public ref Tile this[int x, int y] => ref _tiles[_startX + x, _startY + y];
+
             public int Width { get; }
             public int Height { get; }
         }

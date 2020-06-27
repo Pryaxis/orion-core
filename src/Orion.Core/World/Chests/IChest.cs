@@ -35,12 +35,12 @@ namespace Orion.Core.World.Chests
         /// </summary>
         /// <value>The chest's name.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        string Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets the chest's items.
         /// </summary>
         /// <value>The chest's items.</value>
-        IArray<ItemStack> Items { get; }
+        public IArray<ItemStack> Items { get; }
     }
 }

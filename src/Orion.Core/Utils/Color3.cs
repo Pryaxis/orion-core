@@ -25,20 +25,23 @@ namespace Orion.Core.Utils
     /// <summary>
     /// Represents a three byte component color.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
+    /// <remarks>
+    /// This structure is sized to allow efficient passing.
+    /// </remarks>
+    [StructLayout(LayoutKind.Explicit, Size = 4)]
     public readonly struct Color3 : IEquatable<Color3>
     {
         /// <summary>
         /// Gets the color black.
         /// </summary>
         /// <value>The color black.</value>
-        public static Color3 Black { [ExcludeFromCodeCoverage] get; } = new Color3(0x00, 0x00, 0x00);
+        public static Color3 Black { get; } = new Color3(0x00, 0x00, 0x00);
 
         /// <summary>
         /// Gets the color white.
         /// </summary>
         /// <value>The color white.</value>
-        public static Color3 White { [ExcludeFromCodeCoverage] get; } = new Color3(0xff, 0xff, 0xff);
+        public static Color3 White { get; } = new Color3(0xff, 0xff, 0xff);
 
         /// <summary>
         /// Gets the red component.

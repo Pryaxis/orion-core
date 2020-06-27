@@ -16,28 +16,29 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Orion.Core.World.Tiles;
 
-namespace Orion.Core.World.Tiles
+namespace Orion.Core.Packets.DataStructures
 {
     /// <summary>
-    /// Represents a slice of tiles backed by a two-dimensional tile array.
+    /// Represents a slice of tiles transmitted over the network.
     /// </summary>
     /// <remarks>
     /// This class is thread-safe.
     /// </remarks>
-    public sealed class TileSlice : ITileSlice
+    public sealed class NetworkTileSlice : ITileSlice
     {
         private readonly Tile[,] _tiles;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TileSlice"/> class with the specified dimensions.
+        /// Initializes a new instance of the <see cref="NetworkTileSlice"/> class with the specified dimensions.
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="width"/> or <paramref name="height"/> are negative.
         /// </exception>
-        public TileSlice(int width, int height)
+        public NetworkTileSlice(int width, int height)
         {
             if (width < 0)
             {

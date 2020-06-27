@@ -18,6 +18,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Orion.Core.Packets.DataStructures;
 using Orion.Core.World.Tiles;
 
 namespace Orion.Core.Packets.World.Tiles
@@ -47,7 +48,7 @@ namespace Orion.Core.Packets.World.Tiles
         private const ushort HasYellowWireMask   /* */ = 0b10000000_00000000;
 
         // Store a single empty `TileSlice` so that there is only one allocation.
-        private static readonly TileSlice _emptyTiles = new TileSlice(0, 0);
+        private static readonly NetworkTileSlice _emptyTiles = new NetworkTileSlice(0, 0);
 
         [FieldOffset(0)] private byte _data;
         [FieldOffset(1)] private byte _bytes;
@@ -106,7 +107,7 @@ namespace Orion.Core.Packets.World.Tiles
 
             index += span[index..].Read(ref _bytes, 4);
 
-            _tiles = new TileSlice(size, size);
+            _tiles = new NetworkTileSlice(size, size);
             for (var i = 0; i < size; ++i)
             {
                 for (var j = 0; j < size; ++j)

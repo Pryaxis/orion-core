@@ -54,26 +54,26 @@ namespace Orion.Core.World.TileEntities
         /// Gets the tile entity's index. A negative value indicates that the tile entity is abstract.
         /// </summary>
         /// <value>The tile entity's index.</value>
-        int Index { get; }
+        public int Index { get; }
 
         /// <summary>
         /// Gets a value indicating whether the tile entity is active: i.e., whether the tile entity exists in the
         /// world.
         /// </summary>
         /// <value><see langword="true"/> if the tile entity is active; otherwise, <see langword="false"/>.</value>
-        bool IsActive { get; }
+        public bool IsActive { get; }
 
         /// <summary>
         /// Gets or sets the tile entity's X coordinate.
         /// </summary>
         /// <value>The tile entity's X coordinate.</value>
-        int X { get; set; }
+        public int X { get; set; }
 
         /// <summary>
         /// Gets or sets the tile entity's Y coordinate.
         /// </summary>
         /// <value>The tile entity's Y coordinate.</value>
-        int Y { get; set; }
+        public int Y { get; set; }
     }
 
     /// <summary>
@@ -82,12 +82,12 @@ namespace Orion.Core.World.TileEntities
     public static class ITileEntityExtensions
     {
         /// <summary>
-        /// Returns a value indicating whether the <paramref name="tileEntity"/> is concrete: i.e., whether the tile
-        /// entity <i>can</i> exist in the world.
+        /// Returns a value indicating whether the tile entity is concrete: i.e., whether the tile entity <i>can</i>
+        /// exist in the world.
         /// </summary>
         /// <param name="tileEntity">The tile entity.</param>
         /// <returns>
-        /// <see langword="true"/> if the <paramref name="tileEntity"/> is concrete; otherwise, <see langword="false"/>.
+        /// <see langword="true"/> if the tile entity is concrete; otherwise, <see langword="false"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="tileEntity"/> is <see langword="null"/>.</exception>
         [Pure]

@@ -26,7 +26,7 @@ namespace Orion.Core.World.Tiles
     /// <remarks>
     /// This structure is not thread-safe.
     /// </remarks>
-    [StructLayout(LayoutKind.Explicit)]
+    [StructLayout(LayoutKind.Explicit, Size = 13)]
     public struct Tile
     {
         // The shifts for the tile header.
@@ -108,21 +108,8 @@ namespace Orion.Core.World.Tiles
         /// <value><see langword="true"/> if the block is active; otherwise, <see langword="false"/>.</value>
         public bool IsBlockActive
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (Header & IsBlockActiveMask) != 0;
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set
-            {
-                if (value)
-                {
-                    Header |= IsBlockActiveMask;
-                }
-                else
-                {
-                    Header &= ~IsBlockActiveMask;
-                }
-            }
+            readonly get => GetFlag(IsBlockActiveMask);
+            set => SetFlag(IsBlockActiveMask, value);
         }
 
         /// <summary>
@@ -131,21 +118,8 @@ namespace Orion.Core.World.Tiles
         /// <value><see langword="true"/> if the block is actuated; otherwise, <see langword="false"/>.</value>
         public bool IsBlockActuated
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (Header & IsBlockActuatedMask) != 0;
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set
-            {
-                if (value)
-                {
-                    Header |= IsBlockActuatedMask;
-                }
-                else
-                {
-                    Header &= ~IsBlockActuatedMask;
-                }
-            }
+            readonly get => GetFlag(IsBlockActuatedMask);
+            set => SetFlag(IsBlockActuatedMask, value);
         }
 
         /// <summary>
@@ -154,21 +128,8 @@ namespace Orion.Core.World.Tiles
         /// <value><see langword="true"/> if the tile has red wire; otherwise, <see langword="false"/>.</value>
         public bool HasRedWire
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (Header & HasRedWireMask) != 0;
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set
-            {
-                if (value)
-                {
-                    Header |= HasRedWireMask;
-                }
-                else
-                {
-                    Header &= ~HasRedWireMask;
-                }
-            }
+            readonly get => GetFlag(HasRedWireMask);
+            set => SetFlag(HasRedWireMask, value);
         }
 
         /// <summary>
@@ -177,21 +138,8 @@ namespace Orion.Core.World.Tiles
         /// <value><see langword="true"/> if the tile has blue wire; otherwise, <see langword="false"/>.</value>
         public bool HasBlueWire
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (Header & HasBlueWireMask) != 0;
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set
-            {
-                if (value)
-                {
-                    Header |= HasBlueWireMask;
-                }
-                else
-                {
-                    Header &= ~HasBlueWireMask;
-                }
-            }
+            readonly get => GetFlag(HasBlueWireMask);
+            set => SetFlag(HasBlueWireMask, value);
         }
 
         /// <summary>
@@ -200,21 +148,8 @@ namespace Orion.Core.World.Tiles
         /// <value><see langword="true"/> if the tile has green wire; otherwise, <see langword="false"/>.</value>
         public bool HasGreenWire
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (Header & HasGreenWireMask) != 0;
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set
-            {
-                if (value)
-                {
-                    Header |= HasGreenWireMask;
-                }
-                else
-                {
-                    Header &= ~HasGreenWireMask;
-                }
-            }
+            readonly get => GetFlag(HasGreenWireMask);
+            set => SetFlag(HasGreenWireMask, value);
         }
 
         /// <summary>
@@ -223,21 +158,8 @@ namespace Orion.Core.World.Tiles
         /// <value><see langword="true"/> if the block is halved; otherwise, <see langword="false"/>.</value>
         public bool IsBlockHalved
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (Header & IsBlockHalvedMask) != 0;
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set
-            {
-                if (value)
-                {
-                    Header |= IsBlockHalvedMask;
-                }
-                else
-                {
-                    Header &= ~IsBlockHalvedMask;
-                }
-            }
+            readonly get => GetFlag(IsBlockHalvedMask);
+            set => SetFlag(IsBlockHalvedMask, value);
         }
 
         /// <summary>
@@ -246,21 +168,8 @@ namespace Orion.Core.World.Tiles
         /// <value><see langword="true"/> if the tile has an actuator; otherwise, <see langword="false"/>.</value>
         public bool HasActuator
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (Header & HasActuatorMask) != 0;
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set
-            {
-                if (value)
-                {
-                    Header |= HasActuatorMask;
-                }
-                else
-                {
-                    Header &= ~HasActuatorMask;
-                }
-            }
+            readonly get => GetFlag(HasActuatorMask);
+            set => SetFlag(HasActuatorMask, value);
         }
 
         /// <summary>
@@ -308,21 +217,8 @@ namespace Orion.Core.World.Tiles
         /// <value><see langword="true"/> if the tile has green wire; otherwise, <see langword="false"/>.</value>
         public bool HasYellowWire
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (Header & HasYellowWireMask) != 0;
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set
-            {
-                if (value)
-                {
-                    Header |= HasYellowWireMask;
-                }
-                else
-                {
-                    Header &= ~HasYellowWireMask;
-                }
-            }
+            readonly get => GetFlag(HasYellowWireMask);
+            set => SetFlag(HasYellowWireMask, value);
         }
 
         /// <summary>
@@ -348,21 +244,8 @@ namespace Orion.Core.World.Tiles
         /// <value><see langword="true"/> if the tile is checking liquid; otherwise, <see langword="false"/>.</value>
         public bool IsCheckingLiquid
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (Header & IsCheckingLiquidMask) != 0;
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set
-            {
-                if (value)
-                {
-                    Header |= IsCheckingLiquidMask;
-                }
-                else
-                {
-                    Header &= ~IsCheckingLiquidMask;
-                }
-            }
+            readonly get => GetFlag(IsCheckingLiquidMask);
+            set => SetFlag(IsCheckingLiquidMask, value);
         }
 
         /// <summary>
@@ -371,20 +254,22 @@ namespace Orion.Core.World.Tiles
         /// <value><see langword="true"/> if the tile should skip liquids; otherwise, <see langword="false"/>.</value>
         public bool ShouldSkipLiquid
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (Header & ShouldSkipLiquidMask) != 0;
+            readonly get => GetFlag(ShouldSkipLiquidMask);
+            set => SetFlag(ShouldSkipLiquidMask, value);
+        }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set
+        private readonly bool GetFlag(uint mask) => (Header & mask) != 0;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void SetFlag(uint mask, bool value)
+        {
+            if (value)
             {
-                if (value)
-                {
-                    Header |= ShouldSkipLiquidMask;
-                }
-                else
-                {
-                    Header &= ~ShouldSkipLiquidMask;
-                }
+                Header |= mask;
+            }
+            else
+            {
+                Header &= ~mask;
             }
         }
     }
