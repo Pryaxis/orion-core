@@ -27,7 +27,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
     [StructLayout(LayoutKind.Explicit)]
     public sealed class TargetDummy : SerializableTileEntity
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <inheritdoc/>
         public override TileEntityId Id => TileEntityId.TargetDummy;

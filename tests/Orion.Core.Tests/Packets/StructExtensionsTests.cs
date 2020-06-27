@@ -24,13 +24,13 @@ namespace Orion.Core.Packets
     public class StructExtensionsTests
     {
         [Fact]
-        public void AsRefByte()
+        public void AsByte()
         {
             var testStruct = new TestStruct();
 
-            Unsafe.WriteUnaligned(ref testStruct.AsRefByte(4), 1234);
+            Unsafe.WriteUnaligned(ref testStruct.AsByte(), 1234);
 
-            Assert.Equal(1234, testStruct.Value2);
+            Assert.Equal(1234, testStruct.Value);
         }
 
         [StructLayout(LayoutKind.Explicit)]

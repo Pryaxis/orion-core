@@ -48,7 +48,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         [Fact]
         public void Read()
         {
-            var itemFrame = TestUtils.ReadTileEntity<ItemFrame>(_bytes, includeIndex: true);
+            var itemFrame = TestUtils.ReadTileEntity<ItemFrame>(_bytes, true);
 
             Assert.Equal(10, itemFrame.Index);
             Assert.Equal(256, itemFrame.X);

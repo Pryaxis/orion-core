@@ -48,7 +48,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         [Fact]
         public void Read()
         {
-            var weaponRack = TestUtils.ReadTileEntity<WeaponRack>(_bytes, includeIndex: true);
+            var weaponRack = TestUtils.ReadTileEntity<WeaponRack>(_bytes, true);
 
             Assert.Equal(10, weaponRack.Index);
             Assert.Equal(256, weaponRack.X);

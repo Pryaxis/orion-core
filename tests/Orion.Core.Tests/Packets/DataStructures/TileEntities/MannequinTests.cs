@@ -78,7 +78,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         [Fact]
         public void Read()
         {
-            var mannequin = TestUtils.ReadTileEntity<Mannequin>(_bytes, includeIndex: true);
+            var mannequin = TestUtils.ReadTileEntity<Mannequin>(_bytes, true);
 
             Assert.Equal(10, mannequin.Index);
             Assert.Equal(256, mannequin.X);
@@ -104,7 +104,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         [Fact]
         public void Read_Empty()
         {
-            var mannequin = TestUtils.ReadTileEntity<Mannequin>(_emptyBytes, includeIndex: true);
+            var mannequin = TestUtils.ReadTileEntity<Mannequin>(_emptyBytes, true);
 
             Assert.Equal(10, mannequin.Index);
             Assert.Equal(256, mannequin.X);

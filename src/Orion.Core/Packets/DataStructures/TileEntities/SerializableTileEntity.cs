@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Orion.Core.World.TileEntities;
@@ -42,8 +43,8 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
                 [TileEntityId.Pylon] = () => new Pylon()
             };
 
-        [FieldOffset(0)] private byte _bytes;
-        [FieldOffset(4)] private byte _bytes2;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
+        [FieldOffset(4)] private byte _bytes2;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets the tile entity's ID.
@@ -78,7 +79,10 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
         public int Write(Span<byte> span, bool includeIndex)
         {
-            // Write the tile entity header with zero bounds checking.
+            Debug.Assert(span.Length >= (includeIndex ? 9 : 5));
+
+            // Write the tile entity header with no bounds checking since we need to perform bounds checking later
+            // anyways.
             ref var header = ref MemoryMarshal.GetReference(span);
 
             Unsafe.WriteUnaligned(ref header, Id);
@@ -126,7 +130,10 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
         public static int Read(Span<byte> span, bool includeIndex, out SerializableTileEntity tileEntity)
         {
-            // Read the tile entity header with zero bounds checking.
+            Debug.Assert(span.Length >= (includeIndex ? 9 : 5));
+
+            // Read the tile entity header with no bounds checking since we need to perform bounds checking later
+            // anyways.
             ref var header = ref MemoryMarshal.GetReference(span);
 
             var id = Unsafe.ReadUnaligned<TileEntityId>(ref header);

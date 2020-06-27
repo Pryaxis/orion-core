@@ -35,7 +35,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         [Fact]
         public void Read()
         {
-            var pylon = TestUtils.ReadTileEntity<Pylon>(_bytes, includeIndex: true);
+            var pylon = TestUtils.ReadTileEntity<Pylon>(_bytes, true);
 
             Assert.Equal(10, pylon.Index);
             Assert.Equal(256, pylon.X);

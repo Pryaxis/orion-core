@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -50,6 +51,8 @@ namespace Orion.Core.Packets.DataStructures.Modules
         /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
         public int Write(Span<byte> span, PacketContext context)
         {
+            Debug.Assert(span.Length >= 2);
+
             // Write the module ID with no bounds checking since we need to perform bounds checking later anyways.
             Unsafe.WriteUnaligned(ref MemoryMarshal.GetReference(span), Id);
 
@@ -91,6 +94,8 @@ namespace Orion.Core.Packets.DataStructures.Modules
         /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
         public static int Read(Span<byte> span, PacketContext context, out SerializableModule module)
         {
+            Debug.Assert(span.Length >= 2);
+
             // Read the module ID with no bounds checking since we need to perform bounds checking later anyways.
             var id = Unsafe.ReadUnaligned<ModuleId>(ref MemoryMarshal.GetReference(span));
 

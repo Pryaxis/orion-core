@@ -65,7 +65,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         [Fact]
         public void Read()
         {
-            var hatRack = TestUtils.ReadTileEntity<HatRack>(_bytes, includeIndex: true);
+            var hatRack = TestUtils.ReadTileEntity<HatRack>(_bytes, true);
 
             Assert.Equal(10, hatRack.Index);
             Assert.Equal(256, hatRack.X);
@@ -80,7 +80,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         [Fact]
         public void Read_Empty()
         {
-            var hatRack = TestUtils.ReadTileEntity<HatRack>(_emptyBytes, includeIndex: true);
+            var hatRack = TestUtils.ReadTileEntity<HatRack>(_emptyBytes, true);
 
             Assert.Equal(10, hatRack.Index);
             Assert.Equal(256, hatRack.X);

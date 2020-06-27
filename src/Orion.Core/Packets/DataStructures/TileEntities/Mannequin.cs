@@ -29,8 +29,8 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
     [StructLayout(LayoutKind.Explicit, Size = 128)]
     public sealed class Mannequin : SerializableTileEntity
     {
-        [FieldOffset(0)] private ItemStack _items;
-        [FieldOffset(64)] private ItemStack _dyes;
+        [FieldOffset(0)] private ItemStack _items;  // Used to obtain an interior reference.
+        [FieldOffset(64)] private ItemStack _dyes;  // Used to obtain an interior reference.
 
         /// <inheritdoc/>
         public override TileEntityId Id => TileEntityId.Mannequin;
@@ -58,7 +58,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
             {
                 if (flags[i])
                 {
-                    length += span[length..].Read(ref Unsafe.As<ItemStack, byte>(ref Unsafe.Add(ref _items, i)), 5);
+                    length += span[length..].Read(ref Items.At(i).AsByte(), 5);
                 }
             }
 
@@ -66,7 +66,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
             {
                 if (flags2[i])
                 {
-                    length += span[length..].Read(ref Unsafe.As<ItemStack, byte>(ref Unsafe.Add(ref _dyes, i)), 5);
+                    length += span[length..].Read(ref Dyes.At(i).AsByte(), 5);
                 }
             }
 
@@ -82,18 +82,20 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
 
             for (var i = 0; i < 8; ++i)
             {
-                if (!Items[i].IsEmpty)
+                ref var item = ref Items.At(i);
+                if (!item.IsEmpty)
                 {
-                    length += span[length..].Write(ref Unsafe.As<ItemStack, byte>(ref Unsafe.Add(ref _items, i)), 5);
+                    length += span[length..].Write(ref item.AsByte(), 5);
                     flags[i] = true;
                 }
             }
 
             for (var i = 0; i < 8; ++i)
             {
-                if (!Dyes[i].IsEmpty)
+                ref var dye = ref Dyes.At(i);
+                if (!dye.IsEmpty)
                 {
-                    length += span[length..].Write(ref Unsafe.As<ItemStack, byte>(ref Unsafe.Add(ref _dyes, i)), 5);
+                    length += span[length..].Write(ref dye.AsByte(), 5);
                     flags2[i] = true;
                 }
             }

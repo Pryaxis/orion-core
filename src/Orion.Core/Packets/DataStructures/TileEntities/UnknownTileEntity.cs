@@ -31,7 +31,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         /// Initializes a new instance of the <see cref="UnknownTileEntity"/> with the specified data
         /// <paramref name="length"/> and tile entity <paramref name="id"/>.
         /// </summary>
-        /// <param name="length">The tile entity length.</param>
+        /// <param name="length">The data length.</param>
         /// <param name="id">The tile entity ID.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="length"/> is negative.</exception>
         public UnknownTileEntity(int length, TileEntityId id)

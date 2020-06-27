@@ -17,6 +17,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -25,13 +26,29 @@ using Orion.Core.Packets.DataStructures;
 namespace Orion.Core.Packets
 {
     /// <summary>
-    /// Provides extension for the <see cref="Span{Byte}"/> structure.
+    /// Provides extension for the <see cref="Span{T}"/> structure.
     /// </summary>
     internal static class SpanExtensions
     {
         /// <summary>
+        /// Returns a reference to the element at the given <paramref name="index"/>. <i>Performs no bounds
+        /// checking!</i>
+        /// </summary>
+        /// <typeparam name="T">The type of element.</typeparam>
+        /// <param name="span">The span.</param>
+        /// <param name="index">The index.</param>
+        /// <returns>A reference to the element at the given <paramref name="index"/>.</returns>
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ref T At<T>(this Span<T> span, int index)
+        {
+            Debug.Assert(index >= 0 && index < span.Length);
+
+            return ref Unsafe.Add(ref MemoryMarshal.GetReference(span), index);
+        }
+
+        /// <summary>
         /// Reads <paramref name="length"/> bytes from the <paramref name="span"/> into the given
-        /// <paramref name="destination"/>. Returns the number of bytes read.
+        /// <paramref name="destination"/>. Returns the number of bytes read. <i>Performs no bounds checking!</i>
         /// </summary>
         /// <param name="span">The span to read from.</param>
         /// <param name="destination">The destination to write to.</param>
@@ -97,7 +114,7 @@ namespace Orion.Core.Packets
 
         /// <summary>
         /// Writes <paramref name="length"/> bytes into the <paramref name="span"/> from the given
-        /// <paramref name="source"/>. Returns the number of bytes written.
+        /// <paramref name="source"/>. Returns the number of bytes written. <i>Performs no bounds checking!</i>
         /// </summary>
         /// <param name="span">The span to write to.</param>
         /// <param name="source">The source to read from.</param>

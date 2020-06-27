@@ -57,7 +57,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         [Fact]
         public void Read()
         {
-            var sensor = TestUtils.ReadTileEntity<Sensor>(_bytes, includeIndex: true);
+            var sensor = TestUtils.ReadTileEntity<Sensor>(_bytes, true);
 
             Assert.Equal(10, sensor.Index);
             Assert.Equal(256, sensor.X);

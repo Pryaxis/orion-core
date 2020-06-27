@@ -61,7 +61,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
             var tileEntity = new TestTileEntity { Index = 10, X = 256, Y = 100, Value = 42 };
             var bytes = new byte[1000];
 
-            var length = tileEntity.Write(bytes, includeIndex: true);
+            var length = tileEntity.Write(bytes, true);
 
             Assert.Equal(new byte[] { 255, 10, 0, 0, 0, 0, 1, 100, 0, 42 }, bytes[..length]);
         }
@@ -72,7 +72,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
             var tileEntity = new TestTileEntity { Index = 10, X = 256, Y = 100, Value = 42 };
             var bytes = new byte[1000];
 
-            var length = tileEntity.Write(bytes, includeIndex: false);
+            var length = tileEntity.Write(bytes, false);
 
             Assert.Equal(new byte[] { 255, 0, 1, 100, 0, 42 }, bytes[..length]);
         }
@@ -82,7 +82,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         {
             var bytes = new byte[] { 255, 10, 0, 0, 0, 0, 1, 100, 0, 42 };
 
-            var length = SerializableTileEntity.Read(bytes, includeIndex: true, out var tileEntity);
+            var length = SerializableTileEntity.Read(bytes, true, out var tileEntity);
             Assert.Equal(bytes.Length, length);
             Assert.IsType<UnknownTileEntity>(tileEntity);
 
@@ -99,7 +99,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         {
             var bytes = new byte[] { 255, 0, 1, 100, 0, 42 };
 
-            var length = SerializableTileEntity.Read(bytes, includeIndex: false, out var tileEntity);
+            var length = SerializableTileEntity.Read(bytes, false, out var tileEntity);
             Assert.Equal(bytes.Length, length);
             Assert.IsType<UnknownTileEntity>(tileEntity);
 

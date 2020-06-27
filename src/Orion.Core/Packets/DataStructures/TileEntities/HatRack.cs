@@ -29,8 +29,8 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
     [StructLayout(LayoutKind.Explicit, Size = 32)]
     public sealed class HatRack : SerializableTileEntity
     {
-        [FieldOffset(0)] private ItemStack _items;
-        [FieldOffset(16)] private ItemStack _dyes;
+        [FieldOffset(0)] private ItemStack _items;  // Used to obtain an interior reference.
+        [FieldOffset(16)] private ItemStack _dyes;  // Used to obtain an interior reference.
 
         /// <inheritdoc/>
         public override TileEntityId Id => TileEntityId.HatRack;
@@ -53,22 +53,20 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
             var flags = Unsafe.ReadUnaligned<ByteFlags>(ref span[0]);
             var length = 1;
 
-            if (flags[0])
+            for (var i = 0; i < 2; ++i)
             {
-                length += span[length..].Read(ref Unsafe.As<ItemStack, byte>(ref _items), 5);
-            }
-            if (flags[1])
-            {
-                length += span[length..].Read(ref Unsafe.As<ItemStack, byte>(ref Unsafe.Add(ref _items, 1)), 5);
+                if (flags[i])
+                {
+                    length += span[length..].Read(ref Items.At(i).AsByte(), 5);
+                }
             }
 
-            if (flags[2])
+            for (var i = 0; i < 2; ++i)
             {
-                length += span[length..].Read(ref Unsafe.As<ItemStack, byte>(ref _dyes), 5);
-            }
-            if (flags[3])
-            {
-                length += span[length..].Read(ref Unsafe.As<ItemStack, byte>(ref Unsafe.Add(ref _dyes, 1)), 5);
+                if (flags[i + 2])
+                {
+                    length += span[length..].Read(ref Dyes.At(i).AsByte(), 5);
+                }
             }
 
             return length;
@@ -80,26 +78,24 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
             var flags = new ByteFlags();
             var length = 1;
 
-            if (!Items[0].IsEmpty)
+            for (var i = 0; i < 2; ++i)
             {
-                length += span[length..].Write(ref Unsafe.As<ItemStack, byte>(ref _items), 5);
-                flags[0] = true;
-            }
-            if (!Items[1].IsEmpty)
-            {
-                length += span[length..].Write(ref Unsafe.As<ItemStack, byte>(ref Unsafe.Add(ref _items, 1)), 5);
-                flags[1] = true;
+                ref var item = ref Items.At(0);
+                if (!item.IsEmpty)
+                {
+                    length += span[length..].Write(ref item.AsByte(), 5);
+                    flags[i] = true;
+                }
             }
 
-            if (!Dyes[0].IsEmpty)
+            for (var i = 0; i < 2; ++i)
             {
-                length += span[length..].Write(ref Unsafe.As<ItemStack, byte>(ref _dyes), 5);
-                flags[2] = true;
-            }
-            if (!Dyes[1].IsEmpty)
-            {
-                length += span[length..].Write(ref Unsafe.As<ItemStack, byte>(ref Unsafe.Add(ref _dyes, 1)), 5);
-                flags[3] = true;
+                ref var dye = ref Dyes.At(0);
+                if (!dye.IsEmpty)
+                {
+                    length += span[length..].Write(ref dye.AsByte(), 5);
+                    flags[i + 2] = true;
+                }
             }
 
             Unsafe.WriteUnaligned(ref span[0], flags);

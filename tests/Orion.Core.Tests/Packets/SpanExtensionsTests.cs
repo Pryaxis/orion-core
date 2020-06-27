@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Orion.Core.Packets.DataStructures;
 using Xunit;
@@ -39,6 +40,14 @@ namespace Orion.Core.Packets
             new object[] { NetworkText.Formatted("formattable {0} {1}", "literal", "literal2") },
             new object[] { NetworkText.Localized("localized {0} {1}", "literal", "literal2") },
         };
+
+        [Fact]
+        public void At()
+        {
+            Span<byte> span = stackalloc byte[] { 255, 255 };
+
+            Assert.True(Unsafe.AreSame(ref span[1], ref span.At(1)));
+        }
 
         [Fact]
         public void ReadBytes()

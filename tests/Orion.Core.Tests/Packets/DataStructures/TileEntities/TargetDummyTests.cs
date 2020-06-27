@@ -47,7 +47,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         [Fact]
         public void Read()
         {
-            var targetDummy = TestUtils.ReadTileEntity<TargetDummy>(_bytes, includeIndex: true);
+            var targetDummy = TestUtils.ReadTileEntity<TargetDummy>(_bytes, true);
 
             Assert.Equal(10, targetDummy.Index);
             Assert.Equal(256, targetDummy.X);

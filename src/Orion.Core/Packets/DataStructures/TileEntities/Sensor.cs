@@ -27,7 +27,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
     [StructLayout(LayoutKind.Explicit, Size = 2)]
     public sealed class Sensor : SerializableTileEntity
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <inheritdoc/>
         public override TileEntityId Id => TileEntityId.Sensor;

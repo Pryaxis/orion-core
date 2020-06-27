@@ -53,7 +53,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         [Fact]
         public void Read()
         {
-            var tileEntity = TestUtils.ReadTileEntity<UnknownTileEntity>(_bytes, includeIndex: true);
+            var tileEntity = TestUtils.ReadTileEntity<UnknownTileEntity>(_bytes, true);
 
             Assert.Equal(10, tileEntity.Index);
             Assert.Equal(256, tileEntity.X);
@@ -69,7 +69,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         [Fact]
         public void Read_Empty()
         {
-            var tileEntity = TestUtils.ReadTileEntity<UnknownTileEntity>(_emptyBytes, includeIndex: true);
+            var tileEntity = TestUtils.ReadTileEntity<UnknownTileEntity>(_emptyBytes, true);
 
             Assert.Equal(10, tileEntity.Index);
             Assert.Equal(256, tileEntity.X);
