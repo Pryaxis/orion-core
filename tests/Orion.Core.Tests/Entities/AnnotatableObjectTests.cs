@@ -40,6 +40,14 @@ namespace Orion.Core.Entities
         }
 
         [Fact]
+        public void GetAnnotation_KeyDoesNotExist_NullProvider_HasDefaultValue()
+        {
+            var annotatable = new AnnotatableObject();
+
+            Assert.Equal(0, annotatable.GetAnnotation<int>("test"));
+        }
+
+        [Fact]
         public void GetAnnotation_KeyDoesNotExist_HasDefaultValue()
         {
             var annotatable = new AnnotatableObject();
@@ -48,21 +56,11 @@ namespace Orion.Core.Entities
         }
 
         [Fact]
-        public void GetAnnotation_KeyDoesNotExistNullProvider_HasDefaultValue()
-        {
-            var annotatable = new AnnotatableObject();
-
-            Assert.Equal(0, annotatable.GetAnnotation<int>("test"));
-        }
-
-        [Fact]
         public void GetAnnotation_Set_Get()
         {
             var annotatable = new AnnotatableObject();
 
-            ref var value = ref annotatable.GetAnnotation<int>("test");
-
-            value = 5;
+            annotatable.GetAnnotation<int>("test") = 5;
 
             Assert.Equal(5, annotatable.GetAnnotation<int>("test"));
         }
@@ -76,7 +74,7 @@ namespace Orion.Core.Entities
         }
 
         [Fact]
-        public void RemoveAnnotation_KeyExists_ReturnsTrue()
+        public void RemoveAnnotation_ReturnsTrue()
         {
             var annotatable = new AnnotatableObject();
             annotatable.GetAnnotation<int>("test") = 1;
@@ -85,7 +83,7 @@ namespace Orion.Core.Entities
         }
 
         [Fact]
-        public void RemoveAnnotation_KeyDoesntExist_ReturnsFalse()
+        public void RemoveAnnotation_ReturnsFalse()
         {
             var annotatable = new AnnotatableObject();
 
