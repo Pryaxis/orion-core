@@ -113,7 +113,8 @@ namespace Orion.Core.Packets
                 [PacketId.WeaponRackInfo] = () => new WeaponRackInfoPacket(),
                 [PacketId.HatRackInventory] = () => new HatRackInventoryPacket(),
                 [PacketId.NpcFish] = () => new NpcFishPacket(),
-                [PacketId.PlateInfo] = () => new PlateInfoPacket()
+                [PacketId.PlateInfo] = () => new PlateInfoPacket(),
+                [PacketId.ServerHost] = () => new ServerHostPacket()
             };
 
         /// <summary>

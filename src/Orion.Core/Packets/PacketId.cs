@@ -36,6 +36,7 @@ namespace Orion.Core.Packets
         TileSquare = 20,
         ItemInfo = 21,
         ItemOwner = 22,
+        NpcInfo = 23,
         NpcDamage = 28,
         PlayerPvp = 30,
         ChestOpen = 31,
@@ -91,6 +92,7 @@ namespace Orion.Core.Packets
         HatRackInventory = 124,
         NpcFish = 130,
         PlateInfo = 133,
+        ServerHost = 139,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }
