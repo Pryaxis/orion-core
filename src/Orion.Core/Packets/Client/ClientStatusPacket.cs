@@ -107,14 +107,14 @@ namespace Orion.Core.Packets.Client
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
             var length = span.Read(ref _bytes, 4);
-            length += span[length..].Read(Encoding.UTF8, out _statusText);
+            length += NetworkText.Read(span[length..], Encoding.UTF8, out _statusText);
             return length + span[length..].Read(ref _bytes2, 1);
         }
 
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
             var length = span.Write(ref _bytes, 4);
-            length += span[length..].Write(StatusText, Encoding.UTF8);
+            length += StatusText.Write(span[length..], Encoding.UTF8);
             return length + span[length..].Write(ref _bytes2, 1);
         }
     }

@@ -52,9 +52,9 @@ namespace Orion.Core.Packets.Client
         {
             var packet = new ServerDisconnectPacket();
 
-            packet.Reason = NetworkText.Localized("CLI.KickMessage");
+            packet.Reason = new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage");
 
-            Assert.Equal(NetworkText.Localized("CLI.KickMessage"), packet.Reason);
+            Assert.Equal(new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage"), packet.Reason);
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace Orion.Core.Packets.Client
         {
             var packet = TestUtils.ReadPacket<ServerDisconnectPacket>(_bytes, PacketContext.Server);
 
-            Assert.Equal(NetworkText.Localized("CLI.KickMessage"), packet.Reason);
+            Assert.Equal(new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage"), packet.Reason);
         }
 
         [Fact]

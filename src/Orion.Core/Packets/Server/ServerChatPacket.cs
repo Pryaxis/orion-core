@@ -62,7 +62,7 @@ namespace Orion.Core.Packets.Server
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
             var index = span.Read(ref _bytes, 3);
-            index += span[index..].Read(Encoding.UTF8, out _message);
+            index += NetworkText.Read(span[index..], Encoding.UTF8, out _message);
             return index + span[index..].Read(ref _bytes2, 2);
         }
 
@@ -70,7 +70,7 @@ namespace Orion.Core.Packets.Server
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
             var index = span.Write(ref _bytes, 3);
-            index += span[index..].Write(Message, Encoding.UTF8);
+            index += Message.Write(span[index..], Encoding.UTF8);
             return index + span[index..].Write(ref _bytes2, 2);
         }
     }

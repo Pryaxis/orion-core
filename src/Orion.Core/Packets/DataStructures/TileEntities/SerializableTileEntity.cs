@@ -121,12 +121,12 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         protected abstract int WriteBody(Span<byte> span);
 
         /// <summary>
-        /// Reads a serializable tile entity from the given <paramref name="span"/>. Returns the number of bytes read
-        /// from the <paramref name="span"/>.
+        /// Reads a <see cref="SerializableTileEntity"/> instance from the given <paramref name="span"/>. Returns the
+        /// number of bytes read from the <paramref name="span"/>.
         /// </summary>
         /// <param name="span">The span to read from.</param>
         /// <param name="includeIndex">Whether to include the tile entity's index.</param>
-        /// <param name="tileEntity">The resulting tile entity.</param>
+        /// <param name="tileEntity">The resulting <see cref="SerializableTileEntity"/> instance.</param>
         /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
         public static int Read(Span<byte> span, bool includeIndex, out SerializableTileEntity tileEntity)
         {

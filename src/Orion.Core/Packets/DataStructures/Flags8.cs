@@ -22,10 +22,10 @@ using System.Runtime.InteropServices;
 namespace Orion.Core.Packets.DataStructures
 {
     /// <summary>
-    /// Provides bit-based indexing into a byte as flags.
+    /// Holds a set of 8 flags.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    internal struct ByteFlags
+    internal struct Flags8
     {
         [FieldOffset(0)] private byte _value;
 

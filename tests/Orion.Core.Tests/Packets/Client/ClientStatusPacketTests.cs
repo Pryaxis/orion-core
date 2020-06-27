@@ -45,9 +45,9 @@ namespace Orion.Core.Packets.Client
         {
             var packet = new ClientStatusPacket();
 
-            packet.StatusText = NetworkText.Localized("LegacyInterface.44");
+            packet.StatusText = new NetworkText(NetworkTextMode.Localized, "LegacyInterface.44");
 
-            Assert.Equal(NetworkText.Localized("LegacyInterface.44"), packet.StatusText);
+            Assert.Equal(new NetworkText(NetworkTextMode.Localized, "LegacyInterface.44"), packet.StatusText);
         }
 
         [Theory]
@@ -80,7 +80,7 @@ namespace Orion.Core.Packets.Client
             var packet = TestUtils.ReadPacket<ClientStatusPacket>(_bytes, PacketContext.Server);
 
             Assert.Equal(15, packet.MaxStatus);
-            Assert.Equal(NetworkText.Localized("LegacyInterface.44"), packet.StatusText);
+            Assert.Equal(new NetworkText(NetworkTextMode.Localized, "LegacyInterface.44"), packet.StatusText);
             Assert.False(packet.HidePercentage);
             Assert.False(packet.HasShadows);
         }

@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using Xunit;
 
 namespace Orion.Core.Packets.DataStructures
@@ -27,9 +28,61 @@ namespace Orion.Core.Packets.DataStructures
         public static readonly IEnumerable<object[]> NetworkTexts = new[]
         {
             new object[] { (NetworkText)"literal" },
-            new object[] { NetworkText.Formatted("formattable {0} {1}", "literal", "literal2") },
-            new object[] { NetworkText.Localized("localized {0} {1}", "literal", "literal2") },
+            new object[] { new NetworkText(NetworkTextMode.Formatted, "formatted {0} {1}", "literal", "literal2") },
+            new object[] { new NetworkText(NetworkTextMode.Localized, "localized {0} {1}", "literal", "literal2") },
         };
+
+        [Fact]
+        public void Ctor_NullFormat_ThrowsArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => new NetworkText(NetworkTextMode.Literal, null!));
+        }
+
+        [Fact]
+        public void Ctor_NullSubstitutions_ThrowsArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(
+                () => new NetworkText(NetworkTextMode.Formatted, "formatted {0} {1}", null!));
+        }
+
+        [Fact]
+        public void Ctor_LiteralAndSubstitutions_ThrowsArgumentException()
+        {
+            Assert.Throws<ArgumentException>(() => new NetworkText(NetworkTextMode.Literal, "literal", "test"));
+        }
+
+        [Fact]
+        public void Ctor_SubstitutionsContainsNull_ThrowsArgumentException()
+        {
+            Assert.Throws<ArgumentException>(
+                () => new NetworkText(NetworkTextMode.Formatted, "formatted {0} {1}", "test", null!));
+        }
+
+        [Fact]
+        public void Mode_Get()
+        {
+            var text = new NetworkText(NetworkTextMode.Formatted, "formatted {0} {1}", "test", "test2");
+
+            Assert.Equal(NetworkTextMode.Formatted, text.Mode);
+        }
+
+        [Fact]
+        public void Format_Get()
+        {
+            var text = new NetworkText(NetworkTextMode.Formatted, "formatted {0} {1}", "test", "test2");
+
+            Assert.Equal("formatted {0} {1}", text.Format);
+        }
+
+        [Fact]
+        public void Substitutions_Get()
+        {
+            var text = new NetworkText(NetworkTextMode.Formatted, "formatted {0} {1}", "test", "test2");
+
+            Assert.Collection(text.Substitutions,
+                t => Assert.Equal("test", t),
+                t => Assert.Equal("test2", t));
+        }
 
         [Theory]
         [MemberData(nameof(NetworkTexts))]
@@ -50,16 +103,14 @@ namespace Orion.Core.Packets.DataStructures
             Assert.False(text.Equals((object)text2));
             Assert.False(text.Equals(1234));
             Assert.False(text.Equals((object?)null!));
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-            Assert.False(text.Equals(null!));
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            Assert.False(text!.Equals(null!));
         }
 
         [Fact]
-        public void Equals_ArgsDifferent_ReturnsFalse()
+        public void Equals_SubstitutionsDifferent_ReturnsFalse()
         {
-            var text = NetworkText.Formatted("test {0}", "test");
-            var text2 = NetworkText.Formatted("test {0}", "test2");
+            var text = new NetworkText(NetworkTextMode.Formatted, "test {0}", "test");
+            var text2 = new NetworkText(NetworkTextMode.Formatted, "test {0}", "test2");
 
             Assert.False(text.Equals(text2));
             Assert.False(text.Equals((object)text2));
@@ -82,6 +133,20 @@ namespace Orion.Core.Packets.DataStructures
             });
         }
 
+        [Theory]
+        [MemberData(nameof(NetworkTexts))]
+        public void RoundTrip(NetworkText text)
+        {
+            var bytes = new byte[10000000];
+            var span = bytes.AsSpan();
+
+            var numBytes = text.Write(span, Encoding.UTF8);
+
+            Assert.Equal(numBytes, NetworkText.Read(span, Encoding.UTF8, out NetworkText text2));
+
+            Assert.Equal(text, text2);
+        }
+
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Implicit()
@@ -89,58 +154,6 @@ namespace Orion.Core.Packets.DataStructures
             NetworkText text = "test";
 
             Assert.Equal("test", text);
-        }
-
-        [Fact]
-        public void Formatted_NullFormat_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => NetworkText.Formatted(null!));
-        }
-
-        [Fact]
-        public void Formatted_NullArgs_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => NetworkText.Formatted("{0} {1}", null!));
-        }
-
-        [Fact]
-        public void Formatted_NullArg_ThrowsArgumentException()
-        {
-            Assert.Throws<ArgumentException>(() => NetworkText.Formatted("{0} {1}", "a", null!));
-        }
-
-        [Fact]
-        public void Formatted()
-        {
-            var text = NetworkText.Formatted("{0} {1}", "a", "b");
-
-            Assert.Equal(NetworkText.Formatted("{0} {1}", "a", "b"), text);
-        }
-
-        [Fact]
-        public void Localized_NullFormat_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => NetworkText.Localized(null!));
-        }
-
-        [Fact]
-        public void Localized_NullArgs_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => NetworkText.Localized("{0} {1}", null!));
-        }
-
-        [Fact]
-        public void Localized_NullArg_ThrowsArgumentException()
-        {
-            Assert.Throws<ArgumentException>(() => NetworkText.Localized("{0} {1}", "a", null!));
-        }
-
-        [Fact]
-        public void Localized()
-        {
-            var text = NetworkText.Localized("{0} {1}", "a", "b");
-
-            Assert.Equal(NetworkText.Localized("{0} {1}", "a", "b"), text);
         }
 
         [Theory]
@@ -158,8 +171,8 @@ namespace Orion.Core.Packets.DataStructures
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Equality_ReturnsFalse()
         {
-            var text = "test";
-            var text2 = "test2";
+            NetworkText text = "test";
+            NetworkText text2 = "test2";
 
             Assert.False(text == text2);
         }
@@ -168,8 +181,8 @@ namespace Orion.Core.Packets.DataStructures
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Inequality_ReturnsTrue()
         {
-            var text = "test";
-            var text2 = "test2";
+            NetworkText text = "test";
+            NetworkText text2 = "test2";
 
             Assert.True(text != text2);
         }

@@ -19,7 +19,7 @@ using Xunit;
 
 namespace Orion.Core.Packets.DataStructures
 {
-    public class ByteFlagsTests
+    public class Flags8Tests
     {
         [Theory]
         [InlineData(0)]
@@ -32,7 +32,7 @@ namespace Orion.Core.Packets.DataStructures
         [InlineData(7)]
         public void Item_Set_Get(int index)
         {
-            var flags = new ByteFlags();
+            var flags = new Flags8();
 
             flags[index] = true;
 

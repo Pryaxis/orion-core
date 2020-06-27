@@ -98,7 +98,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
             else
             {
                 var length = span.Read(ref _bytes, 1);
-                length += span[length..].Read(Encoding.UTF8, out _serverMessage);
+                length += NetworkText.Read(span[length..], Encoding.UTF8, out _serverMessage);
                 return length + span[length..].Read(ref _bytes2, 3);
             }
         }
@@ -114,7 +114,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
             else
             {
                 var length = span.Write(ref _bytes, 1);
-                length += span[length..].Write(ServerMessage, Encoding.UTF8);
+                length += ServerMessage.Write(span[length..], Encoding.UTF8);
                 return length + span[length..].Write(ref _bytes2, 3);
             }
         }

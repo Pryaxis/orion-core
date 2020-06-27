@@ -16,11 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 
 namespace Orion.Core.Packets.DataStructures
 {
@@ -34,21 +36,65 @@ namespace Orion.Core.Packets.DataStructures
         /// </summary>
         public static readonly NetworkText Empty = string.Empty;
 
-        internal readonly Mode _mode;
-        internal readonly string _format;
-        internal readonly NetworkText[] _args;
-
-        internal NetworkText(Mode mode, string format, params NetworkText[] args)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NetworkText"/> class with the specified
+        /// <paramref name="mode"/>, <paramref name="format"/>, and <paramref name="substitutions"/>.
+        /// </summary>
+        /// <param name="mode">The network text mode.</param>
+        /// <param name="format">The format.</param>
+        /// <param name="substitutions">The substitutions.</param>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="substitutions"/> contains <see langword="null"/> or is non-empty and <paramref name="mode"/>
+        /// is <see cref="NetworkTextMode.Literal"/>.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="format"/> or <paramref name="substitutions"/> are <see langword="null"/>.
+        /// </exception>
+        public NetworkText(NetworkTextMode mode, string format, params NetworkText[] substitutions)
         {
-            Debug.Assert(format != null);
-            Debug.Assert(args != null);
-            Debug.Assert(mode != Mode.Literal || args.Length == 0);
-            Debug.Assert(args.All(a => a != null));
+            if (format is null)
+            {
+                throw new ArgumentNullException(nameof(format));
+            }
 
-            _mode = mode;
-            _format = format;
-            _args = args;
+            if (substitutions is null)
+            {
+                throw new ArgumentNullException(nameof(substitutions));
+            }
+
+            if (substitutions.Contains(null!))
+            {
+                throw new ArgumentException("Substitutions cannot contain null", nameof(substitutions));
+            }
+
+            if (mode == NetworkTextMode.Literal && substitutions.Length > 0)
+            {
+                throw new ArgumentException(
+                    "Substitutions cannot be non-empty for literal mode", nameof(substitutions));
+            }
+
+            Mode = mode;
+            Format = format;
+            Substitutions = substitutions;
         }
+
+        /// <summary>
+        /// Gets the network text's mode.
+        /// </summary>
+        /// <value>The network text's mode.</value>
+        public NetworkTextMode Mode { get; }
+
+        /// <summary>
+        /// Gets the network text's format.
+        /// </summary>
+        /// <value>The network text's format.</value>
+        public string Format { get; }
+
+        /// <summary>
+        /// Gets the network text's substitutions.
+        /// </summary>
+        /// <value>The network text's substitutions.</value>
+        public IReadOnlyList<NetworkText> Substitutions { get; }
 
         /// <inheritdoc/>
         [Pure]
@@ -63,14 +109,14 @@ namespace Orion.Core.Packets.DataStructures
                 return false;
             }
 
-            if (_mode != other._mode || _format != other._format || _args.Length != other._args.Length)
+            if (Mode != other.Mode || Format != other.Format || Substitutions.Count != other.Substitutions.Count)
             {
                 return false;
             }
 
-            for (var i = 0; i < _args.Length; ++i)
+            for (var i = 0; i < Substitutions.Count; ++i)
             {
-                if (!_args[i].Equals(other._args[i]))
+                if (!Substitutions[i].Equals(other.Substitutions[i]))
                 {
                     return false;
                 }
@@ -87,11 +133,11 @@ namespace Orion.Core.Packets.DataStructures
         public override int GetHashCode()
         {
             var hashCode = new HashCode();
-            hashCode.Add(_mode);
-            hashCode.Add(_format);
-            foreach (var arg in _args)
+            hashCode.Add(Mode);
+            hashCode.Add(Format);
+            foreach (var substitution in Substitutions)
             {
-                hashCode.Add(arg);
+                hashCode.Add(substitution);
             }
 
             return hashCode.ToHashCode();
@@ -102,14 +148,82 @@ namespace Orion.Core.Packets.DataStructures
         /// </summary>
         /// <returns>A string representation of the network text.</returns>
         [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => _mode switch
+        public override string ToString() => Mode switch
         {
-            Mode.Literal => _format,
-            Mode.Formatted => string.Format(CultureInfo.InvariantCulture, _format, _args),
-            Mode.Localized => string.Format(CultureInfo.InvariantCulture, _format, _args),
+            NetworkTextMode.Literal => Format,
+            NetworkTextMode.Formatted => string.Format(CultureInfo.InvariantCulture, Format, Substitutions),
+            NetworkTextMode.Localized => string.Format(CultureInfo.InvariantCulture, Format, Substitutions),
 
             _ => throw new InvalidOperationException("Invalid network text mode")
         };
+
+        /// <summary>
+        /// Writes the network text to the given <paramref name="span"/> with the specified <paramref name="encoding"/>.
+        /// Returns the number of bytes written.
+        /// </summary>
+        /// <param name="span">The span to write to.</param>
+        /// <param name="encoding">The encoding to use.</param>
+        /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="encoding"/> is <see langword="null"/>.</exception>
+        public int Write(Span<byte> span, Encoding encoding)
+        {
+            if (encoding is null)
+            {
+                throw new ArgumentNullException(nameof(encoding));
+            }
+
+            span[0] = (byte)Mode;
+            var length = 1 + span[1..].Write(Format, encoding);
+
+            byte numSubstitutions = 0;
+            if (Mode != NetworkTextMode.Literal)
+            {
+                numSubstitutions = (byte)Substitutions.Count;
+                span[length++] = numSubstitutions;
+            }
+
+            for (var i = 0; i < numSubstitutions; ++i)
+            {
+                length += Substitutions[i].Write(span[length..], encoding);
+            }
+
+            return length;
+        }
+
+        /// <summary>
+        /// Reads a <see cref="NetworkText"/> instance from the given <paramref name="span"/> with the specified
+        /// <paramref name="encoding"/>. Returns the number of bytes read.
+        /// </summary>
+        /// <param name="span">The span to read from.</param>
+        /// <param name="encoding">The encoding to use.</param>
+        /// <param name="value">The resulting <see cref="NetworkText"/> instance.</param>
+        /// <returns></returns>
+        public static int Read(Span<byte> span, Encoding encoding, out NetworkText value)
+        {
+            if (encoding is null)
+            {
+                throw new ArgumentNullException(nameof(encoding));
+            }
+
+            var mode = (NetworkTextMode)span[0];
+            var length = 1 + span[1..].Read(encoding, out var format);
+            var substitutions = Array.Empty<NetworkText>();
+
+            byte numSubstitutions = 0;
+            if (mode != NetworkTextMode.Literal)
+            {
+                numSubstitutions = span[length++];
+                substitutions = new NetworkText[numSubstitutions];
+            }
+
+            for (var i = 0; i < numSubstitutions; ++i)
+            {
+                length += Read(span[length..], encoding, out substitutions[i]);
+            }
+
+            value = new NetworkText(mode, format, substitutions);
+            return length;
+        }
 
         /// <summary>
         /// Returns a literal <see cref="NetworkText"/> instance with the specified <paramref name="text"/>.
@@ -118,58 +232,7 @@ namespace Orion.Core.Packets.DataStructures
         /// <exception cref="ArgumentNullException"><paramref name="text"/> is <see langword="null"/>.</exception>
         [Pure]
         public static implicit operator NetworkText(string text) =>
-            NewNetworkText(Mode.Literal, text, Array.Empty<NetworkText>());
-
-        /// <summary>
-        /// Returns a formatted <see cref="NetworkText"/> instance with the specified <paramref name="format"/> and
-        /// <paramref name="args"/>. 
-        /// </summary>
-        /// <param name="format">The format string.</param>
-        /// <param name="args">The arguments to substitute.</param>
-        /// <returns>The formatted <see cref="NetworkText"/> instance.</returns>
-        /// <exception cref="ArgumentException"><paramref name="args"/> contains <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="format"/> or <paramref name="args"/> are <see langword="null"/>.
-        /// </exception>
-        [Pure]
-        public static NetworkText Formatted(string format, params NetworkText[] args) =>
-            NewNetworkText(Mode.Formatted, format, args);
-
-        /// <summary>
-        /// Returns a localized <see cref="NetworkText"/> instance with the specified <paramref name="format"/> and
-        /// <paramref name="args"/>.
-        /// </summary>
-        /// <param name="format">The format string.</param>
-        /// <param name="args">The arguments to substitute.</param>
-        /// <returns>The localized <see cref="NetworkText"/> instance.</returns>
-        /// <exception cref="ArgumentException"><paramref name="args"/> contains <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="format"/> or <paramref name="args"/> are <see langword="null"/>.
-        /// </exception>
-        [Pure]
-        public static NetworkText Localized(string format, params NetworkText[] args) =>
-            NewNetworkText(Mode.Localized, format, args);
-
-        [Pure]
-        private static NetworkText NewNetworkText(Mode mode, string format, NetworkText[] args)
-        {
-            if (format is null)
-            {
-                throw new ArgumentNullException(nameof(format));
-            }
-
-            if (args is null)
-            {
-                throw new ArgumentNullException(nameof(args));
-            }
-
-            if (args.Any(a => a == null))
-            {
-                throw new ArgumentException("Args contains null", nameof(args));
-            }
-
-            return new NetworkText(mode, format, args);
-        }
+            new NetworkText(NetworkTextMode.Literal, text, Array.Empty<NetworkText>());
 
         /// <summary>
         /// Returns a value indicating whether <paramref name="left"/> is equal to <paramref name="right"/>.
@@ -195,12 +258,26 @@ namespace Orion.Core.Packets.DataStructures
         /// </returns>
         [Pure]
         public static bool operator !=(NetworkText? left, NetworkText? right) => !(left == right);
+    }
 
-        internal enum Mode
-        {
-            Literal = 0,
-            Formatted = 1,
-            Localized = 2,
-        }
+    /// <summary>
+    /// Specifies the mode of a <see cref="NetworkText"/>.
+    /// </summary>
+    public enum NetworkTextMode : byte
+    {
+        /// <summary>
+        /// Indicates a literal.
+        /// </summary>
+        Literal = 0,
+
+        /// <summary>
+        /// Indicates formatted text, with substitutions.
+        /// </summary>
+        Formatted = 1,
+
+        /// <summary>
+        /// Indicates localized text, with substitutions.
+        /// </summary>
+        Localized = 2
     }
 }

@@ -85,12 +85,12 @@ namespace Orion.Core.Packets.DataStructures.Modules
         protected abstract int WriteBody(Span<byte> span, PacketContext context);
 
         /// <summary>
-        /// Reads a serializable module from the given <paramref name="span"/> in the specified
+        /// Reads a <see cref="SerializableModule"/> instance from the given <paramref name="span"/> in the specified
         /// <paramref name="context"/>. Returns the number of bytes read from the <paramref name="span"/>.
         /// </summary>
         /// <param name="span">The span to read from.</param>
         /// <param name="context">The packet context to use when reading.</param>
-        /// <param name="module">The resulting module.</param>
+        /// <param name="module">The resulting <see cref="SerializableModule"/> instance.</param>
         /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
         public static int Read(Span<byte> span, PacketContext context, out SerializableModule module)
         {

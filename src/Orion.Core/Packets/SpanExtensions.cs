@@ -81,38 +81,6 @@ namespace Orion.Core.Packets
         }
 
         /// <summary>
-        /// Reads an encoded <see cref="NetworkText"/> instance from the <paramref name="span"/> with the given
-        /// <paramref name="encoding"/>. Returns the number of bytse read.
-        /// </summary>
-        /// <param name="span">The span to read from.</param>
-        /// <param name="encoding">The encoding to use.</param>
-        /// <param name="value">The resulting <see cref="NetworkText"/> instance.</param>
-        /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
-        public static int Read(this Span<byte> span, Encoding encoding, out NetworkText value)
-        {
-            Debug.Assert(encoding != null);
-
-            var mode = (NetworkText.Mode)span[0];
-            var index = 1 + span[1..].Read(encoding, out string text);
-            var substitutions = Array.Empty<NetworkText>();
-
-            byte numSubstitutions = 0;
-            if (mode != NetworkText.Mode.Literal)
-            {
-                numSubstitutions = span[index++];
-                substitutions = new NetworkText[numSubstitutions];
-            }
-
-            for (var i = 0; i < numSubstitutions; ++i)
-            {
-                index += Read(span[index..], encoding, out substitutions[i]);
-            }
-
-            value = new NetworkText(mode, text, substitutions);
-            return index;
-        }
-
-        /// <summary>
         /// Writes <paramref name="length"/> bytes into the <paramref name="span"/> from the given
         /// <paramref name="source"/>. Returns the number of bytes written. <i>Performs no bounds checking!</i>
         /// </summary>
@@ -146,37 +114,6 @@ namespace Orion.Core.Packets
             var index = Write7BitEncodedInt(span, length);
             encoding.GetBytes(value, span[index..]);
             return index + length;
-        }
-
-        /// <summary>
-        /// Writes an encoded <see cref="NetworkText"/> instance to the <paramref name="span"/> with the given
-        /// <paramref name="encoding"/>. Returns the number of bytes written.
-        /// </summary>
-        /// <param name="span">The span to write to.</param>
-        /// <param name="value">The <see cref="NetworkText"/> instance to write.</param>
-        /// <param name="encoding">The encoding to use.</param>
-        /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
-        public static int Write(this Span<byte> span, NetworkText value, Encoding encoding)
-        {
-            Debug.Assert(value != null);
-            Debug.Assert(encoding != null);
-            
-            span[0] = (byte)value._mode;
-            var index = 1 + span[1..].Write(value._format, encoding);
-
-            byte numSubstitutions = 0;
-            if (value._mode != NetworkText.Mode.Literal)
-            {
-                numSubstitutions = (byte)value._args.Length;
-                span[index++] = numSubstitutions;
-            }
-
-            for (var i = 0; i < numSubstitutions; ++i)
-            {
-                index += span[index..].Write(value._args[i], encoding);
-            }
-
-            return index;
         }
 
         private static int Read7BitEncodedInt(Span<byte> span, out int value)

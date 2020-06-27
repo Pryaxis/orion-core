@@ -60,13 +60,13 @@ namespace Orion.Core.Packets.Server
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
             var length = span.Read(ref _bytes, 11);
-            return length + span[length..].Read(Encoding.UTF8, out _text);
+            return length + NetworkText.Read(span[length..], Encoding.UTF8, out _text);
         }
 
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
             var length = span.Write(ref _bytes, 11);
-            return length + span[length..].Write(Text, Encoding.UTF8);
+            return length + Text.Write(span[length..], Encoding.UTF8);
         }
     }
 }

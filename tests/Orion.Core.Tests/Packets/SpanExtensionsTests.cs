@@ -34,13 +34,6 @@ namespace Orion.Core.Packets
             new object[] { new string('a', 2097152) },
         };
 
-        public static readonly IEnumerable<object[]> NetworkTextParams = new[]
-        {
-            new object[] { (NetworkText)"literal" },
-            new object[] { NetworkText.Formatted("formattable {0} {1}", "literal", "literal2") },
-            new object[] { NetworkText.Localized("localized {0} {1}", "literal", "literal2") },
-        };
-
         [Fact]
         public void At()
         {
@@ -98,20 +91,6 @@ namespace Orion.Core.Packets
             Assert.Equal(numBytes, span.Read(Encoding.UTF8, out string str2));
 
             Assert.Equal(str, str2);
-        }
-
-        [Theory]
-        [MemberData(nameof(NetworkTextParams))]
-        public void WriteNetworkText_ReadNetworkText(NetworkText text)
-        {
-            var bytes = new byte[10000000];
-            var span = bytes.AsSpan();
-
-            var numBytes = span.Write(text, Encoding.UTF8);
-
-            Assert.Equal(numBytes, span.Read(Encoding.UTF8, out NetworkText text2));
-
-            Assert.Equal(text, text2);
         }
     }
 }
