@@ -33,11 +33,40 @@ namespace Orion.Core.Packets
             return (TPacket)packet;
         }
 
-        public static TModule ReadModule<TModule>(Span<byte> span, PacketContext context) where TModule : IModule
+        /// <summary>
+        /// Reads a serializable module from the given <paramref name="span"/> in the specified
+        /// <paramref name="context"/>, performing round trip checks.
+        /// </summary>
+        /// <typeparam name="TTileEntity">The type of serializable module.</typeparam>
+        /// <param name="span">The span to read from.</param>
+        /// <param name="context">The packet context to use when reading.</param>
+        /// <returns></returns>
+        public static TModule ReadModule<TModule>(Span<byte> span, PacketContext context)
+            where TModule : SerializableModule
         {
-            var moduleLength = IModule.Read(span, context, out var module);
+            var otherContext = context == PacketContext.Server ? PacketContext.Client : PacketContext.Server;
+
+            // Read the module.
+            var length = SerializableModule.Read(span, context, out var module);
             Assert.IsType<TModule>(module);
-            Assert.Equal(span.Length, moduleLength);
+            Assert.Equal(span.Length, length);
+
+            // Write the tile module.
+            var bytes = new byte[ushort.MaxValue];
+            var moduleLength = module.Write(bytes, otherContext);
+
+            // Read the tile module again.
+            SerializableModule.Read(span, context, out var module2);
+
+            // Write the tile module again.
+            var bytes2 = new byte[ushort.MaxValue];
+            var moduleLength2 = module2.Write(bytes2, otherContext);
+
+            Assert.Equal(moduleLength, moduleLength2);
+            for (var i = 0; i < moduleLength; ++i)
+            {
+                Assert.True(bytes[i] == bytes2[i], $"Expected: {bytes[i]}\nActual:   {bytes2[i]}\n  at position {i}");
+            }
 
             return (TModule)module;
         }
@@ -103,37 +132,6 @@ namespace Orion.Core.Packets
 
             Assert.Equal(packetLength, packetLength2);
             for (var i = 0; i < packetLength; ++i)
-            {
-                Assert.True(bytes[i] == bytes2[i], $"Expected: {bytes[i]}\nActual:   {bytes2[i]}\n  at position {i}");
-            }
-        }
-
-        /// <summary>
-        /// Tests a module round trip by reading, writing, re-reading, and then re-writing the module, comparing the
-        /// written byte sequences.
-        /// </summary>
-        /// <param name="span">The span to read from, initially.</param>
-        /// <param name="context">The packet context to use.</param>
-        public static void RoundTripModule(Span<byte> span, PacketContext context)
-        {
-            var otherContext = context == PacketContext.Server ? PacketContext.Client : PacketContext.Server;
-
-            // Read the module.
-            IModule.Read(span, context, out var module);
-
-            // Write the module.
-            var bytes = new byte[ushort.MaxValue];
-            var moduleLength = module.Write(bytes, otherContext);
-
-            // Read the module again.
-            IModule.Read(span, context, out var module2);
-
-            // Write the module again.
-            var bytes2 = new byte[ushort.MaxValue];
-            var moduleLength2 = module2.Write(bytes2, otherContext);
-
-            Assert.Equal(moduleLength, moduleLength2);
-            for (var i = 0; i < moduleLength; ++i)
             {
                 Assert.True(bytes[i] == bytes2[i], $"Expected: {bytes[i]}\nActual:   {bytes2[i]}\n  at position {i}");
             }

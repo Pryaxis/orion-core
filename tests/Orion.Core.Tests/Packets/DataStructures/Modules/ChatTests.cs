@@ -23,7 +23,7 @@ using Xunit;
 namespace Orion.Core.Packets.DataStructures.Modules
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ChatModuleTests
+    public class ChatTests
     {
         private readonly byte[] _serverBytes =
         {
@@ -35,106 +35,94 @@ namespace Orion.Core.Packets.DataStructures.Modules
         [Fact]
         public void ClientCommand_SetNullValue_ThrowsArgumentNullException()
         {
-            var module = new ChatModule();
+            var chat = new Chat();
 
-            Assert.Throws<ArgumentNullException>(() => module.ClientCommand = null!);
+            Assert.Throws<ArgumentNullException>(() => chat.ClientCommand = null!);
         }
 
         [Fact]
         public void ClientCommand_Set_Get()
         {
-            var module = new ChatModule();
+            var chat = new Chat();
 
-            module.ClientCommand = "Say";
+            chat.ClientCommand = "Say";
 
-            Assert.Equal("Say", module.ClientCommand);
+            Assert.Equal("Say", chat.ClientCommand);
         }
 
         [Fact]
         public void ClientMessage_SetNullValue_ThrowsArgumentNullException()
         {
-            var module = new ChatModule();
+            var chat = new Chat();
 
-            Assert.Throws<ArgumentNullException>(() => module.ClientMessage = null!);
+            Assert.Throws<ArgumentNullException>(() => chat.ClientMessage = null!);
         }
 
         [Fact]
         public void ClientMessage_Set_Get()
         {
-            var module = new ChatModule();
+            var chat = new Chat();
 
-            module.ClientMessage = "/command test";
+            chat.ClientMessage = "/command test";
 
-            Assert.Equal("/command test", module.ClientMessage);
+            Assert.Equal("/command test", chat.ClientMessage);
         }
 
         [Fact]
         public void ServerAuthorIndex_Set_Get()
         {
-            var module = new ChatModule();
+            var chat = new Chat();
 
-            module.ServerAuthorIndex = 1;
+            chat.ServerAuthorIndex = 1;
 
-            Assert.Equal(1, module.ServerAuthorIndex);
+            Assert.Equal(1, chat.ServerAuthorIndex);
         }
 
         [Fact]
         public void ServerMessage_SetNullValue_ThrowsArgumentNullException()
         {
-            var module = new ChatModule();
+            var chat = new Chat();
 
-            Assert.Throws<ArgumentNullException>(() => module.ServerMessage = null!);
+            Assert.Throws<ArgumentNullException>(() => chat.ServerMessage = null!);
         }
 
         [Fact]
         public void ServerMessage_Set_Get()
         {
-            var module = new ChatModule();
+            var chat = new Chat();
 
-            module.ServerMessage = "test";
+            chat.ServerMessage = "test";
 
-            Assert.Equal("test", module.ServerMessage);
+            Assert.Equal("test", chat.ServerMessage);
         }
 
         [Fact]
         public void ServerColor_Set_Get()
         {
-            var module = new ChatModule();
+            var chat = new Chat();
 
-            module.ServerColor = Color3.White;
+            chat.ServerColor = Color3.White;
 
-            Assert.Equal(Color3.White, module.ServerColor);
+            Assert.Equal(Color3.White, chat.ServerColor);
         }
 
         [Fact]
         public void Read_AsServer()
         {
-            var module = TestUtils.ReadModule<ChatModule>(_serverBytes, PacketContext.Server);
+            var chat = TestUtils.ReadModule<Chat>(_serverBytes, PacketContext.Server);
 
-            Assert.Equal("Say", module.ClientCommand);
-            Assert.Equal("/command test", module.ClientMessage);
+            Assert.Equal("Say", chat.ClientCommand);
+            Assert.Equal("/command test", chat.ClientMessage);
         }
 
         [Fact]
         public void Read_AsClient()
         {
-            var module = TestUtils.ReadModule<ChatModule>(_clientBytes, PacketContext.Client);
+            var chat = TestUtils.ReadModule<Chat>(_clientBytes, PacketContext.Client);
 
-            Assert.Equal(1, module.ServerAuthorIndex);
-            Assert.Equal("test", module.ServerMessage);
-            Assert.Equal(Color3.White, module.ServerColor);
-        }
-
-        [Fact]
-        public void RoundTrip_AsServer()
-        {
-            TestUtils.RoundTripModule(_serverBytes, PacketContext.Server);
-        }
-
-        [Fact]
-        public void RoundTrip_AsClient()
-        {
-            TestUtils.RoundTripModule(_clientBytes, PacketContext.Client);
+            Assert.Equal(1, chat.ServerAuthorIndex);
+            Assert.Equal("test", chat.ServerMessage);
+            Assert.Equal(Color3.White, chat.ServerColor);
         }
     }
 }

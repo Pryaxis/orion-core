@@ -25,14 +25,14 @@ namespace Orion.Core.Packets
     /// </summary>
     public sealed class ModulePacket : IPacket
     {
-        private IModule _module = EmptyModule.Instance;
+        private SerializableModule _module = EmptyModule.Instance;
 
         /// <summary>
         /// Gets or sets the module.
         /// </summary>
         /// <value>The module.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public IModule Module
+        public SerializableModule Module
         {
             get => _module;
             set => _module = value ?? throw new ArgumentNullException(nameof(value));
@@ -40,21 +40,21 @@ namespace Orion.Core.Packets
 
         PacketId IPacket.Id => PacketId.Module;
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => IModule.Read(span, context, out _module);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => SerializableModule.Read(span, context, out _module);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => _module.Write(span, context);
 
-        private sealed class EmptyModule : IModule
+        private sealed class EmptyModule : SerializableModule
         {
             public static EmptyModule Instance { get; } = new EmptyModule();
+
+            public override ModuleId Id => (ModuleId)65535;
 
             private EmptyModule()
             {
             }
 
-            ModuleId IModule.Id => (ModuleId)65535;
-
-            int IModule.ReadBody(Span<byte> span, PacketContext context) => 0;
-            int IModule.WriteBody(Span<byte> span, PacketContext context) => 0;
+            protected override int ReadBody(Span<byte> span, PacketContext context) => 0;
+            protected override int WriteBody(Span<byte> span, PacketContext context) => 0;
         }
     }
 }

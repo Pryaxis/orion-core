@@ -23,20 +23,20 @@ using Orion.Core.Utils;
 namespace Orion.Core.Packets.DataStructures.Modules
 {
     /// <summary>
-    /// A module sent for chat.
+    /// Represents a serializable module sent for chat.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 32)]
-    public sealed class ChatModule : IModule
+    public sealed class Chat : SerializableModule
     {
         [FieldOffset(0)] private string _clientCommand = string.Empty;
         [FieldOffset(8)] private string _clientMessage = string.Empty;
-        [FieldOffset(16)] private byte _bytes;
-        [FieldOffset(17)] private byte _bytes2;
+        [FieldOffset(16)] private byte _bytes;  // Used to obtain an interior reference.
+        [FieldOffset(17)] private byte _bytes2;  // Used to obtain an interior reference.
         [FieldOffset(24)] private NetworkText _serverMessage = NetworkText.Empty;
 
         /// <summary>
-        /// Gets or sets the command. This is only applicable if read in <see cref="PacketContext.Server"/> or written
-        /// in <see cref="PacketContext.Client"/>.
+        /// Gets or sets the command. <i>This is only applicable if read in <see cref="PacketContext.Server"/> or
+        /// written in <see cref="PacketContext.Client"/>!</i>
         /// </summary>
         /// <value>The command.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
@@ -47,8 +47,8 @@ namespace Orion.Core.Packets.DataStructures.Modules
         }
 
         /// <summary>
-        /// Gets or sets the message. This is only applicable if read in <see cref="PacketContext.Server"/> or written
-        /// in <see cref="PacketContext.Client"/>.
+        /// Gets or sets the message. <i>This is only applicable if read in <see cref="PacketContext.Server"/> or
+        /// written in <see cref="PacketContext.Client"/>!</i>
         /// </summary>
         /// <value>The message.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
@@ -59,15 +59,15 @@ namespace Orion.Core.Packets.DataStructures.Modules
         }
 
         /// <summary>
-        /// Gets or sets the author player index. This is only applicable if read in <see cref="PacketContext.Client"/>
-        /// or written in <see cref="PacketContext.Server"/>.
+        /// Gets or sets the author player index. <i>This is only applicable if read in
+        /// <see cref="PacketContext.Client"/> or written in <see cref="PacketContext.Server"/>!</i>
         /// </summary>
         /// <value>The author player index.</value>
         [field: FieldOffset(16)] public byte ServerAuthorIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the message. This is only applicable if read in <see cref="PacketContext.Client"/> or written
-        /// in <see cref="PacketContext.Server"/>.
+        /// Gets or sets the message. <i>This is only applicable if read in <see cref="PacketContext.Client"/> or
+        /// written in <see cref="PacketContext.Server"/>!</i>
         /// </summary>
         /// <value>The message.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
@@ -78,16 +78,17 @@ namespace Orion.Core.Packets.DataStructures.Modules
         }
 
         /// <summary>
-        /// Gets or sets the color. This is only applicable if read in <see cref="PacketContext.Client"/> or written in
-        /// <see cref="PacketContext.Server"/>.
+        /// Gets or sets the color. <i>This is only applicable if read in <see cref="PacketContext.Client"/> or written
+        /// in <see cref="PacketContext.Server"/>!</i>
         /// </summary>
         /// <value>The color.</value>
         [field: FieldOffset(17)] public Color3 ServerColor { get; set; }
 
-        ModuleId IModule.Id => ModuleId.Chat;
+        /// <inheritdoc/>
+        public override ModuleId Id => ModuleId.Chat;
 
         /// <inheritdoc/>
-        public int ReadBody(Span<byte> span, PacketContext context)
+        protected override int ReadBody(Span<byte> span, PacketContext context)
         {
             if (context == PacketContext.Server)
             {
@@ -103,7 +104,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
         }
 
         /// <inheritdoc/>
-        public int WriteBody(Span<byte> span, PacketContext context)
+        protected override int WriteBody(Span<byte> span, PacketContext context)
         {
             if (context == PacketContext.Client)
             {

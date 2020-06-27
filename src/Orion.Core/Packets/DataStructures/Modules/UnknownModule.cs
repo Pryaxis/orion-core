@@ -20,33 +20,32 @@ using System;
 namespace Orion.Core.Packets.DataStructures.Modules
 {
     /// <summary>
-    /// An unknown module.
+    /// Represents an unknown serializable module.
     /// </summary>
-    public sealed class UnknownModule : IModule
+    public sealed class UnknownModule : SerializableModule
     {
         private readonly byte[] _data;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UnknownModule"/> class with the specified module
+        /// Initializes a new instance of the <see cref="UnknownModule"/> class with the specified data
         /// <paramref name="length"/> and <paramref name="id"/>.
         /// </summary>
         /// <param name="length">The module length.</param>
         /// <param name="id">The module ID.</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="length"/> is too small.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="length"/> is negative.</exception>
         public UnknownModule(int length, ModuleId id)
         {
-            if (length < IModule.HeaderSize)
+            if (length < 0)
             {
-                throw new ArgumentOutOfRangeException(
-                    nameof(length), $"Length is too small (expected: >= {IModule.HeaderSize})");
+                throw new ArgumentOutOfRangeException(nameof(length), "Length is negative");
             }
 
-            _data = new byte[length - IModule.HeaderSize];
+            _data = new byte[length];
             Id = id;
         }
 
         /// <inheritdoc/>
-        public ModuleId Id { get; }
+        public override ModuleId Id { get; }
 
         /// <summary>
         /// Gets the module's data.
@@ -54,10 +53,12 @@ namespace Orion.Core.Packets.DataStructures.Modules
         /// <value>The module's data.</value>
         public unsafe Span<byte> Data => _data;
 
-        int IModule.ReadBody(Span<byte> span, PacketContext context) =>
+        /// <inheritdoc/>
+        protected override int ReadBody(Span<byte> span, PacketContext context) =>
             _data.Length == 0 ? 0 : span.Read(ref _data[0], _data.Length);
 
-        int IModule.WriteBody(Span<byte> span, PacketContext context) =>
+        /// <inheritdoc/>
+        protected override int WriteBody(Span<byte> span, PacketContext context) =>
             _data.Length == 0 ? 0 : span.Write(ref _data[0], _data.Length);
     }
 }

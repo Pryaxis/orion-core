@@ -17,7 +17,6 @@
 
 using System;
 using Moq;
-using Orion.Core.Packets;
 using Orion.Core.Packets.Server;
 using Orion.Core.Packets.World.Tiles;
 using Orion.Core.Utils;

@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
@@ -27,19 +28,25 @@ namespace Orion.Core.Packets.DataStructures.Modules
         private readonly byte[] _emptyBytes = { 255, 255 };
 
         [Fact]
-        public void Data_Get()
+        public void Ctor_NegativeLength_ThrowsArgumentOutOfRangeException()
         {
-            var module = new UnknownModule(10, (ModuleId)65535);
-
-            Assert.Equal(8, module.Data.Length);
+            Assert.Throws<ArgumentOutOfRangeException>(() => new UnknownModule(-1, (ModuleId)65535));
         }
 
         [Fact]
         public void Id_Get()
         {
-            var module = new UnknownModule(10, (ModuleId)65535);
+            var module = new UnknownModule(8, (ModuleId)65535);
 
             Assert.Equal((ModuleId)65535, module.Id);
+        }
+
+        [Fact]
+        public void Data_Get()
+        {
+            var module = new UnknownModule(8, (ModuleId)65535);
+
+            Assert.Equal(8, module.Data.Length);
         }
 
         [Fact]
@@ -60,18 +67,6 @@ namespace Orion.Core.Packets.DataStructures.Modules
             var module = TestUtils.ReadModule<UnknownModule>(_emptyBytes, PacketContext.Server);
 
             Assert.Equal(0, module.Data.Length);
-        }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripModule(_bytes, PacketContext.Server);
-        }
-
-        [Fact]
-        public void RoundTrip_Empty()
-        {
-            TestUtils.RoundTripModule(_emptyBytes, PacketContext.Server);
         }
     }
 }
