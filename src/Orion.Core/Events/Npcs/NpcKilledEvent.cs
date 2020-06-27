@@ -21,9 +21,9 @@ using Orion.Core.Npcs;
 namespace Orion.Core.Events.Npcs
 {
     /// <summary>
-    /// An event that occurs when an NPC has been killed.
+    /// An event that occurs when an NPC has been killed. This event cannot be canceled.
     /// </summary>
-    [Event("npc-killed")]
+    [Event("npc-killed", IsCancelable = false)]
     public sealed class NpcKilledEvent : NpcEvent
     {
         /// <summary>

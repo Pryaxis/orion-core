@@ -20,9 +20,9 @@ using Serilog.Events;
 namespace Orion.Core.Events.Server
 {
     /// <summary>
-    /// An event that occurs when a server tick (update) occurs.
+    /// An event that occurs when a server tick (update) occurs. This event cannot be canceled.
     /// </summary>
-    [Event("server-tick", LoggingLevel = LogEventLevel.Verbose)]
+    [Event("server-tick", LoggingLevel = LogEventLevel.Verbose, IsCancelable = false)]
     public sealed class ServerTickEvent : Event
     {
     }

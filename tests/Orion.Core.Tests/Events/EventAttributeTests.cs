@@ -48,5 +48,15 @@ namespace Orion.Core.Events
 
             Assert.Equal(LogEventLevel.Information, attribute.LoggingLevel);
         }
+
+        [Fact]
+        public void IsCancelable_Set_Get()
+        {
+            var attribute = new EventAttribute("test");
+
+            attribute.IsCancelable = false;
+
+            Assert.False(attribute.IsCancelable);
+        }
     }
 }

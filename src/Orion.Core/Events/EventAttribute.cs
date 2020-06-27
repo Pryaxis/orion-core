@@ -49,5 +49,14 @@ namespace Orion.Core.Events
         /// </summary>
         /// <value>The event's logging level. The default value is <c>Debug</c>.</value>
         public LogEventLevel LoggingLevel { get; set; } = LogEventLevel.Debug;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the event is cancelable.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the event is cancelable; otherwise, <see langword="false"/>. The default value is
+        /// <see langword="true"/>.
+        /// </value>
+        public bool IsCancelable { get; set; } = true;
     }
 }

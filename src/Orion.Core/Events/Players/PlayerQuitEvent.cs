@@ -21,9 +21,9 @@ using Orion.Core.Players;
 namespace Orion.Core.Events.Players
 {
     /// <summary>
-    /// An event that occurs when a player has quit the server.
+    /// An event that occurs when a player has quit the server. This event cannot be canceled.
     /// </summary>
-    [Event("player-quit")]
+    [Event("player-quit", IsCancelable = false)]
     public sealed class PlayerQuitEvent : PlayerEvent
     {
         /// <summary>

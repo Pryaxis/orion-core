@@ -18,9 +18,9 @@
 namespace Orion.Core.Events.Server
 {
     /// <summary>
-    /// An event that occurs when the server starts accepting connections.
+    /// An event that occurs when the server starts accepting connections. This event cannot be canceled.
     /// </summary>
-    [Event("server-start")]
+    [Event("server-start", IsCancelable = false)]
     public sealed class ServerStartEvent : Event
     {
     }

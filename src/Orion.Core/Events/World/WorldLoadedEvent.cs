@@ -21,9 +21,9 @@ using Orion.Core.World;
 namespace Orion.Core.Events.World
 {
     /// <summary>
-    /// An event that occurs when a world has been loaded.
+    /// An event that occurs when a world has been loaded. This event cannot be canceled.
     /// </summary>
-    [Event("world-loaded")]
+    [Event("world-loaded", IsCancelable = false)]
     public sealed class WorldLoadedEvent : WorldEvent
     {
         /// <summary>

@@ -18,9 +18,9 @@
 namespace Orion.Core.Events.Server
 {
     /// <summary>
-    /// An event that occurs when the server is initializing.
+    /// An event that occurs when the server is initializing. This event cannot be canceled.
     /// </summary>
-    [Event("server-init")]
+    [Event("server-init", IsCancelable = false)]
     public sealed class ServerInitializeEvent : Event
     {
     }

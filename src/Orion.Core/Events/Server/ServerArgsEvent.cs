@@ -23,9 +23,9 @@ using System.Linq;
 namespace Orion.Core.Events.Server
 {
     /// <summary>
-    /// An event that occurs when the server arguments are processed.
+    /// An event that occurs when the server arguments are processed. This event cannot be canceled.
     /// </summary>
-    [Event("server-args")]
+    [Event("server-args", IsCancelable = false)]
     public sealed class ServerArgsEvent : Event
     {
         private readonly ISet<string> _bools = new HashSet<string>();
