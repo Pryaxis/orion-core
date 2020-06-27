@@ -30,6 +30,7 @@ namespace Orion.Core.Packets
         PlayerInventory = 5,
         PlayerJoin = 6,
         ClientStatus = 9,
+        SectionFrames = 11,
         ServerActivity = 14,
         PlayerHealth = 16,
         TileModify = 17,

@@ -53,6 +53,7 @@ namespace Orion.Core.Packets
                 [PacketId.PlayerInventory] = () => new PlayerInventoryPacket(),
                 [PacketId.PlayerJoin] = () => new PlayerJoinPacket(),
                 [PacketId.ClientStatus] = () => new ClientStatusPacket(),
+                [PacketId.SectionFrames] = () => new SectionFramesPacket(),
                 [PacketId.ServerActivity] = () => new ServerActivityPacket(),
                 [PacketId.PlayerHealth] = () => new PlayerHealthPacket(),
                 [PacketId.TileModify] = () => new TileModifyPacket(),
