@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace Orion.Core.Entities
@@ -26,35 +28,115 @@ namespace Orion.Core.Entities
     /// <remarks>
     /// Implementations must be thread-safe.
     /// 
-    /// This interface is used to allow consumers to attach custom state to objects without having to rely on the
+    /// This interface allows consumers to attach custom state to objects without having to rely on the
     /// <see cref="ConditionalWeakTable{TKey, TValue}"/> class.
     /// </remarks>
     public interface IAnnotatable
     {
         /// <summary>
-        /// Gets a reference to the annotation of type <typeparamref name="T"/> with the given <paramref name="key"/>,
-        /// using the specified <paramref name="initializer"/> to initialize the annotation.
+        /// Gets the annotation with the given <paramref name="key"/>, using the specified
+        /// <paramref name="initializer"/> to initialize the annotation if it does not exist.
         /// </summary>
-        /// <typeparam name="T">The type.</typeparam>
-        /// <param name="key">The key.</param>
+        /// <typeparam name="TAnnotation">The type of annotation.</typeparam>
+        /// <param name="key">The annotation key to get.</param>
         /// <param name="initializer">
         /// The initializer. If <see langword="null"/>, then a default initializer is used.
         /// </param>
-        /// <returns>A reference to the annotation.</returns>
-        /// <exception cref="ArgumentException">
-        /// <paramref name="key"/> does not refer to an annotation of type <typeparamref name="T"/>.
-        /// </exception>
+        /// <returns>The annotation.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null"/>.</exception>
-        ref T GetAnnotation<T>(string key, Func<T>? initializer = null);
+        public TAnnotation GetAnnotation<TAnnotation>(
+            AnnotationKey<TAnnotation> key, Func<TAnnotation>? initializer = null);
+
+        /// <summary>
+        /// Sets the annotation with the given <paramref name="key"/> to the specified <paramref name="value"/>.
+        /// </summary>
+        /// <typeparam name="TAnnotation">The type of annotation.</typeparam>
+        /// <param name="key">The annotation key to set.</param>
+        /// <param name="value">The value.</param>
+        public void SetAnnotation<TAnnotation>(AnnotationKey<TAnnotation> key, TAnnotation value);
 
         /// <summary>
         /// Removes the annotation with the given <paramref name="key"/>. Returns a value indicating success.
         /// </summary>
-        /// <param name="key">The key.</param>
+        /// <typeparam name="TAnnotation">The type of annotation.</typeparam>
+        /// <param name="key">The annotation key to remove.</param>
         /// <returns>
         /// <see langword="true"/> if the annotation was removed; otherwise, <see langword="false"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null"/>.</exception>
-        bool RemoveAnnotation(string key);
+        public bool RemoveAnnotation<TAnnotation>(AnnotationKey<TAnnotation> key);
+    }
+
+    /// <summary>
+    /// Represents a strongly-typed annotation key.
+    /// </summary>
+    /// <typeparam name="TAnnotation">The type of annotation.</typeparam>
+    public sealed class AnnotationKey<TAnnotation>
+    {
+    }
+
+    /// <summary>
+    /// Represents an annotatable object. Provides the base class for implementations of interfaces derived from
+    /// <see cref="IAnnotatable"/>.
+    /// </summary>
+    /// <remarks>
+    /// This class is thread-safe.
+    /// </remarks>
+    public class AnnotatableObject : IAnnotatable
+    {
+        private readonly object _lock = new object();
+        private readonly IDictionary<object, object?> _annotations = new Dictionary<object, object?>();
+
+        /// <inheritdoc/>
+        public TAnnotation GetAnnotation<TAnnotation>(
+            AnnotationKey<TAnnotation> key, Func<TAnnotation>? initializer = null)
+        {
+            if (key is null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            lock (_lock)
+            {
+                if (!_annotations.TryGetValue(key, out var value))
+                {
+                    value = initializer is null ? default : initializer();
+                    _annotations[key] = value;
+                }
+
+                Debug.Assert(value is TAnnotation);
+                return (TAnnotation)value;
+            }
+
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void SetAnnotation<TAnnotation>(AnnotationKey<TAnnotation> key, TAnnotation value)
+        {
+            if (key is null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            lock (_lock)
+            {
+                _annotations[key] = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public bool RemoveAnnotation<TAnnotation>(AnnotationKey<TAnnotation> key)
+        {
+            if (key is null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            lock (_lock)
+            {
+                return _annotations.Remove(key);
+            }
+        }
     }
 }
