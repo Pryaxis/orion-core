@@ -16,8 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Orion.Core.Collections;
 using Orion.Core.Items;
+using Orion.Core.Utils;
 using Orion.Core.World.TileEntities;
 
 namespace Orion.Core.World.Chests

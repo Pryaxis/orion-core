@@ -18,7 +18,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
-namespace Orion.Core.Buffs
+namespace Orion.Core.Entities
 {
     /// <summary>
     /// Specifies a buff ID.

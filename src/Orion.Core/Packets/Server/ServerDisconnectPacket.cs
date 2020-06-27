@@ -17,7 +17,7 @@
 
 using System;
 using System.Text;
-using Orion.Core.DataStructures;
+using Orion.Core.Packets.DataStructures;
 
 namespace Orion.Core.Packets.Server
 {

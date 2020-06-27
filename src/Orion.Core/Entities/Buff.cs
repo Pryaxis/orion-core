@@ -19,7 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 
-namespace Orion.Core.Buffs
+namespace Orion.Core.Entities
 {
     /// <summary>
     /// Represents a buff.

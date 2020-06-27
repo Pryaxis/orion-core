@@ -17,7 +17,7 @@
 
 using System;
 using Moq;
-using Orion.Core.Buffs;
+using Orion.Core.Entities;
 using Orion.Core.Npcs;
 using Orion.Core.Players;
 using Xunit;

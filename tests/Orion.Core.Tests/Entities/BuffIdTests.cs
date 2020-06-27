@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Orion.Core.Buffs
+namespace Orion.Core.Entities
 {
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]

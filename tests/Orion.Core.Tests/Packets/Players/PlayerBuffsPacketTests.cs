@@ -16,7 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics.CodeAnalysis;
-using Orion.Core.Buffs;
+using Orion.Core.Entities;
 using Xunit;
 
 namespace Orion.Core.Packets.Players

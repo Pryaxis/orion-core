@@ -17,8 +17,8 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Orion.Core.DataStructures;
 using Orion.Core.Items;
+using Orion.Core.Utils;
 
 namespace Orion.Core.Packets.Items
 {

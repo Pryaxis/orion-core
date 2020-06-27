@@ -18,7 +18,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.DataStructures
+namespace Orion.Core.Utils
 {
     public class Color3Tests
     {

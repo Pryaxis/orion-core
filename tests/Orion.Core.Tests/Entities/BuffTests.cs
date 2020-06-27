@@ -19,7 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Buffs
+namespace Orion.Core.Entities
 {
     public class BuffTests
     {

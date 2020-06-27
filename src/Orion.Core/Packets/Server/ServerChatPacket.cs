@@ -18,7 +18,8 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
-using Orion.Core.DataStructures;
+using Orion.Core.Packets.DataStructures;
+using Orion.Core.Utils;
 
 namespace Orion.Core.Packets.Server
 {

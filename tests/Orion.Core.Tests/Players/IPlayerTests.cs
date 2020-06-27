@@ -17,10 +17,10 @@
 
 using System;
 using Moq;
-using Orion.Core.DataStructures;
 using Orion.Core.Packets;
 using Orion.Core.Packets.Server;
 using Orion.Core.Packets.World.Tiles;
+using Orion.Core.Utils;
 using Orion.Core.World.Tiles;
 using Xunit;
 

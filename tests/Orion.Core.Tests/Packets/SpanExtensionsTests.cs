@@ -18,7 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Orion.Core.DataStructures;
+using Orion.Core.Packets.DataStructures;
 using Xunit;
 
 namespace Orion.Core.Packets

@@ -17,7 +17,7 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Orion.Core.Buffs;
+using Orion.Core.Entities;
 
 namespace Orion.Core.Packets.Npcs
 {

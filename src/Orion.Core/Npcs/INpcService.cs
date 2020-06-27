@@ -16,8 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using Orion.Core.DataStructures;
 using Orion.Core.Events.Npcs;
+using Orion.Core.Utils;
 
 namespace Orion.Core.Npcs
 {

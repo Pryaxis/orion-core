@@ -22,7 +22,7 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 
-namespace Orion.Core.DataStructures
+namespace Orion.Core.Packets.DataStructures
 {
     /// <summary>
     /// Represents text transmitted over the network.

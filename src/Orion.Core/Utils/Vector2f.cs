@@ -20,7 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 
-namespace Orion.Core.DataStructures
+namespace Orion.Core.Utils
 {
     /// <summary>
     /// Represents a two float component vector.

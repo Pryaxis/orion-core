@@ -17,7 +17,7 @@
 
 using System.Collections.Generic;
 
-namespace Orion.Core.Collections
+namespace Orion.Core.Utils
 {
     /// <summary>
     /// Represents a collection of elements that can be accessed by index.
