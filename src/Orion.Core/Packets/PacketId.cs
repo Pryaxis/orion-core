@@ -92,6 +92,7 @@ namespace Orion.Core.Packets
         HatRackInventory = 124,
         NpcFish = 130,
         PlateInfo = 133,
+        PlayerLuck = 134,
         PlayerDead = 135,
         NpcRemoveBuff = 137,
         ServerHost = 139,
