@@ -28,7 +28,7 @@ namespace Orion.Core.Events.Server
     [Event("server-args", IsCancelable = false)]
     public sealed class ServerArgsEvent : Event
     {
-        private readonly ISet<string> _bools = new HashSet<string>();
+        private readonly ISet<string> _flags = new HashSet<string>();
         private readonly IDictionary<string, string> _values = new Dictionary<string, string>();
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Orion.Core.Events.Server
                     var equals = arg.IndexOf('=', StringComparison.Ordinal);
                     if (equals < 0)
                     {
-                        _bools.Add(arg[2..]);
+                        _flags.Add(arg[2..]);
                     }
                     else
                     {
@@ -69,7 +69,7 @@ namespace Orion.Core.Events.Server
                     // Add the args' characters as flags.
                     foreach (var c in arg[1..])
                     {
-                        _bools.Add(c.ToString());
+                        _flags.Add(c.ToString());
                     }
                 }
             }
@@ -83,14 +83,14 @@ namespace Orion.Core.Events.Server
         /// <exception cref="ArgumentException">
         /// <paramref name="name"/> is <see langword="null"/> or whitespace.
         /// </exception>
-        public bool GetBool(string name)
+        public bool GetFlag(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("Name is null or whitespace", nameof(name));
             }
 
-            return _bools.Contains(name);
+            return _flags.Contains(name);
         }
 
         /// <summary>

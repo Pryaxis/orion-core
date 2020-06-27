@@ -37,37 +37,37 @@ namespace Orion.Core.Events.Server
         [Theory]
         [InlineData(null)]
         [InlineData("   ")]
-        public void GetBool_ThrowsArgumentException(string? name)
+        public void GetFlag_NullOrWhiteSpaceName_ThrowsArgumentException(string? name)
         {
             var evt = new ServerArgsEvent();
 
-            Assert.Throws<ArgumentException>(() => evt.GetBool(name!));
+            Assert.Throws<ArgumentException>(() => evt.GetFlag(name!));
         }
 
         [Fact]
-        public void GetBool_FlagExists_ReturnsTrue()
+        public void GetFlag_FlagExists_ReturnsTrue()
         {
             var evt = new ServerArgsEvent("-abcd", "--test");
 
-            Assert.True(evt.GetBool("a"));
-            Assert.True(evt.GetBool("b"));
-            Assert.True(evt.GetBool("c"));
-            Assert.True(evt.GetBool("d"));
-            Assert.True(evt.GetBool("test"));
+            Assert.True(evt.GetFlag("a"));
+            Assert.True(evt.GetFlag("b"));
+            Assert.True(evt.GetFlag("c"));
+            Assert.True(evt.GetFlag("d"));
+            Assert.True(evt.GetFlag("test"));
         }
 
         [Fact]
-        public void GetBool_FlagDoesntExist_ReturnsFalse()
+        public void GetFlag_FlagDoesntExist_ReturnsFalse()
         {
             var evt = new ServerArgsEvent("--test");
 
-            Assert.False(evt.GetBool("test2"));
+            Assert.False(evt.GetFlag("test2"));
         }
 
         [Theory]
         [InlineData(null)]
         [InlineData("   ")]
-        public void TryGetValue_ThrowsArgumentException(string? name)
+        public void TryGetValue_NullOrWhiteSpaceName_ThrowsArgumentException(string? name)
         {
             var evt = new ServerArgsEvent();
 
