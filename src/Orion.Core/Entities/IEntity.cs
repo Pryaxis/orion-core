@@ -58,38 +58,38 @@ namespace Orion.Core.Entities
         /// Gets the entity's index. A negative value indicates that the entity is abstract.
         /// </summary>
         /// <value>The entity's index.</value>
-        int Index { get; }
+        public int Index { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the entity is active: i.e., whether the entity exists in the world.
         /// </summary>
         /// <value><see langword="true"/> if the entity is active; otherwise, <see langword="false"/>.</value>
-        bool IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         /// <summary>
         /// Gets or sets the entity's name.
         /// </summary>
         /// <value>The entity's name.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        string Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the entity's position, in pixels.
         /// </summary>
         /// <value>The entity's position, in pixels.</value>
-        Vector2f Position { get; set; }
+        public Vector2f Position { get; set; }
 
         /// <summary>
         /// Gets or sets the entity's velocity, in pixels per tick.
         /// </summary>
         /// <value>The entity's velocity, in pixels per tick.</value>
-        Vector2f Velocity { get; set; }
+        public Vector2f Velocity { get; set; }
 
         /// <summary>
         /// Gets or sets the entity's size, in pixels.
         /// </summary>
         /// <value>The entity's size, in pixels.</value>
-        Vector2f Size { get; set; }
+        public Vector2f Size { get; set; }
     }
 
     /// <summary>

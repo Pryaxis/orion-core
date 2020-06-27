@@ -73,7 +73,7 @@ namespace Orion.Core.Utils
 
         /// <inheritdoc/>
         [Pure]
-        public override bool Equals(object obj) => obj is Color3 other && Equals(other);
+        public override bool Equals(object? obj) => obj is Color3 other && Equals(other);
 
         /// <inheritdoc/>
         [Pure]

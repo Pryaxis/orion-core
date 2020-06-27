@@ -23,11 +23,11 @@ using System.Runtime.InteropServices;
 namespace Orion.Core.Items
 {
     /// <summary>
-    /// Represents a stack of items in an inventory of some sort.
+    /// Represents a stack of items.
     /// </summary>
     /// <remarks>
-    /// An item stack instance fully describes an inventory slot. It is composed of an <see cref="ItemId"/>, the item
-    /// stack size, and an <see cref="ItemPrefix"/>.
+    /// An item stack instance fully describes an item. It is composed of an <see cref="ItemId"/>,
+    /// an <see cref="ItemPrefix"/>, and the item stack size.
     /// 
     /// This structure is sized to allow efficient passing.
     /// </remarks>
@@ -74,7 +74,7 @@ namespace Orion.Core.Items
 
         /// <inheritdoc/>
         [Pure]
-        public override bool Equals(object obj) => obj is ItemStack other && Equals(other);
+        public override bool Equals(object? obj) => obj is ItemStack other && Equals(other);
 
         /// <inheritdoc/>
         [Pure]

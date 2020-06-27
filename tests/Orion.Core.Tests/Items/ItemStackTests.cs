@@ -47,7 +47,7 @@ namespace Orion.Core.Items
         }
 
         [Fact]
-        public void IsEmpty_ReturnsTrue()
+        public void IsEmpty_Get_ReturnsTrue()
         {
             var itemStack = new ItemStack(ItemId.None, ItemPrefix.None, 10);
             var itemStack2 = new ItemStack(ItemId.Sdmg, ItemPrefix.None, 0);
@@ -57,7 +57,7 @@ namespace Orion.Core.Items
         }
 
         [Fact]
-        public void IsEmpty_ReturnsFalse()
+        public void IsEmpty_Get_ReturnsFalse()
         {
             var itemStack = new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1);
 

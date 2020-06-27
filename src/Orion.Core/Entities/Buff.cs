@@ -101,7 +101,7 @@ namespace Orion.Core.Entities
 
         /// <inheritdoc/>
         [Pure]
-        public override bool Equals(object obj) => obj is Buff other && Equals(other);
+        public override bool Equals(object? obj) => obj is Buff other && Equals(other);
 
         /// <inheritdoc/>
         [Pure]

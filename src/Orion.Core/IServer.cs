@@ -47,48 +47,48 @@ namespace Orion.Core
         /// Gets the event manager.
         /// </summary>
         /// <value>The event manager.</value>
-        IEventManager Events { get; }
+        public IEventManager Events { get; }
 
         /// <summary>
         /// Gets the item service.
         /// </summary>
         /// <value>The item service.</value>
-        IItemService Items { get; }
+        public IItemService Items { get; }
 
         /// <summary>
         /// Gets the NPC service.
         /// </summary>
         /// <value>The NPC service.</value>
-        INpcService Npcs { get; }
+        public INpcService Npcs { get; }
 
         /// <summary>
         /// Gets the player service.
         /// </summary>
         /// <value>The player service.</value>
-        IPlayerService Players { get; }
+        public IPlayerService Players { get; }
 
         /// <summary>
         /// Gets the projectile service.
         /// </summary>
         /// <value>The projectile service.</value>
-        IProjectileService Projectiles { get; }
+        public IProjectileService Projectiles { get; }
 
         /// <summary>
         /// Gets the chest service.
         /// </summary>
         /// <value>The chest service.</value>
-        IChestService Chests { get; }
+        public IChestService Chests { get; }
 
         /// <summary>
         /// Gets the sign service.
         /// </summary>
         /// <value>The sign service.</value>
-        ISignService Signs { get; }
+        public ISignService Signs { get; }
 
         /// <summary>
         /// Gets the world.
         /// </summary>
         /// <value>The world.</value>
-        IWorld World { get; }
+        public IWorld World { get; }
     }
 }

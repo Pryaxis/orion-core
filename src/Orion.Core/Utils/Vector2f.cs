@@ -57,7 +57,7 @@ namespace Orion.Core.Utils
 
         /// <inheritdoc/>
         [Pure]
-        public override bool Equals(object obj) => obj is Vector2f vector && Equals(vector);
+        public override bool Equals(object? obj) => obj is Vector2f vector && Equals(vector);
 
         /// <inheritdoc/>
         [Pure]

@@ -35,78 +35,78 @@ namespace Orion.Core.Players
     public interface IPlayer : IEntity
     {
         /// <summary>
+        /// Gets the player's character.
+        /// </summary>
+        /// <value>The player's character.</value>
+        public ICharacter Character { get; }
+
+        /// <summary>
         /// Gets or sets the player's health.
         /// </summary>
         /// <value>The player's health.</value>
-        int Health { get; set; }
+        public int Health { get; set; }
 
         /// <summary>
         /// Gets or sets the player's maximum health.
         /// </summary>
         /// <value>The player's maximum health.</value>
-        int MaxHealth { get; set; }
+        public int MaxHealth { get; set; }
 
         /// <summary>
         /// Gets or sets the player's mana.
         /// </summary>
         /// <value>The player's mana.</value>
-        int Mana { get; set; }
+        public int Mana { get; set; }
 
         /// <summary>
         /// Gets or sets the player's maximum mana.
         /// </summary>
         /// <value>The player's maximum mana.</value>
-        int MaxMana { get; set; }
+        public int MaxMana { get; set; }
 
         /// <summary>
         /// Gets the player's buffs.
         /// </summary>
         /// <value>The player's buffs.</value>
-        IArray<Buff> Buffs { get; }
-
-        /// <summary>
-        /// Gets or sets the player's character difficulty.
-        /// </summary>
-        /// <value>The player's character difficulty.</value>
-        CharacterDifficulty Difficulty { get; set; }
+        public IArray<Buff> Buffs { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the player is in PvP.
         /// </summary>
         /// <value><see langword="true"/> if the player is in PvP; otherwise, <see langword="false"/>.</value>
-        bool IsInPvp { get; set; }
+        public bool IsInPvp { get; set; }
 
         /// <summary>
         /// Gets or sets the player's team.
         /// </summary>
         /// <value>The player's team.</value>
-        PlayerTeam Team { get; set; }
+        public PlayerTeam Team { get; set; }
 
         /// <summary>
         /// Receives the given <paramref name="packet"/> from the player.
         /// </summary>
         /// <param name="packet">The packet to receive.</param>
-        void ReceivePacket(IPacket packet);
+        public void ReceivePacket(IPacket packet);
 
         /// <summary>
         /// Receives the given <paramref name="packet"/> from the player.
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="packet">The packet to receive.</param>
-        void ReceivePacket<TPacket>(TPacket packet) where TPacket : struct, IPacket;
+        public void ReceivePacket<TPacket>(TPacket packet) where TPacket : struct, IPacket;
 
         /// <summary>
         /// Sends the given <paramref name="packet"/> to the player.
         /// </summary>>
         /// <param name="packet">The packet to send.</param>
-        void SendPacket(IPacket packet);
+        public void SendPacket(IPacket packet);
 
         /// <summary>
         /// Sends the given <paramref name="packet"/> to the player.
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="packet">The packet to send.</param>
-        void SendPacket<TPacket>(TPacket packet) where TPacket : struct, IPacket;
+        public void SendPacket<TPacket>(TPacket packet) where TPacket : struct, IPacket;
     }
 
     /// <summary>

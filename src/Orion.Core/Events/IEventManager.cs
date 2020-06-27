@@ -42,7 +42,7 @@ namespace Orion.Core.Events
         /// <exception cref="ArgumentNullException">
         /// <paramref name="handler"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        void RegisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event;
+        public void RegisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event;
 
         /// <summary>
         /// Registers the given asynchronous event <paramref name="handler"/> for events of a certain type.
@@ -53,7 +53,7 @@ namespace Orion.Core.Events
         /// <exception cref="ArgumentNullException">
         /// <paramref name="handler"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        void RegisterAsyncHandler<TEvent>(Func<TEvent, Task> handler, ILogger log) where TEvent : Event;
+        public void RegisterAsyncHandler<TEvent>(Func<TEvent, Task> handler, ILogger log) where TEvent : Event;
 
         /// <summary>
         /// Deregisters the given synchronous event <paramref name="handler"/> for events of a certain type.
@@ -64,7 +64,7 @@ namespace Orion.Core.Events
         /// <exception cref="ArgumentNullException">
         /// <paramref name="handler"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        void DeregisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event;
+        public void DeregisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event;
 
         /// <summary>
         /// Deregisters the given asynchronous event <paramref name="handler"/> for events of a certain type.
@@ -75,7 +75,7 @@ namespace Orion.Core.Events
         /// <exception cref="ArgumentNullException">
         /// <paramref name="handler"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        void DeregisterAsyncHandler<TEvent>(Func<TEvent, Task> handler, ILogger log) where TEvent : Event;
+        public void DeregisterAsyncHandler<TEvent>(Func<TEvent, Task> handler, ILogger log) where TEvent : Event;
 
         /// <summary>
         /// Raises the given <paramref name="evt"/>, executing all of the event handlers which apply for events of a
@@ -87,7 +87,7 @@ namespace Orion.Core.Events
         /// <exception cref="ArgumentNullException">
         /// <paramref name="evt"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        void Raise<TEvent>(TEvent evt, ILogger log) where TEvent : Event;
+        public void Raise<TEvent>(TEvent evt, ILogger log) where TEvent : Event;
     }
 
     /// <summary>

@@ -31,24 +31,24 @@ namespace Orion.Core.Npcs
         /// Gets the NPC's ID.
         /// </summary>
         /// <value>The NPC's ID.</value>
-        NpcId Id { get; }
+        public NpcId Id { get; }
 
         /// <summary>
         /// Gets or sets the NPC's health.
         /// </summary>
         /// <value>The NPC's health.</value>
-        int Health { get; set; }
+        public int Health { get; set; }
 
         /// <summary>
         /// Gets or sets the NPC's max health.
         /// </summary>
         /// <value>The NPC's max health.</value>
-        int MaxHealth { get; set; }
+        public int MaxHealth { get; set; }
 
         /// <summary>
         /// Sets the NPC's <paramref name="id"/>. This will update the NPC accordingly. 
         /// </summary>
         /// <param name="id">The NPC ID to set the NPC to.</param>
-        void SetId(NpcId id);
+        public void SetId(NpcId id);
     }
 }

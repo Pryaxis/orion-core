@@ -52,7 +52,7 @@ namespace Orion.Core.Packets.DataStructures
 
         /// <inheritdoc/>
         [Pure]
-        public override bool Equals(object obj) => obj is NetworkText other && Equals(other);
+        public override bool Equals(object? obj) => obj is NetworkText other && Equals(other);
 
         /// <inheritdoc/>
         [Pure]
