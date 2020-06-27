@@ -27,21 +27,20 @@ namespace Orion.Core.Packets
         private readonly byte[] _data;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UnknownPacket"/> class with the specified packet
+        /// Initializes a new instance of the <see cref="UnknownPacket"/> class with the specified data
         /// <paramref name="length"/> and <paramref name="id"/>.
         /// </summary>
-        /// <param name="length">The packet length.</param>
+        /// <param name="length">The data length.</param>
         /// <param name="id">The packet ID.</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="length"/> is too small.</exception>
-        public UnknownPacket(ushort length, PacketId id)
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="length"/> is negative.</exception>
+        public UnknownPacket(int length, PacketId id)
         {
-            if (length < IPacket.HeaderSize)
+            if (length < 0)
             {
-                throw new ArgumentOutOfRangeException(
-                    nameof(length), $"Length is too small (expected: >= {IPacket.HeaderSize})");
+                throw new ArgumentOutOfRangeException("Length is negative");
             }
 
-            _data = new byte[length - IPacket.HeaderSize];
+            _data = new byte[length];
             Id = id;
         }
 

@@ -21,7 +21,6 @@ using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using Orion.Core.Packets.DataStructures;
 
 namespace Orion.Core.Packets
 {

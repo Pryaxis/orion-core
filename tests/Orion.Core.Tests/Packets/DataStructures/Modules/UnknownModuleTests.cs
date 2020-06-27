@@ -21,7 +21,6 @@ using Xunit;
 
 namespace Orion.Core.Packets.DataStructures.Modules
 {
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class UnknownModuleTests
     {
         private readonly byte[] _bytes = { 255, 255, 0, 1, 2, 3, 4, 5, 6, 7 };

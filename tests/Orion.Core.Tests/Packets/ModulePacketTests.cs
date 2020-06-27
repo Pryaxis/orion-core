@@ -15,29 +15,67 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+using Moq;
 using Orion.Core.Packets.DataStructures.Modules;
 using Xunit;
 
 namespace Orion.Core.Packets
 {
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ModulePacketTests
     {
-        private readonly byte[] _bytes = { 5, 0, 82, 255, 255 };
+        private readonly byte[] _chatBytes =
+        {
+            23, 0, 82, 1, 0, 3, 83, 97, 121, 13, 47, 99, 111, 109, 109, 97, 110, 100, 32, 116, 101, 115, 116
+        };
+
+        private readonly byte[] _unknownBytes = { 5, 0, 82, 255, 255 };
 
         [Fact]
-        public void Read()
+        public void Module_GetNull_ThrowsInvalidOperationException()
         {
-            var packet = TestUtils.ReadPacket<ModulePacket>(_bytes, PacketContext.Server);
+            var packet = new ModulePacket<IModule>();
 
-            Assert.IsType<UnknownModule>(packet.Module);
-            Assert.Equal((ModuleId)65535, ((UnknownModule)packet.Module).Id);
-            Assert.Equal(0, ((UnknownModule)packet.Module).Data.Length);
+            Assert.Throws<InvalidOperationException>(() => packet.Module);
         }
 
         [Fact]
-        public void RoundTrip()
+        public void Module_Set_Get()
         {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
+            var module = Mock.Of<IModule>();
+            var packet = new ModulePacket<IModule>();
+
+            packet.Module = module;
+
+            Assert.Same(module, packet.Module);
+        }
+
+        [Fact]
+        public void Module_SetNullValue_ThrowsArgumentNullException()
+        {
+            var packet = new ModulePacket<IModule>();
+
+            Assert.Throws<ArgumentNullException>(() => packet.Module = null!);
+        }
+
+        [Fact]
+        public void Read_Chat()
+        {
+            var packet = TestUtils.ReadPacket<ModulePacket<Chat>>(_chatBytes, PacketContext.Server);
+
+            Assert.Equal("Say", packet.Module.ClientCommand);
+            Assert.Equal("/command test", packet.Module.ClientMessage);
+        }
+
+        [Fact]
+        public void Read_Unknown()
+        {
+            var packet = TestUtils.ReadPacket<ModulePacket<UnknownModule>>(_unknownBytes, PacketContext.Server);
+
+            Assert.Equal((ModuleId)65535, packet.Module.Id);
+            Assert.Equal(0, packet.Module.Data.Length);
         }
     }
 }

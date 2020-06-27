@@ -26,7 +26,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
     /// Represents a serializable module sent for chat.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 32)]
-    public sealed class Chat : SerializableModule
+    public sealed class Chat : IModule
     {
         [FieldOffset(0)] private string _clientCommand = string.Empty;
         [FieldOffset(8)] private string _clientMessage = string.Empty;
@@ -84,11 +84,9 @@ namespace Orion.Core.Packets.DataStructures.Modules
         /// <value>The color.</value>
         [field: FieldOffset(17)] public Color3 ServerColor { get; set; }
 
-        /// <inheritdoc/>
-        public override ModuleId Id => ModuleId.Chat;
+        ModuleId IModule.Id => ModuleId.Chat;
 
-        /// <inheritdoc/>
-        protected override int ReadBody(Span<byte> span, PacketContext context)
+        int IModule.ReadBody(Span<byte> span, PacketContext context)
         {
             if (context == PacketContext.Server)
             {
@@ -103,8 +101,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
             }
         }
 
-        /// <inheritdoc/>
-        protected override int WriteBody(Span<byte> span, PacketContext context)
+        int IModule.WriteBody(Span<byte> span, PacketContext context)
         {
             if (context == PacketContext.Client)
             {

@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using Orion.Core.Packets.DataStructures.Modules;
 using Orion.Core.Packets.DataStructures.TileEntities;
 using Xunit;
@@ -24,51 +26,103 @@ namespace Orion.Core.Packets
 {
     public static class TestUtils
     {
-        public static TPacket ReadPacket<TPacket>(Span<byte> span, PacketContext context) where TPacket : IPacket
-        {
-            var packetLength = IPacket.Read(span, context, out var packet);
-            Assert.IsType<TPacket>(packet);
-            Assert.Equal(span.Length, packetLength);
-
-            return (TPacket)packet;
-        }
-
         /// <summary>
-        /// Reads a serializable module from the given <paramref name="span"/> in the specified
-        /// <paramref name="context"/>, performing round trip checks.
+        /// Reads a packet from the given <paramref name="span"/> in the specified <paramref name="context"/>,
+        /// performing round trip checks.
         /// </summary>
-        /// <typeparam name="TTileEntity">The type of serializable module.</typeparam>
+        /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="span">The span to read from.</param>
         /// <param name="context">The packet context to use when reading.</param>
-        /// <returns></returns>
-        public static TModule ReadModule<TModule>(Span<byte> span, PacketContext context)
-            where TModule : SerializableModule
+        /// <returns>The resulting packet.</returns>
+        public static TPacket ReadPacket<TPacket>(Span<byte> span, PacketContext context) where TPacket : IPacket
         {
             var otherContext = context == PacketContext.Server ? PacketContext.Client : PacketContext.Server;
 
-            // Read the module.
-            var length = SerializableModule.Read(span, context, out var module);
-            Assert.IsType<TModule>(module);
-            Assert.Equal(span.Length, length);
+            var packet = Read(span);
+            var bytes = Write(packet);
+            var packet2 = Read(bytes);
+            var bytes2 = Write(packet2);
+            Assert.Equal(bytes, bytes2);
 
-            // Write the tile module.
-            var bytes = new byte[ushort.MaxValue];
-            var moduleLength = module.Write(bytes, otherContext);
+            return packet;
 
-            // Read the tile module again.
-            SerializableModule.Read(span, context, out var module2);
-
-            // Write the tile module again.
-            var bytes2 = new byte[ushort.MaxValue];
-            var moduleLength2 = module2.Write(bytes2, otherContext);
-
-            Assert.Equal(moduleLength, moduleLength2);
-            for (var i = 0; i < moduleLength; ++i)
+            TPacket Read(Span<byte> span)
             {
-                Assert.True(bytes[i] == bytes2[i], $"Expected: {bytes[i]}\nActual:   {bytes2[i]}\n  at position {i}");
+                var packetLength = Unsafe.ReadUnaligned<ushort>(ref span[0]);
+                var packetId = (PacketId)span[2];
+                var type = packetId.Type();
+
+                TPacket packet;
+                if (packetId == PacketId.Module)
+                {
+                    var moduleId = Unsafe.ReadUnaligned<ModuleId>(ref span[3]);
+                    packet =
+                        (TPacket)Activator.CreateInstance(typeof(ModulePacket<>).MakeGenericType(moduleId.Type()))!;
+                }
+                else
+                {
+                    packet = type == typeof(UnknownPacket)
+                       ? (TPacket)(object)new UnknownPacket(span.Length - 3, packetId)
+                       : (TPacket)Activator.CreateInstance(type)!;
+                }
+
+                var length = packet.ReadBody(span[3..], context);
+                Assert.Equal(span.Length - 3, length);
+
+                return packet;
             }
 
-            return (TModule)module;
+            byte[] Write(TPacket packet)
+            {
+                var otherContext = context == PacketContext.Server ? PacketContext.Client : PacketContext.Server;
+
+                var bytes = new byte[ushort.MaxValue];
+                var length = packet.Write(bytes, otherContext);
+                return bytes[..length];
+            }
+        }
+
+        /// <summary>
+        /// Reads a module from the given <paramref name="span"/> in the specified <paramref name="context"/>,
+        /// performing round trip checks.
+        /// </summary>
+        /// <typeparam name="TModule">The type of module.</typeparam>
+        /// <param name="span">The span to read from.</param>
+        /// <param name="context">The packet context to use when reading.</param>
+        /// <returns>The resulting module.</returns>
+        public static TModule ReadModule<TModule>(Span<byte> span, PacketContext context) where TModule : IModule
+        {
+            var otherContext = context == PacketContext.Server ? PacketContext.Client : PacketContext.Server;
+
+            var module = Read(span, context);
+            var bytes = Write(module, otherContext);
+            var module2 = Read(bytes, context);
+            var bytes2 = Write(module2, otherContext);
+            Assert.Equal(bytes, bytes2);
+
+            return module;
+
+            static TModule Read(Span<byte> span, PacketContext context)
+            {
+                var moduleId = Unsafe.ReadUnaligned<ModuleId>(ref span[0]);
+                var type = moduleId.Type();
+
+                var module = type == typeof(UnknownModule)
+                    ? (TModule)(object)new UnknownModule(span.Length - 2, moduleId)
+                    : (TModule)Activator.CreateInstance(type)!;
+
+                var length = module.ReadBody(span[2..], context);
+                Assert.Equal(span.Length - 2, length);
+
+                return module;
+            }
+
+            static byte[] Write(TModule module, PacketContext context)
+            {
+                var bytes = new byte[ushort.MaxValue];
+                var length = module.Write(bytes, context);
+                return bytes[..length];
+            }
         }
 
         /// <summary>
@@ -81,29 +135,27 @@ namespace Orion.Core.Packets
         public static TTileEntity ReadTileEntity<TTileEntity>(Span<byte> span, bool includeIndex)
             where TTileEntity : SerializableTileEntity
         {
-            // Read the tile entity.
-            var length = SerializableTileEntity.Read(span, includeIndex, out var tileEntity);
-            Assert.IsType<TTileEntity>(tileEntity);
-            Assert.Equal(span.Length, length);
+            var tileEntity = Read(span);
+            var bytes = Write(tileEntity);
+            var tileEntity2 = Read(bytes);
+            var bytes2 = Write(tileEntity2);
+            Assert.Equal(bytes, bytes2);
 
-            // Write the tile entity.
-            var bytes = new byte[ushort.MaxValue];
-            var moduleLength = tileEntity.Write(bytes, includeIndex);
+            return tileEntity;
 
-            // Read the tile entity again.
-            SerializableTileEntity.Read(span, includeIndex, out var tileEntity2);
-
-            // Write the tile entity again.
-            var bytes2 = new byte[ushort.MaxValue];
-            var moduleLength2 = tileEntity2.Write(bytes2, includeIndex);
-
-            Assert.Equal(moduleLength, moduleLength2);
-            for (var i = 0; i < moduleLength; ++i)
+            TTileEntity Read(Span<byte> span)
             {
-                Assert.True(bytes[i] == bytes2[i], $"Expected: {bytes[i]}\nActual:   {bytes2[i]}\n  at position {i}");
+                var length = SerializableTileEntity.Read(span, includeIndex, out var tileEntity);
+                Assert.Equal(span.Length, length);
+                return (TTileEntity)tileEntity;
             }
 
-            return (TTileEntity)tileEntity;
+            byte[] Write(TTileEntity tileEntity)
+            {
+                var bytes = new byte[ushort.MaxValue];
+                var length = tileEntity.Write(bytes, includeIndex);
+                return bytes[..length];
+            }
         }
 
         /// <summary>

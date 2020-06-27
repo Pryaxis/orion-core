@@ -91,7 +91,6 @@ namespace Orion.Core.Packets
                 [PacketId.AnglerQuestInfo] = () => new AnglerQuestInfoPacket(),
                 [PacketId.AnglerQuestComplete] = () => new AnglerQuestCompletePacket(),
                 [PacketId.ServerCombatNumber] = () => new ServerCombatNumberPacket(),
-                [PacketId.Module] = () => new ModulePacket(),
                 [PacketId.NpcKillCount] = () => new NpcKillCountPacket(),
                 [PacketId.PlayerStealth] = () => new PlayerStealthPacket(),
                 [PacketId.TileEntityInfo] = () => new TileEntityInfoPacket(),

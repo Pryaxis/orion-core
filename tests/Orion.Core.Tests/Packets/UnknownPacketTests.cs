@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
@@ -27,9 +28,15 @@ namespace Orion.Core.Packets
         private readonly byte[] _emptyBytes = { 3, 0, 255 };
 
         [Fact]
+        public void Ctor_NegativeLength_ThrowsArgumentOutOfRangeException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new UnknownPacket(-1, (PacketId)255));
+        }
+
+        [Fact]
         public void Data_Get()
         {
-            var packet = new UnknownPacket(11, (PacketId)255);
+            var packet = new UnknownPacket(8, (PacketId)255);
 
             Assert.Equal(8, packet.Data.Length);
         }
@@ -37,7 +44,7 @@ namespace Orion.Core.Packets
         [Fact]
         public void Id_Set_Get()
         {
-            var packet = new UnknownPacket(11, (PacketId)255);
+            var packet = new UnknownPacket(8, (PacketId)255);
 
             Assert.Equal((PacketId)255, packet.Id);
         }
@@ -60,18 +67,6 @@ namespace Orion.Core.Packets
             var packet = TestUtils.ReadPacket<UnknownPacket>(_emptyBytes, PacketContext.Server);
 
             Assert.Equal(0, packet.Data.Length);
-        }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
-
-        [Fact]
-        public void RoundTrip_Empty()
-        {
-            TestUtils.RoundTripPacket(_emptyBytes, PacketContext.Server);
         }
     }
 }

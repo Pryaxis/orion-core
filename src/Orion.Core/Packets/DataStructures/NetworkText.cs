@@ -17,7 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
@@ -29,6 +28,9 @@ namespace Orion.Core.Packets.DataStructures
     /// <summary>
     /// Represents text transmitted over the network.
     /// </summary>
+    /// <remarks>
+    /// This class is thread-safe.
+    /// </remarks>
     public sealed class NetworkText : IEquatable<NetworkText>
     {
         /// <summary>

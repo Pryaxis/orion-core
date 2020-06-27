@@ -22,7 +22,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
     /// <summary>
     /// Represents an unknown serializable module.
     /// </summary>
-    public sealed class UnknownModule : SerializableModule
+    public sealed class UnknownModule : IModule
     {
         private readonly byte[] _data;
 
@@ -30,7 +30,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
         /// Initializes a new instance of the <see cref="UnknownModule"/> class with the specified data
         /// <paramref name="length"/> and <paramref name="id"/>.
         /// </summary>
-        /// <param name="length">The module length.</param>
+        /// <param name="length">The data length.</param>
         /// <param name="id">The module ID.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="length"/> is negative.</exception>
         public UnknownModule(int length, ModuleId id)
@@ -45,7 +45,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
         }
 
         /// <inheritdoc/>
-        public override ModuleId Id { get; }
+        public ModuleId Id { get; }
 
         /// <summary>
         /// Gets the module's data.
@@ -53,12 +53,10 @@ namespace Orion.Core.Packets.DataStructures.Modules
         /// <value>The module's data.</value>
         public unsafe Span<byte> Data => _data;
 
-        /// <inheritdoc/>
-        protected override int ReadBody(Span<byte> span, PacketContext context) =>
+        int IModule.ReadBody(Span<byte> span, PacketContext context) =>
             _data.Length == 0 ? 0 : span.Read(ref _data[0], _data.Length);
 
-        /// <inheritdoc/>
-        protected override int WriteBody(Span<byte> span, PacketContext context) =>
+        int IModule.WriteBody(Span<byte> span, PacketContext context) =>
             _data.Length == 0 ? 0 : span.Write(ref _data[0], _data.Length);
     }
 }

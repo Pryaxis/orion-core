@@ -22,7 +22,6 @@ using Xunit;
 
 namespace Orion.Core.Packets.DataStructures.TileEntities
 {
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class UnknownTileEntityTests
     {
         private readonly byte[] _bytes = { 255, 10, 0, 0, 0, 0, 1, 100, 0, 0, 1, 2, 3, 4, 5, 6, 7 };

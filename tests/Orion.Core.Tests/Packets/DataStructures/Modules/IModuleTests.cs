@@ -16,11 +16,14 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
+using System.Text;
+using Moq;
 using Xunit;
 
 namespace Orion.Core.Packets.DataStructures.Modules
 {
-    public class SerializableModuleTests
+    public class IModuleTests
     {
         [Fact]
         public void Write_AsServer()
@@ -45,32 +48,59 @@ namespace Orion.Core.Packets.DataStructures.Modules
         }
 
         [Fact]
-        public void Read()
+        public void Write_Struct_AsServer()
         {
-            var bytes = new byte[] { 255, 255, 42 };
+            var module = new TestStructModule { Value = 42 };
+            var bytes = new byte[1000];
 
-            var length = SerializableModule.Read(bytes, PacketContext.Server, out var module);
-            Assert.Equal(bytes.Length, length);
-            Assert.IsType<UnknownModule>(module);
+            var length = module.Write(bytes, PacketContext.Server);
 
-            Assert.Equal((ModuleId)65535, module.Id);
-            Assert.Equal(1, ((UnknownModule)module).Data.Length);
-            Assert.Equal(42, ((UnknownModule)module).Data[0]);
+            Assert.Equal(new byte[] { 255, 255, 42 }, bytes[..length]);
         }
 
-        private sealed class TestModule : SerializableModule
+        [Fact]
+        public void Write_Struct_AsClient()
         {
-            public override ModuleId Id => (ModuleId)65535;
+            var module = new TestStructModule { Value = 42 };
+            var bytes = new byte[1000];
 
+            var length = module.Write(bytes, PacketContext.Client);
+
+            Assert.Equal(new byte[] { 255, 255, 0 }, bytes[..length]);
+        }
+
+        public sealed class TestModule : IModule
+        {
             public byte Value { get; set; }
 
-            protected override int ReadBody(Span<byte> span, PacketContext context)
+            public ModuleId Id => (ModuleId)65535;
+
+            public int ReadBody(Span<byte> span, PacketContext context)
             {
                 Value = (byte)(span[0] + (context == PacketContext.Server ? 0 : 42));
                 return 1;
             }
 
-            protected override int WriteBody(Span<byte> span, PacketContext context)
+            public int WriteBody(Span<byte> span, PacketContext context)
+            {
+                span[0] = (byte)(Value - (context == PacketContext.Server ? 0 : 42));
+                return 1;
+            }
+        }
+
+        public struct TestStructModule : IModule
+        {
+            public byte Value { get; set; }
+
+            public ModuleId Id => (ModuleId)65535;
+
+            public int ReadBody(Span<byte> span, PacketContext context)
+            {
+                Value = (byte)(span[0] + (context == PacketContext.Server ? 0 : 42));
+                return 1;
+            }
+
+            public int WriteBody(Span<byte> span, PacketContext context)
             {
                 span[0] = (byte)(Value - (context == PacketContext.Server ? 0 : 42));
                 return 1;
