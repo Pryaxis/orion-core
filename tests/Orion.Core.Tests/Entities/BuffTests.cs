@@ -52,6 +52,32 @@ namespace Orion.Core.Entities
         }
 
         [Fact]
+        public void Duration_Get()
+        {
+            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+
+            Assert.Equal(TimeSpan.FromMinutes(8), buff.Duration);
+        }
+
+        [Fact]
+        public void IsEmpty_Get_ReturnsTrue()
+        {
+            var buff = new Buff(BuffId.None, 28800);
+            var buff2 = new Buff(BuffId.ObsidianSkin, 0);
+
+            Assert.True(buff.IsEmpty);
+            Assert.True(buff2.IsEmpty);
+        }
+
+        [Fact]
+        public void IsEmpty_Get_ReturnsFalse()
+        {
+            var buff = new Buff(BuffId.ObsidianSkin, 28800);
+
+            Assert.False(buff.IsEmpty);
+        }
+
+        [Fact]
         public void IsDebuff_Get_ReturnsTrue()
         {
             var buff = new Buff(BuffId.Poisoned, 28800);
@@ -65,14 +91,6 @@ namespace Orion.Core.Entities
             var buff = new Buff(BuffId.ObsidianSkin, 28800);
 
             Assert.False(buff.IsDebuff);
-        }
-
-        [Fact]
-        public void Duration_Get()
-        {
-            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
-
-            Assert.Equal(TimeSpan.FromMinutes(8), buff.Duration);
         }
 
         [Fact]
@@ -106,39 +124,6 @@ namespace Orion.Core.Entities
             var buff2 = new Buff(BuffId.ObsidianSkin, 28800);
 
             Assert.Equal(buff.GetHashCode(), buff2.GetHashCode());
-        }
-
-        [Fact]
-        public void WithTicks_NegativeTicks_ThrowsArgumentOutOfRangeException()
-        {
-            var buff = new Buff(BuffId.ObsidianSkin, 28800);
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => buff.WithTicks(-1));
-        }
-
-        [Fact]
-        public void WithTicks()
-        {
-            var buff = new Buff(BuffId.ObsidianSkin, 1);
-
-            Assert.Equal(new Buff(BuffId.ObsidianSkin, 28800), buff.WithTicks(28800));
-        }
-
-        [Fact]
-        public void WithDuration_NegativeDuration_ThrowsArgumentOutOfRangeException()
-        {
-            var buff = new Buff(BuffId.ObsidianSkin, 28800);
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => buff.WithDuration(TimeSpan.FromSeconds(-1)));
-        }
-
-        [Fact]
-        public void WithDuration()
-        {
-            var buff = new Buff(BuffId.ObsidianSkin, 1);
-
-            Assert.Equal(
-                new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8)), buff.WithDuration(TimeSpan.FromMinutes(8)));
         }
 
         [Fact]

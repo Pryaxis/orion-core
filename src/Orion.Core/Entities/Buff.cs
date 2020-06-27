@@ -82,16 +82,22 @@ namespace Orion.Core.Entities
         public int Ticks { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the buff is a debuff.
-        /// </summary>
-        /// <value><see langword="true"/> if the buff is a debuff; otherwise, <see langword="false"/>.</value>
-        public bool IsDebuff => Id.IsDebuff();
-
-        /// <summary>
         /// Gets the buff duration.
         /// </summary>
         /// <value>The buff duration.</value>
         public TimeSpan Duration => TimeSpan.FromSeconds(Ticks / 60.0);
+
+        /// <summary>
+        /// Gets a value indicating whether the buff is empty.
+        /// </summary>
+        /// <value><see langword="true"/> if the buff is empty; otherwise, <see langword="false"/>.</value>
+        public bool IsEmpty => Id == BuffId.None || Ticks == 0;
+
+        /// <summary>
+        /// Gets a value indicating whether the buff is a debuff.
+        /// </summary>
+        /// <value><see langword="true"/> if the buff is a debuff; otherwise, <see langword="false"/>.</value>
+        public bool IsDebuff => Id.IsDebuff();
 
         /// <inheritdoc/>
         [Pure]
@@ -114,40 +120,6 @@ namespace Orion.Core.Entities
         /// <returns>A string representation of the buff.</returns>
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => $"{Id} for {Duration:mm:ss}";
-
-        /// <summary>
-        /// Returns a new buff with the given <paramref name="ticks"/>.
-        /// </summary>
-        /// <param name="ticks">The buff duration, in ticks.</param>
-        /// <returns>A new buff with the given <paramref name="ticks"/>.</returns>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="ticks"/> is negative.</exception>
-        [Pure]
-        public Buff WithTicks(int ticks)
-        {
-            if (ticks < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(ticks), "Ticks is negative");
-            }
-
-            return new Buff(Id, ticks);
-        }
-
-        /// <summary>
-        /// Returns a new buff with the given <paramref name="duration"/>.
-        /// </summary>
-        /// <param name="duration">The buff duration.</param>
-        /// <returns>A new buff with the given <paramref name="duration"/>.</returns>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="duration"/> is negative.</exception>
-        [Pure]
-        public Buff WithDuration(TimeSpan duration)
-        {
-            if (duration < TimeSpan.Zero)
-            {
-                throw new ArgumentOutOfRangeException(nameof(duration), "Duration is negative");
-            }
-
-            return new Buff(Id, duration);
-        }
 
         /// <summary>
         /// Returns a value indicating whether <paramref name="left"/> is equal to <paramref name="right"/>.
