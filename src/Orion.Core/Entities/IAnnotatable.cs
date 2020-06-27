@@ -65,6 +65,11 @@ namespace Orion.Core.Entities
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null"/>.</exception>
         public bool RemoveAnnotation<TAnnotation>(AnnotationKey<TAnnotation> key);
+
+        /// <summary>
+        /// Clears all annotations.
+        /// </summary>
+        public void ClearAnnotations();
     }
 
     /// <summary>
@@ -136,6 +141,15 @@ namespace Orion.Core.Entities
             lock (_lock)
             {
                 return _annotations.Remove(key);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void ClearAnnotations()
+        {
+            lock (_lock)
+            {
+                _annotations.Clear();
             }
         }
     }

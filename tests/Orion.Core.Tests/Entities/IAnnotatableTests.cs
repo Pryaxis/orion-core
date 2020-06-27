@@ -93,5 +93,17 @@ namespace Orion.Core.Entities
 
             Assert.False(annotatable.RemoveAnnotation(key));
         }
+
+        [Fact]
+        public void ClearAnnotations()
+        {
+            var annotatable = new AnnotatableObject();
+            var key = new AnnotationKey<int>();
+            annotatable.SetAnnotation(key, 10);
+
+            annotatable.ClearAnnotations();
+
+            Assert.Equal(0, annotatable.GetAnnotation(key));
+        }
     }
 }
