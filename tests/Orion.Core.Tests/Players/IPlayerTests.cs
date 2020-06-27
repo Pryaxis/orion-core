@@ -118,13 +118,5 @@ namespace Orion.Core.Players
 
             Mock.Get(player).VerifyAll();
         }
-
-        private sealed class TestPacket : IPacket
-        {
-            public PacketId Id => throw new NotImplementedException();
-
-            int IPacket.ReadBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
-            int IPacket.WriteBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
-        }
     }
 }

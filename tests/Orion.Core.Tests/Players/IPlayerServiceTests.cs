@@ -31,16 +31,37 @@ namespace Orion.Core.Players
         [Fact]
         public void BroadcastPacket_NullPlayers_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(
-                () => IPlayerServiceExtensions.BroadcastPacket(null!, new TestPacket()));
+            var packet = Mock.Of<IPacket>();
+
+            Assert.Throws<ArgumentNullException>(() => IPlayerServiceExtensions.BroadcastPacket(null!, packet));
         }
 
         [Fact]
         public void BroadcastPacket()
         {
             var players = Mock.Of<IPlayerService>(p => p.Count == 1 && p[0] == Mock.Of<IPlayer>());
+            var packet = Mock.Of<IPacket>();
 
-            var packet = new TestPacket();
+            players.BroadcastPacket(packet);
+
+            Mock.Get(players[0])
+                .Verify(p => p.SendPacket(packet));
+        }
+
+        [Fact]
+        public void BroadcastPacket_Struct_NullPlayers_ThrowsArgumentNullException()
+        {
+            var packet = new TestStructPacket();
+
+            Assert.Throws<ArgumentNullException>(() => IPlayerServiceExtensions.BroadcastPacket(null!, packet));
+        }
+
+        [Fact]
+        public void BroadcastPacket_Struct()
+        {
+            var players = Mock.Of<IPlayerService>(p => p.Count == 1 && p[0] == Mock.Of<IPlayer>());
+            var packet = new TestStructPacket();
+
             players.BroadcastPacket(packet);
 
             Mock.Get(players[0])
@@ -113,12 +134,12 @@ namespace Orion.Core.Players
             Mock.Get(players[0]).VerifyAll();
         }
 
-        private sealed class TestPacket : IPacket
+        private struct TestStructPacket : IPacket
         {
             public PacketId Id => throw new NotImplementedException();
 
-            int IPacket.ReadBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
-            int IPacket.WriteBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
+            public int ReadBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
+            public int WriteBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
         }
     }
 }

@@ -93,6 +93,9 @@ namespace Orion.Core.Players
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="packet">The packet to receive.</param>
+        /// <remarks>
+        /// This overload is provided for efficient struct codegen.
+        /// </remarks>
         public void ReceivePacket<TPacket>(TPacket packet) where TPacket : struct, IPacket;
 
         /// <summary>
@@ -106,6 +109,9 @@ namespace Orion.Core.Players
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="packet">The packet to send.</param>
+        /// <remarks>
+        /// This overload is provided for efficient struct codegen.
+        /// </remarks>
         public void SendPacket<TPacket>(TPacket packet) where TPacket : struct, IPacket;
     }
 
