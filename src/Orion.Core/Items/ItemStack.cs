@@ -28,8 +28,10 @@ namespace Orion.Core.Items
     /// <remarks>
     /// An item stack instance fully describes an inventory slot. It is composed of an <see cref="ItemId"/>, the item
     /// stack size, and an <see cref="ItemPrefix"/>.
+    /// 
+    /// This structure is sized to allow efficient passing.
     /// </remarks>
-    [StructLayout(LayoutKind.Explicit)]
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
     public readonly struct ItemStack : IEquatable<ItemStack>
     {
         /// <summary>

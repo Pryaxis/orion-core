@@ -15,22 +15,31 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.World.TileEntities
+using Orion.Core.World.TileEntities;
+using Xunit;
+
+namespace Orion.Core.Packets.DataStructures.TileEntities
 {
-    /// <summary>
-    /// Specifies a tile entity ID.
-    /// </summary>
-    public enum TileEntityId : byte
+    public class PylonTests
     {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        TargetDummy = 0,
-        ItemFrame = 1,
-        Sensor = 2,
-        Mannequin = 3,
-        WeaponRack = 4,
-        HatRack = 5,
-        Plate = 6,
-        Pylon = 7
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        private readonly byte[] _bytes = { 7, 10, 0, 0, 0, 0, 1, 100, 0 };
+
+        [Fact]
+        public void Id_Get()
+        {
+            var pylon = new Pylon();
+
+            Assert.Equal(TileEntityId.Pylon, pylon.Id);
+        }
+
+        [Fact]
+        public void Read()
+        {
+            var pylon = TestUtils.ReadTileEntity<Pylon>(_bytes, includeIndex: true);
+
+            Assert.Equal(10, pylon.Index);
+            Assert.Equal(256, pylon.X);
+            Assert.Equal(100, pylon.Y);
+        }
     }
 }

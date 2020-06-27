@@ -17,6 +17,7 @@
 
 using System;
 using Orion.Core.Packets.DataStructures.Modules;
+using Orion.Core.Packets.DataStructures.TileEntities;
 using Xunit;
 
 namespace Orion.Core.Packets
@@ -39,6 +40,41 @@ namespace Orion.Core.Packets
             Assert.Equal(span.Length, moduleLength);
 
             return (TModule)module;
+        }
+
+        /// <summary>
+        /// Reads a serializable tile entity from the given <paramref name="span"/>, performing round trip checks.
+        /// </summary>
+        /// <typeparam name="TTileEntity">The type of serializable tile entity.</typeparam>
+        /// <param name="span">The span to read from.</param>
+        /// <param name="includeIndex">Whether to include the tile entity's index.</param>
+        /// <returns>The tile entity.</returns>
+        public static TTileEntity ReadTileEntity<TTileEntity>(Span<byte> span, bool includeIndex)
+            where TTileEntity : SerializableTileEntity
+        {
+            // Read the tile entity.
+            var length = SerializableTileEntity.Read(span, includeIndex, out var tileEntity);
+            Assert.IsType<TTileEntity>(tileEntity);
+            Assert.Equal(span.Length, length);
+
+            // Write the tile entity.
+            var bytes = new byte[ushort.MaxValue];
+            var moduleLength = tileEntity.Write(bytes, includeIndex);
+
+            // Read the tile entity again.
+            SerializableTileEntity.Read(span, includeIndex, out var tileEntity2);
+
+            // Write the tile entity again.
+            var bytes2 = new byte[ushort.MaxValue];
+            var moduleLength2 = tileEntity2.Write(bytes2, includeIndex);
+
+            Assert.Equal(moduleLength, moduleLength2);
+            for (var i = 0; i < moduleLength; ++i)
+            {
+                Assert.True(bytes[i] == bytes2[i], $"Expected: {bytes[i]}\nActual:   {bytes2[i]}\n  at position {i}");
+            }
+
+            return (TTileEntity)tileEntity;
         }
 
         /// <summary>
@@ -73,7 +109,7 @@ namespace Orion.Core.Packets
         }
 
         /// <summary>
-        /// Tests a packet round trip by reading, writing, re-reading, and then re-writing the packet, comparing the
+        /// Tests a module round trip by reading, writing, re-reading, and then re-writing the module, comparing the
         /// written byte sequences.
         /// </summary>
         /// <param name="span">The span to read from, initially.</param>
@@ -82,17 +118,17 @@ namespace Orion.Core.Packets
         {
             var otherContext = context == PacketContext.Server ? PacketContext.Client : PacketContext.Server;
 
-            // Read the packet.
+            // Read the module.
             IModule.Read(span, context, out var module);
 
-            // Write the packet.
+            // Write the module.
             var bytes = new byte[ushort.MaxValue];
             var moduleLength = module.Write(bytes, otherContext);
 
-            // Read the packet again.
+            // Read the module again.
             IModule.Read(span, context, out var module2);
 
-            // Write the packet again.
+            // Write the module again.
             var bytes2 = new byte[ushort.MaxValue];
             var moduleLength2 = module2.Write(bytes2, otherContext);
 

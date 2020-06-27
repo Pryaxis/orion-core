@@ -15,22 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.World.TileEntities
+
+using System;
+using Orion.Core.World.TileEntities;
+
+namespace Orion.Core.Packets.DataStructures.TileEntities
 {
     /// <summary>
-    /// Specifies a tile entity ID.
+    /// Represents a serializable pylon.
     /// </summary>
-    public enum TileEntityId : byte
+    public sealed class Pylon : SerializableTileEntity
     {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        TargetDummy = 0,
-        ItemFrame = 1,
-        Sensor = 2,
-        Mannequin = 3,
-        WeaponRack = 4,
-        HatRack = 5,
-        Plate = 6,
-        Pylon = 7
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        /// <inheritdoc/>
+        public override TileEntityId Id => TileEntityId.Pylon;
+
+        /// <inheritdoc/>
+        protected override int ReadBody(Span<byte> span) => 0;
+
+        /// <inheritdoc/>
+        protected override int WriteBody(Span<byte> span) => 0;
     }
 }
