@@ -30,7 +30,7 @@ namespace Orion.Core.Events.Packets
         {
             var receiver = Mock.Of<IPlayer>();
 
-            Assert.Throws<ArgumentNullException>(() => new PacketSendEvent(null!, receiver));
+            Assert.Throws<ArgumentNullException>(() => new PacketSendEvent<IPacket>(null!, receiver));
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace Orion.Core.Events.Packets
         {
             var packet = Mock.Of<IPacket>();
 
-            Assert.Throws<ArgumentNullException>(() => new PacketSendEvent(packet, null!));
+            Assert.Throws<ArgumentNullException>(() => new PacketSendEvent<IPacket>(packet, null!));
         }
 
         [Fact]
@@ -46,7 +46,7 @@ namespace Orion.Core.Events.Packets
         {
             var packet = Mock.Of<IPacket>();
             var receiver = Mock.Of<IPlayer>();
-            var evt = new PacketSendEvent(packet, receiver);
+            var evt = new PacketSendEvent<IPacket>(packet, receiver);
 
             Assert.Same(receiver, evt.Receiver);
         }

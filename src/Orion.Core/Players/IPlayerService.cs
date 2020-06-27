@@ -35,8 +35,8 @@ namespace Orion.Core.Players
     /// 
     /// The player service is responsible for publishing the following packet and player-related events:
     /// <list type="bullet">
-    /// <item><description><see cref="PacketReceiveEvent"/></description></item>
-    /// <item><description><see cref="PacketSendEvent"/></description></item>
+    /// <item><description><see cref="PacketReceiveEvent{TPacket}"/></description></item>
+    /// <item><description><see cref="PacketSendEvent{TPacket}"/></description></item>
     /// <item><description><see cref="PlayerTickEvent"/></description></item>
     /// <item><description><see cref="PlayerQuitEvent"/></description></item>
     /// <item><description><see cref="PlayerJoinEvent"/></description></item>

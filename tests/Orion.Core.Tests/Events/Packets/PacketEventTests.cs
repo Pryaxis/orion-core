@@ -27,19 +27,19 @@ namespace Orion.Core.Events.Packets
         [Fact]
         public void Ctor_NullPacket_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new TestPacketEvent(null!));
+            Assert.Throws<ArgumentNullException>(() => new TestPacketEvent<IPacket>(null!));
         }
 
         [Fact]
         public void Packet_Get()
         {
             var packet = Mock.Of<IPacket>();
-            var evt = new TestPacketEvent(packet);
+            var evt = new TestPacketEvent<IPacket>(packet);
 
             Assert.Same(packet, evt.Packet);
         }
 
-        private class TestPacketEvent : PacketEvent
+        private class TestPacketEvent<TPacket> : PacketEvent<TPacket> where TPacket : IPacket
         {
             public TestPacketEvent(IPacket packet) : base(packet)
             {

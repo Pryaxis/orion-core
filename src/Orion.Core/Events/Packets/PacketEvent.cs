@@ -23,10 +23,11 @@ namespace Orion.Core.Events.Packets
     /// <summary>
     /// Provides the base class for a packet-related event.
     /// </summary>
-    public abstract class PacketEvent : Event
+    /// <typeparam name="TPacket">The type of packet.</typeparam>
+    public abstract class PacketEvent<TPacket> : Event where TPacket : IPacket
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PacketEvent"/> class with the specified
+        /// Initializes a new instance of the <see cref="PacketEvent{TPacket}"/> class with the specified
         /// <paramref name="packet"/>.
         /// </summary>
         /// <param name="packet">The packet.</param>

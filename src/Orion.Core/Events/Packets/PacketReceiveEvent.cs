@@ -25,11 +25,12 @@ namespace Orion.Core.Events.Packets
     /// <summary>
     /// An event that occurs when a packet is being received. This event can be canceled.
     /// </summary>
+    /// <typeparam name="TPacket">The type of packet.</typeparam>
     [Event("packet-recv", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class PacketReceiveEvent : PacketEvent
+    public sealed class PacketReceiveEvent<TPacket> : PacketEvent<TPacket> where TPacket : IPacket
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PacketReceiveEvent"/> class with the specified
+        /// Initializes a new instance of the <see cref="PacketReceiveEvent{TPacket}"/> class with the specified
         /// <paramref name="packet"/> and <paramref name="sender"/>.
         /// </summary>
         /// <param name="packet">The packet being received.</param>
