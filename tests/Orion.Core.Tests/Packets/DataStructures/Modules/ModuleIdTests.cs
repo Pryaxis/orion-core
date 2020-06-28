@@ -25,8 +25,7 @@ namespace Orion.Core.Packets.Modules
 {
     public class ModuleIdTests
     {
-        private static readonly ISet<Type> _excludedTypes =
-            new HashSet<Type> { typeof(UnknownModule), typeof(IModule) };
+        private readonly ISet<Type> _excludedTypes = new HashSet<Type> { typeof(UnknownModule), typeof(IModule) };
 
         [Fact]
         public void Type()

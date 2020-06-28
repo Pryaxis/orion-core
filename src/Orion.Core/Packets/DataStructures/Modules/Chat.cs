@@ -23,7 +23,7 @@ using Orion.Core.Utils;
 namespace Orion.Core.Packets.DataStructures.Modules
 {
     /// <summary>
-    /// Represents a serializable module sent for chat.
+    /// A module sent for chat.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 32)]
     public sealed class Chat : IModule
@@ -105,13 +105,13 @@ namespace Orion.Core.Packets.DataStructures.Modules
         {
             if (context == PacketContext.Client)
             {
-                var length = span.Write(ClientCommand, Encoding.UTF8);
-                return length + span[length..].Write(ClientMessage, Encoding.UTF8);
+                var length = span.Write(_clientCommand, Encoding.UTF8);
+                return length + span[length..].Write(_clientMessage, Encoding.UTF8);
             }
             else
             {
                 var length = span.Write(ref _bytes, 1);
-                length += ServerMessage.Write(span[length..], Encoding.UTF8);
+                length += _serverMessage.Write(span[length..], Encoding.UTF8);
                 return length + span[length..].Write(ref _bytes2, 3);
             }
         }

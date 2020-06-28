@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using Orion.Core.Packets.DataStructures.Modules;
 using Orion.Core.Packets.DataStructures.TileEntities;
@@ -53,6 +52,9 @@ namespace Orion.Core.Packets
                 var type = packetId.Type();
 
                 TPacket packet;
+
+                // Special case for module packets, since we need to retrieve the module type as well to construct the
+                // packet.
                 if (packetId == PacketId.Module)
                 {
                     var moduleId = Unsafe.ReadUnaligned<ModuleId>(ref span[3]);

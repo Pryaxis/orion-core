@@ -16,9 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Moq;
 using Xunit;
 
 namespace Orion.Core.Packets.DataStructures.Modules

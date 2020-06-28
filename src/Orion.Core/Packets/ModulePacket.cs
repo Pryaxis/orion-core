@@ -16,7 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Reflection;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Orion.Core.Packets.DataStructures.Modules;
@@ -27,14 +27,13 @@ namespace Orion.Core.Packets
     /// A packet sent in the form of a module.
     /// </summary>
     /// <typeparam name="TModule">The type of module.</typeparam>
-    public sealed class ModulePacket<TModule> : IPacket where TModule : notnull, IModule
+    public struct ModulePacket<TModule> : IPacket where TModule : notnull, IModule
     {
-        private TModule _module = default!;
+        private TModule _module;
 
         /// <summary>
         /// Gets or sets the module.
         /// </summary>
-        /// <value>The module.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         /// <exception cref="InvalidOperationException">The module is <see langword="null"/>.</exception>
         public TModule Module
@@ -47,20 +46,23 @@ namespace Orion.Core.Packets
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
-            // Initialize the `_module` field if it is `null`. If `TModule` is `UnknownModule`, then this is a special
-            // case.
-            if (_module is null)
+            // `UnknownModule` is a special case, since we need to always reconstruct it in case the `ModulePacket<>`
+            // instance is being reused.
+            if (typeof(TModule) == typeof(UnknownModule))
             {
-                var type = typeof(TModule);
-                if (type == typeof(UnknownModule))
-                {
-                    var id = Unsafe.ReadUnaligned<ModuleId>(ref MemoryMarshal.GetReference(span));
-                    _module = (TModule)(object)new UnknownModule(span.Length - 2, id);
-                }
-                else
-                {
-                    _module = (TModule)Activator.CreateInstance(type);
-                }
+                Debug.Assert(span.Length >= 2);
+
+                ref var header = ref MemoryMarshal.GetReference(span);
+
+                // Read the module ID with no bounds checking since we need to perform bounds checking later
+                // anyways.
+                var moduleId = Unsafe.ReadUnaligned<ModuleId>(ref header);
+
+                _module = (TModule)(object)new UnknownModule(span.Length - 2, moduleId);
+            }
+            else if (_module is null)
+            {
+                _module = (TModule)Activator.CreateInstance(typeof(TModule));
             }
 
             return 2 + _module.ReadBody(span[2..], context);
@@ -72,6 +74,8 @@ namespace Orion.Core.Packets
             {
                 throw new InvalidOperationException("Module is null");
             }
+
+            Debug.Assert(span.Length >= 2);
 
             ref var header = ref MemoryMarshal.GetReference(span);
 

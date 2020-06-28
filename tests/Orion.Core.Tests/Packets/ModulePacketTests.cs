@@ -34,11 +34,19 @@ namespace Orion.Core.Packets
         private readonly byte[] _unknownBytes = { 5, 0, 82, 255, 255 };
 
         [Fact]
-        public void Module_GetNull_ThrowsInvalidOperationException()
+        public void Module_GetNullValue_ThrowsInvalidOperationException()
         {
             var packet = new ModulePacket<IModule>();
 
             Assert.Throws<InvalidOperationException>(() => packet.Module);
+        }
+
+        [Fact]
+        public void Module_SetNullValue_ThrowsArgumentNullException()
+        {
+            var packet = new ModulePacket<IModule>();
+
+            Assert.Throws<ArgumentNullException>(() => packet.Module = null!);
         }
 
         [Fact]
@@ -50,14 +58,6 @@ namespace Orion.Core.Packets
             packet.Module = module;
 
             Assert.Same(module, packet.Module);
-        }
-
-        [Fact]
-        public void Module_SetNullValue_ThrowsArgumentNullException()
-        {
-            var packet = new ModulePacket<IModule>();
-
-            Assert.Throws<ArgumentNullException>(() => packet.Module = null!);
         }
 
         [Fact]
@@ -76,6 +76,15 @@ namespace Orion.Core.Packets
 
             Assert.Equal((ModuleId)65535, packet.Module.Id);
             Assert.Equal(0, packet.Module.Data.Length);
+        }
+
+        [Fact]
+        public void Write_NullModule_ThrowsInvalidOperationException()
+        {
+            var packet = new ModulePacket<IModule>();
+            var bytes = new byte[1000];
+
+            Assert.Throws<InvalidOperationException>(() => packet.Write(bytes, PacketContext.Server));
         }
     }
 }

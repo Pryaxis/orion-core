@@ -28,7 +28,7 @@ namespace Orion.Core.Packets
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UnknownPacket"/> class with the specified data
-        /// <paramref name="length"/> and <paramref name="id"/>.
+        /// <paramref name="length"/> and packet <paramref name="id"/>.
         /// </summary>
         /// <param name="length">The data length.</param>
         /// <param name="id">The packet ID.</param>

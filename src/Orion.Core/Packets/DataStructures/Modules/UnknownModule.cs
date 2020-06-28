@@ -20,7 +20,7 @@ using System;
 namespace Orion.Core.Packets.DataStructures.Modules
 {
     /// <summary>
-    /// Represents an unknown serializable module.
+    /// An unknown module.
     /// </summary>
     public sealed class UnknownModule : IModule
     {
@@ -28,7 +28,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UnknownModule"/> class with the specified data
-        /// <paramref name="length"/> and <paramref name="id"/>.
+        /// <paramref name="length"/> and module <paramref name="id"/>.
         /// </summary>
         /// <param name="length">The data length.</param>
         /// <param name="id">The module ID.</param>
