@@ -53,12 +53,5 @@ namespace Orion.Core.Packets.Players
             Assert.Equal(5, packet.PlayerIndex);
             Assert.Equal(100, packet.HealthAmount);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(
-                _bytes, PacketContext.Server);
-        }
     }
 }

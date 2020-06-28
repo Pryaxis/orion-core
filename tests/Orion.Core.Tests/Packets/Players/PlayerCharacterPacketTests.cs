@@ -338,11 +338,5 @@ namespace Orion.Core.Packets.Players
             Assert.False(packet.IsUsingBiomeTorches);
             Assert.False(packet.IsFightingTheTorchGod);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

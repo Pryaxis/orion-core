@@ -51,11 +51,5 @@ namespace Orion.Core.Packets.Client
 
             Assert.Equal("Terraria", packet.Uuid);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

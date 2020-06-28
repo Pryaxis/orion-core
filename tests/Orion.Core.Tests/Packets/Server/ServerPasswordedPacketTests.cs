@@ -28,11 +28,5 @@ namespace Orion.Core.Packets.Server
         {
             _ = TestUtils.ReadPacket<ServerPasswordedPacket>(_bytes, PacketContext.Server);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

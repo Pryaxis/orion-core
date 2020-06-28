@@ -23,6 +23,12 @@ namespace Orion.Core.Packets.DataStructures.Modules
     public class IModuleTests
     {
         [Fact]
+        public void Write_NullModule_ThrowsArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => IModuleExtensions.Write(null!, default, PacketContext.Server));
+        }
+
+        [Fact]
         public void Write_AsServer()
         {
             var module = new TestModule { Value = 42 };
@@ -66,7 +72,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
             Assert.Equal(new byte[] { 255, 255, 0 }, bytes[..length]);
         }
 
-        public sealed class TestModule : IModule
+        private sealed class TestModule : IModule
         {
             public byte Value { get; set; }
 
@@ -85,7 +91,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
             }
         }
 
-        public struct TestStructModule : IModule
+        private struct TestStructModule : IModule
         {
             public byte Value { get; set; }
 

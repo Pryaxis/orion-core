@@ -53,11 +53,5 @@ namespace Orion.Core.Packets.Items
             Assert.Equal(10, packet.ItemIndex);
             Assert.Equal(5, packet.OwnerIndex);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

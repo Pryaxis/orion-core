@@ -76,11 +76,5 @@ namespace Orion.Core.Packets.Npcs
             Assert.Equal(NpcId.Butterfly, packet.Id);
             Assert.Equal(1, packet.Style);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

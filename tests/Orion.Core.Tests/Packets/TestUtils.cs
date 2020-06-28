@@ -159,36 +159,5 @@ namespace Orion.Core.Packets
                 return bytes[..length];
             }
         }
-
-        /// <summary>
-        /// Tests a packet round trip by reading, writing, re-reading, and then re-writing the packet, comparing the
-        /// written byte sequences.
-        /// </summary>
-        /// <param name="span">The span to read from, initially.</param>
-        /// <param name="context">The packet context to use.</param>
-        public static void RoundTripPacket(Span<byte> span, PacketContext context)
-        {
-            var otherContext = context == PacketContext.Server ? PacketContext.Client : PacketContext.Server;
-
-            // Read the packet.
-            IPacket.Read(span, context, out var packet);
-
-            // Write the packet.
-            var bytes = new byte[ushort.MaxValue];
-            var packetLength = packet.Write(bytes, otherContext);
-
-            // Read the packet again.
-            IPacket.Read(span, context, out var packet2);
-
-            // Write the packet again.
-            var bytes2 = new byte[ushort.MaxValue];
-            var packetLength2 = packet2.Write(bytes2, otherContext);
-
-            Assert.Equal(packetLength, packetLength2);
-            for (var i = 0; i < packetLength; ++i)
-            {
-                Assert.True(bytes[i] == bytes2[i], $"Expected: {bytes[i]}\nActual:   {bytes2[i]}\n  at position {i}");
-            }
-        }
     }
 }

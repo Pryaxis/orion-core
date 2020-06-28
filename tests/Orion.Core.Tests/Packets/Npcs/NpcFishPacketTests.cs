@@ -65,11 +65,5 @@ namespace Orion.Core.Packets.Npcs
             Assert.Equal(256, packet.Y);
             Assert.Equal(NpcId.HemogoblinShark, packet.Id);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

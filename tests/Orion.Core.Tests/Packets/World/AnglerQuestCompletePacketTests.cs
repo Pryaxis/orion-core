@@ -28,12 +28,5 @@ namespace Orion.Core.Packets.World
         {
             _ = TestUtils.ReadPacket<AnglerQuestCompletePacket>(_bytes, PacketContext.Server);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(
-                _bytes, PacketContext.Server);
-        }
     }
 }

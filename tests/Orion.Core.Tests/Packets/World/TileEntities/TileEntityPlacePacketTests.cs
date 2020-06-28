@@ -65,11 +65,5 @@ namespace Orion.Core.Packets.World.TileEntities
             Assert.Equal(100, packet.Y);
             Assert.Equal(TileEntityId.ItemFrame, packet.Id);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

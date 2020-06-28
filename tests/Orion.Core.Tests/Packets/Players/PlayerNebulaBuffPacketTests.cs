@@ -66,12 +66,5 @@ namespace Orion.Core.Packets.Players
             Assert.Equal(BuffId.LifeNebula, packet.Id);
             Assert.Equal(new Vector2f(100, 256), packet.Position);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(
-                _bytes, PacketContext.Server);
-        }
     }
 }

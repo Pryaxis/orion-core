@@ -76,11 +76,5 @@ namespace Orion.Core.Packets.World.Tiles
             Assert.Equal(255, packet.LiquidAmount);
             Assert.Equal(Liquid.Honey, packet.Liquid);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

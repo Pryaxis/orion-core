@@ -68,11 +68,5 @@ namespace Orion.Core.Packets.Players
                 Assert.Equal(BuffId.ObsidianSkin, packet.Ids[i]);
             }
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

@@ -87,11 +87,5 @@ namespace Orion.Core.Packets.Players
             Assert.Equal(ItemPrefix.Godly, packet.Prefix);
             Assert.Equal(ItemId.CopperShortsword, packet.Id);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

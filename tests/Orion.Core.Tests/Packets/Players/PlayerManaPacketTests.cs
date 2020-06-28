@@ -64,11 +64,5 @@ namespace Orion.Core.Packets.Players
             Assert.Equal(100, packet.Mana);
             Assert.Equal(200, packet.MaxMana);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

@@ -64,11 +64,5 @@ namespace Orion.Core.Packets.Client
 
             Assert.Equal(new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage"), packet.Reason);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

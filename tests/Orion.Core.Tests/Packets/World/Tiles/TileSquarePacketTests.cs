@@ -112,18 +112,5 @@ namespace Orion.Core.Packets.World.Tiles
             Assert.Equal(1, packet.Tiles.Width);
             Assert.Equal(1, packet.Tiles.Height);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
-
-        [Fact]
-        public void RoundTrip_ExtraData()
-        {
-            TestUtils.RoundTripPacket(
-                _extraDataBytes, PacketContext.Server);
-        }
     }
 }

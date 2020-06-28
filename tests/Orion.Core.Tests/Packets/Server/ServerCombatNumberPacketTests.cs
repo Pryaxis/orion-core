@@ -65,12 +65,5 @@ namespace Orion.Core.Packets.Server
             Assert.Equal(Color3.White, packet.Color);
             Assert.Equal(1234, packet.Number);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(
-                _bytes, PacketContext.Server);
-        }
     }
 }

@@ -42,11 +42,5 @@ namespace Orion.Core.Packets.Players
 
             Assert.Equal(TeleportationType.DemonConch, packet.Type);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

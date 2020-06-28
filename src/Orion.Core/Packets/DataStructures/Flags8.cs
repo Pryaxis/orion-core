@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 namespace Orion.Core.Packets.DataStructures
 {
     /// <summary>
-    /// Holds a set of 8 flags.
+    /// Represents a set of 8 flags as a byte.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     internal struct Flags8

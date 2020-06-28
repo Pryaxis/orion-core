@@ -199,7 +199,8 @@ namespace Orion.Core.Packets.DataStructures
         /// <param name="span">The span to read from.</param>
         /// <param name="encoding">The encoding to use.</param>
         /// <param name="value">The resulting <see cref="NetworkText"/> instance.</param>
-        /// <returns></returns>
+        /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="encoding"/> is <see langword="null"/>.</exception>
         public static int Read(Span<byte> span, Encoding encoding, out NetworkText value)
         {
             if (encoding is null)

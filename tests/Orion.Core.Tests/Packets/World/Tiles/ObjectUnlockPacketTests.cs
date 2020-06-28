@@ -64,11 +64,5 @@ namespace Orion.Core.Packets.World.Tiles
             Assert.Equal(256, packet.X);
             Assert.Equal(100, packet.Y);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

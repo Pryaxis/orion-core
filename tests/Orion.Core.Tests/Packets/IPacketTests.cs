@@ -29,25 +29,83 @@ namespace Orion.Core.Packets
         }
 
         [Fact]
-        public void Write()
+        public void Write_AsServer()
         {
-            var bytes = new byte[4];
-            var packet = new TestPacket();
+            var packet = new TestPacket { Value = 42 };
+            var bytes = new byte[1000];
 
-            Assert.Equal(4, packet.Write(bytes, PacketContext.Server));
+            var length = packet.Write(bytes, PacketContext.Server);
 
-            Assert.Equal(new byte[] { 4, 0, 255, 42 }, bytes);
+            Assert.Equal(new byte[] { 4, 0, 255, 42 }, bytes[..length]);
         }
 
-        private class TestPacket : IPacket
+        [Fact]
+        public void Write_AsClient()
         {
+            var packet = new TestPacket { Value = 42 };
+            var bytes = new byte[1000];
+
+            var length = packet.Write(bytes, PacketContext.Client);
+
+            Assert.Equal(new byte[] { 4, 0, 255, 0 }, bytes[..length]);
+        }
+
+        [Fact]
+        public void Write_Struct_AsServer()
+        {
+            var packet = new TestStructPacket { Value = 42 };
+            var bytes = new byte[1000];
+
+            var length = packet.Write(bytes, PacketContext.Server);
+
+            Assert.Equal(new byte[] { 4, 0, 255, 42 }, bytes[..length]);
+        }
+
+        [Fact]
+        public void Write_Struct_AsClient()
+        {
+            var packet = new TestStructPacket { Value = 42 };
+            var bytes = new byte[1000];
+
+            var length = packet.Write(bytes, PacketContext.Client);
+
+            Assert.Equal(new byte[] { 4, 0, 255, 0 }, bytes[..length]);
+        }
+
+        private sealed class TestPacket : IPacket
+        {
+            public byte Value { get; set; }
+
             public PacketId Id => (PacketId)255;
 
-            int IPacket.ReadBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
-
-            int IPacket.WriteBody(Span<byte> span, PacketContext context)
+            public int ReadBody(Span<byte> span, PacketContext context)
             {
-                span[0] = 42;
+                Value = (byte)(span[0] + (context == PacketContext.Server ? 0 : 42));
+                return 1;
+            }
+
+            public int WriteBody(Span<byte> span, PacketContext context)
+            {
+                span[0] = (byte)(Value - (context == PacketContext.Server ? 0 : 42));
+                return 1;
+            }
+        }
+
+        private struct TestStructPacket : IPacket
+        {
+            public byte Value { get; set; }
+
+            public PacketId Id => (PacketId)255;
+
+            public int ReadBody(Span<byte> span, PacketContext context)
+            {
+                Value = (byte)(span[0] + (context == PacketContext.Server ? 0 : 42));
+                return 1;
+            }
+
+            public int WriteBody(Span<byte> span, PacketContext context)
+            {
+                span[0] = (byte)(Value - (context == PacketContext.Server ? 0 : 42));
                 return 1;
             }
         }

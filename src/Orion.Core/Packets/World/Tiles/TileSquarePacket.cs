@@ -182,7 +182,7 @@ namespace Orion.Core.Packets.World.Tiles
 
                 if (tile.BlockId.HasFrames())
                 {
-                    Unsafe.CopyBlockUnaligned(ref tile.AsRefByte(5), ref span[index], 4);
+                    Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref tile.AsByte(), 5), ref span[index], 4);
                     index += 4;
                 }
 
@@ -245,7 +245,7 @@ namespace Orion.Core.Packets.World.Tiles
 
                 if (tile.BlockId.HasFrames())
                 {
-                    Unsafe.CopyBlockUnaligned(ref span[index], ref tile.AsRefByte(5), 4);
+                    Unsafe.CopyBlockUnaligned(ref span[index], ref Unsafe.Add(ref tile.AsByte(), 5), 4);
                     index += 4;
                 }
 

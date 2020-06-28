@@ -27,7 +27,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
     /// <summary>
     /// Provides the base class for a serializable tile entity.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
     public abstract class SerializableTileEntity
     {
         private static readonly IDictionary<TileEntityId, Func<SerializableTileEntity>> _ctors =

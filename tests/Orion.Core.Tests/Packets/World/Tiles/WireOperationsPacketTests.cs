@@ -86,11 +86,5 @@ namespace Orion.Core.Packets.World.Tiles
             Assert.Equal(256, packet.EndY);
             Assert.Equal(WireOperationsPacket.WireOperations.Actuator, packet.Operations);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

@@ -24,7 +24,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
     /// <summary>
     /// Represents a serializable target dummy.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
+    [StructLayout(LayoutKind.Explicit, Size = 2)]
     public sealed class TargetDummy : SerializableTileEntity
     {
         [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.

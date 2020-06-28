@@ -86,11 +86,5 @@ namespace Orion.Core.Packets.Npcs
             Assert.Equal(NpcDamagePacket.HitDirection.Right, packet.Direction);
             Assert.True(packet.IsCritical);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

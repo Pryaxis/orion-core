@@ -86,11 +86,5 @@ namespace Orion.Core.Packets.Server
             Assert.Equal("Terraria", packet.Message);
             Assert.Equal(100, packet.LineWidth);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

@@ -43,83 +43,6 @@ namespace Orion.Core.Packets
         /// </summary>
         public const int HeaderSize = sizeof(ushort) + sizeof(PacketId);
 
-        private static readonly IDictionary<PacketId, Func<IPacket>> _constructors =
-            new Dictionary<PacketId, Func<IPacket>>
-            {
-                [PacketId.ClientConnect] = () => new ClientConnectPacket(),
-                [PacketId.ServerDisconnect] = () => new ServerDisconnectPacket(),
-                [PacketId.ServerIndex] = () => new ServerIndexPacket(),
-                [PacketId.PlayerCharacter] = () => new PlayerCharacterPacket(),
-                [PacketId.PlayerInventory] = () => new PlayerInventoryPacket(),
-                [PacketId.PlayerJoin] = () => new PlayerJoinPacket(),
-                [PacketId.ClientStatus] = () => new ClientStatusPacket(),
-                [PacketId.SectionFrames] = () => new SectionFramesPacket(),
-                [PacketId.ServerActivity] = () => new ServerActivityPacket(),
-                [PacketId.PlayerHealth] = () => new PlayerHealthPacket(),
-                [PacketId.TileModify] = () => new TileModifyPacket(),
-                [PacketId.TileSquare] = () => new TileSquarePacket(),
-                [PacketId.ItemInfo] = () => new ItemInfoPacket(),
-                [PacketId.ItemOwner] = () => new ItemOwnerPacket(),
-                [PacketId.PlayerMana] = () => new PlayerManaPacket(),
-                [PacketId.PlayerManaEffect] = () => new PlayerManaEffectPacket(),
-                [PacketId.NpcDamage] = () => new NpcDamagePacket(),
-                [PacketId.PlayerPvp] = () => new PlayerPvpPacket(),
-                [PacketId.ChestOpen] = () => new ChestOpenPacket(),
-                [PacketId.ChestInventory] = () => new ChestInventoryPacket(),
-                [PacketId.PlayerHealthEffect] = () => new PlayerHealthEffectPacket(),
-                [PacketId.ServerPassworded] = () => new ServerPasswordedPacket(),
-                [PacketId.ClientPassword] = () => new ClientPasswordPacket(),
-                [PacketId.ItemDisown] = () => new ItemDisownPacket(),
-                [PacketId.PlayerTeam] = () => new PlayerTeamPacket(),
-                [PacketId.SignRead] = () => new SignReadPacket(),
-                [PacketId.TileLiquid] = () => new TileLiquidPacket(),
-                [PacketId.PlayerBuffs] = () => new PlayerBuffsPacket(),
-                [PacketId.ObjectUnlock] = () => new ObjectUnlockPacket(),
-                [PacketId.NpcBuff] = () => new NpcBuffPacket(),
-                [PacketId.PlayerBuff] = () => new PlayerBuffPacket(),
-                [PacketId.NpcName] = () => new NpcNamePacket(),
-                [PacketId.WireActivate] = () => new WireActivatePacket(),
-                [PacketId.PlayerDodge] = () => new PlayerDodgePacket(),
-                [PacketId.BlockPaint] = () => new BlockPaintPacket(),
-                [PacketId.WallPaint] = () => new WallPaintPacket(),
-                [PacketId.PlayerHeal] = () => new PlayerHealPacket(),
-                [PacketId.ClientUuid] = () => new ClientUuidPacket(),
-                [PacketId.ChestName] = () => new ChestNamePacket(),
-                [PacketId.NpcCatch] = () => new NpcCatchPacket(),
-                [PacketId.NpcRelease] = () => new NpcReleasePacket(),
-                [PacketId.PlayerTeleport] = () => new PlayerTeleportPacket(),
-                [PacketId.AnglerQuestInfo] = () => new AnglerQuestInfoPacket(),
-                [PacketId.AnglerQuestComplete] = () => new AnglerQuestCompletePacket(),
-                [PacketId.ServerCombatNumber] = () => new ServerCombatNumberPacket(),
-                [PacketId.NpcKillCount] = () => new NpcKillCountPacket(),
-                [PacketId.PlayerStealth] = () => new PlayerStealthPacket(),
-                [PacketId.TileEntityInfo] = () => new TileEntityInfoPacket(),
-                [PacketId.TileEntityPlace] = () => new TileEntityPlacePacket(),
-                [PacketId.ItemFrameInfo] = () => new ItemFrameInfoPacket(),
-                [PacketId.InstancedItemInfo] = () => new InstancedItemInfoPacket(),
-                [PacketId.PlayerMinionPosition] = () => new PlayerMinionPositionPacket(),
-                [PacketId.PlayerNebulaBuff] = () => new PlayerNebulaBuffPacket(),
-                [PacketId.MoonLordInfo] = () => new MoonLordInfoPacket(),
-                [PacketId.GemLockToggle] = () => new GemLockTogglePacket(),
-                [PacketId.ServerChat] = () => new ServerChatPacket(),
-                [PacketId.WireOperations] = () => new WireOperationsPacket(),
-                [PacketId.PartyToggle] = () => new PartyTogglePacket(),
-                [PacketId.OldOnesArmyStart] = () => new OldOnesArmyStartPacket(),
-                [PacketId.OldOnesArmyEnd] = () => new OldOnesArmyEndPacket(),
-                [PacketId.PlayerMinionTarget] = () => new PlayerMinionTargetPacket(),
-                [PacketId.OldOnesArmyInfo] = () => new OldOnesArmyInfoPacket(),
-                [PacketId.ServerCombatText] = () => new ServerCombatTextPacket(),
-                [PacketId.MannequinInventory] = () => new MannequinInventoryPacket(),
-                [PacketId.WeaponRackInfo] = () => new WeaponRackInfoPacket(),
-                [PacketId.HatRackInventory] = () => new HatRackInventoryPacket(),
-                [PacketId.NpcFish] = () => new NpcFishPacket(),
-                [PacketId.PlateInfo] = () => new PlateInfoPacket(),
-                [PacketId.PlayerLuck] = () => new PlayerLuckPacket(),
-                [PacketId.PlayerDead] = () => new PlayerDeadPacket(),
-                [PacketId.NpcRemoveBuff] = () => new NpcRemoveBuffPacket(),
-                [PacketId.ServerHost] = () => new ServerHostPacket()
-            };
-
         /// <summary>
         /// Gets the packet's ID.
         /// </summary>
@@ -150,27 +73,6 @@ namespace Orion.Core.Packets
         /// Implementations may not perform any bounds checking on <paramref name="span"/>.
         /// </remarks>
         public int WriteBody(Span<byte> span, PacketContext context);
-
-        /// <summary>
-        /// Reads a packet from the given <paramref name="span"/> in the specified <paramref name="context"/>. Returns
-        /// the number of bytes read from the <paramref name="span"/>.
-        /// </summary>
-        /// <param name="span">The span to read from.</param>
-        /// <param name="context">The packet context to use when reading.</param>
-        /// <param name="packet">The resulting packet.</param>
-        /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
-        public static int Read(Span<byte> span, PacketContext context, out IPacket packet)
-        {
-            // Since we know that the span must have space for the packet header, we read it with zero bounds checking.
-            var packetLength = Unsafe.ReadUnaligned<ushort>(ref MemoryMarshal.GetReference(span));
-            var id = Unsafe.ReadUnaligned<PacketId>(ref Unsafe.Add(ref MemoryMarshal.GetReference(span), 2));
-
-            packet = _constructors.TryGetValue(id, out var ctor) ? ctor() : new UnknownPacket(packetLength, id);
-            var packetBodyLength = packet.ReadBody(span[HeaderSize..], context);
-            Debug.Assert(packetBodyLength + HeaderSize == packetLength);
-
-            return packetLength;
-        }
     }
 
     /// <summary>
@@ -194,11 +96,44 @@ namespace Orion.Core.Packets
                 throw new ArgumentNullException(nameof(packet));
             }
 
-            var packetLength = IPacket.HeaderSize + packet.WriteBody(span[IPacket.HeaderSize..], context);
+            Debug.Assert(span.Length >= 3);
 
-            // Since we know that the span must have space for the packet header, we write it with zero bounds checking.
-            Unsafe.WriteUnaligned(ref MemoryMarshal.GetReference(span), (ushort)packetLength);
-            Unsafe.WriteUnaligned(ref Unsafe.Add(ref MemoryMarshal.GetReference(span), 2), packet.Id);
+            ref var header = ref MemoryMarshal.GetReference(span);
+
+            var packetLength = 3 + packet.WriteBody(span[3..], context);
+
+            // Write the packet header with no bounds checking since we already performed bounds checking.
+            Unsafe.WriteUnaligned(ref header, (ushort)packetLength);
+            Unsafe.WriteUnaligned(ref Unsafe.Add(ref header, 2), packet.Id);
+
+            return packetLength;
+        }
+
+        /// <summary>
+        /// Writes the packet to the given <paramref name="span"/> in the specified <paramref name="context"/>.
+        /// Returns the number of bytes written to the <paramref name="span"/>.
+        /// </summary>
+        /// <typeparam name="TPacket">The type of packet.</typeparam>
+        /// <param name="packet">The packet.</param>
+        /// <param name="span">The span to write to.</param>
+        /// <param name="context">The packet context to use when writing.</param>
+        /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null"/>.</exception>
+        /// <remarks>
+        /// This overload is provided for efficient struct codegen.
+        /// </remarks>
+        public static int Write<TPacket>(this TPacket packet, Span<byte> span, PacketContext context)
+            where TPacket : struct, IPacket
+        {
+            Debug.Assert(span.Length >= 3);
+
+            ref var header = ref MemoryMarshal.GetReference(span);
+
+            var packetLength = 3 + packet.WriteBody(span[3..], context);
+
+            // Write the packet header with no bounds checking since we already performed bounds checking.
+            Unsafe.WriteUnaligned(ref header, (ushort)packetLength);
+            Unsafe.WriteUnaligned(ref Unsafe.Add(ref header, 2), packet.Id);
 
             return packetLength;
         }

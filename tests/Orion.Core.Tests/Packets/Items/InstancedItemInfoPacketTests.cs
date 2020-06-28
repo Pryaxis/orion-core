@@ -113,12 +113,5 @@ namespace Orion.Core.Packets.Items
             Assert.False(packet.AllowSelfPickup);
             Assert.Equal(ItemId.Sdmg, packet.Id);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(
-                _bytes, PacketContext.Server);
-        }
     }
 }

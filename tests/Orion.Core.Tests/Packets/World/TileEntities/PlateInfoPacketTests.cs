@@ -87,11 +87,5 @@ namespace Orion.Core.Packets.World.TileEntities
             Assert.Equal(ItemPrefix.Unreal, packet.Prefix);
             Assert.Equal(1, packet.StackSize);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }

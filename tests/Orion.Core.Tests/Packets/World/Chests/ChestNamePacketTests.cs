@@ -103,17 +103,5 @@ namespace Orion.Core.Packets.World.Chests
             Assert.Equal(100, packet.Y);
             Assert.Equal("Terraria", packet.Name);
         }
-
-        [Fact]
-        public void RoundTrip_AsServer()
-        {
-            TestUtils.RoundTripPacket(_serverBytes, PacketContext.Server);
-        }
-
-        [Fact]
-        public void RoundTrip_AsClient()
-        {
-            TestUtils.RoundTripPacket(_clientBytes, PacketContext.Client);
-        }
     }
 }

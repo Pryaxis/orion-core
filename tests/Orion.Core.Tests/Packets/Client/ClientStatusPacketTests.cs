@@ -84,11 +84,5 @@ namespace Orion.Core.Packets.Client
             Assert.False(packet.HidePercentage);
             Assert.False(packet.HasShadows);
         }
-
-        [Fact]
-        public void RoundTrip()
-        {
-            TestUtils.RoundTripPacket(_bytes, PacketContext.Server);
-        }
     }
 }
