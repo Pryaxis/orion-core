@@ -21,11 +21,11 @@ using System.Text;
 namespace Orion.Core.Packets.Client
 {
     /// <summary>
-    /// A packet sent from the client to the server to connect.
+    /// A packet sent from the client to the server to connect to the server.
     /// </summary>
-    public sealed class ClientConnectPacket : IPacket
+    public struct ClientConnect : IPacket
     {
-        private string _version = string.Empty;
+        private string? _version;
 
         /// <summary>
         /// Gets or sets the client's version. This is of the form <c>"Terraria###"</c>, where <c>###</c> is the
@@ -35,7 +35,7 @@ namespace Orion.Core.Packets.Client
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Version
         {
-            get => _version;
+            get => _version ?? string.Empty;
             set => _version = value ?? throw new ArgumentNullException(nameof(value));
         }
 

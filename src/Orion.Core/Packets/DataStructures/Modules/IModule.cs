@@ -99,9 +99,6 @@ namespace Orion.Core.Packets.DataStructures.Modules
         /// <param name="span">The span to write to.</param>
         /// <param name="context">The packet context to use when writing.</param>
         /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
-        /// <remarks>
-        /// This overload is provided for efficient struct codegen.
-        /// </remarks>
         public static int Write<TModule>(this TModule module, Span<byte> span, PacketContext context)
             where TModule : struct, IModule
         {

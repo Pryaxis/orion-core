@@ -16,20 +16,9 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Orion.Core.Packets.Client;
-using Orion.Core.Packets.Items;
-using Orion.Core.Packets.Npcs;
-using Orion.Core.Packets.Players;
-using Orion.Core.Packets.Server;
-using Orion.Core.Packets.World;
-using Orion.Core.Packets.World.Chests;
-using Orion.Core.Packets.World.Signs;
-using Orion.Core.Packets.World.TileEntities;
-using Orion.Core.Packets.World.Tiles;
 
 namespace Orion.Core.Packets
 {
@@ -38,11 +27,6 @@ namespace Orion.Core.Packets
     /// </summary>
     public interface IPacket
     {
-        /// <summary>
-        /// The packet header size.
-        /// </summary>
-        public const int HeaderSize = sizeof(ushort) + sizeof(PacketId);
-
         /// <summary>
         /// Gets the packet's ID.
         /// </summary>
@@ -58,7 +42,7 @@ namespace Orion.Core.Packets
         /// <param name="context">The packet context to use when reading.</param>
         /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
         /// <remarks>
-        /// Implementations may not perform any bounds checking on <paramref name="span"/>.
+        /// Implementations might not perform bounds checking on the <paramref name="span"/>.
         /// </remarks>
         public int ReadBody(Span<byte> span, PacketContext context);
 
@@ -70,7 +54,7 @@ namespace Orion.Core.Packets
         /// <param name="context">The packet context to use when writing.</param>
         /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
         /// <remarks>
-        /// Implementations may not perform any bounds checking on <paramref name="span"/>.
+        /// Implementations might not perform bounds checking on the <paramref name="span"/>.
         /// </remarks>
         public int WriteBody(Span<byte> span, PacketContext context);
     }
@@ -118,10 +102,6 @@ namespace Orion.Core.Packets
         /// <param name="span">The span to write to.</param>
         /// <param name="context">The packet context to use when writing.</param>
         /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null"/>.</exception>
-        /// <remarks>
-        /// This overload is provided for efficient struct codegen.
-        /// </remarks>
         public static int Write<TPacket>(this TPacket packet, Span<byte> span, PacketContext context)
             where TPacket : struct, IPacket
         {

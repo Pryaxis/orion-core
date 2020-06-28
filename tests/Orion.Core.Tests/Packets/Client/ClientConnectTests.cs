@@ -22,34 +22,42 @@ using Xunit;
 namespace Orion.Core.Packets.Client
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ClientConnectPacketTests
+    public class ClientConnectTests
     {
         private readonly byte[] _bytes = { 15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52 };
 
         [Fact]
+        public void Version_GetNullValue()
+        {
+            var clientConnect = new ClientConnect();
+
+            Assert.Equal(string.Empty, clientConnect.Version);
+        }
+
+        [Fact]
         public void Version_SetNullValue_ThrowsArgumentNullException()
         {
-            var packet = new ClientConnectPacket();
+            var clientConnect = new ClientConnect();
 
-            Assert.Throws<ArgumentNullException>(() => packet.Version = null!);
+            Assert.Throws<ArgumentNullException>(() => clientConnect.Version = null!);
         }
 
         [Fact]
         public void Version_Set_Get()
         {
-            var packet = new ClientConnectPacket();
+            var clientConnect = new ClientConnect();
 
-            packet.Version = "Terraria194";
+            clientConnect.Version = "Terraria194";
 
-            Assert.Equal("Terraria194", packet.Version);
+            Assert.Equal("Terraria194", clientConnect.Version);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<ClientConnectPacket>(_bytes, PacketContext.Server);
+            var clientConnect = TestUtils.ReadPacket<ClientConnect>(_bytes, PacketContext.Server);
 
-            Assert.Equal("Terraria194", packet.Version);
+            Assert.Equal("Terraria194", clientConnect.Version);
         }
     }
 }

@@ -121,7 +121,7 @@ namespace Orion.Core.Packets
     {
         private static readonly IDictionary<PacketId, Type> _types = new Dictionary<PacketId, Type>
         {
-            [PacketId.ClientConnect] = typeof(ClientConnectPacket),
+            [PacketId.ClientConnect] = typeof(ClientConnect),
             [PacketId.ServerDisconnect] = typeof(ServerDisconnectPacket),
             [PacketId.ServerIndex] = typeof(ServerIndexPacket),
             [PacketId.PlayerCharacter] = typeof(PlayerCharacterPacket),

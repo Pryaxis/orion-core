@@ -85,9 +85,6 @@ namespace Orion.Core.Players
         /// <param name="players">The player service.</param>
         /// <param name="packet">The packet to broadcast.</param>
         /// <exception cref="ArgumentNullException"><paramref name="players"/> is <see langword="null"/>.</exception>
-        /// <remarks>
-        /// This overload is provided for efficient struct codegen.
-        /// </remarks>
         public static void BroadcastPacket<TPacket>(this IPlayerService players, TPacket packet)
             where TPacket : struct, IPacket
         {
