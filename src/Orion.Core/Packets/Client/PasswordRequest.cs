@@ -17,14 +17,14 @@
 
 using System;
 
-namespace Orion.Core.Packets.Server
+namespace Orion.Core.Packets.Client
 {
     /// <summary>
-    /// A packet sent from the server to the client to indicate that the server is passworded.
+    /// A packet sent from the server to the client to request a password.
     /// </summary>
-    public sealed class ServerPasswordedPacket : IPacket
+    public struct PasswordRequest : IPacket
     {
-        PacketId IPacket.Id => PacketId.ServerPassworded;
+        PacketId IPacket.Id => PacketId.PasswordRequest;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => 0;
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => 0;

@@ -21,7 +21,7 @@ using Destructurama.Attributed;
 namespace Orion.Core.Packets.Client
 {
     /// <summary>
-    /// A packet sent from the client to the server as a password response.
+    /// A packet sent from the client to the server to respond with a password.
     /// </summary>
     public struct PasswordResponse : IPacket
     {

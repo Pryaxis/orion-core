@@ -17,16 +17,16 @@
 
 using Xunit;
 
-namespace Orion.Core.Packets.Server
+namespace Orion.Core.Packets.Client
 {
-    public class ServerPasswordedPacketTests
+    public class PasswordRequestTests
     {
         private readonly byte[] _bytes = { 3, 0, 37 };
 
         [Fact]
         public void Read()
         {
-            _ = TestUtils.ReadPacket<ServerPasswordedPacket>(_bytes, PacketContext.Server);
+            _ = TestUtils.ReadPacket<PasswordRequest>(_bytes, PacketContext.Server);
         }
     }
 }
