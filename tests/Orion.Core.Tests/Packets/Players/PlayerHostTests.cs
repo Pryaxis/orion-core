@@ -18,17 +18,17 @@
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.Server
+namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ServerHostPacketTests
+    public class PlayerHostTests
     {
         private readonly byte[] _bytes = { 5, 0, 139, 5, 1 };
 
         [Fact]
         public void Index_Set_Get()
         {
-            var packet = new ServerHostPacket();
+            var packet = new PlayerHost();
 
             packet.Index = 5;
 
@@ -38,7 +38,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void IsHost_Set_Get()
         {
-            var packet = new ServerHostPacket();
+            var packet = new PlayerHost();
 
             packet.IsHost = true;
 
@@ -48,7 +48,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<ServerHostPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<PlayerHost>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.Index);
             Assert.True(packet.IsHost);

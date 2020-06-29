@@ -110,7 +110,7 @@ namespace Orion.Core.Packets
         PlayerLuck = 134,
         PlayerDead = 135,
         NpcRemoveBuff = 137,
-        ServerHost = 139,
+        PlayerHost = 139,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
@@ -192,7 +192,7 @@ namespace Orion.Core.Packets
             [PacketId.PlayerLuck] = typeof(PlayerLuckPacket),
             [PacketId.PlayerDead] = typeof(PlayerDeadPacket),
             [PacketId.NpcRemoveBuff] = typeof(NpcRemoveBuffPacket),
-            [PacketId.ServerHost] = typeof(ServerHostPacket)
+            [PacketId.PlayerHost] = typeof(PlayerHost)
         };
 
         /// <summary>

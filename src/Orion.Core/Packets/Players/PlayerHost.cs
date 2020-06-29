@@ -18,15 +18,16 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Orion.Core.Packets.Server
+namespace Orion.Core.Packets.Players
 {
     /// <summary>
+    /// A packet sent from the server to the client to set a player's host status.
     /// A packet sent from the server to the client to set the server's host.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 2)]
-    public sealed class ServerHostPacket : IPacket
+    public struct PlayerHost : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the player's index.
@@ -40,7 +41,7 @@ namespace Orion.Core.Packets.Server
         /// <value><see langword="true"/> if the player is a host; otherwise, <see langword="false"/>.</value>
         [field: FieldOffset(1)] public bool IsHost { get; set; }
 
-        PacketId IPacket.Id => PacketId.ServerHost;
+        PacketId IPacket.Id => PacketId.PlayerHost;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 2);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 2);
