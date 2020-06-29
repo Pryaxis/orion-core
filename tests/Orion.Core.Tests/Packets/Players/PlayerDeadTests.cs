@@ -15,28 +15,32 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using System.Runtime.InteropServices;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace Orion.Core.Packets.Players
 {
-    /// <summary>
-    /// A packet sent from the server to the client to mark a player as dead.
-    /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 1)]
-    public sealed class PlayerDeadPacket : IPacket
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
+    public class PlayerDeadTests
     {
-        [FieldOffset(0)] private byte _bytes;
+        private readonly byte[] _bytes = { 4, 0, 135, 5 };
 
-        /// <summary>
-        /// Gets or sets the player index.
-        /// </summary>
-        /// <value>The player index.</value>
-        [field: FieldOffset(0)] public byte Index { get; set; }
+        [Fact]
+        public void Index_Set_Get()
+        {
+            var packet = new PlayerDead();
 
-        PacketId IPacket.Id => PacketId.PlayerDead;
+            packet.Index = 5;
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 1);
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 1);
+            Assert.Equal(5, packet.Index);
+        }
+
+        [Fact]
+        public void Read()
+        {
+            var packet = TestUtils.ReadPacket<PlayerDead>(_bytes, PacketContext.Server);
+
+            Assert.Equal(5, packet.Index);
+        }
     }
 }
