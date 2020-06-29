@@ -25,7 +25,7 @@ namespace Orion.Core.Packets.Npcs
     /// A packet sent from the server to the client to set an NPC ID's kill count.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 8)]
-    public sealed class NpcKillCountPacket : IPacket
+    public struct NpcKillCount : IPacket
     {
         [FieldOffset(0)] private byte _bytes;
 

@@ -166,7 +166,7 @@ namespace Orion.Core.Packets
             [PacketId.AnglerQuestInfo] = typeof(AnglerQuestInfoPacket),
             [PacketId.AnglerQuestComplete] = typeof(AnglerQuestCompletePacket),
             [PacketId.CombatNumber] = typeof(CombatNumber),
-            [PacketId.NpcKillCount] = typeof(NpcKillCountPacket),
+            [PacketId.NpcKillCount] = typeof(NpcKillCount),
             [PacketId.PlayerStealth] = typeof(PlayerStealthPacket),
             [PacketId.TileEntityInfo] = typeof(TileEntityInfoPacket),
             [PacketId.TileEntityPlace] = typeof(TileEntityPlacePacket),
