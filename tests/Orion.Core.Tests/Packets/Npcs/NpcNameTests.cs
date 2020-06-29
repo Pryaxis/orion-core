@@ -22,7 +22,7 @@ using Xunit;
 namespace Orion.Core.Packets.Npcs
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class NpcNamePacketTests
+    public class NpcNameTests
     {
         private readonly byte[] _serverBytes = { 5, 0, 56, 5, 0 };
         private readonly byte[] _clientBytes = { 18, 0, 56, 5, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97, 1, 0, 0, 0 };
@@ -30,7 +30,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void NpcIndex_Set_Get()
         {
-            var packet = new NpcNamePacket();
+            var packet = new NpcName();
 
             packet.NpcIndex = 5;
 
@@ -40,7 +40,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Name_GetNullValue()
         {
-            var packet = new NpcNamePacket();
+            var packet = new NpcName();
 
             Assert.Equal(string.Empty, packet.Name);
         }
@@ -48,7 +48,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Name_SetNullValue_ThrowsArgumentNullException()
         {
-            var packet = new NpcNamePacket();
+            var packet = new NpcName();
 
             Assert.Throws<ArgumentNullException>(() => packet.Name = null!);
         }
@@ -56,7 +56,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Name_Set_Get()
         {
-            var packet = new NpcNamePacket();
+            var packet = new NpcName();
 
             packet.Name = "Terraria";
 
@@ -66,7 +66,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Variant_Set_Get()
         {
-            var packet = new NpcNamePacket();
+            var packet = new NpcName();
 
             packet.Variant = 1;
 
@@ -76,7 +76,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Read_AsServer()
         {
-            var packet = TestUtils.ReadPacket<NpcNamePacket>(_serverBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<NpcName>(_serverBytes, PacketContext.Server);
 
             Assert.Equal(5, packet.NpcIndex);
         }
@@ -84,7 +84,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Read_AsClient()
         {
-            var packet = TestUtils.ReadPacket<NpcNamePacket>(_clientBytes, PacketContext.Client);
+            var packet = TestUtils.ReadPacket<NpcName>(_clientBytes, PacketContext.Client);
 
             Assert.Equal(5, packet.NpcIndex);
             Assert.Equal("Terraria", packet.Name);

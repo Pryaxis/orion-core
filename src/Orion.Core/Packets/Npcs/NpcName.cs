@@ -24,13 +24,12 @@ namespace Orion.Core.Packets.Npcs
     /// A packet sent from the client to the server to request an NPC's name or from the server to the client to set an
     /// NPC's name.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public sealed class NpcNamePacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public struct NpcName : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
-        [FieldOffset(2)] private byte _bytes2;
-
-        [field: FieldOffset(8)] private string? _name;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
+        [FieldOffset(2)] private byte _bytes2;  // Used to obtain an interior reference.
+        [FieldOffset(8)] private string? _name;
 
         /// <summary>
         /// Gets or sets the NPC index.
@@ -39,24 +38,25 @@ namespace Orion.Core.Packets.Npcs
         [field: FieldOffset(0)] public short NpcIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the NPC's name.
+        /// Gets or sets the NPC's name. <i>This is only applicable if read in <see cref="PacketContext.Client"/> or
+        /// written in <see cref="PacketContext.Server"/>!</i>
         /// </summary>
         /// <value>The NPC's name.</value>
         public string Name
         {
-            get => _name ?? string.Empty;
+            get => _name ??= string.Empty;
             set => _name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
-        /// Gets or sets the NPC's variant.
+        /// Gets or sets the NPC's variant. <i>This is only applicable if read in <see cref="PacketContext.Client"/> or
+        /// written in <see cref="PacketContext.Server"/>!</i>
         /// </summary>
         /// <value>The NPC's variant.</value>
         [field: FieldOffset(2)] public int Variant { get; set; }
 
         PacketId IPacket.Id => PacketId.NpcName;
 
-        /// <inheritdoc/>
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
             var length = span.Read(ref _bytes, 2);
@@ -66,10 +66,10 @@ namespace Orion.Core.Packets.Npcs
             }
 
             length += span[length..].Read(out _name);
-            return length + span[length..].Read(ref _bytes2, 4);
+            length += span[length..].Read(ref _bytes2, 4);
+            return length;
         }
 
-        /// <inheritdoc/>
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
             var length = span.Write(ref _bytes, 2);
@@ -79,7 +79,8 @@ namespace Orion.Core.Packets.Npcs
             }
 
             length += span[length..].Write(Name);
-            return length + span[length..].Write(ref _bytes2, 4);
+            length += span[length..].Write(ref _bytes2, 4);
+            return length;
         }
     }
 }

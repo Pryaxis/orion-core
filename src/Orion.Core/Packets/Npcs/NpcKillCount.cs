@@ -27,7 +27,7 @@ namespace Orion.Core.Packets.Npcs
     [StructLayout(LayoutKind.Explicit, Size = 8)]
     public struct NpcKillCount : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the NPC ID.
