@@ -137,7 +137,7 @@ namespace Orion.Core.Packets
             [PacketId.ItemOwn] = typeof(ItemOwn),
             [PacketId.PlayerMana] = typeof(PlayerManaPacket),
             [PacketId.PlayerManaEffect] = typeof(PlayerManaEffectPacket),
-            [PacketId.NpcDamage] = typeof(NpcDamagePacket),
+            [PacketId.NpcDamage] = typeof(NpcDamage),
             [PacketId.PlayerPvp] = typeof(PlayerPvpPacket),
             [PacketId.ChestOpen] = typeof(ChestOpenPacket),
             [PacketId.ChestInventory] = typeof(ChestInventoryPacket),

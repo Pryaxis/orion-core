@@ -17,16 +17,17 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Orion.Core.Packets.DataStructures;
 
 namespace Orion.Core.Packets.Npcs
 {
     /// <summary>
     /// A packet sent to damage an NPC.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public sealed class NpcDamagePacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 12)]
+    public struct NpcDamage : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the NPC index.
@@ -35,8 +36,8 @@ namespace Orion.Core.Packets.Npcs
         [field: FieldOffset(0)] public short NpcIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the damage. If <c>-1</c> and read in <see cref="PacketContext.Client"/>, then the NPC is
-        /// removed.
+        /// Gets or sets the damage. A value of <c>-1</c> in <see cref="PacketContext.Client"/> indicates that the NPC
+        /// is being removed.
         /// </summary>
         /// <value>The damage.</value>
         [field: FieldOffset(2)] public short Damage { get; set; }
@@ -63,21 +64,5 @@ namespace Orion.Core.Packets.Npcs
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 10);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 10);
-
-        /// <summary>
-        /// Specifies the hit direction in a <see cref="NpcDamagePacket"/>.
-        /// </summary>
-        public enum HitDirection : byte
-        {
-            /// <summary>
-            /// Indicates left.
-            /// </summary>
-            Left = 0,
-
-            /// <summary>
-            /// Indicates right.
-            /// </summary>
-            Right = 2
-        }
     }
 }

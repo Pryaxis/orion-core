@@ -15,29 +15,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using System.Runtime.InteropServices;
-
-namespace Orion.Core.Packets.Npcs
+namespace Orion.Core.Packets.DataStructures
 {
     /// <summary>
-    /// A packet sent from the client to the server to catch an NPC.
+    /// Specifies a hit direction.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 4)]
-    public struct NpcCatch : IPacket
+    public enum HitDirection : byte
     {
-        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
-        [FieldOffset(2)] private readonly byte _playerIndex;  // Unused.
+        /// <summary>
+        /// Indicates left.
+        /// </summary>
+        Left = 0,
 
         /// <summary>
-        /// Gets or sets the NPC index.
+        /// Indicates right.
         /// </summary>
-        /// <value>The NPC index.</value>
-        [field: FieldOffset(0)] public short NpcIndex { get; set; }
-
-        PacketId IPacket.Id => PacketId.NpcCatch;
-
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 3);
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 3);
+        Right = 2
     }
 }

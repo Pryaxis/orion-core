@@ -16,19 +16,20 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics.CodeAnalysis;
+using Orion.Core.Packets.DataStructures;
 using Xunit;
 
 namespace Orion.Core.Packets.Npcs
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class NpcDamagePacketTests
+    public class NpcDamageTests
     {
         private readonly byte[] _bytes = { 13, 0, 28, 5, 0, 108, 0, 205, 204, 128, 64, 2, 1 };
 
         [Fact]
         public void NpcIndex_Set_Get()
         {
-            var packet = new NpcDamagePacket();
+            var packet = new NpcDamage();
 
             packet.NpcIndex = 5;
 
@@ -38,7 +39,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Damage_Set_Get()
         {
-            var packet = new NpcDamagePacket();
+            var packet = new NpcDamage();
 
             packet.Damage = 108;
 
@@ -48,7 +49,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Knockback_Set_Get()
         {
-            var packet = new NpcDamagePacket();
+            var packet = new NpcDamage();
 
             packet.Knockback = 4.025f;
 
@@ -58,17 +59,17 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Direction_Set_Get()
         {
-            var packet = new NpcDamagePacket();
+            var packet = new NpcDamage();
 
-            packet.Direction = NpcDamagePacket.HitDirection.Right;
+            packet.Direction = HitDirection.Right;
 
-            Assert.Equal(NpcDamagePacket.HitDirection.Right, packet.Direction);
+            Assert.Equal(HitDirection.Right, packet.Direction);
         }
 
         [Fact]
         public void IsCritical_Set_Get()
         {
-            var packet = new NpcDamagePacket();
+            var packet = new NpcDamage();
 
             packet.IsCritical = true;
 
@@ -78,12 +79,12 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<NpcDamagePacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<NpcDamage>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.NpcIndex);
             Assert.Equal(108, packet.Damage);
             Assert.Equal(4.025f, packet.Knockback);
-            Assert.Equal(NpcDamagePacket.HitDirection.Right, packet.Direction);
+            Assert.Equal(HitDirection.Right, packet.Direction);
             Assert.True(packet.IsCritical);
         }
     }
