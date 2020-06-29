@@ -41,6 +41,6 @@ namespace Orion.Core.Events.Packets
         /// Gets the packet involved in the event.
         /// </summary>
         /// <value>The packet involved in the event.</value>
-        public IPacket Packet { get; }
+        public TPacket Packet { get; }
     }
 }
