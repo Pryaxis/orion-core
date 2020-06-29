@@ -158,7 +158,7 @@ namespace Orion.Core.Packets
             [PacketId.BlockPaint] = typeof(BlockPaintPacket),
             [PacketId.WallPaint] = typeof(WallPaintPacket),
             [PacketId.PlayerHeal] = typeof(PlayerHealPacket),
-            [PacketId.ClientUuid] = typeof(ClientUuidPacket),
+            [PacketId.ClientUuid] = typeof(ClientUuid),
             [PacketId.ChestName] = typeof(ChestNamePacket),
             [PacketId.NpcCatch] = typeof(NpcCatchPacket),
             [PacketId.NpcRelease] = typeof(NpcReleasePacket),

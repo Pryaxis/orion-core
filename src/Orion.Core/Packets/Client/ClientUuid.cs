@@ -21,11 +21,11 @@ using Destructurama.Attributed;
 namespace Orion.Core.Packets.Client
 {
     /// <summary>
-    /// A packet sent from the client to the server to inform the server of its UUID.
+    /// A packet sent from the client to the server to register its UUID.
     /// </summary>
-    public sealed class ClientUuidPacket : IPacket
+    public struct ClientUuid : IPacket
     {
-        private string _uuid = string.Empty;
+        private string? _uuid;
 
         /// <summary>
         /// Gets or sets the client's UUID.
@@ -35,7 +35,7 @@ namespace Orion.Core.Packets.Client
         [LogMasked]
         public string Uuid
         {
-            get => _uuid;
+            get => _uuid ??= string.Empty;
             set => _uuid = value ?? throw new ArgumentNullException(nameof(value));
         }
 
