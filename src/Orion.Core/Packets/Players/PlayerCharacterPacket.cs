@@ -18,7 +18,6 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 using Orion.Core.Players;
 using Orion.Core.Utils;
 
@@ -298,14 +297,14 @@ namespace Orion.Core.Packets.Players
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
             var index = span.Read(ref _bytes, 3);
-            index += span[index..].Read(Encoding.UTF8, out _name);
+            index += span[index..].Read(out _name);
             return index + span[index..].Read(ref _bytes2, 27);
         }
 
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
             var index = span.Write(ref _bytes, 3);
-            index += span[index..].Write(Name, Encoding.UTF8);
+            index += span[index..].Write(Name);
             return index + span[index..].Write(ref _bytes2, 27);
         }
 

@@ -18,6 +18,7 @@
 using System;
 using Orion.Core.Entities;
 using Orion.Core.Packets;
+using Orion.Core.Packets.Client;
 using Orion.Core.Packets.DataStructures;
 using Orion.Core.Packets.Server;
 using Orion.Core.Packets.World.Tiles;
@@ -134,7 +135,7 @@ namespace Orion.Core.Players
                 throw new ArgumentNullException(nameof(reason));
             }
 
-            var packet = new ServerDisconnectPacket { Reason = reason };
+            var packet = new ClientDisconnect { Reason = reason };
             player.SendPacket(packet);
         }
 

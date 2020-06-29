@@ -17,7 +17,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Orion.Core.Packets.World.Chests
 {
@@ -67,13 +66,13 @@ namespace Orion.Core.Packets.World.Chests
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
             var length = span.Read(ref _bytes, 6);
-            return context == PacketContext.Server ? length : length + span[length..].Read(Encoding.UTF8, out _name);
+            return context == PacketContext.Server ? length : length + span[length..].Read(out _name);
         }
 
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
             var length = span.Write(ref _bytes, 6);
-            return context == PacketContext.Client ? length : length + span[length..].Write(Name, Encoding.UTF8);
+            return context == PacketContext.Client ? length : length + span[length..].Write(Name);
         }
     }
 }

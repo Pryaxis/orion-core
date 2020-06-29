@@ -21,7 +21,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 
 namespace Orion.Core.Packets.DataStructures
 {
@@ -160,22 +159,14 @@ namespace Orion.Core.Packets.DataStructures
         };
 
         /// <summary>
-        /// Writes the network text to the given <paramref name="span"/> with the specified <paramref name="encoding"/>.
-        /// Returns the number of bytes written.
+        /// Writes the network text to the given <paramref name="span"/>. Returns the number of bytes written.
         /// </summary>
         /// <param name="span">The span to write to.</param>
-        /// <param name="encoding">The encoding to use.</param>
         /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="encoding"/> is <see langword="null"/>.</exception>
-        public int Write(Span<byte> span, Encoding encoding)
+        public int Write(Span<byte> span)
         {
-            if (encoding is null)
-            {
-                throw new ArgumentNullException(nameof(encoding));
-            }
-
             span[0] = (byte)Mode;
-            var length = 1 + span[1..].Write(Format, encoding);
+            var length = 1 + span[1..].Write(Format);
 
             byte numSubstitutions = 0;
             if (Mode != NetworkTextMode.Literal)
@@ -186,30 +177,22 @@ namespace Orion.Core.Packets.DataStructures
 
             for (var i = 0; i < numSubstitutions; ++i)
             {
-                length += Substitutions[i].Write(span[length..], encoding);
+                length += Substitutions[i].Write(span[length..]);
             }
 
             return length;
         }
 
         /// <summary>
-        /// Reads a <see cref="NetworkText"/> instance from the given <paramref name="span"/> with the specified
-        /// <paramref name="encoding"/>. Returns the number of bytes read.
+        /// Reads a <see cref="NetworkText"/> instance from the given <paramref name="span"/>. Returns the number of bytes read.
         /// </summary>
         /// <param name="span">The span to read from.</param>
-        /// <param name="encoding">The encoding to use.</param>
         /// <param name="value">The resulting <see cref="NetworkText"/> instance.</param>
         /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="encoding"/> is <see langword="null"/>.</exception>
-        public static int Read(Span<byte> span, Encoding encoding, out NetworkText value)
+        public static int Read(Span<byte> span, out NetworkText value)
         {
-            if (encoding is null)
-            {
-                throw new ArgumentNullException(nameof(encoding));
-            }
-
             var mode = (NetworkTextMode)span[0];
-            var length = 1 + span[1..].Read(encoding, out var format);
+            var length = 1 + span[1..].Read(out var format);
             var substitutions = Array.Empty<NetworkText>();
 
             byte numSubstitutions = 0;
@@ -221,7 +204,7 @@ namespace Orion.Core.Packets.DataStructures
 
             for (var i = 0; i < numSubstitutions; ++i)
             {
-                length += Read(span[length..], encoding, out substitutions[i]);
+                length += Read(span[length..], out substitutions[i]);
             }
 
             value = new NetworkText(mode, format, substitutions);

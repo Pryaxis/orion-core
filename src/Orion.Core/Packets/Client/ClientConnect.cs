@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Text;
 
 namespace Orion.Core.Packets.Client
 {
@@ -41,7 +40,7 @@ namespace Orion.Core.Packets.Client
 
         PacketId IPacket.Id => PacketId.ClientConnect;
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(Encoding.UTF8, out _version);
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(Version, Encoding.UTF8);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(out _version);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(Version);
     }
 }

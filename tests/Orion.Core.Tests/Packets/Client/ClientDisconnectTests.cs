@@ -18,13 +18,12 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Orion.Core.Packets.DataStructures;
-using Orion.Core.Packets.Server;
 using Xunit;
 
 namespace Orion.Core.Packets.Client
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ServerDisconnectPacketTests
+    public class ClientDisconnectTests
     {
         private readonly byte[] _bytes =
         {
@@ -34,35 +33,35 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void Reason_Get_Default()
         {
-            var packet = new ServerDisconnectPacket();
+            var clientDisconnect = new ClientDisconnect();
 
-            Assert.Equal(NetworkText.Empty, packet.Reason);
+            Assert.Equal(NetworkText.Empty, clientDisconnect.Reason);
         }
 
         [Fact]
         public void Reason_SetNullValue_ThrowsArgumentNullException()
         {
-            var packet = new ServerDisconnectPacket();
+            var clientDisconnect = new ClientDisconnect();
 
-            Assert.Throws<ArgumentNullException>(() => packet.Reason = null!);
+            Assert.Throws<ArgumentNullException>(() => clientDisconnect.Reason = null!);
         }
 
         [Fact]
         public void Reason_Set_Get()
         {
-            var packet = new ServerDisconnectPacket();
+            var clientDisconnect = new ClientDisconnect();
 
-            packet.Reason = new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage");
+            clientDisconnect.Reason = new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage");
 
-            Assert.Equal(new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage"), packet.Reason);
+            Assert.Equal(new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage"), clientDisconnect.Reason);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<ServerDisconnectPacket>(_bytes, PacketContext.Server);
+            var clientDisconnect = TestUtils.ReadPacket<ClientDisconnect>(_bytes, PacketContext.Server);
 
-            Assert.Equal(new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage"), packet.Reason);
+            Assert.Equal(new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage"), clientDisconnect.Reason);
         }
     }
 }

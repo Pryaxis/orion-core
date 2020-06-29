@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Text;
 using Destructurama.Attributed;
 
 namespace Orion.Core.Packets.Client
@@ -42,7 +41,7 @@ namespace Orion.Core.Packets.Client
 
         PacketId IPacket.Id => PacketId.ClientUuid;
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(Encoding.UTF8, out _uuid);
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(Uuid, Encoding.UTF8);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(out _uuid);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(Uuid);
     }
 }

@@ -18,7 +18,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
 using Xunit;
 
 namespace Orion.Core.Packets
@@ -60,7 +59,7 @@ namespace Orion.Core.Packets
             Assert.Throws<ArgumentException>(() =>
             {
                 var span = bytes.AsSpan();
-                return span.Read(Encoding.UTF8, out string _);
+                return span.Read(out string _);
             });
         }
 
@@ -85,9 +84,9 @@ namespace Orion.Core.Packets
             var bytes = new byte[10000000];
             var span = bytes.AsSpan();
 
-            var numBytes = span.Write(str, Encoding.UTF8);
+            var numBytes = span.Write(str);
 
-            Assert.Equal(numBytes, span.Read(Encoding.UTF8, out string str2));
+            Assert.Equal(numBytes, span.Read(out string str2));
 
             Assert.Equal(str, str2);
         }

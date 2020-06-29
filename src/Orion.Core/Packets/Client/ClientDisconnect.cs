@@ -16,17 +16,16 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Text;
 using Orion.Core.Packets.DataStructures;
 
-namespace Orion.Core.Packets.Server
+namespace Orion.Core.Packets.Client
 {
     /// <summary>
     /// A packet sent from the server to the client to disconnect the client.
     /// </summary>
-    public sealed class ServerDisconnectPacket : IPacket
+    public struct ClientDisconnect : IPacket
     {
-        private NetworkText _reason = NetworkText.Empty;
+        private NetworkText? _reason;
 
         /// <summary>
         /// Gets or sets the disconnect reason.
@@ -35,16 +34,13 @@ namespace Orion.Core.Packets.Server
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public NetworkText Reason
         {
-            get => _reason;
+            get => _reason ?? NetworkText.Empty;
             set => _reason = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        PacketId IPacket.Id => PacketId.ServerDisconnect;
+        PacketId IPacket.Id => PacketId.ClientDisconnect;
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) =>
-            NetworkText.Read(span, Encoding.UTF8, out _reason);
-
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) =>
-            _reason.Write(span, Encoding.UTF8);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => NetworkText.Read(span, out _reason);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => Reason.Write(span);
     }
 }

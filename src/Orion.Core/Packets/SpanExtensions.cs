@@ -63,19 +63,15 @@ namespace Orion.Core.Packets
         }
 
         /// <summary>
-        /// Reads an encoded string from the <paramref name="span"/> with the given <paramref name="encoding"/>. Returns
-        /// the number of bytes read.
+        /// Reads a UTF8-encoded string from the <paramref name="span"/>. Returns the number of bytes read.
         /// </summary>
         /// <param name="span">The span to read from.</param>
-        /// <param name="encoding">The encoding to use.</param>
         /// <param name="value">The resulting string.</param>
         /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
-        public static int Read(this Span<byte> span, Encoding encoding, out string value)
+        public static int Read(this Span<byte> span, out string value)
         {
-            Debug.Assert(encoding != null);
-
             var index = Read7BitEncodedInt(span, out var length);
-            value = encoding.GetString(span[index..(index + length)]);
+            value = Encoding.UTF8.GetString(span[index..(index + length)]);
             return index + length;
         }
 
@@ -97,21 +93,18 @@ namespace Orion.Core.Packets
         }
 
         /// <summary>
-        /// Writes an encoded string to the <paramref name="span"/> with the given <paramref name="encoding"/>. Returns
-        /// the number of bytes written.
+        /// Writes a UTF8-encoded string to the <paramref name="span"/>. Returns the number of bytes written.
         /// </summary>
         /// <param name="span">The span to write to.</param>
         /// <param name="value">The string to write.</param>
-        /// <param name="encoding">The encoding to use.</param>
         /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
-        public static int Write(this Span<byte> span, string value, Encoding encoding)
+        public static int Write(this Span<byte> span, string value)
         {
             Debug.Assert(value != null);
-            Debug.Assert(encoding != null);
 
-            var length = encoding.GetByteCount(value);
+            var length = Encoding.UTF8.GetByteCount(value);
             var index = Write7BitEncodedInt(span, length);
-            encoding.GetBytes(value, span[index..]);
+            Encoding.UTF8.GetBytes(value, span[index..]);
             return index + length;
         }
 

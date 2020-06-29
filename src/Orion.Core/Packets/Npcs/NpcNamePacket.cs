@@ -17,7 +17,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Orion.Core.Packets.Npcs
 {
@@ -66,7 +65,7 @@ namespace Orion.Core.Packets.Npcs
                 return length;
             }
 
-            length += span[length..].Read(Encoding.UTF8, out _name);
+            length += span[length..].Read(out _name);
             return length + span[length..].Read(ref _bytes2, 4);
         }
 
@@ -79,7 +78,7 @@ namespace Orion.Core.Packets.Npcs
                 return length;
             }
 
-            length += span[length..].Write(Name, Encoding.UTF8);
+            length += span[length..].Write(Name);
             return length + span[length..].Write(ref _bytes2, 4);
         }
     }

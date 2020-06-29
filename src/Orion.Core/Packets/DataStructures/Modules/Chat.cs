@@ -17,7 +17,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Text;
 using Orion.Core.Utils;
 
 namespace Orion.Core.Packets.DataStructures.Modules
@@ -90,13 +89,13 @@ namespace Orion.Core.Packets.DataStructures.Modules
         {
             if (context == PacketContext.Server)
             {
-                var length = span.Read(Encoding.UTF8, out _clientCommand);
-                return length + span[length..].Read(Encoding.UTF8, out _clientMessage);
+                var length = span.Read(out _clientCommand);
+                return length + span[length..].Read(out _clientMessage);
             }
             else
             {
                 var length = span.Read(ref _bytes, 1);
-                length += NetworkText.Read(span[length..], Encoding.UTF8, out _serverMessage);
+                length += NetworkText.Read(span[length..], out _serverMessage);
                 return length + span[length..].Read(ref _bytes2, 3);
             }
         }
@@ -105,13 +104,13 @@ namespace Orion.Core.Packets.DataStructures.Modules
         {
             if (context == PacketContext.Client)
             {
-                var length = span.Write(_clientCommand, Encoding.UTF8);
-                return length + span[length..].Write(_clientMessage, Encoding.UTF8);
+                var length = span.Write(_clientCommand);
+                return length + span[length..].Write(_clientMessage);
             }
             else
             {
                 var length = span.Write(ref _bytes, 1);
-                length += _serverMessage.Write(span[length..], Encoding.UTF8);
+                length += _serverMessage.Write(span[length..]);
                 return length + span[length..].Write(ref _bytes2, 3);
             }
         }

@@ -17,6 +17,7 @@
 
 using System;
 using Moq;
+using Orion.Core.Packets.Client;
 using Orion.Core.Packets.Server;
 using Orion.Core.Packets.World.Tiles;
 using Orion.Core.Utils;
@@ -46,7 +47,7 @@ namespace Orion.Core.Players
         {
             var player = Mock.Of<IPlayer>();
             Mock.Get(player)
-                .Setup(p => p.SendPacket(It.Is<ServerDisconnectPacket>(p => p.Reason == "test")));
+                .Setup(p => p.SendPacket(It.Is<ClientDisconnect>(p => p.Reason == "test")));
 
             player.Disconnect("test");
 

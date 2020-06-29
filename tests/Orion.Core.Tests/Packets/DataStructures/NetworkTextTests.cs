@@ -18,7 +18,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using Xunit;
 
 namespace Orion.Core.Packets.DataStructures
@@ -140,9 +139,9 @@ namespace Orion.Core.Packets.DataStructures
             var bytes = new byte[10000000];
             var span = bytes.AsSpan();
 
-            var numBytes = text.Write(span, Encoding.UTF8);
+            var numBytes = text.Write(span);
 
-            Assert.Equal(numBytes, NetworkText.Read(span, Encoding.UTF8, out NetworkText text2));
+            Assert.Equal(numBytes, NetworkText.Read(span, out NetworkText text2));
 
             Assert.Equal(text, text2);
         }
