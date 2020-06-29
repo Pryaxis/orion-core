@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 namespace Orion.Core.Packets.Players
 {
     /// <summary>
-    /// A packet sent to have a player dodge.
+    /// A packet sent to cause a player to dodge.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 2)]
     public struct PlayerDodge : IPacket

@@ -21,12 +21,12 @@ using System.Runtime.InteropServices;
 namespace Orion.Core.Packets.Players
 {
     /// <summary>
-    /// A packet sent to set a player's health information.
+    /// A packet sent to heal a player.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 5)]
-    public sealed class PlayerHealthPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 4)]
+    public struct PlayerHeal : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the player index.
@@ -35,20 +35,14 @@ namespace Orion.Core.Packets.Players
         [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's health.
+        /// Gets or sets the heal amount.
         /// </summary>
-        /// <value>The player's health.</value>
-        [field: FieldOffset(1)] public short Health { get; set; }
+        /// <value>The heal amount.</value>
+        [field: FieldOffset(1)] public short Amount { get; set; }
 
-        /// <summary>
-        /// Gets or sets the player's maximum health.
-        /// </summary>
-        /// <value>The player's maximum health.</value>
-        [field: FieldOffset(3)] public short MaxHealth { get; set; }
+        PacketId IPacket.Id => PacketId.PlayerHeal;
 
-        PacketId IPacket.Id => PacketId.PlayerHealth;
-
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 5);
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 5);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 3);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 3);
     }
 }

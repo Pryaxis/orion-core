@@ -21,12 +21,12 @@ using System.Runtime.InteropServices;
 namespace Orion.Core.Packets.Players
 {
     /// <summary>
-    /// A packet sent to heal a player.
+    /// A packet sent to show a health effect on a player.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 3)]
-    public sealed class PlayerHealPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 4)]
+    public struct PlayerHealthEffect : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the player index.
@@ -35,12 +35,12 @@ namespace Orion.Core.Packets.Players
         [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the heal amount.
+        /// Gets or sets the health amount.
         /// </summary>
-        /// <value>The heal amount.</value>
+        /// <value>The health amount.</value>
         [field: FieldOffset(1)] public short Amount { get; set; }
 
-        PacketId IPacket.Id => PacketId.PlayerHeal;
+        PacketId IPacket.Id => PacketId.PlayerHealthEffect;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 3);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 3);

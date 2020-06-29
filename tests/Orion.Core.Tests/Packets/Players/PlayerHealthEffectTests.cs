@@ -21,14 +21,14 @@ using Xunit;
 namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerHealthEffectPacketTests
+    public class PlayerHealthEffectTests
     {
         private readonly byte[] _bytes = { 6, 0, 35, 5, 100, 0 };
 
         [Fact]
         public void PlayerIndex_Set_Get()
         {
-            var packet = new PlayerHealthEffectPacket();
+            var packet = new PlayerHealthEffect();
 
             packet.PlayerIndex = 5;
 
@@ -36,22 +36,22 @@ namespace Orion.Core.Packets.Players
         }
 
         [Fact]
-        public void HealthAmount_Set_Get()
+        public void Amount_Set_Get()
         {
-            var packet = new PlayerHealthEffectPacket();
+            var packet = new PlayerHealthEffect();
 
-            packet.HealthAmount = 100;
+            packet.Amount = 100;
 
-            Assert.Equal(100, packet.HealthAmount);
+            Assert.Equal(100, packet.Amount);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<PlayerHealthEffectPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<PlayerHealthEffect>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.PlayerIndex);
-            Assert.Equal(100, packet.HealthAmount);
+            Assert.Equal(100, packet.Amount);
         }
     }
 }
