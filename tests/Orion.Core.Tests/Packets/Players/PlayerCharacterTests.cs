@@ -23,7 +23,7 @@ using Xunit;
 namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerCharacterPacketTests
+    public class PlayerCharacterTests
     {
         private readonly byte[] _bytes = {
             35, 0, 4, 5, 2, 50, 1, 102, 1, 0, 0, 0, 26, 131, 54, 158, 74, 51, 47, 39, 88, 184, 58, 43, 69, 8, 97, 162,
@@ -33,7 +33,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void PlayerIndex_Set_Get()
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.PlayerIndex = 5;
 
@@ -43,7 +43,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void SkinVariant_Set_Get()
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.SkinVariant = 2;
 
@@ -53,7 +53,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void Hair_Set_Get()
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.Hair = 50;
 
@@ -61,9 +61,17 @@ namespace Orion.Core.Packets.Players
         }
 
         [Fact]
+        public void Name_GetNullValue()
+        {
+            var packet = new PlayerCharacter();
+
+            Assert.Equal(string.Empty, packet.Name);
+        }
+
+        [Fact]
         public void Name_Set_Get()
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.Name = "f";
 
@@ -73,7 +81,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void HairDye_Set_Get()
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.HairDye = 1;
 
@@ -85,7 +93,7 @@ namespace Orion.Core.Packets.Players
         [InlineData(false)]
         public void HideAccessorySlot1_Set_Get(bool value)
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.HideAccessorySlot1 = value;
 
@@ -97,7 +105,7 @@ namespace Orion.Core.Packets.Players
         [InlineData(false)]
         public void HideAccessorySlot2_Set_Get(bool value)
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.HideAccessorySlot2 = value;
 
@@ -109,7 +117,7 @@ namespace Orion.Core.Packets.Players
         [InlineData(false)]
         public void HideAccessorySlot3_Set_Get(bool value)
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.HideAccessorySlot3 = value;
 
@@ -121,7 +129,7 @@ namespace Orion.Core.Packets.Players
         [InlineData(false)]
         public void HideAccessorySlot4_Set_Get(bool value)
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.HideAccessorySlot4 = value;
 
@@ -133,7 +141,7 @@ namespace Orion.Core.Packets.Players
         [InlineData(false)]
         public void HideAccessorySlot5_Set_Get(bool value)
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.HideAccessorySlot5 = value;
 
@@ -145,7 +153,7 @@ namespace Orion.Core.Packets.Players
         [InlineData(false)]
         public void HideAccessorySlot6_Set_Get(bool value)
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.HideAccessorySlot6 = value;
 
@@ -157,7 +165,7 @@ namespace Orion.Core.Packets.Players
         [InlineData(false)]
         public void HideAccessorySlot7_Set_Get(bool value)
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.HideAccessorySlot7 = value;
 
@@ -169,7 +177,7 @@ namespace Orion.Core.Packets.Players
         [InlineData(false)]
         public void HidePetSlot_Set_Get(bool value)
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.HidePetSlot = value;
 
@@ -181,7 +189,7 @@ namespace Orion.Core.Packets.Players
         [InlineData(false)]
         public void HideLightPetSlot_Set_Get(bool value)
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.HideLightPetSlot = value;
 
@@ -191,7 +199,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void HairColor_Set_Get()
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.HairColor = new Color3(26, 131, 54);
 
@@ -201,7 +209,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void SkinColor_Set_Get()
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.SkinColor = new Color3(158, 74, 51);
 
@@ -211,7 +219,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void EyeColor_Set_Get()
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.EyeColor = new Color3(47, 39, 88);
 
@@ -221,7 +229,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void ShirtColor_Set_Get()
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.ShirtColor = new Color3(184, 58, 43);
 
@@ -231,7 +239,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void UndershirtColor_Set_Get()
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.UndershirtColor = new Color3(69, 8, 97);
 
@@ -241,7 +249,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void PantsColor_Set_Get()
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.PantsColor = new Color3(162, 167, 255);
 
@@ -251,7 +259,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void ShoeColor_Set_Get()
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.ShoeColor = new Color3(212, 159, 76);
 
@@ -265,7 +273,7 @@ namespace Orion.Core.Packets.Players
         [InlineData(CharacterDifficulty.Journey)]
         public void Difficulty_Set_Get(CharacterDifficulty value)
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.Difficulty = value;
 
@@ -277,7 +285,7 @@ namespace Orion.Core.Packets.Players
         [InlineData(false)]
         public void HasExtraAccessorySlot_Set_Get(bool value)
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.HasExtraAccessorySlot = value;
 
@@ -289,7 +297,7 @@ namespace Orion.Core.Packets.Players
         [InlineData(false)]
         public void IsUsingBiomeTorches_Set_Get(bool value)
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.IsUsingBiomeTorches = value;
 
@@ -301,7 +309,7 @@ namespace Orion.Core.Packets.Players
         [InlineData(false)]
         public void IsFightingTheTorchGod_Set_Get(bool value)
         {
-            var packet = new PlayerCharacterPacket();
+            var packet = new PlayerCharacter();
 
             packet.IsFightingTheTorchGod = value;
 
@@ -311,7 +319,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<PlayerCharacterPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<PlayerCharacter>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.PlayerIndex);
             Assert.Equal(2, packet.SkinVariant);
