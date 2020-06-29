@@ -22,12 +22,12 @@ using Orion.Core.Entities;
 namespace Orion.Core.Packets.Npcs
 {
     /// <summary>
-    /// A packet sent from the client to the server to remove an NPC's buff.
+    /// A packet sent from the client to the server to remove a buff from an NPC.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 4)]
-    public sealed class NpcRemoveBuffPacket : IPacket
+    public struct NpcRemoveBuff : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the NPC index.
@@ -36,9 +36,9 @@ namespace Orion.Core.Packets.Npcs
         [field: FieldOffset(0)] public short Index { get; set; }
 
         /// <summary>
-        /// Gets or sets the buff ID to remove.
+        /// Gets or sets the buff ID.
         /// </summary>
-        /// <value>The buff ID to remove.</value>
+        /// <value>The buff ID.</value>
         [field: FieldOffset(2)] public BuffId Id { get; set; }
 
         PacketId IPacket.Id => PacketId.NpcRemoveBuff;

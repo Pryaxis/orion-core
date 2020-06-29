@@ -22,14 +22,14 @@ using Xunit;
 namespace Orion.Core.Packets.Npcs
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class NpcRemoveBuffPacketTests
+    public class NpcRemoveBuffTests
     {
         private readonly byte[] _bytes = { 7, 0, 137, 5, 0, 20, 0 };
 
         [Fact]
         public void Index_Set_Get()
         {
-            var packet = new NpcRemoveBuffPacket();
+            var packet = new NpcRemoveBuff();
 
             packet.Index = 5;
 
@@ -39,7 +39,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Id_Set_Get()
         {
-            var packet = new NpcRemoveBuffPacket();
+            var packet = new NpcRemoveBuff();
 
             packet.Id = BuffId.Poisoned;
 
@@ -49,7 +49,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<NpcRemoveBuffPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<NpcRemoveBuff>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.Index);
             Assert.Equal(BuffId.Poisoned, packet.Id);

@@ -191,7 +191,7 @@ namespace Orion.Core.Packets
             [PacketId.PlateInfo] = typeof(PlateInfoPacket),
             [PacketId.PlayerLuck] = typeof(PlayerLuckPacket),
             [PacketId.PlayerDead] = typeof(PlayerDeadPacket),
-            [PacketId.NpcRemoveBuff] = typeof(NpcRemoveBuffPacket),
+            [PacketId.NpcRemoveBuff] = typeof(NpcRemoveBuff),
             [PacketId.PlayerHost] = typeof(PlayerHost)
         };
 
