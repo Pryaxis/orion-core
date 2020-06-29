@@ -16,42 +16,54 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics.CodeAnalysis;
+using Orion.Core.Entities;
 using Xunit;
 
 namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerActivityTests
+    public class PlayerAddBuffTests
     {
-        private readonly byte[] _bytes = { 5, 0, 14, 5, 1 };
+        private readonly byte[] _bytes = { 10, 0, 55, 5, 1, 0, 60, 0, 0, 0 };
 
         [Fact]
-        public void Index_Set_Get()
+        public void PlayerIndex_Set_Get()
         {
-            var packet = new PlayerActivity();
+            var packet = new PlayerAddBuff();
 
-            packet.Index = 5;
+            packet.PlayerIndex = 5;
 
-            Assert.Equal(5, packet.Index);
+            Assert.Equal(5, packet.PlayerIndex);
         }
 
         [Fact]
-        public void IsActive_Set_Get()
+        public void Id_Set_Get()
         {
-            var packet = new PlayerActivity();
+            var packet = new PlayerAddBuff();
 
-            packet.IsActive = true;
+            packet.Id = BuffId.ObsidianSkin;
 
-            Assert.True(packet.IsActive);
+            Assert.Equal(BuffId.ObsidianSkin, packet.Id);
+        }
+
+        [Fact]
+        public void Ticks_Set_Get()
+        {
+            var packet = new PlayerAddBuff();
+
+            packet.Ticks = 60;
+
+            Assert.Equal(60, packet.Ticks);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<PlayerActivity>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<PlayerAddBuff>(_bytes, PacketContext.Server);
 
-            Assert.Equal(5, packet.Index);
-            Assert.True(packet.IsActive);
+            Assert.Equal(5, packet.PlayerIndex);
+            Assert.Equal(BuffId.ObsidianSkin, packet.Id);
+            Assert.Equal(60, packet.Ticks);
         }
     }
 }

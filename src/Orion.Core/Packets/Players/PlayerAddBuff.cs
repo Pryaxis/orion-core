@@ -17,32 +17,39 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Orion.Core.Entities;
 
 namespace Orion.Core.Packets.Players
 {
     /// <summary>
-    /// A packet sent from the server to the client to set a player's activity.
+    /// A packet sent to add a buff to a player.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 2)]
-    public struct PlayerActivity : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    public struct PlayerAddBuff : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
+        [FieldOffset(0)] private byte _bytes;
 
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
         /// <value>The player index.</value>
-        [field: FieldOffset(0)] public byte Index { get; set; }
+        [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the player is active.
+        /// Gets or sets the buff ID.
         /// </summary>
-        /// <value><see langword="true"/> if the player is active; otherwise, <see langword="false"/>.</value>
-        [field: FieldOffset(1)] public bool IsActive { get; set; }
+        /// <value>The buff ID.</value>
+        [field: FieldOffset(1)] public BuffId Id { get; set; }
 
-        PacketId IPacket.Id => PacketId.PlayerActivity;
+        /// <summary>
+        /// Gets or sets the buff duration, in ticks.
+        /// </summary>
+        /// <value>The buff duration, in ticks.</value>
+        [field: FieldOffset(3)] public int Ticks { get; set; }
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 2);
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 2);
+        PacketId IPacket.Id => PacketId.PlayerAddBuff;
+
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 7);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 7);
     }
 }
