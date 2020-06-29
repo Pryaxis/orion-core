@@ -30,21 +30,21 @@ namespace Orion.Core.Packets.Misc
         [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
-        /// Gets or sets the combat number's position.
+        /// Gets or sets the number's position.
         /// </summary>
-        /// <value>The combat number's position.</value>
+        /// <value>The combat s position.</value>
         [field: FieldOffset(0)] public Vector2f Position { get; set; }
 
         /// <summary>
-        /// Gets or sets the combat number's color.
+        /// Gets or sets the number's color.
         /// </summary>
         /// <value>The combat number's color.</value>
         [field: FieldOffset(8)] public Color3 Color { get; set; }
 
         /// <summary>
-        /// Gets or sets the combat number.
+        /// Gets or sets the number.
         /// </summary>
-        /// <value>The combat number.</value>
+        /// <value>The number.</value>
         [field: FieldOffset(11)] public int Number { get; set; }
 
         PacketId IPacket.Id => PacketId.CombatNumber;

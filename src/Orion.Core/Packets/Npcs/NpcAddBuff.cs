@@ -22,12 +22,12 @@ using Orion.Core.Entities;
 namespace Orion.Core.Packets.Npcs
 {
     /// <summary>
-    /// A packet sent to buff an NPC.
+    /// A packet sent to add a buff to an NPC.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public sealed class NpcBuffPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    public struct NpcAddBuff : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the NPC index.
@@ -42,12 +42,12 @@ namespace Orion.Core.Packets.Npcs
         [field: FieldOffset(2)] public BuffId Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the buff time, in ticks.
+        /// Gets or sets the buff duration, in ticks.
         /// </summary>
-        /// <value>The buff time, in ticks.</value>
+        /// <value>The buff duration, in ticks.</value>
         [field: FieldOffset(4)] public short Ticks { get; set; }
 
-        PacketId IPacket.Id => PacketId.NpcBuff;
+        PacketId IPacket.Id => PacketId.NpcAddBuff;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 6);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 6);

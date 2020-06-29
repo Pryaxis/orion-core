@@ -31,8 +31,8 @@ namespace Orion.Core.Packets.Items
         [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
-        /// Gets or sets the item index. If <c>400</c> and read in <see cref="PacketContext.Server"/>, then the item is
-        /// being spawned.
+        /// Gets or sets the item index. A value of <c>400</c> in <see cref="PacketContext.Server"/> indicates that the
+        /// item is being spawned.
         /// </summary>
         /// <value>The item index.</value>
         [field: FieldOffset(0)] public short ItemIndex { get; set; }
@@ -71,7 +71,7 @@ namespace Orion.Core.Packets.Items
         [field: FieldOffset(21)] public bool AllowSelfPickup { get; set; }
 
         /// <summary>
-        /// Gets or sets the item's ID.
+        /// Gets or sets the item's ID. A value of <see cref="ItemId.None"/> indicates that the item is being removed.
         /// </summary>
         /// <value>The item's ID.</value>
         [field: FieldOffset(22)] public ItemId Id { get; set; }

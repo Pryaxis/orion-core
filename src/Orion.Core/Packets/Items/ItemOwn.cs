@@ -35,7 +35,7 @@ namespace Orion.Core.Packets.Items
         [field: FieldOffset(0)] public short ItemIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the item owner's index. If <c>255</c>, then there is no owner.
+        /// Gets or sets the item owner's index. A value of <c>255</c> indicates no owner.
         /// </summary>
         /// <value>The item owner's index.</value>
         [field: FieldOffset(2)] public byte OwnerIndex { get; set; }

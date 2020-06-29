@@ -32,21 +32,21 @@ namespace Orion.Core.Packets.Server
         [FieldOffset(16)] private NetworkText? _text;
 
         /// <summary>
-        /// Gets or sets the combat text's position.
+        /// Gets or sets the text's position.
         /// </summary>
-        /// <value>The combat text's position.</value>
+        /// <value>The text's position.</value>
         [field: FieldOffset(0)] public Vector2f Position { get; set; }
 
         /// <summary>
-        /// Gets or sets the combat text's color.
+        /// Gets or sets the text's color.
         /// </summary>
-        /// <value>The combat text's color.</value>
+        /// <value>The text's color.</value>
         [field: FieldOffset(8)] public Color3 Color { get; set; }
 
         /// <summary>
-        /// Gets or sets the combat text.
+        /// Gets or sets the text.
         /// </summary>
-        /// <value>The combat text.</value>
+        /// <value>The text.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public NetworkText Text
         {
