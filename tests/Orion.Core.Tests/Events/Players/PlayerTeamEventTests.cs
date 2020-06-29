@@ -27,16 +27,16 @@ namespace Orion.Core.Events.Players
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new PlayerTeamEvent(null!, PlayerTeam.None));
+            Assert.Throws<ArgumentNullException>(() => new PlayerTeamEvent(null!, Team.None));
         }
 
         [Fact]
         public void Team_Get()
         {
             var player = Mock.Of<IPlayer>();
-            var evt = new PlayerTeamEvent(player, PlayerTeam.Red);
+            var evt = new PlayerTeamEvent(player, Team.Red);
 
-            Assert.Equal(PlayerTeam.Red, evt.Team);
+            Assert.Equal(Team.Red, evt.Team);
         }
     }
 }

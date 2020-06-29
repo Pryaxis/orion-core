@@ -16,19 +16,20 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics.CodeAnalysis;
+using Orion.Core.Utils;
 using Xunit;
 
 namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerPvpPacketTests
+    public class MinionPositionTests
     {
-        private readonly byte[] _bytes = { 5, 0, 30, 5, 1 };
+        private readonly byte[] _bytes = { 12, 0, 99, 5, 0, 0, 200, 66, 0, 0, 128, 67 };
 
         [Fact]
         public void PlayerIndex_Set_Get()
         {
-            var packet = new PlayerPvpPacket();
+            var packet = new MinionPosition();
 
             packet.PlayerIndex = 5;
 
@@ -36,22 +37,22 @@ namespace Orion.Core.Packets.Players
         }
 
         [Fact]
-        public void IsInPvp_Set_Get()
+        public void Position_Set_Get()
         {
-            var packet = new PlayerPvpPacket();
+            var packet = new MinionPosition();
 
-            packet.IsInPvp = true;
+            packet.Position = new Vector2f(100, 256);
 
-            Assert.True(packet.IsInPvp);
+            Assert.Equal(new Vector2f(100, 256), packet.Position);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<PlayerPvpPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<MinionPosition>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.PlayerIndex);
-            Assert.True(packet.IsInPvp);
+            Assert.Equal(new Vector2f(100, 256), packet.Position);
         }
     }
 }

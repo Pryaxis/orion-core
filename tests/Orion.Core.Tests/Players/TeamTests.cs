@@ -17,16 +17,29 @@
 
 using Xunit;
 
-namespace Orion.Core.Packets.Players
+namespace Orion.Core.Players
 {
-    public class PlayerJoinPacketTests
+    // These tests depend on Terraria state.
+    [Collection("TerrariaTestsCollection")]
+    public class TeamTests
     {
-        private readonly byte[] _bytes = { 3, 0, 6 };
+        [Fact]
+        public void Color()
+        {
+            for (var i = 0; i < 6; ++i)
+            {
+                var color = ((Team)i).Color();
+
+                Assert.Equal(Terraria.Main.teamColor[i].R, color.R);
+                Assert.Equal(Terraria.Main.teamColor[i].G, color.G);
+                Assert.Equal(Terraria.Main.teamColor[i].B, color.B);
+            }
+        }
 
         [Fact]
-        public void Read()
+        public void Color_InvalidTeam()
         {
-            _ = TestUtils.ReadPacket<PlayerJoinPacket>(_bytes, PacketContext.Server);
+            Assert.Equal(default, ((Team)255).Color());
         }
     }
 }

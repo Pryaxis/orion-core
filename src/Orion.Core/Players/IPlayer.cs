@@ -80,7 +80,7 @@ namespace Orion.Core.Players
         /// Gets or sets the player's team.
         /// </summary>
         /// <value>The player's team.</value>
-        public PlayerTeam Team { get; set; }
+        public Team Team { get; set; }
 
         /// <summary>
         /// Receives the given <paramref name="packet"/> from the player.

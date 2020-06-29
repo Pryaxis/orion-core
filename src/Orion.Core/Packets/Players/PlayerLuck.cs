@@ -24,33 +24,33 @@ namespace Orion.Core.Packets.Players
     /// A packet sent to set a player's luck.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 12)]
-    public sealed class PlayerLuckPacket : IPacket
+    public struct PlayerLuck : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
-        /// Gets or sets the player's index.
+        /// Gets or sets the player index.
         /// </summary>
-        /// <value>The player's index.</value>
-        [field: FieldOffset(0)] public byte Index { get; set; }
+        /// <value>The player index.</value>
+        [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's ladybug luck time remaining, in ticks.
+        /// Gets or sets the player's ladybug luck duration, in ticks. A negative value results in bad luck.
         /// </summary>
-        /// <value>The player's ladybug luck time remaining, in ticks.</value>
-        [field: FieldOffset(1)] public int LadybugTicksRemaining { get; set; }
+        /// <value>The player's ladybug luck duration, in ticks.</value>
+        [field: FieldOffset(1)] public int LadybugTicks { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's torch luck.
+        /// Gets or sets the player's torch luck. A negative value results in bad luck.
         /// </summary>
         /// <value>The player's torch luck.</value>
-        [field: FieldOffset(5)] public float TorchLuck { get; set; }
+        [field: FieldOffset(5)] public float Torch { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's luck potion.
+        /// Gets or sets the player's luck potion strength.
         /// </summary>
-        /// <value>The player's luck potion.</value>
-        [field: FieldOffset(9)] public byte LuckPotion { get; set; }
+        /// <value>The player's luck potion strength.</value>
+        [field: FieldOffset(9)] public byte PotionStrength { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the player is near a garden gnome.

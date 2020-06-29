@@ -15,26 +15,34 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+using System.Runtime.InteropServices;
+
 namespace Orion.Core.Packets.Players
 {
     /// <summary>
-    /// Specifies the teleportation type in a <see cref="PlayerTeleportPacket"/>.
+    /// A packet sent to set a minion's target.
     /// </summary>
-    public enum TeleportationType : byte
+    [StructLayout(LayoutKind.Explicit, Size = 4)]
+    public struct MinionTarget : IPacket
     {
-        /// <summary>
-        /// Indicates a teleportation potion.
-        /// </summary>
-        TeleportationPotion = 0,
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
-        /// Indicates a magic conch.
+        /// Gets or sets the player index.
         /// </summary>
-        MagicConch = 1,
+        /// <value>The player index.</value>
+        [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Indicates a demon conch.
+        /// Gets or sets the minion target's NPC index.
         /// </summary>
-        DemonConch = 2
+        /// <value>The minion target's NPC index.</value>
+        [field: FieldOffset(1)] public short TargetIndex { get; set; }
+
+        PacketId IPacket.Id => PacketId.PlayerMinionTarget;
+
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 3);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 3);
     }
 }

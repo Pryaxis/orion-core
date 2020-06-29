@@ -21,14 +21,14 @@ using Xunit;
 namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerManaPacketTests
+    public class PlayerStealthTests
     {
-        private readonly byte[] _bytes = { 8, 0, 42, 5, 100, 0, 200, 0 };
+        private readonly byte[] _bytes = { 8, 0, 84, 5, 0, 0, 128, 63 };
 
         [Fact]
         public void PlayerIndex_Set_Get()
         {
-            var packet = new PlayerManaPacket();
+            var packet = new PlayerStealth();
 
             packet.PlayerIndex = 5;
 
@@ -36,33 +36,22 @@ namespace Orion.Core.Packets.Players
         }
 
         [Fact]
-        public void Mana_Set_Get()
+        public void Status_Set_Get()
         {
-            var packet = new PlayerManaPacket();
+            var packet = new PlayerStealth();
 
-            packet.Mana = 100;
+            packet.Status = 1.0f;
 
-            Assert.Equal(100, packet.Mana);
-        }
-
-        [Fact]
-        public void MaxMana_Set_Get()
-        {
-            var packet = new PlayerManaPacket();
-
-            packet.MaxMana = 200;
-
-            Assert.Equal(200, packet.MaxMana);
+            Assert.Equal(1.0f, packet.Status);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<PlayerManaPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<PlayerStealth>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.PlayerIndex);
-            Assert.Equal(100, packet.Mana);
-            Assert.Equal(200, packet.MaxMana);
+            Assert.Equal(1.0f, packet.Status);
         }
     }
 }

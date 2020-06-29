@@ -32,7 +32,7 @@ namespace Orion.Core.Packets.Players
         /// Gets or sets the player index.
         /// </summary>
         /// <value>The player index.</value>
-        [field: FieldOffset(0)] public byte Index { get; set; }
+        [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the player is a host.

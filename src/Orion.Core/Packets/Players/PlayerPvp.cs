@@ -21,12 +21,12 @@ using System.Runtime.InteropServices;
 namespace Orion.Core.Packets.Players
 {
     /// <summary>
-    /// A packet sent to set a player's minion target.
+    /// A packet sent to set a player's PvP status.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 3)]
-    public sealed class PlayerMinionTargetPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 2)]
+    public struct PlayerPvp : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the player index.
@@ -35,14 +35,14 @@ namespace Orion.Core.Packets.Players
         [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's minion target NPC index.
+        /// Gets or sets a value indicating whether the player is in PvP.
         /// </summary>
-        /// <value>The player's minion target NPC index.</value>
-        [field: FieldOffset(1)] public short NpcIndex { get; set; }
+        /// <value><see langword="true"/> if the player is in PvP; otherwise, <see langword="false"/>.</value>
+        [field: FieldOffset(1)] public bool IsInPvp { get; set; }
 
-        PacketId IPacket.Id => PacketId.PlayerMinionTarget;
+        PacketId IPacket.Id => PacketId.PlayerPvp;
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 3);
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 3);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 2);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 2);
     }
 }

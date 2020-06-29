@@ -15,31 +15,32 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Players
+namespace Orion.Core.Packets.Players
 {
-    // These tests depend on Terraria state.
-    [Collection("TerrariaTestsCollection")]
-    public class PlayerTeamTests
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
+    public class PlayerTeleportItemTests
     {
-        [Fact]
-        public void Color()
-        {
-            for (var i = 0; i < 6; ++i)
-            {
-                var color = ((PlayerTeam)i).Color();
+        private readonly byte[] _bytes = { 4, 0, 73, 2 };
 
-                Assert.Equal(Terraria.Main.teamColor[i].R, color.R);
-                Assert.Equal(Terraria.Main.teamColor[i].G, color.G);
-                Assert.Equal(Terraria.Main.teamColor[i].B, color.B);
-            }
+        [Fact]
+        public void Item_Set_Get()
+        {
+            var packet = new PlayerTeleportItem();
+
+            packet.Item = PlayerTeleportItem.TeleportItem.DemonConch;
+
+            Assert.Equal(PlayerTeleportItem.TeleportItem.DemonConch, packet.Item);
         }
 
         [Fact]
-        public void Color_InvalidTeam()
+        public void Read()
         {
-            Assert.Equal(default, ((PlayerTeam)255).Color());
+            var packet = TestUtils.ReadPacket<PlayerTeleportItem>(_bytes, PacketContext.Server);
+
+            Assert.Equal(PlayerTeleportItem.TeleportItem.DemonConch, packet.Item);
         }
     }
 }

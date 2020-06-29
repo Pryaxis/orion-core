@@ -16,27 +16,17 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Runtime.InteropServices;
 
 namespace Orion.Core.Packets.Players
 {
     /// <summary>
-    /// A packet sent to teleport a player.
+    /// A packet sent from the client to the server to join the server.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 1)]
-    public sealed class PlayerTeleportPacket : IPacket
+    public struct PlayerJoin : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        PacketId IPacket.Id => PacketId.PlayerJoin;
 
-        /// <summary>
-        /// Gets or sets the teleportation type.
-        /// </summary>
-        /// <value>The teleportation type.</value>
-        [field: FieldOffset(0)] public TeleportationType Type { get; set; }
-
-        PacketId IPacket.Id => PacketId.PlayerTeleport;
-
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 1);
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 1);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => 0;
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => 0;
     }
 }

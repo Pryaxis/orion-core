@@ -16,31 +16,43 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics.CodeAnalysis;
+using Orion.Core.Players;
 using Xunit;
 
 namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerTeleportPacketTests
+    public class PlayerTeamTests
     {
-        private readonly byte[] _bytes = { 4, 0, 73, 2 };
+        private readonly byte[] _bytes = { 5, 0, 45, 5, 1 };
 
         [Fact]
-        public void Type_Set_Get()
+        public void PlayerIndex_Set_Get()
         {
-            var packet = new PlayerTeleportPacket();
+            var packet = new PlayerTeam();
 
-            packet.Type = TeleportationType.DemonConch;
+            packet.PlayerIndex = 5;
 
-            Assert.Equal(TeleportationType.DemonConch, packet.Type);
+            Assert.Equal(5, packet.PlayerIndex);
+        }
+
+        [Fact]
+        public void Team_Set_Get()
+        {
+            var packet = new PlayerTeam();
+
+            packet.Team = Team.Red;
+
+            Assert.Equal(Team.Red, packet.Team);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<PlayerTeleportPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<PlayerTeam>(_bytes, PacketContext.Server);
 
-            Assert.Equal(TeleportationType.DemonConch, packet.Type);
+            Assert.Equal(5, packet.PlayerIndex);
+            Assert.Equal(Team.Red, packet.Team);
         }
     }
 }

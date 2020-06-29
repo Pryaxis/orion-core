@@ -24,7 +24,7 @@ namespace Orion.Core.Players
     /// <summary>
     /// Specifies a player's team.
     /// </summary>
-    public enum PlayerTeam : byte
+    public enum Team : byte
     {
         /// <summary>
         /// Indicates no team.
@@ -58,18 +58,18 @@ namespace Orion.Core.Players
     }
 
     /// <summary>
-    /// Provides extensions for the <see cref="PlayerTeam"/> enumeration.
+    /// Provides extensions for the <see cref="Team"/> enumeration.
     /// </summary>
-    public static class PlayerTeamExtensions
+    public static class TeamExtensions
     {
-        private static readonly IDictionary<PlayerTeam, Color3> _colors = new Dictionary<PlayerTeam, Color3>
+        private static readonly IDictionary<Team, Color3> _colors = new Dictionary<Team, Color3>
         {
-            [PlayerTeam.None] = Color3.White,
-            [PlayerTeam.Red] = new Color3(0xda, 0x3b, 0x3b),
-            [PlayerTeam.Green] = new Color3(0x3b, 0xda, 0x55),
-            [PlayerTeam.Blue] = new Color3(0x3b, 0x95, 0xda),
-            [PlayerTeam.Yellow] = new Color3(0xf2, 0xdd, 0x64),
-            [PlayerTeam.Pink] = new Color3(0xe0, 0x64, 0xf2)
+            [Team.None] = Color3.White,
+            [Team.Red] = new Color3(0xda, 0x3b, 0x3b),
+            [Team.Green] = new Color3(0x3b, 0xda, 0x55),
+            [Team.Blue] = new Color3(0x3b, 0x95, 0xda),
+            [Team.Yellow] = new Color3(0xf2, 0xdd, 0x64),
+            [Team.Pink] = new Color3(0xe0, 0x64, 0xf2)
         };
 
         /// <summary>
@@ -78,6 +78,6 @@ namespace Orion.Core.Players
         /// <param name="team">The team.</param>
         /// <returns>The team's color.</returns>
         [Pure]
-        public static Color3 Color(this PlayerTeam team) => _colors.TryGetValue(team, out var color) ? color : default;
+        public static Color3 Color(this Team team) => _colors.TryGetValue(team, out var color) ? color : default;
     }
 }

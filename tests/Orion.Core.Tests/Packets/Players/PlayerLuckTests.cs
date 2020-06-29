@@ -21,54 +21,54 @@ using Xunit;
 namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerLuckPacketTests
+    public class PlayerLuckTests
     {
         private readonly byte[] _bytes = { 14, 0, 134, 5, 60, 0, 0, 0, 0, 0, 0, 0, 3, 1 };
 
         [Fact]
-        public void Index_Set_Get()
+        public void PlayerIndex_Set_Get()
         {
-            var packet = new PlayerLuckPacket();
+            var packet = new PlayerLuck();
 
-            packet.Index = 5;
+            packet.PlayerIndex = 5;
 
-            Assert.Equal(5, packet.Index);
+            Assert.Equal(5, packet.PlayerIndex);
         }
 
         [Fact]
-        public void LadybugTicksRemaining_Set_Get()
+        public void LadybugTicks_Set_Get()
         {
-            var packet = new PlayerLuckPacket();
+            var packet = new PlayerLuck();
 
-            packet.LadybugTicksRemaining = 60;
+            packet.LadybugTicks = 60;
 
-            Assert.Equal(60, packet.LadybugTicksRemaining);
+            Assert.Equal(60, packet.LadybugTicks);
         }
 
         [Fact]
-        public void TorchLuck_Set_Get()
+        public void Torch_Set_Get()
         {
-            var packet = new PlayerLuckPacket();
+            var packet = new PlayerLuck();
 
-            packet.TorchLuck = 0f;
+            packet.Torch = 0f;
 
-            Assert.Equal(0f, packet.TorchLuck);
+            Assert.Equal(0f, packet.Torch);
         }
 
         [Fact]
-        public void LuckPotion_Set_Get()
+        public void PotionStrength_Set_Get()
         {
-            var packet = new PlayerLuckPacket();
+            var packet = new PlayerLuck();
 
-            packet.LuckPotion = 3;
+            packet.PotionStrength = 3;
 
-            Assert.Equal(3, packet.LuckPotion);
+            Assert.Equal(3, packet.PotionStrength);
         }
 
         [Fact]
         public void IsNearGardenGnome_Set_Get()
         {
-            var packet = new PlayerLuckPacket();
+            var packet = new PlayerLuck();
 
             packet.IsNearGardenGnome = true;
 
@@ -78,12 +78,12 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<PlayerLuckPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<PlayerLuck>(_bytes, PacketContext.Server);
 
-            Assert.Equal(5, packet.Index);
-            Assert.Equal(60, packet.LadybugTicksRemaining);
-            Assert.Equal(0f, packet.TorchLuck);
-            Assert.Equal(3, packet.LuckPotion);
+            Assert.Equal(5, packet.PlayerIndex);
+            Assert.Equal(60, packet.LadybugTicks);
+            Assert.Equal(0f, packet.Torch);
+            Assert.Equal(3, packet.PotionStrength);
             Assert.True(packet.IsNearGardenGnome);
         }
     }

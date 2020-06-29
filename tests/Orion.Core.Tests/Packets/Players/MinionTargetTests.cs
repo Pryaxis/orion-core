@@ -21,14 +21,14 @@ using Xunit;
 namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerStealthPacketTests
+    public class MinionTargetTests
     {
-        private readonly byte[] _bytes = { 8, 0, 84, 5, 0, 0, 128, 63 };
+        private readonly byte[] _bytes = { 6, 0, 115, 5, 1, 0 };
 
         [Fact]
         public void PlayerIndex_Set_Get()
         {
-            var packet = new PlayerStealthPacket();
+            var packet = new MinionTarget();
 
             packet.PlayerIndex = 5;
 
@@ -36,22 +36,22 @@ namespace Orion.Core.Packets.Players
         }
 
         [Fact]
-        public void Status_Set_Get()
+        public void TargetIndex_Set_Get()
         {
-            var packet = new PlayerStealthPacket();
+            var packet = new MinionTarget();
 
-            packet.Status = 1.0f;
+            packet.TargetIndex = 1;
 
-            Assert.Equal(1.0f, packet.Status);
+            Assert.Equal(1, packet.TargetIndex);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<PlayerStealthPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<MinionTarget>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.PlayerIndex);
-            Assert.Equal(1.0f, packet.Status);
+            Assert.Equal(1, packet.TargetIndex);
         }
     }
 }

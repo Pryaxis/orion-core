@@ -17,17 +17,16 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Orion.Core.Players;
 
 namespace Orion.Core.Packets.Players
 {
     /// <summary>
-    /// A packet sent to set a player's team.
+    /// A packet sent to set a player's mana information.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 2)]
-    public sealed class PlayerTeamPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    public struct PlayerMana : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the player index.
@@ -36,14 +35,20 @@ namespace Orion.Core.Packets.Players
         [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's team.
+        /// Gets or sets the player's mana.
         /// </summary>
-        /// <value>The player's team.</value>
-        [field: FieldOffset(1)] public PlayerTeam Team { get; set; }
+        /// <value>The player's mana.</value>
+        [field: FieldOffset(1)] public short Mana { get; set; }
 
-        PacketId IPacket.Id => PacketId.PlayerTeam;
+        /// <summary>
+        /// Gets or sets the player's maximum mana.
+        /// </summary>
+        /// <value>The player's maximum mana.</value>
+        [field: FieldOffset(3)] public short MaxMana { get; set; }
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 2);
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 2);
+        PacketId IPacket.Id => PacketId.PlayerMana;
+
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 5);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 5);
     }
 }

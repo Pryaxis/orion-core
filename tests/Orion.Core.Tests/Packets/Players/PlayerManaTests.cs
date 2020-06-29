@@ -16,20 +16,19 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics.CodeAnalysis;
-using Orion.Core.Utils;
 using Xunit;
 
 namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerMinionPositionPacketTests
+    public class PlayerManaTests
     {
-        private readonly byte[] _bytes = { 12, 0, 99, 5, 0, 0, 200, 66, 0, 0, 128, 67 };
+        private readonly byte[] _bytes = { 8, 0, 42, 5, 100, 0, 200, 0 };
 
         [Fact]
         public void PlayerIndex_Set_Get()
         {
-            var packet = new PlayerMinionPositionPacket();
+            var packet = new PlayerMana();
 
             packet.PlayerIndex = 5;
 
@@ -37,22 +36,33 @@ namespace Orion.Core.Packets.Players
         }
 
         [Fact]
-        public void Position_Set_Get()
+        public void Mana_Set_Get()
         {
-            var packet = new PlayerMinionPositionPacket();
+            var packet = new PlayerMana();
 
-            packet.Position = new Vector2f(100, 256);
+            packet.Mana = 100;
 
-            Assert.Equal(new Vector2f(100, 256), packet.Position);
+            Assert.Equal(100, packet.Mana);
+        }
+
+        [Fact]
+        public void MaxMana_Set_Get()
+        {
+            var packet = new PlayerMana();
+
+            packet.MaxMana = 200;
+
+            Assert.Equal(200, packet.MaxMana);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<PlayerMinionPositionPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<PlayerMana>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.PlayerIndex);
-            Assert.Equal(new Vector2f(100, 256), packet.Position);
+            Assert.Equal(100, packet.Mana);
+            Assert.Equal(200, packet.MaxMana);
         }
     }
 }

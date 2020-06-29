@@ -16,19 +16,21 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics.CodeAnalysis;
+using Orion.Core.Entities;
+using Orion.Core.Utils;
 using Xunit;
 
 namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerMinionTargetPacketTests
+    public class PlayerNebulaBuffTests
     {
-        private readonly byte[] _bytes = { 6, 0, 115, 5, 1, 0 };
+        private readonly byte[] _bytes = { 14, 0, 102, 5, 173, 0, 0, 0, 200, 66, 0, 0, 128, 67 };
 
         [Fact]
         public void PlayerIndex_Set_Get()
         {
-            var packet = new PlayerMinionTargetPacket();
+            var packet = new PlayerNebulaBuff();
 
             packet.PlayerIndex = 5;
 
@@ -36,22 +38,33 @@ namespace Orion.Core.Packets.Players
         }
 
         [Fact]
-        public void NpcIndex_Set_Get()
+        public void Id_Set_Get()
         {
-            var packet = new PlayerMinionTargetPacket();
+            var packet = new PlayerNebulaBuff();
 
-            packet.NpcIndex = 1;
+            packet.Id = BuffId.LifeNebula;
 
-            Assert.Equal(1, packet.NpcIndex);
+            Assert.Equal(BuffId.LifeNebula, packet.Id);
+        }
+
+        [Fact]
+        public void Position_Set_Get()
+        {
+            var packet = new PlayerNebulaBuff();
+
+            packet.Position = new Vector2f(100, 256);
+
+            Assert.Equal(new Vector2f(100, 256), packet.Position);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<PlayerMinionTargetPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<PlayerNebulaBuff>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.PlayerIndex);
-            Assert.Equal(1, packet.NpcIndex);
+            Assert.Equal(BuffId.LifeNebula, packet.Id);
+            Assert.Equal(new Vector2f(100, 256), packet.Position);
         }
     }
 }

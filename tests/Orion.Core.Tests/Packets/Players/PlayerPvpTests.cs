@@ -16,20 +16,19 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics.CodeAnalysis;
-using Orion.Core.Players;
 using Xunit;
 
 namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerTeamPacketTests
+    public class PlayerPvpTests
     {
-        private readonly byte[] _bytes = { 5, 0, 45, 5, 1 };
+        private readonly byte[] _bytes = { 5, 0, 30, 5, 1 };
 
         [Fact]
         public void PlayerIndex_Set_Get()
         {
-            var packet = new PlayerTeamPacket();
+            var packet = new PlayerPvp();
 
             packet.PlayerIndex = 5;
 
@@ -37,22 +36,22 @@ namespace Orion.Core.Packets.Players
         }
 
         [Fact]
-        public void Team_Set_Get()
+        public void IsInPvp_Set_Get()
         {
-            var packet = new PlayerTeamPacket();
+            var packet = new PlayerPvp();
 
-            packet.Team = PlayerTeam.Red;
+            packet.IsInPvp = true;
 
-            Assert.Equal(PlayerTeam.Red, packet.Team);
+            Assert.True(packet.IsInPvp);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<PlayerTeamPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<PlayerPvp>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.PlayerIndex);
-            Assert.Equal(PlayerTeam.Red, packet.Team);
+            Assert.True(packet.IsInPvp);
         }
     }
 }

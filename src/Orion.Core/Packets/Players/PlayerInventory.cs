@@ -25,9 +25,9 @@ namespace Orion.Core.Packets.Players
     /// A packet sent to set a player's inventory.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 8)]
-    public sealed class PlayerInventoryPacket : IPacket
+    public struct PlayerInventory : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the player index.

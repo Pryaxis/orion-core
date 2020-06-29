@@ -21,22 +21,43 @@ using System.Runtime.InteropServices;
 namespace Orion.Core.Packets.Players
 {
     /// <summary>
-    /// A packet sent from the server to the client to mark a player as dead.
+    /// A packet sent to teleport a player via an item.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 1)]
-    public struct PlayerDead : IPacket
+    public struct PlayerTeleportItem : IPacket
     {
         [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
-        /// Gets or sets the player index.
+        /// Gets or sets the teleportation item.
         /// </summary>
-        /// <value>The player index.</value>
-        [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
+        /// <value>The teleportation item.</value>
+        [field: FieldOffset(0)] public TeleportItem Item { get; set; }
 
-        PacketId IPacket.Id => PacketId.PlayerDead;
+        PacketId IPacket.Id => PacketId.PlayerTeleportItem;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 1);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 1);
+
+        /// <summary>
+        /// Specifies the teleportation type in a <see cref="PlayerTeleportItem"/>.
+        /// </summary>
+        public enum TeleportItem : byte
+        {
+            /// <summary>
+            /// Indicates a teleportation potion.
+            /// </summary>
+            TeleportationPotion = 0,
+
+            /// <summary>
+            /// Indicates a magic conch.
+            /// </summary>
+            MagicConch = 1,
+
+            /// <summary>
+            /// Indicates a demon conch.
+            /// </summary>
+            DemonConch = 2
+        }
     }
 }

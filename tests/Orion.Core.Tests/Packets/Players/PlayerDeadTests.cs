@@ -26,13 +26,13 @@ namespace Orion.Core.Packets.Players
         private readonly byte[] _bytes = { 4, 0, 135, 5 };
 
         [Fact]
-        public void Index_Set_Get()
+        public void PlayerIndex_Set_Get()
         {
             var packet = new PlayerDead();
 
-            packet.Index = 5;
+            packet.PlayerIndex = 5;
 
-            Assert.Equal(5, packet.Index);
+            Assert.Equal(5, packet.PlayerIndex);
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace Orion.Core.Packets.Players
         {
             var packet = TestUtils.ReadPacket<PlayerDead>(_bytes, PacketContext.Server);
 
-            Assert.Equal(5, packet.Index);
+            Assert.Equal(5, packet.PlayerIndex);
         }
     }
 }

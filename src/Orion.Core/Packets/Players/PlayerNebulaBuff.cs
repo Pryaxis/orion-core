@@ -17,17 +17,18 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Orion.Core.Entities;
 using Orion.Core.Utils;
 
 namespace Orion.Core.Packets.Players
 {
     /// <summary>
-    /// A packet sent to set a player's minion position.
+    /// A packet sent to buff a player with a Nebula Armor buff.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 9)]
-    public sealed class PlayerMinionPositionPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 12)]
+    public struct PlayerNebulaBuff : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the player index.
@@ -36,14 +37,20 @@ namespace Orion.Core.Packets.Players
         [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's minion position.
+        /// Gets or sets the buff ID.
         /// </summary>
-        /// <value>The player's minion position.</value>
-        [field: FieldOffset(1)] public Vector2f Position { get; set; }
+        /// <value>The buff ID.</value>
+        [field: FieldOffset(1)] public BuffId Id { get; set; }
 
-        PacketId IPacket.Id => PacketId.PlayerMinionPosition;
+        /// <summary>
+        /// Gets or sets the buff's position.
+        /// </summary>
+        /// <value>The buff's position.</value>
+        [field: FieldOffset(3)] public Vector2f Position { get; set; }
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 9);
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 9);
+        PacketId IPacket.Id => PacketId.PlayerNebulaBuff;
+
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 11);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 11);
     }
 }

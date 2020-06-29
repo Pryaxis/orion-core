@@ -33,7 +33,7 @@ namespace Orion.Core.Events.Players
         /// <param name="player">The player sending their team.</param>
         /// <param name="team">The player's team.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerTeamEvent(IPlayer player, PlayerTeam team) : base(player)
+        public PlayerTeamEvent(IPlayer player, Team team) : base(player)
         {
             Team = team;
         }
@@ -42,6 +42,6 @@ namespace Orion.Core.Events.Players
         /// Gets the player's team.
         /// </summary>
         /// <value>The player's team.</value>
-        public PlayerTeam Team { get; }
+        public Team Team { get; }
     }
 }
