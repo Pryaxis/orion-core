@@ -21,14 +21,14 @@ using Xunit;
 namespace Orion.Core.Packets.Npcs
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class NpcCatchPacketTests
+    public class NpcCatchTests
     {
         private readonly byte[] _bytes = { 6, 0, 70, 1, 0, 5 };
 
         [Fact]
         public void NpcIndex_Set_Get()
         {
-            var packet = new NpcCatchPacket();
+            var packet = new NpcCatch();
 
             packet.NpcIndex = 1;
 
@@ -36,22 +36,11 @@ namespace Orion.Core.Packets.Npcs
         }
 
         [Fact]
-        public void PlayerIndex_Set_Get()
-        {
-            var packet = new NpcCatchPacket();
-
-            packet.PlayerIndex = 5;
-
-            Assert.Equal(5, packet.PlayerIndex);
-        }
-
-        [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<NpcCatchPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<NpcCatch>(_bytes, PacketContext.Server);
 
             Assert.Equal(1, packet.NpcIndex);
-            Assert.Equal(5, packet.PlayerIndex);
         }
     }
 }

@@ -23,22 +23,17 @@ namespace Orion.Core.Packets.Npcs
     /// <summary>
     /// A packet sent from the client to the server to catch an NPC.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public sealed class NpcCatchPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 4)]
+    public struct NpcCatch : IPacket
     {
         [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(2)] private readonly byte _playerIndex;  // Unused.
 
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
         /// <value>The NPC index.</value>
         [field: FieldOffset(0)] public short NpcIndex { get; set; }
-
-        /// <summary>
-        /// Gets or sets the player index.
-        /// </summary>
-        /// <value>The player index.</value>
-        [field: FieldOffset(2)] public byte PlayerIndex { get; set; }
 
         PacketId IPacket.Id => PacketId.NpcCatch;
 
