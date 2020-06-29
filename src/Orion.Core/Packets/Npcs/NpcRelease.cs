@@ -24,10 +24,10 @@ namespace Orion.Core.Packets.Npcs
     /// <summary>
     /// A packet sent from the client to the server to release an NPC.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public sealed class NpcReleasePacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 12)]
+    public struct NpcRelease : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the NPC's X position.

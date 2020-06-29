@@ -22,14 +22,14 @@ using Xunit;
 namespace Orion.Core.Packets.Npcs
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class NpcReleasePacketTests
+    public class NpcReleaseTests
     {
         private readonly byte[] _bytes = { 14, 0, 71, 64, 6, 0, 0, 0, 16, 0, 0, 100, 1, 1 };
 
         [Fact]
         public void X_Set_Get()
         {
-            var packet = new NpcReleasePacket();
+            var packet = new NpcRelease();
 
             packet.X = 1600;
 
@@ -39,7 +39,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Y_Set_Get()
         {
-            var packet = new NpcReleasePacket();
+            var packet = new NpcRelease();
 
             packet.Y = 4096;
 
@@ -49,7 +49,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Id_Set_Get()
         {
-            var packet = new NpcReleasePacket();
+            var packet = new NpcRelease();
 
             packet.Id = NpcId.Butterfly;
 
@@ -59,7 +59,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Style_Set_Get()
         {
-            var packet = new NpcReleasePacket();
+            var packet = new NpcRelease();
 
             packet.Style = 1;
 
@@ -69,7 +69,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<NpcReleasePacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<NpcRelease>(_bytes, PacketContext.Server);
 
             Assert.Equal(1600, packet.X);
             Assert.Equal(4096, packet.Y);

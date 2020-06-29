@@ -71,7 +71,8 @@ namespace Orion.Core.Packets.Items
         [field: FieldOffset(21)] public bool AllowSelfPickup { get; set; }
 
         /// <summary>
-        /// Gets or sets the item's ID. A value of <see cref="ItemId.None"/> indicates that the item is being removed.
+        /// Gets or sets the item's ID. A value of <see cref="ItemId.None"/> in <see cref="PacketContext.Server"/>
+        /// indicates that the item is being removed.
         /// </summary>
         /// <value>The item's ID.</value>
         [field: FieldOffset(22)] public ItemId Id { get; set; }

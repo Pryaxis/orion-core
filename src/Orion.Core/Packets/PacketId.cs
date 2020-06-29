@@ -161,7 +161,7 @@ namespace Orion.Core.Packets
             [PacketId.ClientUuid] = typeof(ClientUuid),
             [PacketId.ChestName] = typeof(ChestNamePacket),
             [PacketId.NpcCatch] = typeof(NpcCatch),
-            [PacketId.NpcRelease] = typeof(NpcReleasePacket),
+            [PacketId.NpcRelease] = typeof(NpcRelease),
             [PacketId.PlayerTeleport] = typeof(PlayerTeleportPacket),
             [PacketId.AnglerQuestInfo] = typeof(AnglerQuestInfoPacket),
             [PacketId.AnglerQuestComplete] = typeof(AnglerQuestCompletePacket),
