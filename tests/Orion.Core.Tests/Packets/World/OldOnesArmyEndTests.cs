@@ -15,18 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace Orion.Core.Packets.World
 {
-    /// <summary>
-    /// A packet sent from the client to the server to complete an angler quest.
-    /// </summary>
-    public sealed class AnglerQuestCompletePacket : IPacket
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
+    public class OldOnesArmyEndTests
     {
-        PacketId IPacket.Id => PacketId.AnglerQuestComplete;
+        private readonly byte[] _bytes = { 3, 0, 114 };
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => 0;
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => 0;
+        [Fact]
+        public void Read()
+        {
+            _ = TestUtils.ReadPacket<OldOnesArmyEnd>(_bytes, PacketContext.Server);
+        }
     }
 }

@@ -33,25 +33,22 @@ namespace Orion.Core.Packets.World.Tiles
         private const int SlopeShift = 12;
 
         // The masks for the tile header.
-        private const ushort IsBlockActiveMask   /* */ = 0b00000000_00000001;
-        private const ushort HasWallMask         /* */ = 0b00000000_00000100;
-        private const ushort HasLiquidMask       /* */ = 0b00000000_00001000;
-        private const ushort HasRedWireMask      /* */ = 0b00000000_00010000;
-        private const ushort IsBlockHalvedMask   /* */ = 0b00000000_00100000;
-        private const ushort HasActuatorMask     /* */ = 0b00000000_01000000;
-        private const ushort IsBlockActuatedMask /* */ = 0b00000000_10000000;
-        private const ushort HasBlueWireMask     /* */ = 0b00000001_00000000;
-        private const ushort HasGreenWireMask    /* */ = 0b00000010_00000000;
-        private const ushort HasBlockColorMask   /* */ = 0b00000100_00000000;
-        private const ushort HasWallColorMask    /* */ = 0b00001000_00000000;
-        private const ushort SlopeMask           /* */ = 0b01110000_00000000;
-        private const ushort HasYellowWireMask   /* */ = 0b10000000_00000000;
+        private const ushort IsBlockActiveMask   /* */ = 0b_00000000_00000001;
+        private const ushort HasWallMask         /* */ = 0b_00000000_00000100;
+        private const ushort HasLiquidMask       /* */ = 0b_00000000_00001000;
+        private const ushort HasRedWireMask      /* */ = 0b_00000000_00010000;
+        private const ushort IsBlockHalvedMask   /* */ = 0b_00000000_00100000;
+        private const ushort HasActuatorMask     /* */ = 0b_00000000_01000000;
+        private const ushort IsBlockActuatedMask /* */ = 0b_00000000_10000000;
+        private const ushort HasBlueWireMask     /* */ = 0b_00000001_00000000;
+        private const ushort HasGreenWireMask    /* */ = 0b_00000010_00000000;
+        private const ushort HasBlockColorMask   /* */ = 0b_00000100_00000000;
+        private const ushort HasWallColorMask    /* */ = 0b_00001000_00000000;
+        private const ushort SlopeMask           /* */ = 0b_01110000_00000000;
+        private const ushort HasYellowWireMask   /* */ = 0b_10000000_00000000;
 
-        // Store a single empty `TileSlice` so that there is only one allocation.
-        private static readonly NetworkTileSlice _emptyTiles = new NetworkTileSlice(0, 0);
-
-        [FieldOffset(0)] private byte _data;
-        [FieldOffset(1)] private byte _bytes;
+        [FieldOffset(0)] private byte _changeType;  // Unused.
+        [FieldOffset(1)] private byte _bytes;  // Used to obtain an interior reference.
         [FieldOffset(8)] private ITileSlice? _tiles;
 
         /// <summary>
@@ -74,7 +71,7 @@ namespace Orion.Core.Packets.World.Tiles
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public ITileSlice Tiles
         {
-            get => _tiles ?? _emptyTiles;
+            get => _tiles ??= NetworkTileSlice.Empty;
 
             set
             {
@@ -94,63 +91,61 @@ namespace Orion.Core.Packets.World.Tiles
 
         PacketId IPacket.Id => PacketId.TileSquare;
 
-        /// <inheritdoc/>
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
-            var index = 2;
-            var size = Unsafe.ReadUnaligned<short>(ref MemoryMarshal.GetReference(span));
+            var length = 2;
+            var size = Unsafe.ReadUnaligned<short>(ref span.At(0));
             if (size < 0)
             {
-                _data = span[index++];
+                _changeType = span[length++];
                 size &= short.MaxValue;
             }
 
-            index += span[index..].Read(ref _bytes, 4);
+            length += span[length..].Read(ref _bytes, 4);
 
             _tiles = new NetworkTileSlice(size, size);
             for (var i = 0; i < size; ++i)
             {
                 for (var j = 0; j < size; ++j)
                 {
-                    index += ReadTile(span[index..], ref _tiles[i, j]);
+                    length += ReadTile(span[length..], ref _tiles[i, j]);
                 }
             }
 
-            return index;
+            return length;
         }
 
-        /// <inheritdoc/>
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
             var tiles = Tiles;
 
-            var index = 2;
+            var length = 2;
             var size = (short)tiles.Width;
-            if (_data > 0)
+            if (_changeType > 0)
             {
-                span[index++] = _data;
+                span[length++] = _changeType;
                 size |= ~short.MaxValue;
             }
 
-            Unsafe.WriteUnaligned(ref MemoryMarshal.GetReference(span), size);
-            index += span[index..].Write(ref _bytes, 4);
+            Unsafe.WriteUnaligned(ref span.At(0), size);
+            length += span[length..].Write(ref _bytes, 4);
 
             for (var i = 0; i < tiles.Width; ++i)
             {
                 for (var j = 0; j < tiles.Height; ++j)
                 {
-                    index += WriteTile(span[index..], ref tiles[i, j]);
+                    length += WriteTile(span[length..], ref tiles[i, j]);
                 }
             }
 
-            return index;
+            return length;
         }
 
         // TODO: look into optimizing this if bottleneck?
         private int ReadTile(Span<byte> span, ref Tile tile)
         {
+            ref var header = ref Unsafe.As<byte, ushort>(ref span.At(0));
             var index = 2;
-            var header = Unsafe.ReadUnaligned<ushort>(ref span[0]);
 
             tile.IsBlockActive        /* */ = (header & IsBlockActiveMask) != 0;
             var hasWall               /* */ = (header & HasWallMask) != 0;
@@ -212,30 +207,30 @@ namespace Orion.Core.Packets.World.Tiles
             var hasBlockColor = tile.BlockColor != PaintColor.None;
             var hasWallColor = tile.WallColor != PaintColor.None;
 
+            ref var header = ref Unsafe.As<byte, ushort>(ref span.At(0));
             var index = 2;
-            ushort header = 0;
 
             if (tile.IsBlockActive)   /* */ header |= IsBlockActiveMask;
-            if (hasWall)              /* */ header |= HasWallMask;
-            if (hasLiquid)            /* */ header |= HasLiquidMask;
             if (tile.HasRedWire)      /* */ header |= HasRedWireMask;
             if (tile.IsBlockHalved)   /* */ header |= IsBlockHalvedMask;
             if (tile.HasActuator)     /* */ header |= HasActuatorMask;
             if (tile.IsBlockActuated) /* */ header |= IsBlockActuatedMask;
             if (tile.HasBlueWire)     /* */ header |= HasBlueWireMask;
             if (tile.HasGreenWire)    /* */ header |= HasGreenWireMask;
-            if (hasBlockColor)        /* */ header |= HasBlockColorMask;
-            if (hasWallColor)         /* */ header |= HasWallColorMask;
             if (tile.HasYellowWire)   /* */ header |= HasYellowWireMask;
 
             if (hasBlockColor)
             {
                 span[index++] = (byte)tile.BlockColor;
+
+                header |= HasBlockColorMask;
             }
 
             if (hasWallColor)
             {
                 span[index++] = (byte)tile.WallColor;
+
+                header |= HasWallColorMask;
             }
 
             if (tile.IsBlockActive)
@@ -256,15 +251,18 @@ namespace Orion.Core.Packets.World.Tiles
             {
                 Unsafe.WriteUnaligned(ref span[index], tile.WallId);
                 index += 2;
+
+                header |= HasWallMask;
             }
 
             if (hasLiquid)
             {
                 span[index++] = tile.LiquidAmount;
                 span[index++] = (byte)tile.Liquid;
+
+                header |= HasLiquidMask;
             }
 
-            Unsafe.WriteUnaligned(ref span[0], header);
             return index;
         }
     }

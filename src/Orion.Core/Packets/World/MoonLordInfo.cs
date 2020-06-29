@@ -21,14 +21,22 @@ using System.Runtime.InteropServices;
 namespace Orion.Core.Packets.World
 {
     /// <summary>
-    /// A packet sent from the server to the client to end the Old One's Army event.
+    /// A packet sent from the server to the client to set Moon Lord information.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public sealed class OldOnesArmyEndPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 4)]
+    public struct MoonLordInfo : IPacket
     {
-        PacketId IPacket.Id => PacketId.OldOnesArmyEnd;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => 0;
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => 0;
+        /// <summary>
+        /// Gets or sets the number of ticks before Moon Lord spawns.
+        /// </summary>
+        /// <value>The number of ticks before Moon Lord spawns.</value>
+        [field: FieldOffset(0)] public int TicksBeforeSpawn { get; set; }
+
+        PacketId IPacket.Id => PacketId.MoonLordInfo;
+
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 4);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 4);
     }
 }

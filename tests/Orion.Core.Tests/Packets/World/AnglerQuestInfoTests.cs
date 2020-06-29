@@ -21,14 +21,14 @@ using Xunit;
 namespace Orion.Core.Packets.World
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class AnglerQuestInfoPacketTests
+    public class AnglerQuestInfoTests
     {
         private readonly byte[] _bytes = { 5, 0, 74, 10, 1 };
 
         [Fact]
         public void Quest_Set_Get()
         {
-            var packet = new AnglerQuestInfoPacket();
+            var packet = new AnglerQuestInfo();
 
             packet.Quest = 10;
 
@@ -38,7 +38,7 @@ namespace Orion.Core.Packets.World
         [Fact]
         public void IsCompleted_Set_Get()
         {
-            var packet = new AnglerQuestInfoPacket();
+            var packet = new AnglerQuestInfo();
 
             packet.IsCompleted = true;
 
@@ -48,7 +48,7 @@ namespace Orion.Core.Packets.World
         [Fact]
         public void Read()
         {
-            _ = TestUtils.ReadPacket<AnglerQuestInfoPacket>(_bytes, PacketContext.Server);
+            _ = TestUtils.ReadPacket<AnglerQuestInfo>(_bytes, PacketContext.Server);
         }
     }
 }

@@ -15,32 +15,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Orion.Core.Packets.World
 {
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class OldOnesArmyInfoPacketTests
+    public class AnglerQuestCompleteTests
     {
-        private readonly byte[] _bytes = { 7, 0, 116, 16, 14, 0, 0 };
-
-        [Fact]
-        public void TicksBeforeNextWave_Set_Get()
-        {
-            var packet = new OldOnesArmyInfoPacket();
-
-            packet.TicksBeforeNextWave = 3600;
-
-            Assert.Equal(3600, packet.TicksBeforeNextWave);
-        }
+        private readonly byte[] _bytes = { 3, 0, 75 };
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<OldOnesArmyInfoPacket>(_bytes, PacketContext.Server);
-
-            Assert.Equal(3600, packet.TicksBeforeNextWave);
+            _ = TestUtils.ReadPacket<AnglerQuestComplete>(_bytes, PacketContext.Server);
         }
     }
 }

@@ -21,20 +21,26 @@ using System.Runtime.InteropServices;
 namespace Orion.Core.Packets.World
 {
     /// <summary>
-    /// A packet sent from the server to the client to set Moon Lord information.
+    /// A packet sent from the client to the server to start the Old One's Army event.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 4)]
-    public sealed class MoonLordInfoPacket : IPacket
+    public struct OldOnesArmyStart : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
-        /// Gets or sets the number of ticks before Moon Lord spawns.
+        /// Gets or sets the eternia crystal's X coordinate.
         /// </summary>
-        /// <value>The number of ticks before Moon Lord spawns.</value>
-        [field: FieldOffset(0)] public int TicksBeforeSpawn { get; set; }
+        /// <value>The eternia crystal's X coordinate.</value>
+        [field: FieldOffset(0)] public short X { get; set; }
 
-        PacketId IPacket.Id => PacketId.MoonLordInfo;
+        /// <summary>
+        /// Gets or sets the eternia crystal's Y coordinate.
+        /// </summary>
+        /// <value>The eternia crystal's Y coordinate.</value>
+        [field: FieldOffset(2)] public short Y { get; set; }
+
+        PacketId IPacket.Id => PacketId.OldOnesArmyStart;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 4);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 4);

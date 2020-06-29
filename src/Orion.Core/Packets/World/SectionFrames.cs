@@ -21,35 +21,35 @@ using System.Runtime.InteropServices;
 namespace Orion.Core.Packets.World
 {
     /// <summary>
-    /// A packet sent from the server to the client to frame a section of the world.
+    /// A packet sent from the server to the client to frame sections of the world.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 8)]
-    public sealed class SectionFramesPacket : IPacket
+    public struct SectionFrames : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
-        /// Gets or sets the starting X coordinate.
+        /// Gets or sets the starting section's X index.
         /// </summary>
-        /// <value>The starting X coordinate.</value>
+        /// <value>The starting section's X index.</value>
         [field: FieldOffset(0)] public short StartX { get; set; }
 
         /// <summary>
-        /// Gets or sets the starting Y coordinate.
+        /// Gets or sets the starting section's Y index.
         /// </summary>
-        /// <value>The starting Y coordinate.</value>
+        /// <value>The starting section's Y index.</value>
         [field: FieldOffset(2)] public short StartY { get; set; }
 
         /// <summary>
-        /// Gets or sets the ending X coordinate.
+        /// Gets or sets the ending section's X index.
         /// </summary>
-        /// <value>The ending X coordinate.</value>
+        /// <value>The ending section's X index.</value>
         [field: FieldOffset(4)] public short EndX { get; set; }
 
         /// <summary>
-        /// Gets or sets the ending Y coordinate.
+        /// Gets or sets the ending section's Y index.
         /// </summary>
-        /// <value>The ending Y coordinate.</value>
+        /// <value>The ending section's Y index.</value>
         [field: FieldOffset(6)] public short EndY { get; set; }
 
         PacketId IPacket.Id => PacketId.SectionFrames;

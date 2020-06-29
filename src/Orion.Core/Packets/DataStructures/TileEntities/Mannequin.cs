@@ -50,8 +50,8 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         /// <inheritdoc/>
         protected override int ReadBody(Span<byte> span)
         {
-            var flags = Unsafe.ReadUnaligned<Flags8>(ref span[0]);
-            var flags2 = Unsafe.ReadUnaligned<Flags8>(ref span[1]);
+            ref var flags = ref Unsafe.As<byte, Flags8>(ref span.At(0));
+            ref var flags2 = ref Unsafe.As<byte, Flags8>(ref span.At(1));
             var length = 2;
 
             for (var i = 0; i < 8; ++i)
@@ -76,8 +76,8 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         /// <inheritdoc/>
         protected override int WriteBody(Span<byte> span)
         {
-            var flags = new Flags8();
-            var flags2 = new Flags8();
+            ref var flags = ref Unsafe.As<byte, Flags8>(ref span.At(0));
+            ref var flags2 = ref Unsafe.As<byte, Flags8>(ref span.At(1));
             var length = 2;
 
             for (var i = 0; i < 8; ++i)
@@ -99,9 +99,6 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
                     flags2[i] = true;
                 }
             }
-
-            Unsafe.WriteUnaligned(ref span[0], flags);
-            Unsafe.WriteUnaligned(ref span[1], flags2);
 
             return length;
         }

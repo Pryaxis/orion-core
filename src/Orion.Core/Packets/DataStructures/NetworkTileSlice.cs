@@ -28,6 +28,11 @@ namespace Orion.Core.Packets.DataStructures
     /// </remarks>
     public sealed class NetworkTileSlice : ITileSlice
     {
+        /// <summary>
+        /// Represents the empty tile slice.
+        /// </summary>
+        public static readonly NetworkTileSlice Empty = new NetworkTileSlice(0, 0);
+
         private readonly Tile[,] _tiles;
 
         /// <summary>

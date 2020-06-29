@@ -21,14 +21,14 @@ using Xunit;
 namespace Orion.Core.Packets.World
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class SectionFramesPacketTests
+    public class SectionFramesTests
     {
         private readonly byte[] _bytes = { 11, 0, 11, 100, 0, 200, 0, 0, 1, 0, 2 };
 
         [Fact]
         public void StartX_Set_Get()
         {
-            var packet = new SectionFramesPacket();
+            var packet = new SectionFrames();
 
             packet.StartX = 100;
 
@@ -38,7 +38,7 @@ namespace Orion.Core.Packets.World
         [Fact]
         public void StartY_Set_Get()
         {
-            var packet = new SectionFramesPacket();
+            var packet = new SectionFrames();
 
             packet.StartY = 200;
 
@@ -48,7 +48,7 @@ namespace Orion.Core.Packets.World
         [Fact]
         public void EndX_Set_Get()
         {
-            var packet = new SectionFramesPacket();
+            var packet = new SectionFrames();
 
             packet.EndX = 256;
 
@@ -58,7 +58,7 @@ namespace Orion.Core.Packets.World
         [Fact]
         public void EndY_Set_Get()
         {
-            var packet = new SectionFramesPacket();
+            var packet = new SectionFrames();
 
             packet.EndY = 512;
 
@@ -68,7 +68,7 @@ namespace Orion.Core.Packets.World
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<SectionFramesPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<SectionFrames>(_bytes, PacketContext.Server);
 
             Assert.Equal(100, packet.StartX);
             Assert.Equal(200, packet.StartY);

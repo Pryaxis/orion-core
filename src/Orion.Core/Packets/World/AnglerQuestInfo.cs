@@ -21,12 +21,12 @@ using System.Runtime.InteropServices;
 namespace Orion.Core.Packets.World
 {
     /// <summary>
-    /// A packet sent from the server to the client to set the angler quest.
+    /// A packet sent from the server to the client to set the current angler quest's information.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 2)]
-    public sealed class AnglerQuestInfoPacket : IPacket
+    public struct AnglerQuestInfo : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         // TODO: potentially enum-ify this.
 

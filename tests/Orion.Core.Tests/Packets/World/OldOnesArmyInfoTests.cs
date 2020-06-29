@@ -21,14 +21,26 @@ using Xunit;
 namespace Orion.Core.Packets.World
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PartyTogglePacketTests
+    public class OldOnesArmyInfoTests
     {
-        private readonly byte[] _bytes = { 3, 0, 111 };
+        private readonly byte[] _bytes = { 7, 0, 116, 16, 14, 0, 0 };
+
+        [Fact]
+        public void TicksBeforeNextWave_Set_Get()
+        {
+            var packet = new OldOnesArmyInfo();
+
+            packet.TicksBeforeNextWave = 3600;
+
+            Assert.Equal(3600, packet.TicksBeforeNextWave);
+        }
 
         [Fact]
         public void Read()
         {
-            _ = TestUtils.ReadPacket<PartyTogglePacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<OldOnesArmyInfo>(_bytes, PacketContext.Server);
+
+            Assert.Equal(3600, packet.TicksBeforeNextWave);
         }
     }
 }

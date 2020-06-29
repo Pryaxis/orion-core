@@ -21,26 +21,37 @@ using Xunit;
 namespace Orion.Core.Packets.World
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class MoonLordInfoPacketTests
+    public class OldOnesArmyStartTests
     {
-        private readonly byte[] _bytes = { 7, 0, 103, 16, 14, 0, 0 };
+        private readonly byte[] _bytes = { 7, 0, 113, 0, 1, 100, 0 };
 
         [Fact]
-        public void TicksBeforeSpawn_Set_Get()
+        public void X_Set_Get()
         {
-            var packet = new MoonLordInfoPacket();
+            var packet = new OldOnesArmyStart();
 
-            packet.TicksBeforeSpawn = 3600;
+            packet.X = 256;
 
-            Assert.Equal(3600, packet.TicksBeforeSpawn);
+            Assert.Equal(256, packet.X);
+        }
+
+        [Fact]
+        public void Y_Set_Get()
+        {
+            var packet = new OldOnesArmyStart();
+
+            packet.Y = 100;
+
+            Assert.Equal(100, packet.Y);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<MoonLordInfoPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<OldOnesArmyStart>(_bytes, PacketContext.Server);
 
-            Assert.Equal(3600, packet.TicksBeforeSpawn);
+            Assert.Equal(256, packet.X);
+            Assert.Equal(100, packet.Y);
         }
     }
 }
