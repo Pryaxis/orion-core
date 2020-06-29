@@ -24,9 +24,9 @@ namespace Orion.Core.Packets.World.Chests
     /// A packet sent from the client to the server to open a chest.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 4)]
-    public sealed class ChestOpenPacket : IPacket
+    public struct ChestOpen : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the chest's X coordinate.

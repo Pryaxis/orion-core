@@ -24,9 +24,9 @@ namespace Orion.Core.Packets.World.Signs
     /// A packet sent from the client to the server to read a sign.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 4)]
-    public sealed class SignReadPacket : IPacket
+    public struct SignRead : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the sign's X coordinate.

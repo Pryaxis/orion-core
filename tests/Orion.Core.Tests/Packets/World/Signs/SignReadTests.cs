@@ -21,14 +21,14 @@ using Xunit;
 namespace Orion.Core.Packets.World.Signs
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class SignReadPacketTests
+    public class SignReadTests
     {
         private readonly byte[] _bytes = { 7, 0, 46, 0, 1, 100, 0 };
 
         [Fact]
         public void X_Set_Get()
         {
-            var packet = new SignReadPacket();
+            var packet = new SignRead();
 
             packet.X = 256;
 
@@ -38,7 +38,7 @@ namespace Orion.Core.Packets.World.Signs
         [Fact]
         public void Y_Set_Get()
         {
-            var packet = new SignReadPacket();
+            var packet = new SignRead();
 
             packet.Y = 100;
 
@@ -48,7 +48,7 @@ namespace Orion.Core.Packets.World.Signs
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<SignReadPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<SignRead>(_bytes, PacketContext.Server);
 
             Assert.Equal(256, packet.X);
             Assert.Equal(100, packet.Y);

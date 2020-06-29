@@ -22,14 +22,14 @@ using Xunit;
 namespace Orion.Core.Packets.World.Chests
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ChestInventoryPacketTests
+    public class ChestInventoryTests
     {
         private readonly byte[] _bytes = { 11, 0, 32, 5, 0, 2, 1, 0, 82, 17, 6 };
 
         [Fact]
         public void ChestIndex_Set_Get()
         {
-            var packet = new ChestInventoryPacket();
+            var packet = new ChestInventory();
 
             packet.ChestIndex = 5;
 
@@ -39,7 +39,7 @@ namespace Orion.Core.Packets.World.Chests
         [Fact]
         public void Slot_Set_Get()
         {
-            var packet = new ChestInventoryPacket();
+            var packet = new ChestInventory();
 
             packet.Slot = 2;
 
@@ -49,7 +49,7 @@ namespace Orion.Core.Packets.World.Chests
         [Fact]
         public void StackSize_Set_Get()
         {
-            var packet = new ChestInventoryPacket();
+            var packet = new ChestInventory();
 
             packet.StackSize = 1;
 
@@ -59,7 +59,7 @@ namespace Orion.Core.Packets.World.Chests
         [Fact]
         public void Prefix_Set_Get()
         {
-            var packet = new ChestInventoryPacket();
+            var packet = new ChestInventory();
 
             packet.Prefix = ItemPrefix.Unreal;
 
@@ -69,7 +69,7 @@ namespace Orion.Core.Packets.World.Chests
         [Fact]
         public void Id_Set_Get()
         {
-            var packet = new ChestInventoryPacket();
+            var packet = new ChestInventory();
 
             packet.Id = ItemId.Sdmg;
 
@@ -79,7 +79,7 @@ namespace Orion.Core.Packets.World.Chests
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<ChestInventoryPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<ChestInventory>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.ChestIndex);
             Assert.Equal(2, packet.Slot);

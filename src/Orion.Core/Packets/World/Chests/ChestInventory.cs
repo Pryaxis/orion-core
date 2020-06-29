@@ -25,9 +25,9 @@ namespace Orion.Core.Packets.World.Chests
     /// A packet sent to set a chest's inventory.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 8)]
-    public sealed class ChestInventoryPacket : IPacket
+    public struct ChestInventory : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the chest index.

@@ -25,14 +25,14 @@ namespace Orion.Core.Packets.World.Chests
     /// chest's name.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 16)]
-    public sealed class ChestNamePacket : IPacket
+    public struct ChestName : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
-        [FieldOffset(8)] private string _name = string.Empty;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
+        [FieldOffset(8)] private string? _name;
 
         /// <summary>
-        /// Gets or sets the chest index. If <c>-1</c> and read in <see cref="PacketContext.Server"/>, then the chest
-        /// index is retrieved using the chest's coordinates.
+        /// Gets or sets the chest index. A value of <c>-1</c> in <see cref="PacketContext.Server"/> indicates that the
+        /// chest index is retrieved using the chest's coordinates.
         /// </summary>
         /// <value>The chest index.</value>
         [field: FieldOffset(0)] public short ChestIndex { get; set; }
@@ -57,7 +57,7 @@ namespace Orion.Core.Packets.World.Chests
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Name
         {
-            get => _name;
+            get => _name ??= string.Empty;
             set => _name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
@@ -66,13 +66,25 @@ namespace Orion.Core.Packets.World.Chests
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
             var length = span.Read(ref _bytes, 6);
-            return context == PacketContext.Server ? length : length + span[length..].Read(out _name);
+            if (context == PacketContext.Server)
+            {
+                return length;
+            }
+
+            length += span[length..].Read(out _name);
+            return length;
         }
 
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
             var length = span.Write(ref _bytes, 6);
-            return context == PacketContext.Client ? length : length + span[length..].Write(Name);
+            if (context == PacketContext.Client)
+            {
+                return length;
+            }
+
+            length += span[length..].Write(Name);
+            return length;
         }
     }
 }
