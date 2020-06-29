@@ -22,7 +22,7 @@ using Xunit;
 namespace Orion.Core.Packets.Client
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ClientStatusPacketTests
+    public class ClientStatusTests
     {
         private readonly byte[] _bytes =
         {
@@ -31,19 +31,27 @@ namespace Orion.Core.Packets.Client
         };
 
         [Fact]
-        public void MaxStatus_Set_Get()
+        public void OutstandingPackets_Set_Get()
         {
-            var packet = new ClientStatusPacket();
+            var packet = new ClientStatus();
 
-            packet.MaxStatus = 15;
+            packet.OutstandingPackets = 15;
 
-            Assert.Equal(15, packet.MaxStatus);
+            Assert.Equal(15, packet.OutstandingPackets);
+        }
+
+        [Fact]
+        public void StatusText_GetNullValue()
+        {
+            var packet = new ClientStatus();
+
+            Assert.Equal(NetworkText.Empty, packet.StatusText);
         }
 
         [Fact]
         public void StatusText_Set_Get()
         {
-            var packet = new ClientStatusPacket();
+            var packet = new ClientStatus();
 
             packet.StatusText = new NetworkText(NetworkTextMode.Localized, "LegacyInterface.44");
 
@@ -55,7 +63,7 @@ namespace Orion.Core.Packets.Client
         [InlineData(false)]
         public void HidePercentage_Set_Get(bool value)
         {
-            var packet = new ClientStatusPacket();
+            var packet = new ClientStatus();
 
             packet.HidePercentage = value;
 
@@ -67,7 +75,7 @@ namespace Orion.Core.Packets.Client
         [InlineData(false)]
         public void HasShadows_Set_Get(bool value)
         {
-            var packet = new ClientStatusPacket();
+            var packet = new ClientStatus();
 
             packet.HasShadows = value;
 
@@ -77,9 +85,9 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<ClientStatusPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<ClientStatus>(_bytes, PacketContext.Server);
 
-            Assert.Equal(15, packet.MaxStatus);
+            Assert.Equal(15, packet.OutstandingPackets);
             Assert.Equal(new NetworkText(NetworkTextMode.Localized, "LegacyInterface.44"), packet.StatusText);
             Assert.False(packet.HidePercentage);
             Assert.False(packet.HasShadows);

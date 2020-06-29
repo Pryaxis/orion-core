@@ -127,7 +127,7 @@ namespace Orion.Core.Packets
             [PacketId.PlayerCharacter] = typeof(PlayerCharacterPacket),
             [PacketId.PlayerInventory] = typeof(PlayerInventoryPacket),
             [PacketId.PlayerJoin] = typeof(PlayerJoinPacket),
-            [PacketId.ClientStatus] = typeof(ClientStatusPacket),
+            [PacketId.ClientStatus] = typeof(ClientStatus),
             [PacketId.SectionFrames] = typeof(SectionFramesPacket),
             [PacketId.ServerActivity] = typeof(ServerActivityPacket),
             [PacketId.PlayerHealth] = typeof(PlayerHealthPacket),
