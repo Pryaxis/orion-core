@@ -22,14 +22,14 @@ using Xunit;
 namespace Orion.Core.Packets.World.TileEntities
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class WeaponRackInfoPacketTests
+    public class WeaponRackInfoTests
     {
         private readonly byte[] _bytes = { 12, 0, 123, 0, 1, 100, 0, 17, 6, 82, 1, 0 };
 
         [Fact]
         public void X_Set_Get()
         {
-            var packet = new WeaponRackInfoPacket();
+            var packet = new WeaponRackInfo();
 
             packet.X = 256;
 
@@ -39,7 +39,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Y_Set_Get()
         {
-            var packet = new WeaponRackInfoPacket();
+            var packet = new WeaponRackInfo();
 
             packet.Y = 100;
 
@@ -49,7 +49,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Id_Set_Get()
         {
-            var packet = new WeaponRackInfoPacket();
+            var packet = new WeaponRackInfo();
 
             packet.Id = ItemId.Sdmg;
 
@@ -59,7 +59,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Prefix_Set_Get()
         {
-            var packet = new WeaponRackInfoPacket();
+            var packet = new WeaponRackInfo();
 
             packet.Prefix = ItemPrefix.Unreal;
 
@@ -69,7 +69,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void StackSize_Set_Get()
         {
-            var packet = new WeaponRackInfoPacket();
+            var packet = new WeaponRackInfo();
 
             packet.StackSize = 1;
 
@@ -79,7 +79,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<WeaponRackInfoPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<WeaponRackInfo>(_bytes, PacketContext.Server);
 
             Assert.Equal(256, packet.X);
             Assert.Equal(100, packet.Y);

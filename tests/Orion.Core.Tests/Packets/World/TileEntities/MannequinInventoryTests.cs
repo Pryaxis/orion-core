@@ -22,24 +22,14 @@ using Xunit;
 namespace Orion.Core.Packets.World.TileEntities
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class HatRackInventoryPacketTests
+    public class MannequinInventoryTests
     {
-        private readonly byte[] _bytes = { 14, 0, 124, 5, 2, 0, 0, 0, 2, 17, 6, 1, 0, 82 };
-
-        [Fact]
-        public void PlayerIndex_Set_Get()
-        {
-            var packet = new HatRackInventoryPacket();
-
-            packet.PlayerIndex = 5;
-
-            Assert.Equal(5, packet.PlayerIndex);
-        }
+        private readonly byte[] _bytes = { 14, 0, 121, 5, 2, 0, 0, 0, 2, 17, 6, 1, 0, 82 };
 
         [Fact]
         public void TileEntityIndex_Set_Get()
         {
-            var packet = new HatRackInventoryPacket();
+            var packet = new MannequinInventory();
 
             packet.TileEntityIndex = 2;
 
@@ -49,7 +39,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Slot_Set_Get()
         {
-            var packet = new HatRackInventoryPacket();
+            var packet = new MannequinInventory();
 
             packet.Slot = 2;
 
@@ -59,7 +49,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Id_Set_Get()
         {
-            var packet = new HatRackInventoryPacket();
+            var packet = new MannequinInventory();
 
             packet.Id = ItemId.Sdmg;
 
@@ -69,7 +59,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void StackSize_Set_Get()
         {
-            var packet = new HatRackInventoryPacket();
+            var packet = new MannequinInventory();
 
             packet.StackSize = 1;
 
@@ -79,7 +69,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Prefix_Set_Get()
         {
-            var packet = new HatRackInventoryPacket();
+            var packet = new MannequinInventory();
 
             packet.Prefix = ItemPrefix.Unreal;
 
@@ -89,9 +79,8 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<HatRackInventoryPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<MannequinInventory>(_bytes, PacketContext.Server);
 
-            Assert.Equal(5, packet.PlayerIndex);
             Assert.Equal(2, packet.TileEntityIndex);
             Assert.Equal(2, packet.Slot);
             Assert.Equal(ItemId.Sdmg, packet.Id);

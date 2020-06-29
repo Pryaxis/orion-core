@@ -22,14 +22,14 @@ using Xunit;
 namespace Orion.Core.Packets.World.TileEntities
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class TileEntityPlacePacketTests
+    public class TileEntityPlaceTests
     {
         private readonly byte[] _bytes = { 8, 0, 87, 0, 1, 100, 0, 1 };
 
         [Fact]
         public void X_Set_Get()
         {
-            var packet = new TileEntityPlacePacket();
+            var packet = new TileEntityPlace();
 
             packet.X = 256;
 
@@ -39,7 +39,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Y_Set_Get()
         {
-            var packet = new TileEntityPlacePacket();
+            var packet = new TileEntityPlace();
 
             packet.Y = 100;
 
@@ -49,7 +49,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Id_Set_Get()
         {
-            var packet = new TileEntityPlacePacket();
+            var packet = new TileEntityPlace();
 
             packet.Id = TileEntityId.ItemFrame;
 
@@ -59,7 +59,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<TileEntityPlacePacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileEntityPlace>(_bytes, PacketContext.Server);
 
             Assert.Equal(256, packet.X);
             Assert.Equal(100, packet.Y);

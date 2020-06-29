@@ -25,15 +25,10 @@ namespace Orion.Core.Packets.World.TileEntities
     /// A packet sent to set a mannequin's inventory.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 11)]
-    public sealed class MannequinInventoryPacket : IPacket
+    public struct MannequinInventory : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
-
-        /// <summary>
-        /// Gets or sets the player index. <i>This is unused!</i>
-        /// </summary>
-        /// <value>The player index.</value>
-        [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
+        [FieldOffset(0)] private readonly byte _playerIndex;  // Unused.
 
         /// <summary>
         /// Gets or sets the tile entity index.
@@ -48,21 +43,21 @@ namespace Orion.Core.Packets.World.TileEntities
         [field: FieldOffset(5)] public byte Slot { get; set; }
 
         /// <summary>
-        /// Gets or sets the item ID.
+        /// Gets or sets the item's ID.
         /// </summary>
-        /// <value>The item ID.</value>
+        /// <value>The item's ID.</value>
         [field: FieldOffset(6)] public ItemId Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the stack size.
+        /// Gets or sets the item's stack size.
         /// </summary>
-        /// <value>The stack size.</value>
+        /// <value>The item's stack size.</value>
         [field: FieldOffset(8)] public short StackSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the item prefix.
+        /// Gets or sets the item's prefix.
         /// </summary>
-        /// <value>The item prefix.</value>
+        /// <value>The item's prefix.</value>
         [field: FieldOffset(10)] public ItemPrefix Prefix { get; set; }
 
         PacketId IPacket.Id => PacketId.MannequinInventory;

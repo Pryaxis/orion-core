@@ -24,10 +24,10 @@ namespace Orion.Core.Packets.World.TileEntities
     /// <summary>
     /// A packet sent from the client to the server to place a tile entity.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 5)]
-    public sealed class TileEntityPlacePacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    public struct TileEntityPlace : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the tile entity's X coordinate.

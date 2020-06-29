@@ -23,26 +23,26 @@ using Xunit;
 namespace Orion.Core.Packets.World.TileEntities
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class TileEntityInfoPacketTests
+    public class TileEntityInfoTests
     {
         private readonly byte[] _bytes = { 15, 0, 86, 10, 0, 0, 0, 1, 0, 0, 1, 100, 0, 5, 0 };
         private readonly byte[] _removeBytes = { 8, 0, 86, 10, 0, 0, 0, 0 };
 
         [Fact]
-        public void Index_Set_Get()
+        public void TileEntityIndex_Set_Get()
         {
-            var packet = new TileEntityInfoPacket();
+            var packet = new TileEntityInfo();
 
-            packet.Index = 10;
+            packet.TileEntityIndex = 10;
 
-            Assert.Equal(10, packet.Index);
+            Assert.Equal(10, packet.TileEntityIndex);
         }
 
         [Fact]
         public void TileEntity_Set_Get()
         {
             var tileEntity = Mock.Of<SerializableTileEntity>();
-            var packet = new TileEntityInfoPacket();
+            var packet = new TileEntityInfo();
 
             packet.TileEntity = tileEntity;
 
@@ -52,9 +52,9 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<TileEntityInfoPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileEntityInfo>(_bytes, PacketContext.Server);
 
-            Assert.Equal(10, packet.Index);
+            Assert.Equal(10, packet.TileEntityIndex);
             Assert.NotNull(packet.TileEntity);
             Assert.Equal(256, packet.TileEntity!.X);
             Assert.Equal(100, packet.TileEntity!.Y);
@@ -65,9 +65,9 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Read_Remove()
         {
-            var packet = TestUtils.ReadPacket<TileEntityInfoPacket>(_removeBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileEntityInfo>(_removeBytes, PacketContext.Server);
 
-            Assert.Equal(10, packet.Index);
+            Assert.Equal(10, packet.TileEntityIndex);
             Assert.Null(packet.TileEntity);
         }
     }

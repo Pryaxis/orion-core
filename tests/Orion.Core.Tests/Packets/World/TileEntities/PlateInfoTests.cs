@@ -22,14 +22,14 @@ using Xunit;
 namespace Orion.Core.Packets.World.TileEntities
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlateInfoPacketTests
+    public class PlateInfoTests
     {
         private readonly byte[] _bytes = { 12, 0, 133, 0, 1, 100, 0, 17, 6, 82, 1, 0 };
 
         [Fact]
         public void X_Set_Get()
         {
-            var packet = new PlateInfoPacket();
+            var packet = new PlateInfo();
 
             packet.X = 256;
 
@@ -39,7 +39,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Y_Set_Get()
         {
-            var packet = new PlateInfoPacket();
+            var packet = new PlateInfo();
 
             packet.Y = 100;
 
@@ -49,7 +49,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Id_Set_Get()
         {
-            var packet = new PlateInfoPacket();
+            var packet = new PlateInfo();
 
             packet.Id = ItemId.Sdmg;
 
@@ -59,7 +59,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Prefix_Set_Get()
         {
-            var packet = new PlateInfoPacket();
+            var packet = new PlateInfo();
 
             packet.Prefix = ItemPrefix.Unreal;
 
@@ -69,7 +69,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void StackSize_Set_Get()
         {
-            var packet = new PlateInfoPacket();
+            var packet = new PlateInfo();
 
             packet.StackSize = 1;
 
@@ -79,7 +79,7 @@ namespace Orion.Core.Packets.World.TileEntities
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<PlateInfoPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<PlateInfo>(_bytes, PacketContext.Server);
 
             Assert.Equal(256, packet.X);
             Assert.Equal(100, packet.Y);
