@@ -19,7 +19,7 @@ using System;
 using System.Runtime.InteropServices;
 using Orion.Core.Packets.DataStructures;
 
-namespace Orion.Core.Packets.Client
+namespace Orion.Core.Packets.Server
 {
     /// <summary>
     /// A packet sent from the server to the client to set the client's status.
@@ -48,7 +48,7 @@ namespace Orion.Core.Packets.Client
             get => _statusText ??= NetworkText.Empty;
             set => _statusText = value ?? throw new ArgumentNullException(nameof(value));
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether to hide the percentage in the status text.
         /// </summary>

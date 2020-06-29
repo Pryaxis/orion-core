@@ -19,45 +19,45 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.Client
+namespace Orion.Core.Packets.Server
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ClientConnectTests
+    public class ClientUuidTests
     {
-        private readonly byte[] _bytes = { 15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52 };
+        private readonly byte[] _bytes = { 12, 0, 68, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
 
         [Fact]
-        public void Version_GetNullValue()
+        public void Uuid_GetNullValue()
         {
-            var packet = new ClientConnect();
+            var packet = new ClientUuid();
 
-            Assert.Equal(string.Empty, packet.Version);
+            Assert.Equal(string.Empty, packet.Uuid);
         }
 
         [Fact]
-        public void Version_SetNullValue_ThrowsArgumentNullException()
+        public void Uuid_SetNullValue_ThrowsArgumentNullException()
         {
-            var packet = new ClientConnect();
+            var packet = new ClientUuid();
 
-            Assert.Throws<ArgumentNullException>(() => packet.Version = null!);
+            Assert.Throws<ArgumentNullException>(() => packet.Uuid = null!);
         }
 
         [Fact]
-        public void Version_Set_Get()
+        public void Uuid_Set_Get()
         {
-            var packet = new ClientConnect();
+            var packet = new ClientUuid();
 
-            packet.Version = "Terraria194";
+            packet.Uuid = "Terraria";
 
-            Assert.Equal("Terraria194", packet.Version);
+            Assert.Equal("Terraria", packet.Uuid);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<ClientConnect>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<ClientUuid>(_bytes, PacketContext.Server);
 
-            Assert.Equal("Terraria194", packet.Version);
+            Assert.Equal("Terraria", packet.Uuid);
         }
     }
 }

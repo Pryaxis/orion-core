@@ -19,7 +19,7 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.Packets.DataStructures;
 using Xunit;
 
-namespace Orion.Core.Packets.Client
+namespace Orion.Core.Packets.Server
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ClientStatusTests

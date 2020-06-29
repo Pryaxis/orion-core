@@ -19,45 +19,45 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Packets.Client
+namespace Orion.Core.Packets.Server
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ClientUuidTests
+    public class ClientConnectTests
     {
-        private readonly byte[] _bytes = { 12, 0, 68, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
+        private readonly byte[] _bytes = { 15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52 };
 
         [Fact]
-        public void Uuid_GetNullValue()
+        public void Version_GetNullValue()
         {
-            var packet = new ClientUuid();
+            var packet = new ClientConnect();
 
-            Assert.Equal(string.Empty, packet.Uuid);
+            Assert.Equal(string.Empty, packet.Version);
         }
 
         [Fact]
-        public void Uuid_SetNullValue_ThrowsArgumentNullException()
+        public void Version_SetNullValue_ThrowsArgumentNullException()
         {
-            var packet = new ClientUuid();
+            var packet = new ClientConnect();
 
-            Assert.Throws<ArgumentNullException>(() => packet.Uuid = null!);
+            Assert.Throws<ArgumentNullException>(() => packet.Version = null!);
         }
 
         [Fact]
-        public void Uuid_Set_Get()
+        public void Version_Set_Get()
         {
-            var packet = new ClientUuid();
+            var packet = new ClientConnect();
 
-            packet.Uuid = "Terraria";
+            packet.Version = "Terraria194";
 
-            Assert.Equal("Terraria", packet.Uuid);
+            Assert.Equal("Terraria194", packet.Version);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<ClientUuid>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<ClientConnect>(_bytes, PacketContext.Server);
 
-            Assert.Equal("Terraria", packet.Uuid);
+            Assert.Equal("Terraria194", packet.Version);
         }
     }
 }

@@ -18,7 +18,6 @@
 using System;
 using Orion.Core.Entities;
 using Orion.Core.Packets;
-using Orion.Core.Packets.Client;
 using Orion.Core.Packets.DataStructures;
 using Orion.Core.Packets.Server;
 using Orion.Core.Packets.World.Tiles;

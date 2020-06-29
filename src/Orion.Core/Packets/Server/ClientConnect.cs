@@ -16,32 +16,31 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 
-namespace Orion.Core.Packets.Client
+namespace Orion.Core.Packets.Server
 {
     /// <summary>
-    /// A packet sent from the client to the server to respond with a password.
+    /// A packet sent from the client to the server to connect to the server.
     /// </summary>
-    public struct PasswordResponse : IPacket
+    public struct ClientConnect : IPacket
     {
-        private string _password;
+        private string? _version;
 
         /// <summary>
-        /// Gets or sets the client's password.
+        /// Gets or sets the client's version. This is of the form <c>"Terraria###"</c>, where <c>###</c> is Terraria's
+        /// internal version number.
         /// </summary>
-        /// <value>The client's password.</value>
+        /// <value>The client's version.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        [LogMasked]
-        public string Password
+        public string Version
         {
-            get => _password ??= string.Empty;
-            set => _password = value ?? throw new ArgumentNullException(nameof(value));
+            get => _version ??= string.Empty;
+            set => _version = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        PacketId IPacket.Id => PacketId.PasswordResponse;
+        PacketId IPacket.Id => PacketId.ClientConnect;
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(out _password);
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(Password);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(out _version);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(Version);
     }
 }

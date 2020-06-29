@@ -17,7 +17,7 @@
 
 using System;
 
-namespace Orion.Core.Packets.Client
+namespace Orion.Core.Packets.Server
 {
     /// <summary>
     /// A packet sent from the server to the client to request a password.

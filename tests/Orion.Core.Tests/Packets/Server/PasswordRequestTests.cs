@@ -17,7 +17,7 @@
 
 using Xunit;
 
-namespace Orion.Core.Packets.Client
+namespace Orion.Core.Packets.Server
 {
     public class PasswordRequestTests
     {

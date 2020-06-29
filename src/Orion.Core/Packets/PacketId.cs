@@ -18,7 +18,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using Orion.Core.Packets.Client;
 using Orion.Core.Packets.Items;
 using Orion.Core.Packets.Misc;
 using Orion.Core.Packets.Npcs;

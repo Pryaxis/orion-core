@@ -16,32 +16,31 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
+using Orion.Core.Packets.DataStructures;
 
-namespace Orion.Core.Packets.Client
+namespace Orion.Core.Packets.Server
 {
     /// <summary>
-    /// A packet sent from the client to the server to register its UUID.
+    /// A packet sent from the server to the client to disconnect the client.
     /// </summary>
-    public struct ClientUuid : IPacket
+    public struct ClientDisconnect : IPacket
     {
-        private string? _uuid;
+        private NetworkText? _reason;
 
         /// <summary>
-        /// Gets or sets the client's UUID.
+        /// Gets or sets the disconnection reason.
         /// </summary>
-        /// <value>The client's UUID.</value>
+        /// <value>The disconnection reason.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        [LogMasked]
-        public string Uuid
+        public NetworkText Reason
         {
-            get => _uuid ??= string.Empty;
-            set => _uuid = value ?? throw new ArgumentNullException(nameof(value));
+            get => _reason ??= NetworkText.Empty;
+            set => _reason = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        PacketId IPacket.Id => PacketId.ClientUuid;
+        PacketId IPacket.Id => PacketId.ClientDisconnect;
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(out _uuid);
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(Uuid);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => NetworkText.Read(span, out _reason);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => Reason.Write(span);
     }
 }
