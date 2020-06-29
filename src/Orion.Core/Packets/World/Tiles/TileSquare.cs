@@ -27,7 +27,7 @@ namespace Orion.Core.Packets.World.Tiles
     /// A packet sent to set a square of tiles.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 16)]
-    public sealed class TileSquarePacket : IPacket
+    public struct TileSquare : IPacket
     {
         // The shifts for the tile header.
         private const int SlopeShift = 12;

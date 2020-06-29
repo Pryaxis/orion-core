@@ -155,7 +155,7 @@ namespace Orion.Core.Players
                 throw new NotSupportedException("Tiles is not square");
             }
 
-            var packet = new TileSquarePacket { X = (short)x, Y = (short)y, Tiles = tiles };
+            var packet = new TileSquare { X = (short)x, Y = (short)y, Tiles = tiles };
             for (var i = 0; i < players.Count; ++i)
             {
                 players[i].SendPacket(packet);

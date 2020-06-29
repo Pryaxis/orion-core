@@ -111,7 +111,7 @@ namespace Orion.Core.Players
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
             var player = Mock.Of<IPlayer>();
             Mock.Get(player)
-                .Setup(p => p.SendPacket(It.Is<TileSquarePacket>(p => p.X == 123 && p.Y == 456 && p.Tiles == tiles)));
+                .Setup(p => p.SendPacket(It.Is<TileSquare>(p => p.X == 123 && p.Y == 456 && p.Tiles == tiles)));
 
             player.SendTiles(123, 456, tiles);
 

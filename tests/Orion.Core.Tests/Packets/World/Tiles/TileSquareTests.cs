@@ -24,7 +24,7 @@ using Xunit;
 namespace Orion.Core.Packets.World.Tiles
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class TileSquarePacketTests
+    public class TileSquareTests
     {
         private readonly byte[] _bytes =
         {
@@ -37,7 +37,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void X_Set_Get()
         {
-            var packet = new TileSquarePacket();
+            var packet = new TileSquare();
 
             packet.X = 2206;
 
@@ -47,7 +47,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Y_Set_Get()
         {
-            var packet = new TileSquarePacket();
+            var packet = new TileSquare();
 
             packet.Y = 312;
 
@@ -55,9 +55,9 @@ namespace Orion.Core.Packets.World.Tiles
         }
 
         [Fact]
-        public void Tiles_Get_Default()
+        public void Tiles_GetNullValue()
         {
-            var packet = new TileSquarePacket();
+            var packet = new TileSquare();
 
             Assert.Equal(0, packet.Tiles.Width);
             Assert.Equal(0, packet.Tiles.Height);
@@ -66,7 +66,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Tiles_SetNullValue_ThrowsArgumentNullException()
         {
-            var packet = new TileSquarePacket();
+            var packet = new TileSquare();
 
             Assert.Throws<ArgumentNullException>(() => packet.Tiles = null!);
         }
@@ -75,7 +75,7 @@ namespace Orion.Core.Packets.World.Tiles
         public void Tiles_SetNotSquareArray_ThrowsArgumentException()
         {
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 2);
-            var packet = new TileSquarePacket();
+            var packet = new TileSquare();
 
             Assert.Throws<ArgumentException>(() => packet.Tiles = tiles);
         }
@@ -84,7 +84,7 @@ namespace Orion.Core.Packets.World.Tiles
         public void Tiles_Set_Get()
         {
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
-            var packet = new TileSquarePacket();
+            var packet = new TileSquare();
 
             packet.Tiles = tiles;
 
@@ -94,7 +94,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<TileSquarePacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileSquare>(_bytes, PacketContext.Server);
 
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
@@ -105,7 +105,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_ExtraData()
         {
-            var packet = TestUtils.ReadPacket<TileSquarePacket>(_extraDataBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileSquare>(_extraDataBytes, PacketContext.Server);
 
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);

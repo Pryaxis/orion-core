@@ -22,40 +22,34 @@ using Orion.Core.World.Tiles;
 namespace Orion.Core.Packets.World.Tiles
 {
     /// <summary>
-    /// A packet sent to set a tile's liquid.
+    /// A packet sent to paint a block.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 6)]
-    public sealed class TileLiquidPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    public struct BlockPaint : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
-        /// Gets or sets the tile's X coordinate.
+        /// Gets or sets the block's X coordinate.
         /// </summary>
-        /// <value>The tile's X coordinate.</value>
+        /// <value>The block's X coordinate.</value>
         [field: FieldOffset(0)] public short X { get; set; }
 
         /// <summary>
-        /// Gets or sets the tile's Y coordinate.
+        /// Gets or sets the block's Y coordinate.
         /// </summary>
-        /// <value>The tile's Y coordinate.</value>
+        /// <value>The block's Y coordinate.</value>
         [field: FieldOffset(2)] public short Y { get; set; }
 
         /// <summary>
-        /// Gets or sets the tile's liquid amount. This ranges from <c>0</c> to <c>255</c>.
+        /// Gets or sets the paint color.
         /// </summary>
-        /// <value>The tile's liquid amount.</value>
-        [field: FieldOffset(4)] public byte LiquidAmount { get; set; }
+        /// <value>The paint color.</value>
+        [field: FieldOffset(4)] public PaintColor Color { get; set; }
 
-        /// <summary>
-        /// Gets or sets the tile's liquid.
-        /// </summary>
-        /// <value>The tile's liquid.</value>
-        [field: FieldOffset(5)] public Liquid Liquid { get; set; }
+        PacketId IPacket.Id => PacketId.BlockPaint;
 
-        PacketId IPacket.Id => PacketId.TileLiquid;
-
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 6);
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 6);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 5);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 5);
     }
 }

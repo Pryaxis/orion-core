@@ -23,40 +23,40 @@ namespace Orion.Core.Packets.World.Tiles
     /// <summary>
     /// A packet sent from the client to the server to perform wire operations.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 9)]
-    public sealed class WireOperationsPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 12)]
+    public struct WireOperations : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
-        /// Gets or sets the operation's starting X coordinate.
+        /// Gets or sets the operations' starting X coordinate.
         /// </summary>
-        /// <value>The operation's starting X coordinate.</value>
+        /// <value>The operations' starting X coordinate.</value>
         [field: FieldOffset(0)] public short StartX { get; set; }
 
         /// <summary>
-        /// Gets or sets the operation's starting Y coordinate.
+        /// Gets or sets the operations' starting Y coordinate.
         /// </summary>
-        /// <value>The operation's starting Y coordinate.</value>
+        /// <value>The operations' starting Y coordinate.</value>
         [field: FieldOffset(2)] public short StartY { get; set; }
 
         /// <summary>
-        /// Gets or sets the operation's ending X coordinate.
+        /// Gets or sets the operations' ending X coordinate.
         /// </summary>
-        /// <value>The operation's ending X coordinate.</value>
+        /// <value>The operations' ending X coordinate.</value>
         [field: FieldOffset(4)] public short EndX { get; set; }
 
         /// <summary>
-        /// Gets or sets the operation's ending Y coordinate.
+        /// Gets or sets the operations' ending Y coordinate.
         /// </summary>
-        /// <value>The operation's ending Y coordinate.</value>
+        /// <value>The operations' ending Y coordinate.</value>
         [field: FieldOffset(6)] public short EndY { get; set; }
 
         /// <summary>
-        /// Gets or sets the operations.
+        /// Gets or sets the operation types.
         /// </summary>
-        /// <value>The operations.</value>
-        [field: FieldOffset(8)] public WireOperations Operations { get; set; }
+        /// <value>The operation types.</value>
+        [field: FieldOffset(8)] public OperationTypes Types { get; set; }
 
         PacketId IPacket.Id => PacketId.WireOperations;
 
@@ -64,10 +64,10 @@ namespace Orion.Core.Packets.World.Tiles
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 9);
 
         /// <summary>
-        /// Specifies the wire operations in a <see cref="WireOperationsPacket"/>.
+        /// Specifies the operation types in a <see cref="Tiles.WireOperations"/>.
         /// </summary>
         [Flags]
-        public enum WireOperations : byte
+        public enum OperationTypes : byte
         {
             /// <summary>
             /// Indicates nothing.

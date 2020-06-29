@@ -21,14 +21,14 @@ using Xunit;
 namespace Orion.Core.Packets.World.Tiles
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class WireOperationsPacketTests
+    public class WireOperationsTests
     {
         private readonly byte[] _bytes = { 12, 0, 109, 0, 1, 100, 0, 100, 0, 0, 1, 16 };
 
         [Fact]
         public void StartX_Set_Get()
         {
-            var packet = new WireOperationsPacket();
+            var packet = new WireOperations();
 
             packet.StartX = 256;
 
@@ -38,7 +38,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void StartY_Set_Get()
         {
-            var packet = new WireOperationsPacket();
+            var packet = new WireOperations();
 
             packet.StartY = 100;
 
@@ -48,7 +48,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void EndX_Set_Get()
         {
-            var packet = new WireOperationsPacket();
+            var packet = new WireOperations();
 
             packet.EndX = 100;
 
@@ -58,7 +58,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void EndY_Set_Get()
         {
-            var packet = new WireOperationsPacket();
+            var packet = new WireOperations();
 
             packet.EndY = 256;
 
@@ -68,23 +68,23 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Operations_Set_Get()
         {
-            var packet = new WireOperationsPacket();
+            var packet = new WireOperations();
 
-            packet.Operations = WireOperationsPacket.WireOperations.Actuator;
+            packet.Types = WireOperations.OperationTypes.Actuator;
 
-            Assert.Equal(WireOperationsPacket.WireOperations.Actuator, packet.Operations);
+            Assert.Equal(WireOperations.OperationTypes.Actuator, packet.Types);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<WireOperationsPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<WireOperations>(_bytes, PacketContext.Server);
 
             Assert.Equal(256, packet.StartX);
             Assert.Equal(100, packet.StartY);
             Assert.Equal(100, packet.EndX);
             Assert.Equal(256, packet.EndY);
-            Assert.Equal(WireOperationsPacket.WireOperations.Actuator, packet.Operations);
+            Assert.Equal(WireOperations.OperationTypes.Actuator, packet.Types);
         }
     }
 }

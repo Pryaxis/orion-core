@@ -24,10 +24,10 @@ namespace Orion.Core.Packets.World.Tiles
     /// <summary>
     /// A packet sent to paint a wall.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 5)]
-    public sealed class WallPaintPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    public struct WallPaint : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the wall's X coordinate.

@@ -21,24 +21,14 @@ using Xunit;
 namespace Orion.Core.Packets.World.Tiles
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ObjectUnlockPacketTests
+    public class WireActivateTests
     {
-        private readonly byte[] _bytes = { 8, 0, 52, 1, 0, 1, 100, 0 };
-
-        [Fact]
-        public void Type_Set_Get()
-        {
-            var packet = new ObjectUnlockPacket();
-
-            packet.Type = UnlockType.Chest;
-
-            Assert.Equal(UnlockType.Chest, packet.Type);
-        }
+        private readonly byte[] _bytes = { 7, 0, 59, 0, 1, 100, 0 };
 
         [Fact]
         public void X_Set_Get()
         {
-            var packet = new ObjectUnlockPacket();
+            var packet = new WireActivate();
 
             packet.X = 256;
 
@@ -48,7 +38,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Y_Set_Get()
         {
-            var packet = new ObjectUnlockPacket();
+            var packet = new WireActivate();
 
             packet.Y = 100;
 
@@ -58,9 +48,8 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<ObjectUnlockPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<WireActivate>(_bytes, PacketContext.Server);
 
-            Assert.Equal(UnlockType.Chest, packet.Type);
             Assert.Equal(256, packet.X);
             Assert.Equal(100, packet.Y);
         }

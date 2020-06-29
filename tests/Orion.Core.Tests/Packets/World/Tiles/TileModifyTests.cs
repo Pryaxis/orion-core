@@ -23,7 +23,7 @@ using Xunit;
 namespace Orion.Core.Packets.World.Tiles
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class TileModifyPacketTests
+    public class TileModifyTests
     {
         private readonly byte[] _breakBlockBytes = { 11, 0, 17, 0, 100, 0, 0, 1, 0, 0, 0 };
         private readonly byte[] _breakBlockFailureBytes = { 11, 0, 17, 0, 100, 0, 0, 1, 1, 0, 0 };
@@ -48,7 +48,7 @@ namespace Orion.Core.Packets.World.Tiles
         private readonly byte[] _breakYellowWireBytes = { 11, 0, 17, 17, 100, 0, 0, 1, 0, 0, 0 };
         private readonly byte[] _modifyLogicGateBytes = { 11, 0, 17, 18, 100, 0, 0, 1, 0, 0, 0 };
         private readonly byte[] _actuateBlockBytes = { 11, 0, 17, 19, 100, 0, 0, 1, 0, 0, 0 };
-        private readonly byte[] _breakContainerBytes = { 11, 0, 17, 20, 100, 0, 0, 1, 0, 0, 0 };
+        private readonly byte[] _breakBlockRequestBytes = { 11, 0, 17, 20, 100, 0, 0, 1, 0, 0, 0 };
         private readonly byte[] _replaceBlockBytes = { 11, 0, 17, 21, 100, 0, 0, 1, 1, 0, 0 };
         private readonly byte[] _replaceWallBytes = { 11, 0, 17, 22, 100, 0, 0, 1, 1, 0, 0 };
         private readonly byte[] _slopeAndHammerBlockBytes = { 11, 0, 17, 23, 100, 0, 0, 1, 1, 0, 0 };
@@ -56,17 +56,17 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Modification_Set_Get()
         {
-            var packet = new TileModifyPacket();
+            var packet = new TileModify();
 
-            packet.Modification = TileModification.BreakBlock;
+            packet.Modification = TileModify.TileModification.BreakBlock;
 
-            Assert.Equal(TileModification.BreakBlock, packet.Modification);
+            Assert.Equal(TileModify.TileModification.BreakBlock, packet.Modification);
         }
 
         [Fact]
         public void X_Set_Get()
         {
-            var packet = new TileModifyPacket();
+            var packet = new TileModify();
 
             packet.X = 100;
 
@@ -76,7 +76,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Y_Set_Get()
         {
-            var packet = new TileModifyPacket();
+            var packet = new TileModify();
 
             packet.Y = 256;
 
@@ -86,7 +86,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void BlockId_GetInvalidModification_ThrowsInvalidOperationException()
         {
-            var packet = new TileModifyPacket { Modification = TileModification.BreakBlock };
+            var packet = new TileModify { Modification = TileModify.TileModification.BreakBlock };
 
             Assert.Throws<InvalidOperationException>(() => packet.BlockId);
         }
@@ -94,17 +94,17 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void BlockId_SetInvalidModification_ThrowsInvalidOperationException()
         {
-            var packet = new TileModifyPacket { Modification = TileModification.BreakBlock };
+            var packet = new TileModify { Modification = TileModify.TileModification.BreakBlock };
 
             Assert.Throws<InvalidOperationException>(() => packet.BlockId = BlockId.Torches);
         }
 
         [Theory]
-        [InlineData(TileModification.PlaceBlock)]
-        [InlineData(TileModification.ReplaceBlock)]
-        public void BlockId_Set_Get(TileModification modification)
+        [InlineData(TileModify.TileModification.PlaceBlock)]
+        [InlineData(TileModify.TileModification.ReplaceBlock)]
+        public void BlockId_Set_Get(TileModify.TileModification modification)
         {
-            var packet = new TileModifyPacket { Modification = modification };
+            var packet = new TileModify { Modification = modification };
 
             packet.BlockId = BlockId.Torches;
 
@@ -114,7 +114,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void BlockStyle_GetInvalidModification_ThrowsInvalidOperationException()
         {
-            var packet = new TileModifyPacket { Modification = TileModification.BreakBlock };
+            var packet = new TileModify { Modification = TileModify.TileModification.BreakBlock };
 
             Assert.Throws<InvalidOperationException>(() => packet.BlockStyle);
         }
@@ -122,17 +122,17 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void BlockStyle_SetInvalidModification_ThrowsInvalidOperationException()
         {
-            var packet = new TileModifyPacket { Modification = TileModification.BreakBlock };
+            var packet = new TileModify { Modification = TileModify.TileModification.BreakBlock };
 
             Assert.Throws<InvalidOperationException>(() => packet.BlockStyle = 1);
         }
 
         [Theory]
-        [InlineData(TileModification.PlaceBlock)]
-        [InlineData(TileModification.ReplaceBlock)]
-        public void BlockStyle_Set_Get(TileModification modification)
+        [InlineData(TileModify.TileModification.PlaceBlock)]
+        [InlineData(TileModify.TileModification.ReplaceBlock)]
+        public void BlockStyle_Set_Get(TileModify.TileModification modification)
         {
-            var packet = new TileModifyPacket { Modification = modification };
+            var packet = new TileModify { Modification = modification };
 
             packet.BlockStyle = 1;
 
@@ -142,7 +142,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void WallId_GetInvalidModification_ThrowsInvalidOperationException()
         {
-            var packet = new TileModifyPacket { Modification = TileModification.BreakWall };
+            var packet = new TileModify { Modification = TileModify.TileModification.BreakWall };
 
             Assert.Throws<InvalidOperationException>(() => packet.WallId);
         }
@@ -150,17 +150,17 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void WallId_SetInvalidModification_ThrowsInvalidOperationException()
         {
-            var packet = new TileModifyPacket { Modification = TileModification.BreakWall };
+            var packet = new TileModify { Modification = TileModify.TileModification.BreakWall };
 
             Assert.Throws<InvalidOperationException>(() => packet.WallId = WallId.Stone);
         }
 
         [Theory]
-        [InlineData(TileModification.PlaceWall)]
-        [InlineData(TileModification.ReplaceWall)]
-        public void WallId_Set_Get(TileModification modification)
+        [InlineData(TileModify.TileModification.PlaceWall)]
+        [InlineData(TileModify.TileModification.ReplaceWall)]
+        public void WallId_Set_Get(TileModify.TileModification modification)
         {
-            var packet = new TileModifyPacket { Modification = modification };
+            var packet = new TileModify { Modification = modification };
 
             packet.WallId = WallId.Stone;
 
@@ -170,7 +170,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Slope_GetInvalidModification_ThrowsInvalidOperationException()
         {
-            var packet = new TileModifyPacket { Modification = TileModification.BreakBlock };
+            var packet = new TileModify { Modification = TileModify.TileModification.BreakBlock };
 
             Assert.Throws<InvalidOperationException>(() => packet.Slope);
         }
@@ -178,17 +178,17 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Slope_SetInvalidModification_ThrowsInvalidOperationException()
         {
-            var packet = new TileModifyPacket { Modification = TileModification.BreakBlock };
+            var packet = new TileModify { Modification = TileModify.TileModification.BreakBlock };
 
             Assert.Throws<InvalidOperationException>(() => packet.Slope = Slope.TopRight);
         }
 
         [Theory]
-        [InlineData(TileModification.SlopeBlock)]
-        [InlineData(TileModification.SlopeAndHammerBlock)]
-        public void Slope_Set_Get(TileModification modification)
+        [InlineData(TileModify.TileModification.SlopeBlock)]
+        [InlineData(TileModify.TileModification.SlopeAndHammerBlock)]
+        public void Slope_Set_Get(TileModify.TileModification modification)
         {
-            var packet = new TileModifyPacket { Modification = modification };
+            var packet = new TileModify { Modification = modification };
 
             packet.Slope = Slope.TopRight;
 
@@ -198,7 +198,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void IsFailure_GetInvalidModification_ThrowsInvalidOperationException()
         {
-            var packet = new TileModifyPacket { Modification = TileModification.PlaceBlock };
+            var packet = new TileModify { Modification = TileModify.TileModification.PlaceBlock };
 
             Assert.Throws<InvalidOperationException>(() => packet.IsFailure);
         }
@@ -206,19 +206,19 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void IsFailure_SetInvalidModification_ThrowsInvalidOperationException()
         {
-            var packet = new TileModifyPacket { Modification = TileModification.PlaceBlock };
+            var packet = new TileModify { Modification = TileModify.TileModification.PlaceBlock };
 
             Assert.Throws<InvalidOperationException>(() => packet.IsFailure = true);
         }
 
         [Theory]
-        [InlineData(TileModification.BreakBlock)]
-        [InlineData(TileModification.BreakWall)]
-        [InlineData(TileModification.BreakBlockItemless)]
-        [InlineData(TileModification.BreakContainer)]
-        public void IsFailure_Set_Get(TileModification modification)
+        [InlineData(TileModify.TileModification.BreakBlock)]
+        [InlineData(TileModify.TileModification.BreakWall)]
+        [InlineData(TileModify.TileModification.BreakBlockItemless)]
+        [InlineData(TileModify.TileModification.BreakBlockRequest)]
+        public void IsFailure_Set_Get(TileModify.TileModification modification)
         {
-            var packet = new TileModifyPacket { Modification = modification };
+            var packet = new TileModify { Modification = modification };
 
             packet.IsFailure = true;
 
@@ -232,9 +232,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakBlock()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakBlockBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_breakBlockBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.BreakBlock, packet.Modification);
+            Assert.Equal(TileModify.TileModification.BreakBlock, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
             Assert.False(packet.IsFailure);
@@ -243,9 +243,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakBlockFailure()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakBlockFailureBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_breakBlockFailureBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.BreakBlock, packet.Modification);
+            Assert.Equal(TileModify.TileModification.BreakBlock, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
             Assert.True(packet.IsFailure);
@@ -254,9 +254,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_PlaceBlock()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_placeBlockBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_placeBlockBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.PlaceBlock, packet.Modification);
+            Assert.Equal(TileModify.TileModification.PlaceBlock, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
             Assert.Equal(BlockId.Torches, packet.BlockId);
@@ -266,9 +266,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakWall()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakWallBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_breakWallBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.BreakWall, packet.Modification);
+            Assert.Equal(TileModify.TileModification.BreakWall, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
             Assert.False(packet.IsFailure);
@@ -277,9 +277,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakWallFailure()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakWallFailureBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_breakWallFailureBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.BreakWall, packet.Modification);
+            Assert.Equal(TileModify.TileModification.BreakWall, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
             Assert.True(packet.IsFailure);
@@ -288,9 +288,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_PlaceWall()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_placeWallBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_placeWallBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.PlaceWall, packet.Modification);
+            Assert.Equal(TileModify.TileModification.PlaceWall, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
             Assert.Equal(WallId.Stone, packet.WallId);
@@ -299,9 +299,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakBlockItemless()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakBlockItemlessBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_breakBlockItemlessBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.BreakBlockItemless, packet.Modification);
+            Assert.Equal(TileModify.TileModification.BreakBlockItemless, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
             Assert.False(packet.IsFailure);
@@ -310,9 +310,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakBlockItemlessFailure()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakBlockItemlessFailureBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_breakBlockItemlessFailureBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.BreakBlockItemless, packet.Modification);
+            Assert.Equal(TileModify.TileModification.BreakBlockItemless, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
             Assert.True(packet.IsFailure);
@@ -321,9 +321,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_PlaceRedWire()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_placeRedWireBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_placeRedWireBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.PlaceRedWire, packet.Modification);
+            Assert.Equal(TileModify.TileModification.PlaceRedWire, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
         }
@@ -331,9 +331,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakRedWire()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakRedWireBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_breakRedWireBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.BreakRedWire, packet.Modification);
+            Assert.Equal(TileModify.TileModification.BreakRedWire, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
         }
@@ -341,9 +341,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_HammerBlock()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_hammerBlockBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_hammerBlockBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.HammerBlock, packet.Modification);
+            Assert.Equal(TileModify.TileModification.HammerBlock, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
         }
@@ -351,9 +351,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_PlaceActuator()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_placeActuatorBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_placeActuatorBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.PlaceActuator, packet.Modification);
+            Assert.Equal(TileModify.TileModification.PlaceActuator, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
         }
@@ -361,9 +361,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakActuator()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakActuatorBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_breakActuatorBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.BreakActuator, packet.Modification);
+            Assert.Equal(TileModify.TileModification.BreakActuator, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
         }
@@ -371,9 +371,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_PlaceBlueWire()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_placeBlueWireBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_placeBlueWireBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.PlaceBlueWire, packet.Modification);
+            Assert.Equal(TileModify.TileModification.PlaceBlueWire, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
         }
@@ -381,9 +381,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakBlueWire()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakBlueWireBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_breakBlueWireBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.BreakBlueWire, packet.Modification);
+            Assert.Equal(TileModify.TileModification.BreakBlueWire, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
         }
@@ -391,9 +391,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_PlaceGreenWire()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_placeGreenWireBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_placeGreenWireBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.PlaceGreenWire, packet.Modification);
+            Assert.Equal(TileModify.TileModification.PlaceGreenWire, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
         }
@@ -401,9 +401,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakGreenWire()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakGreenWireBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_breakGreenWireBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.BreakGreenWire, packet.Modification);
+            Assert.Equal(TileModify.TileModification.BreakGreenWire, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
         }
@@ -411,9 +411,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_SlopeBlock()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_slopeBlockBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_slopeBlockBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.SlopeBlock, packet.Modification);
+            Assert.Equal(TileModify.TileModification.SlopeBlock, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
             Assert.Equal(Slope.TopRight, packet.Slope);
@@ -422,9 +422,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_ModifyTrack()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_modifyTrackBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_modifyTrackBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.ModifyTrack, packet.Modification);
+            Assert.Equal(TileModify.TileModification.ModifyTrack, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
         }
@@ -432,9 +432,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_PlaceYellowWire()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_placeYellowWireBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_placeYellowWireBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.PlaceYellowWire, packet.Modification);
+            Assert.Equal(TileModify.TileModification.PlaceYellowWire, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
         }
@@ -442,9 +442,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_BreakYellowWire()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakYellowWireBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_breakYellowWireBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.BreakYellowWire, packet.Modification);
+            Assert.Equal(TileModify.TileModification.BreakYellowWire, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
         }
@@ -452,9 +452,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_ModifyLogicGate()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_modifyLogicGateBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_modifyLogicGateBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.ModifyLogicGate, packet.Modification);
+            Assert.Equal(TileModify.TileModification.ModifyLogicGate, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
         }
@@ -462,19 +462,19 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_ActuateBlock()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_actuateBlockBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_actuateBlockBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.ActuateBlock, packet.Modification);
+            Assert.Equal(TileModify.TileModification.ActuateBlock, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
         }
 
         [Fact]
-        public void Read_BreakContainer()
+        public void Read_BreakBlockRequest()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_breakContainerBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_breakBlockRequestBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.BreakContainer, packet.Modification);
+            Assert.Equal(TileModify.TileModification.BreakBlockRequest, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
             Assert.False(packet.IsFailure);
@@ -483,9 +483,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_ReplaceBlock()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_replaceBlockBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_replaceBlockBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.ReplaceBlock, packet.Modification);
+            Assert.Equal(TileModify.TileModification.ReplaceBlock, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
             Assert.Equal(BlockId.Stone, packet.BlockId);
@@ -495,9 +495,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_ReplaceWall()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_replaceWallBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_replaceWallBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.ReplaceWall, packet.Modification);
+            Assert.Equal(TileModify.TileModification.ReplaceWall, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
             Assert.Equal(WallId.Stone, packet.WallId);
@@ -506,9 +506,9 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read_SlopeAndHammerBlock()
         {
-            var packet = TestUtils.ReadPacket<TileModifyPacket>(_slopeAndHammerBlockBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileModify>(_slopeAndHammerBlockBytes, PacketContext.Server);
 
-            Assert.Equal(TileModification.SlopeAndHammerBlock, packet.Modification);
+            Assert.Equal(TileModify.TileModification.SlopeAndHammerBlock, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
             Assert.Equal(Slope.TopRight, packet.Slope);

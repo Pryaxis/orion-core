@@ -16,20 +16,19 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics.CodeAnalysis;
-using Orion.Core.World.Tiles;
 using Xunit;
 
 namespace Orion.Core.Packets.World.Tiles
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class TileLiquidPacketTests
+    public class GemLockToggleTests
     {
-        private readonly byte[] _bytes = { 9, 0, 48, 0, 1, 100, 0, 255, 2 };
+        private readonly byte[] _bytes = { 8, 0, 105, 0, 1, 100, 0, 1 };
 
         [Fact]
         public void X_Set_Get()
         {
-            var packet = new TileLiquidPacket();
+            var packet = new GemLockToggle();
 
             packet.X = 256;
 
@@ -39,7 +38,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Y_Set_Get()
         {
-            var packet = new TileLiquidPacket();
+            var packet = new GemLockToggle();
 
             packet.Y = 100;
 
@@ -47,34 +46,23 @@ namespace Orion.Core.Packets.World.Tiles
         }
 
         [Fact]
-        public void LiquidAmount_Set_Get()
+        public void IsActivated_Set_Get()
         {
-            var packet = new TileLiquidPacket();
+            var packet = new GemLockToggle();
 
-            packet.LiquidAmount = 255;
+            packet.IsActivated = true;
 
-            Assert.Equal(255, packet.LiquidAmount);
-        }
-
-        [Fact]
-        public void Liquid_Set_Get()
-        {
-            var packet = new TileLiquidPacket();
-
-            packet.Liquid = Liquid.Honey;
-
-            Assert.Equal(Liquid.Honey, packet.Liquid);
+            Assert.True(packet.IsActivated);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<TileLiquidPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<GemLockToggle>(_bytes, PacketContext.Server);
 
             Assert.Equal(256, packet.X);
             Assert.Equal(100, packet.Y);
-            Assert.Equal(255, packet.LiquidAmount);
-            Assert.Equal(Liquid.Honey, packet.Liquid);
+            Assert.True(packet.IsActivated);
         }
     }
 }

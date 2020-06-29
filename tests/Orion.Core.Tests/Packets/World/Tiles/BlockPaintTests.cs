@@ -22,14 +22,14 @@ using Xunit;
 namespace Orion.Core.Packets.World.Tiles
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class BlockPaintPacketTests
+    public class BlockPaintTests
     {
         private readonly byte[] _bytes = { 8, 0, 63, 0, 1, 100, 0, 1 };
 
         [Fact]
         public void X_Set_Get()
         {
-            var packet = new BlockPaintPacket();
+            var packet = new BlockPaint();
 
             packet.X = 256;
 
@@ -39,7 +39,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Y_Set_Get()
         {
-            var packet = new BlockPaintPacket();
+            var packet = new BlockPaint();
 
             packet.Y = 100;
 
@@ -49,7 +49,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Color_Set_Get()
         {
-            var packet = new BlockPaintPacket();
+            var packet = new BlockPaint();
 
             packet.Color = PaintColor.Red;
 
@@ -59,7 +59,7 @@ namespace Orion.Core.Packets.World.Tiles
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<BlockPaintPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<BlockPaint>(_bytes, PacketContext.Server);
 
             Assert.Equal(256, packet.X);
             Assert.Equal(100, packet.Y);

@@ -24,9 +24,9 @@ namespace Orion.Core.Packets.World.Tiles
     /// A packet sent to activate a wire.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 4)]
-    public sealed class WireActivatePacket : IPacket
+    public struct WireActivate : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the wire's X coordinate.

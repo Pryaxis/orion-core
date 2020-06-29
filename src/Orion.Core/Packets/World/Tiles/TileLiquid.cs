@@ -17,38 +17,45 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Orion.Core.World.Tiles;
 
 namespace Orion.Core.Packets.World.Tiles
 {
     /// <summary>
-    /// A packet sent from the client to the server to toggle a gem lock.
+    /// A packet sent to set a tile's liquid.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 5)]
-    public sealed class GemLockTogglePacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    public struct TileLiquid : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
-        /// Gets or sets the gem lock's X coordinate.
+        /// Gets or sets the tile's X coordinate.
         /// </summary>
-        /// <value>The gem lock's X coordinate.</value>
+        /// <value>The tile's X coordinate.</value>
         [field: FieldOffset(0)] public short X { get; set; }
 
         /// <summary>
-        /// Gets or sets the gem lock's Y coordinate.
+        /// Gets or sets the tile's Y coordinate.
         /// </summary>
-        /// <value>The gem lock's Y coordinate.</value>
+        /// <value>The tile's Y coordinate.</value>
         [field: FieldOffset(2)] public short Y { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the gem lock is activated.
+        /// Gets or sets the tile's liquid amount. This ranges from <c>0</c> to <c>255</c>.
         /// </summary>
-        /// <value><see langword="true"/> if the gem lock is activated; otherwise, <see langword="false"/>.</value>
-        [field: FieldOffset(4)] public bool IsActivated { get; set; }
+        /// <value>The tile's liquid amount.</value>
+        [field: FieldOffset(4)] public byte LiquidAmount { get; set; }
 
-        PacketId IPacket.Id => PacketId.GemLockToggle;
+        /// <summary>
+        /// Gets or sets the tile's liquid.
+        /// </summary>
+        /// <value>The tile's liquid.</value>
+        [field: FieldOffset(5)] public Liquid Liquid { get; set; }
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 5);
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 5);
+        PacketId IPacket.Id => PacketId.TileLiquid;
+
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 6);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 6);
     }
 }

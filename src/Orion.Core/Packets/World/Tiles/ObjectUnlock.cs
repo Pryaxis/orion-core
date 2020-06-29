@@ -17,39 +17,54 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Orion.Core.World.Tiles;
 
 namespace Orion.Core.Packets.World.Tiles
 {
     /// <summary>
-    /// A packet sent to paint a block.
+    /// A packet sent to unlock an object.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 5)]
-    public sealed class BlockPaintPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    public struct ObjectUnlock : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
-        /// Gets or sets the block's X coordinate.
+        /// Gets or sets the object's type.
         /// </summary>
-        /// <value>The block's X coordinate.</value>
-        [field: FieldOffset(0)] public short X { get; set; }
+        /// <value>The object's type.</value>
+        [field: FieldOffset(0)] public ObjectType Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the block's Y coordinate.
+        /// Gets or sets the object's X coordinate.
         /// </summary>
-        /// <value>The block's Y coordinate.</value>
-        [field: FieldOffset(2)] public short Y { get; set; }
+        /// <value>The object's X coordinate.</value>
+        [field: FieldOffset(1)] public short X { get; set; }
 
         /// <summary>
-        /// Gets or sets the paint color.
+        /// Gets or sets the object's Y coordinate.
         /// </summary>
-        /// <value>The paint color.</value>
-        [field: FieldOffset(4)] public PaintColor Color { get; set; }
+        /// <value>The object's Y coordinate.</value>
+        [field: FieldOffset(3)] public short Y { get; set; }
 
-        PacketId IPacket.Id => PacketId.BlockPaint;
+        PacketId IPacket.Id => PacketId.ObjectUnlock;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 5);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 5);
+
+        /// <summary>
+        /// Specifies the object type in an <see cref="ObjectUnlock"/>.
+        /// </summary>
+        public enum ObjectType : byte
+        {
+            /// <summary>
+            /// Indicates a chest.
+            /// </summary>
+            Chest = 1,
+
+            /// <summary>
+            /// Indicates a door.
+            /// </summary>
+            Door = 2
+        }
     }
 }

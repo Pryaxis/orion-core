@@ -28,7 +28,7 @@ namespace Orion.Core.World.Tiles
     /// <remarks>
     /// Implementations are required to be thread-safe.
     /// 
-    /// A tile slice can be used to efficiently pass tiles by reference in, e.g., a <see cref="TileSquarePacket"/>
+    /// A tile slice can be used to efficiently pass tiles by reference in, e.g., a <see cref="TileSquare"/>
     /// instance or the <see cref="IPlayerExtensions.SendTiles(IPlayer, int, int, ITileSlice)"/> extension method.
     /// 
     /// The <see cref="ITileSliceExtensions.Slice(ITileSlice, int, int, int, int)"/> extension method allows zero-copy
