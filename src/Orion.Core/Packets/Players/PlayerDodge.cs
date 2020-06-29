@@ -21,12 +21,12 @@ using System.Runtime.InteropServices;
 namespace Orion.Core.Packets.Players
 {
     /// <summary>
-    /// A packet sent to show a player's dodge.
+    /// A packet sent to have a player dodge.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 2)]
-    public sealed class PlayerDodgePacket : IPacket
+    public struct PlayerDodge : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the player index.
@@ -35,14 +35,35 @@ namespace Orion.Core.Packets.Players
         [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's dodge type.
+        /// Gets or sets the dodge type.
         /// </summary>
-        /// <value>The player's dodge type.</value>
+        /// <value>The dodge type.</value>
         [field: FieldOffset(1)] public DodgeType Type { get; set; }
 
         PacketId IPacket.Id => PacketId.PlayerDodge;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 2);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 2);
+
+        /// <summary>
+        /// Specifies the dodge type in a <see cref="PlayerDodge"/>.
+        /// </summary>
+        public enum DodgeType : byte
+        {
+            /// <summary>
+            /// Indicates a ninja dodge.
+            /// </summary>
+            Ninja = 1,
+
+            /// <summary>
+            /// Indicates a shadow dodge.
+            /// </summary>
+            Shadow = 2,
+
+            /// <summary>
+            /// Indicates a brain of confusion dodge.
+            /// </summary>
+            BrainOfConfusion = 4
+        }
     }
 }

@@ -154,7 +154,7 @@ namespace Orion.Core.Packets
             [PacketId.PlayerAddBuff] = typeof(PlayerAddBuff),
             [PacketId.NpcName] = typeof(NpcName),
             [PacketId.WireActivate] = typeof(WireActivatePacket),
-            [PacketId.PlayerDodge] = typeof(PlayerDodgePacket),
+            [PacketId.PlayerDodge] = typeof(PlayerDodge),
             [PacketId.BlockPaint] = typeof(BlockPaintPacket),
             [PacketId.WallPaint] = typeof(WallPaintPacket),
             [PacketId.PlayerHeal] = typeof(PlayerHealPacket),

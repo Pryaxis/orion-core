@@ -21,14 +21,14 @@ using Xunit;
 namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerDodgePacketTests
+    public class PlayerDodgeTests
     {
         private readonly byte[] _bytes = { 5, 0, 62, 5, 1 };
 
         [Fact]
         public void PlayerIndex_Set_Get()
         {
-            var packet = new PlayerDodgePacket();
+            var packet = new PlayerDodge();
 
             packet.PlayerIndex = 5;
 
@@ -38,20 +38,20 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void Type_Set_Get()
         {
-            var packet = new PlayerDodgePacket();
+            var packet = new PlayerDodge();
 
-            packet.Type = DodgeType.Ninja;
+            packet.Type = PlayerDodge.DodgeType.Ninja;
 
-            Assert.Equal(DodgeType.Ninja, packet.Type);
+            Assert.Equal(PlayerDodge.DodgeType.Ninja, packet.Type);
         }
 
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<PlayerDodgePacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<PlayerDodge>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.PlayerIndex);
-            Assert.Equal(DodgeType.Ninja, packet.Type);
+            Assert.Equal(PlayerDodge.DodgeType.Ninja, packet.Type);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Orion.Core.Packets.Players
     [StructLayout(LayoutKind.Explicit, Size = 1)]
     public struct PlayerDead : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the player index.
