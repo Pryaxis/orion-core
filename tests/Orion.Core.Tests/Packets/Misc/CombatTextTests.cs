@@ -24,7 +24,7 @@ using Xunit;
 namespace Orion.Core.Packets.Server
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ServerCombatTextPacketTests
+    public class CombatTextTests
     {
         private readonly byte[] _bytes =
         {
@@ -34,7 +34,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void Position_Set_Get()
         {
-            var packet = new ServerCombatTextPacket();
+            var packet = new CombatText();
 
             packet.Position = new Vector2f(100, 256);
 
@@ -44,7 +44,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void Color_Set_Get()
         {
-            var packet = new ServerCombatTextPacket();
+            var packet = new CombatText();
 
             packet.Color = Color3.White;
 
@@ -54,7 +54,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void Text_GetNullValue()
         {
-            var packet = new ServerCombatTextPacket();
+            var packet = new CombatText();
 
             Assert.Equal(NetworkText.Empty, packet.Text);
         }
@@ -62,7 +62,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void Text_SetNullValue_ThrowsArgumentNullException()
         {
-            var packet = new ServerCombatTextPacket();
+            var packet = new CombatText();
 
             Assert.Throws<ArgumentNullException>(() => packet.Text = null!);
         }
@@ -70,7 +70,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void Text_Set_Get()
         {
-            var packet = new ServerCombatTextPacket();
+            var packet = new CombatText();
 
             packet.Text = "Terraria";
 
@@ -80,7 +80,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<ServerCombatTextPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<CombatText>(_bytes, PacketContext.Server);
 
             Assert.Equal(new Vector2f(100, 256), packet.Position);
             Assert.Equal(Color3.White, packet.Color);

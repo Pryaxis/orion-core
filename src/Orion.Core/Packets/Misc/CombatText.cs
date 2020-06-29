@@ -26,10 +26,10 @@ namespace Orion.Core.Packets.Server
     /// A packet sent from the server to the client to show combat text.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 24)]
-    public sealed class ServerCombatTextPacket : IPacket
+    public struct CombatText : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
-        [field: FieldOffset(16)] private NetworkText _text = NetworkText.Empty;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
+        [FieldOffset(16)] private NetworkText? _text;
 
         /// <summary>
         /// Gets or sets the combat text's position.
@@ -50,22 +50,24 @@ namespace Orion.Core.Packets.Server
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public NetworkText Text
         {
-            get => _text ?? NetworkText.Empty;
+            get => _text ??= NetworkText.Empty;
             set => _text = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        PacketId IPacket.Id => PacketId.ServerCombatText;
+        PacketId IPacket.Id => PacketId.CombatText;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
             var length = span.Read(ref _bytes, 11);
-            return length + NetworkText.Read(span[length..], out _text);
+            length += NetworkText.Read(span[length..], out _text);
+            return length;
         }
 
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
             var length = span.Write(ref _bytes, 11);
-            return length + Text.Write(span[length..]);
+            length += Text.Write(span[length..]);
+            return length;
         }
     }
 }

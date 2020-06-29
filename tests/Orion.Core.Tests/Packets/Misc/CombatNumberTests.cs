@@ -19,17 +19,17 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.Utils;
 using Xunit;
 
-namespace Orion.Core.Packets.Server
+namespace Orion.Core.Packets.Misc
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ServerCombatNumberPacketTests
+    public class CombatNumberTests
     {
         private readonly byte[] _bytes = { 18, 0, 81, 0, 0, 200, 66, 0, 0, 128, 67, 255, 255, 255, 210, 4, 0, 0 };
 
         [Fact]
         public void Position_Set_Get()
         {
-            var packet = new ServerCombatNumberPacket();
+            var packet = new CombatNumber();
 
             packet.Position = new Vector2f(100, 256);
 
@@ -39,7 +39,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void Color_Set_Get()
         {
-            var packet = new ServerCombatNumberPacket();
+            var packet = new CombatNumber();
 
             packet.Color = Color3.White;
 
@@ -49,7 +49,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void Number_Set_Get()
         {
-            var packet = new ServerCombatNumberPacket();
+            var packet = new CombatNumber();
 
             packet.Number = 1234;
 
@@ -59,7 +59,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<ServerCombatNumberPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<CombatNumber>(_bytes, PacketContext.Server);
 
             Assert.Equal(new Vector2f(100, 256), packet.Position);
             Assert.Equal(Color3.White, packet.Color);

@@ -19,15 +19,15 @@ using System;
 using System.Runtime.InteropServices;
 using Orion.Core.Utils;
 
-namespace Orion.Core.Packets.Server
+namespace Orion.Core.Packets.Misc
 {
     /// <summary>
     /// A packet sent from the server to the client to show a combat number.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 15)]
-    public sealed class ServerCombatNumberPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    public struct CombatNumber : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the combat number's position.
@@ -47,7 +47,7 @@ namespace Orion.Core.Packets.Server
         /// <value>The combat number.</value>
         [field: FieldOffset(11)] public int Number { get; set; }
 
-        PacketId IPacket.Id => PacketId.ServerCombatNumber;
+        PacketId IPacket.Id => PacketId.CombatNumber;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 15);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 15);

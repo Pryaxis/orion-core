@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Orion.Core.Packets.Client;
 using Orion.Core.Packets.Items;
+using Orion.Core.Packets.Misc;
 using Orion.Core.Packets.Npcs;
 using Orion.Core.Packets.Players;
 using Orion.Core.Packets.Server;
@@ -82,7 +83,7 @@ namespace Orion.Core.Packets
         PlayerTeleport = 73,
         AnglerQuestInfo = 74,
         AnglerQuestComplete = 75,
-        ServerCombatNumber = 81,
+        CombatNumber = 81,
         Module = 82,
         NpcKillCount = 83,
         PlayerStealth = 84,
@@ -101,7 +102,7 @@ namespace Orion.Core.Packets
         OldOnesArmyEnd = 114,
         PlayerMinionTarget = 115,
         OldOnesArmyInfo = 116,
-        ServerCombatText = 119,
+        CombatText = 119,
         MannequinInventory = 121,
         WeaponRackInfo = 123,
         HatRackInventory = 124,
@@ -165,7 +166,7 @@ namespace Orion.Core.Packets
             [PacketId.PlayerTeleport] = typeof(PlayerTeleportPacket),
             [PacketId.AnglerQuestInfo] = typeof(AnglerQuestInfoPacket),
             [PacketId.AnglerQuestComplete] = typeof(AnglerQuestCompletePacket),
-            [PacketId.ServerCombatNumber] = typeof(ServerCombatNumberPacket),
+            [PacketId.CombatNumber] = typeof(CombatNumber),
             [PacketId.NpcKillCount] = typeof(NpcKillCountPacket),
             [PacketId.PlayerStealth] = typeof(PlayerStealthPacket),
             [PacketId.TileEntityInfo] = typeof(TileEntityInfoPacket),
@@ -183,7 +184,7 @@ namespace Orion.Core.Packets
             [PacketId.OldOnesArmyEnd] = typeof(OldOnesArmyEndPacket),
             [PacketId.PlayerMinionTarget] = typeof(PlayerMinionTargetPacket),
             [PacketId.OldOnesArmyInfo] = typeof(OldOnesArmyInfoPacket),
-            [PacketId.ServerCombatText] = typeof(ServerCombatTextPacket),
+            [PacketId.CombatText] = typeof(CombatText),
             [PacketId.MannequinInventory] = typeof(MannequinInventoryPacket),
             [PacketId.WeaponRackInfo] = typeof(WeaponRackInfoPacket),
             [PacketId.HatRackInventory] = typeof(HatRackInventoryPacket),
