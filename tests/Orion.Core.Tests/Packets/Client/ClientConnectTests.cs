@@ -29,35 +29,35 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void Version_GetNullValue()
         {
-            var clientConnect = new ClientConnect();
+            var packet = new ClientConnect();
 
-            Assert.Equal(string.Empty, clientConnect.Version);
+            Assert.Equal(string.Empty, packet.Version);
         }
 
         [Fact]
         public void Version_SetNullValue_ThrowsArgumentNullException()
         {
-            var clientConnect = new ClientConnect();
+            var packet = new ClientConnect();
 
-            Assert.Throws<ArgumentNullException>(() => clientConnect.Version = null!);
+            Assert.Throws<ArgumentNullException>(() => packet.Version = null!);
         }
 
         [Fact]
         public void Version_Set_Get()
         {
-            var clientConnect = new ClientConnect();
+            var packet = new ClientConnect();
 
-            clientConnect.Version = "Terraria194";
+            packet.Version = "Terraria194";
 
-            Assert.Equal("Terraria194", clientConnect.Version);
+            Assert.Equal("Terraria194", packet.Version);
         }
 
         [Fact]
         public void Read()
         {
-            var clientConnect = TestUtils.ReadPacket<ClientConnect>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<ClientConnect>(_bytes, PacketContext.Server);
 
-            Assert.Equal("Terraria194", clientConnect.Version);
+            Assert.Equal("Terraria194", packet.Version);
         }
     }
 }

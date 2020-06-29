@@ -33,35 +33,35 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void Reason_Get_Default()
         {
-            var clientDisconnect = new ClientDisconnect();
+            var packet = new ClientDisconnect();
 
-            Assert.Equal(NetworkText.Empty, clientDisconnect.Reason);
+            Assert.Equal(NetworkText.Empty, packet.Reason);
         }
 
         [Fact]
         public void Reason_SetNullValue_ThrowsArgumentNullException()
         {
-            var clientDisconnect = new ClientDisconnect();
+            var packet = new ClientDisconnect();
 
-            Assert.Throws<ArgumentNullException>(() => clientDisconnect.Reason = null!);
+            Assert.Throws<ArgumentNullException>(() => packet.Reason = null!);
         }
 
         [Fact]
         public void Reason_Set_Get()
         {
-            var clientDisconnect = new ClientDisconnect();
+            var packet = new ClientDisconnect();
 
-            clientDisconnect.Reason = new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage");
+            packet.Reason = new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage");
 
-            Assert.Equal(new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage"), clientDisconnect.Reason);
+            Assert.Equal(new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage"), packet.Reason);
         }
 
         [Fact]
         public void Read()
         {
-            var clientDisconnect = TestUtils.ReadPacket<ClientDisconnect>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<ClientDisconnect>(_bytes, PacketContext.Server);
 
-            Assert.Equal(new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage"), clientDisconnect.Reason);
+            Assert.Equal(new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage"), packet.Reason);
         }
     }
 }

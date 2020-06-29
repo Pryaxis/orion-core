@@ -21,11 +21,11 @@ using Destructurama.Attributed;
 namespace Orion.Core.Packets.Client
 {
     /// <summary>
-    /// A packet sent from the client to the server to send a password.
+    /// A packet sent from the client to the server as a password response.
     /// </summary>
-    public sealed class ClientPasswordPacket : IPacket
+    public struct PasswordResponse : IPacket
     {
-        private string _password = string.Empty;
+        private string _password;
 
         /// <summary>
         /// Gets or sets the client's password.
@@ -35,11 +35,11 @@ namespace Orion.Core.Packets.Client
         [LogMasked]
         public string Password
         {
-            get => _password;
+            get => _password ??= string.Empty;
             set => _password = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        PacketId IPacket.Id => PacketId.ClientPassword;
+        PacketId IPacket.Id => PacketId.PasswordResponse;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(out _password);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(Password);

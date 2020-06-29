@@ -22,14 +22,22 @@ using Xunit;
 namespace Orion.Core.Packets.Client
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ClientPasswordPacketTests
+    public class PasswordResponseTests
     {
         private readonly byte[] _bytes = { 12, 0, 38, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
 
         [Fact]
+        public void Password_GetNullValue()
+        {
+            var packet = new PasswordResponse();
+
+            Assert.Equal(string.Empty, packet.Password);
+        }
+
+        [Fact]
         public void Password_SetNullValue_ThrowsArgumentNullException()
         {
-            var packet = new ClientPasswordPacket();
+            var packet = new PasswordResponse();
 
             Assert.Throws<ArgumentNullException>(() => packet.Password = null!);
         }
@@ -37,7 +45,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void Password_Set_Get()
         {
-            var packet = new ClientPasswordPacket();
+            var packet = new PasswordResponse();
 
             packet.Password = "Terraria";
 
@@ -47,7 +55,7 @@ namespace Orion.Core.Packets.Client
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<ClientPasswordPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<PasswordResponse>(_bytes, PacketContext.Server);
 
             Assert.Equal("Terraria", packet.Password);
         }
