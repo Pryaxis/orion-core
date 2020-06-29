@@ -23,10 +23,10 @@ using Orion.Core.Utils;
 namespace Orion.Core.Packets.Items
 {
     /// <summary>
-    /// A packet sent to set an item's information.
+    /// A packet sent to set an instanced item's information.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public sealed class ItemInfoPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 24)]
+    public struct InstancedItemInfo : IPacket
     {
         [FieldOffset(0)] private byte _bytes;
 
@@ -76,7 +76,7 @@ namespace Orion.Core.Packets.Items
         /// <value>The item's ID.</value>
         [field: FieldOffset(22)] public ItemId Id { get; set; }
 
-        PacketId IPacket.Id => PacketId.ItemInfo;
+        PacketId IPacket.Id => PacketId.InstancedItemInfo;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 24);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 24);

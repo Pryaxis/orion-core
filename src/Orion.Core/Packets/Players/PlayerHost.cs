@@ -29,9 +29,9 @@ namespace Orion.Core.Packets.Players
         [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
-        /// Gets or sets the player's index.
+        /// Gets or sets the player index.
         /// </summary>
-        /// <value>The player's index.</value>
+        /// <value>The player index.</value>
         [field: FieldOffset(0)] public byte Index { get; set; }
 
         /// <summary>

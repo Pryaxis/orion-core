@@ -23,12 +23,12 @@ using Orion.Core.Utils;
 namespace Orion.Core.Packets.Items
 {
     /// <summary>
-    /// A packet sent to set an instanced item's information.
+    /// A packet sent to set an item's information.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public sealed class InstancedItemInfoPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 24)]
+    public struct ItemInfo : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the item index. If <c>400</c> and read in <see cref="PacketContext.Server"/>, then the item is
@@ -76,7 +76,7 @@ namespace Orion.Core.Packets.Items
         /// <value>The item's ID.</value>
         [field: FieldOffset(22)] public ItemId Id { get; set; }
 
-        PacketId IPacket.Id => PacketId.InstancedItemInfo;
+        PacketId IPacket.Id => PacketId.ItemInfo;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 24);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 24);

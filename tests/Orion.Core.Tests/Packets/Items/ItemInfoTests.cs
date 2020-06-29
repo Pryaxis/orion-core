@@ -23,17 +23,17 @@ using Xunit;
 namespace Orion.Core.Packets.Items
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class InstancedItemInfoPacketTests
+    public class ItemInfoTests
     {
         private readonly byte[] _bytes =
         {
-            27, 0, 90, 144, 1, 128, 51, 131, 71, 0, 112, 212, 69, 0, 0, 128, 64, 0, 0, 0, 192, 1, 0, 82, 0, 17, 6
+            27, 0, 21, 144, 1, 128, 51, 131, 71, 0, 112, 212, 69, 0, 0, 128, 64, 0, 0, 0, 192, 1, 0, 82, 0, 17, 6
         };
 
         [Fact]
         public void ItemIndex_Set_Get()
         {
-            var packet = new InstancedItemInfoPacket();
+            var packet = new ItemInfo();
 
             packet.ItemIndex = 400;
 
@@ -43,7 +43,7 @@ namespace Orion.Core.Packets.Items
         [Fact]
         public void Position_Set_Get()
         {
-            var packet = new InstancedItemInfoPacket();
+            var packet = new ItemInfo();
 
             packet.Position = new Vector2f(67175, 6798);
 
@@ -53,7 +53,7 @@ namespace Orion.Core.Packets.Items
         [Fact]
         public void Velocity_Set_Get()
         {
-            var packet = new InstancedItemInfoPacket();
+            var packet = new ItemInfo();
 
             packet.Velocity = new Vector2f(4, -2);
 
@@ -63,7 +63,7 @@ namespace Orion.Core.Packets.Items
         [Fact]
         public void StackSize_Set_Get()
         {
-            var packet = new InstancedItemInfoPacket();
+            var packet = new ItemInfo();
 
             packet.StackSize = 1;
 
@@ -73,7 +73,7 @@ namespace Orion.Core.Packets.Items
         [Fact]
         public void Prefix_Set_Get()
         {
-            var packet = new InstancedItemInfoPacket();
+            var packet = new ItemInfo();
 
             packet.Prefix = ItemPrefix.Unreal;
 
@@ -83,7 +83,7 @@ namespace Orion.Core.Packets.Items
         [Fact]
         public void AllowSelfPickup_Set_Get()
         {
-            var packet = new InstancedItemInfoPacket();
+            var packet = new ItemInfo();
 
             packet.AllowSelfPickup = false;
 
@@ -93,7 +93,7 @@ namespace Orion.Core.Packets.Items
         [Fact]
         public void Id_Set_Get()
         {
-            var packet = new InstancedItemInfoPacket();
+            var packet = new ItemInfo();
 
             packet.Id = ItemId.Sdmg;
 
@@ -103,7 +103,7 @@ namespace Orion.Core.Packets.Items
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<InstancedItemInfoPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<ItemInfo>(_bytes, PacketContext.Server);
 
             Assert.Equal(400, packet.ItemIndex);
             Assert.Equal(new Vector2f(67175, 6798), packet.Position);
