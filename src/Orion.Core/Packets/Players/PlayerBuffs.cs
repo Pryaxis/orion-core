@@ -25,7 +25,7 @@ namespace Orion.Core.Packets.Players
     /// A packet sent to set a player's buffs.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 48)]
-    public sealed class PlayerBuffsPacket : IPacket
+    public sealed class PlayerBuffs : IPacket
     {
         [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
         [FieldOffset(1)] private BuffId _buffIds;  // Used to obtain an interior reference.

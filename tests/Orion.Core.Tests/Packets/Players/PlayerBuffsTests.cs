@@ -22,7 +22,7 @@ using Xunit;
 namespace Orion.Core.Packets.Players
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerBuffsPacketTests
+    public class PlayerBuffsTests
     {
         private readonly byte[] _bytes =
         {
@@ -33,7 +33,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void PlayerIndex_Set_Get()
         {
-            var packet = new PlayerBuffsPacket();
+            var packet = new PlayerBuffs();
 
             packet.PlayerIndex = 5;
 
@@ -43,7 +43,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void Ids_Set_Get()
         {
-            var packet = new PlayerBuffsPacket();
+            var packet = new PlayerBuffs();
 
             for (var i = 0; i < packet.Ids.Length; ++i)
             {
@@ -59,7 +59,7 @@ namespace Orion.Core.Packets.Players
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<PlayerBuffsPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<PlayerBuffs>(_bytes, PacketContext.Server);
 
             Assert.Equal(5, packet.PlayerIndex);
 

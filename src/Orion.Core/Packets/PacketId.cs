@@ -148,7 +148,7 @@ namespace Orion.Core.Packets
             [PacketId.PlayerTeam] = typeof(PlayerTeamPacket),
             [PacketId.SignRead] = typeof(SignReadPacket),
             [PacketId.TileLiquid] = typeof(TileLiquidPacket),
-            [PacketId.PlayerBuffs] = typeof(PlayerBuffsPacket),
+            [PacketId.PlayerBuffs] = typeof(PlayerBuffs),
             [PacketId.ObjectUnlock] = typeof(ObjectUnlockPacket),
             [PacketId.NpcAddBuff] = typeof(NpcAddBuff),
             [PacketId.PlayerAddBuff] = typeof(PlayerAddBuff),
