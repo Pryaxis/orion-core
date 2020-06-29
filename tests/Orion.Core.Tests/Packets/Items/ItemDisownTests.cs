@@ -21,14 +21,14 @@ using Xunit;
 namespace Orion.Core.Packets.Items
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ItemDisownPacketTests
+    public class ItemDisownTests
     {
         private readonly byte[] _bytes = { 5, 0, 39, 10, 0 };
 
         [Fact]
         public void ItemIndex_Set_Get()
         {
-            var packet = new ItemDisownPacket();
+            var packet = new ItemDisown();
 
             packet.ItemIndex = 10;
 
@@ -38,7 +38,7 @@ namespace Orion.Core.Packets.Items
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<ItemDisownPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<ItemDisown>(_bytes, PacketContext.Server);
 
             Assert.Equal(10, packet.ItemIndex);
         }

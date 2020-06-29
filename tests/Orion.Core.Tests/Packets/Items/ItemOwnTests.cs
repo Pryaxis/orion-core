@@ -21,14 +21,14 @@ using Xunit;
 namespace Orion.Core.Packets.Items
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ItemOwnerPacketTests
+    public class ItemOwnTests
     {
         private readonly byte[] _bytes = { 6, 0, 22, 10, 0, 5 };
 
         [Fact]
         public void ItemIndex_Set_Get()
         {
-            var packet = new ItemOwnerPacket();
+            var packet = new ItemOwn();
 
             packet.ItemIndex = 10;
 
@@ -38,7 +38,7 @@ namespace Orion.Core.Packets.Items
         [Fact]
         public void OwnerIndex_Set_Get()
         {
-            var packet = new ItemOwnerPacket();
+            var packet = new ItemOwn();
 
             packet.OwnerIndex = 5;
 
@@ -48,7 +48,7 @@ namespace Orion.Core.Packets.Items
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<ItemOwnerPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<ItemOwn>(_bytes, PacketContext.Server);
 
             Assert.Equal(10, packet.ItemIndex);
             Assert.Equal(5, packet.OwnerIndex);

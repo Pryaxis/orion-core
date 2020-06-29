@@ -23,10 +23,10 @@ namespace Orion.Core.Packets.Items
     /// <summary>
     /// A packet sent from the server to the client to disown an item.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public sealed class ItemDisownPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 2)]
+    public struct ItemDisown : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the item index.

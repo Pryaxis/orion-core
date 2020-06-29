@@ -28,7 +28,7 @@ namespace Orion.Core.Packets.Items
     [StructLayout(LayoutKind.Explicit, Size = 24)]
     public struct InstancedItemInfo : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the item index. If <c>400</c> and read in <see cref="PacketContext.Server"/>, then the item is

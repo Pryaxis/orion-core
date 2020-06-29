@@ -21,26 +21,26 @@ using System.Runtime.InteropServices;
 namespace Orion.Core.Packets.Items
 {
     /// <summary>
-    /// A packet sent to set an item's owner.
+    /// A packet sent to own an item.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public sealed class ItemOwnerPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 4)]
+    public struct ItemOwn : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
-        /// Gets or sets the item's index.
+        /// Gets or sets the item index.
         /// </summary>
-        /// <value>The item's index.</value>
+        /// <value>The item index.</value>
         [field: FieldOffset(0)] public short ItemIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the item's owner index. If <c>255</c>, then there is no owner.
+        /// Gets or sets the item owner's index. If <c>255</c>, then there is no owner.
         /// </summary>
-        /// <value>The item's owner index.</value>
+        /// <value>The item owner's index.</value>
         [field: FieldOffset(2)] public byte OwnerIndex { get; set; }
 
-        PacketId IPacket.Id => PacketId.ItemOwner;
+        PacketId IPacket.Id => PacketId.ItemOwn;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 3);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 3);
