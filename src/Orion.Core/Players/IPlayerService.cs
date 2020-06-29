@@ -119,7 +119,7 @@ namespace Orion.Core.Players
                 throw new ArgumentNullException(nameof(message));
             }
 
-            var packet = new ServerChatPacket { Color = color, Message = message, LineWidth = -1 };
+            var packet = new ServerChat { Color = color, Message = message, LineWidth = -1 };
             for (var i = 0; i < players.Count; ++i)
             {
                 players[i].SendPacket(packet);

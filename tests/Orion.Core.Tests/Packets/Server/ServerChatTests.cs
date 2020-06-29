@@ -24,7 +24,7 @@ using Xunit;
 namespace Orion.Core.Packets.Server
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ServerChatPacketTests
+    public class ServerChatTests
     {
         private readonly byte[] _bytes =
         {
@@ -34,7 +34,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void Color_Set_Get()
         {
-            var packet = new ServerChatPacket();
+            var packet = new ServerChat();
 
             packet.Color = Color3.White;
 
@@ -42,9 +42,9 @@ namespace Orion.Core.Packets.Server
         }
 
         [Fact]
-        public void Message_Get_Default()
+        public void Message_GetNullValue()
         {
-            var packet = new ServerChatPacket();
+            var packet = new ServerChat();
 
             Assert.Equal(NetworkText.Empty, packet.Message);
         }
@@ -52,7 +52,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void Message_SetNullValue_ThrowsArgumentNullException()
         {
-            var packet = new ServerChatPacket();
+            var packet = new ServerChat();
 
             Assert.Throws<ArgumentNullException>(() => packet.Message = null!);
         }
@@ -60,7 +60,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void Message_Set_Get()
         {
-            var packet = new ServerChatPacket();
+            var packet = new ServerChat();
 
             packet.Message = "Terraria";
 
@@ -70,7 +70,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void LineWidth_Set_Get()
         {
-            var packet = new ServerChatPacket();
+            var packet = new ServerChat();
 
             packet.LineWidth = 100;
 
@@ -80,7 +80,7 @@ namespace Orion.Core.Packets.Server
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<ServerChatPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<ServerChat>(_bytes, PacketContext.Server);
 
             Assert.Equal(Color3.White, packet.Color);
             Assert.Equal("Terraria", packet.Message);

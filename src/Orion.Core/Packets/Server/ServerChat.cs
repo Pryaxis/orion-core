@@ -26,11 +26,11 @@ namespace Orion.Core.Packets.Server
     /// A packet sent from the server to the client to show chat.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 16)]
-    public sealed class ServerChatPacket : IPacket
+    public struct ServerChat : IPacket
     {
         [FieldOffset(0)] private byte _bytes;
         [FieldOffset(3)] private byte _bytes2;
-        [FieldOffset(8)] private NetworkText _message = NetworkText.Empty;
+        [FieldOffset(8)] private NetworkText? _message;
 
         /// <summary>
         /// Gets or sets the message color.
@@ -45,7 +45,7 @@ namespace Orion.Core.Packets.Server
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public NetworkText Message
         {
-            get => _message;
+            get => _message ??= NetworkText.Empty;
             set => _message = value ?? throw new ArgumentNullException(nameof(value));
         }
 
@@ -57,20 +57,20 @@ namespace Orion.Core.Packets.Server
 
         PacketId IPacket.Id => PacketId.ServerChat;
 
-        /// <inheritdoc/>
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
             var index = span.Read(ref _bytes, 3);
             index += NetworkText.Read(span[index..], out _message);
-            return index + span[index..].Read(ref _bytes2, 2);
+            index += span[index..].Read(ref _bytes2, 2);
+            return index;
         }
 
-        /// <inheritdoc/>
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
             var index = span.Write(ref _bytes, 3);
             index += Message.Write(span[index..]);
-            return index + span[index..].Write(ref _bytes2, 2);
+            index += span[index..].Write(ref _bytes2, 2);
+            return index;
         }
     }
 }

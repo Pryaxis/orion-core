@@ -22,7 +22,6 @@ namespace Orion.Core.Packets.Players
 {
     /// <summary>
     /// A packet sent from the server to the client to set a player's host status.
-    /// A packet sent from the server to the client to set the server's host.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 2)]
     public struct PlayerHost : IPacket

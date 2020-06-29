@@ -176,7 +176,7 @@ namespace Orion.Core.Packets
             [PacketId.PlayerNebulaBuff] = typeof(PlayerNebulaBuffPacket),
             [PacketId.MoonLordInfo] = typeof(MoonLordInfoPacket),
             [PacketId.GemLockToggle] = typeof(GemLockTogglePacket),
-            [PacketId.ServerChat] = typeof(ServerChatPacket),
+            [PacketId.ServerChat] = typeof(ServerChat),
             [PacketId.WireOperations] = typeof(WireOperationsPacket),
             [PacketId.PartyToggle] = typeof(PartyTogglePacket),
             [PacketId.OldOnesArmyStart] = typeof(OldOnesArmyStartPacket),

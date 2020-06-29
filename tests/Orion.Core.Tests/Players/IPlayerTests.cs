@@ -73,7 +73,7 @@ namespace Orion.Core.Players
             var player = Mock.Of<IPlayer>();
             Mock.Get(player)
                 .Setup(p => p.SendPacket(
-                    It.Is<ServerChatPacket>(p => p.Message == "test" && p.Color == Color3.White && p.LineWidth == -1)));
+                    It.Is<ServerChat>(p => p.Message == "test" && p.Color == Color3.White && p.LineWidth == -1)));
 
             player.SendMessage("test", Color3.White);
 
