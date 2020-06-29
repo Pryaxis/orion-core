@@ -15,28 +15,32 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using System.Runtime.InteropServices;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace Orion.Core.Packets.Server
 {
-    /// <summary>
-    /// A packet sent from the server to the client to set the client's index.
-    /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 1)]
-    public sealed class ServerIndexPacket : IPacket
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
+    public class ClientIndexTests
     {
-        [FieldOffset(0)] private byte _bytes;
+        private readonly byte[] _bytes = { 4, 0, 3, 5 };
 
-        /// <summary>
-        /// Gets or sets the client's index.
-        /// </summary>
-        /// <value>The client's index.</value>
-        [field: FieldOffset(0)] public byte Index { get; set; }
+        [Fact]
+        public void Index_Set_Get()
+        {
+            var packet = new ClientIndex();
 
-        PacketId IPacket.Id => PacketId.ServerIndex;
+            packet.Index = 5;
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 1);
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 1);
+            Assert.Equal(5, packet.Index);
+        }
+
+        [Fact]
+        public void Read()
+        {
+            var packet = TestUtils.ReadPacket<ClientIndex>(_bytes, PacketContext.Server);
+
+            Assert.Equal(5, packet.Index);
+        }
     }
 }

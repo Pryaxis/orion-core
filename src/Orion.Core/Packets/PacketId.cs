@@ -39,7 +39,7 @@ namespace Orion.Core.Packets
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         ClientConnect = 1,
         ClientDisconnect = 2,
-        ServerIndex = 3,
+        ClientIndex = 3,
         PlayerCharacter = 4,
         PlayerInventory = 5,
         PlayerJoin = 6,
@@ -123,7 +123,7 @@ namespace Orion.Core.Packets
         {
             [PacketId.ClientConnect] = typeof(ClientConnect),
             [PacketId.ClientDisconnect] = typeof(ClientDisconnect),
-            [PacketId.ServerIndex] = typeof(ServerIndexPacket),
+            [PacketId.ClientIndex] = typeof(ClientIndex),
             [PacketId.PlayerCharacter] = typeof(PlayerCharacterPacket),
             [PacketId.PlayerInventory] = typeof(PlayerInventoryPacket),
             [PacketId.PlayerJoin] = typeof(PlayerJoinPacket),

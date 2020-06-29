@@ -28,8 +28,8 @@ namespace Orion.Core.Packets.Server
     [StructLayout(LayoutKind.Explicit, Size = 16)]
     public struct ServerChat : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
-        [FieldOffset(3)] private byte _bytes2;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
+        [FieldOffset(3)] private byte _bytes2;  // Used to obtain an interior reference.
         [FieldOffset(8)] private NetworkText? _message;
 
         /// <summary>
