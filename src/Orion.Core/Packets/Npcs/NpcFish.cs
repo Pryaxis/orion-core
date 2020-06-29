@@ -22,12 +22,12 @@ using Orion.Core.Npcs;
 namespace Orion.Core.Packets.Npcs
 {
     /// <summary>
-    /// A packet sent from the client to the server to fish an NPC.
+    /// A packet sent from the client to the server to fish out an NPC.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public sealed class NpcFishPacket : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
+    public struct NpcFish : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the NPC's X coordinate.
@@ -42,9 +42,9 @@ namespace Orion.Core.Packets.Npcs
         [field: FieldOffset(2)] public ushort Y { get; set; }
 
         /// <summary>
-        /// Gets or sets the NPC ID.
+        /// Gets or sets the NPC's ID.
         /// </summary>
-        /// <value>The NPC ID.</value>
+        /// <value>The NPC's ID.</value>
         [field: FieldOffset(4)] public NpcId Id { get; set; }
 
         PacketId IPacket.Id => PacketId.NpcFish;

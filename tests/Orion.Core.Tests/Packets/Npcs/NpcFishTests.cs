@@ -22,14 +22,14 @@ using Xunit;
 namespace Orion.Core.Packets.Npcs
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class NpcFishPacketTests
+    public class NpcFishTests
     {
         private readonly byte[] _bytes = { 9, 0, 130, 100, 0, 0, 1, 108, 2 };
 
         [Fact]
         public void X_Set_Get()
         {
-            var packet = new NpcFishPacket();
+            var packet = new NpcFish();
 
             packet.X = 100;
 
@@ -39,7 +39,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Y_Set_Get()
         {
-            var packet = new NpcFishPacket();
+            var packet = new NpcFish();
 
             packet.Y = 256;
 
@@ -49,7 +49,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Id_Set_Get()
         {
-            var packet = new NpcFishPacket();
+            var packet = new NpcFish();
 
             packet.Id = NpcId.HemogoblinShark;
 
@@ -59,7 +59,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<NpcFishPacket>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<NpcFish>(_bytes, PacketContext.Server);
 
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);

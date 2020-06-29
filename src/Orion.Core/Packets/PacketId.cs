@@ -187,7 +187,7 @@ namespace Orion.Core.Packets
             [PacketId.MannequinInventory] = typeof(MannequinInventoryPacket),
             [PacketId.WeaponRackInfo] = typeof(WeaponRackInfoPacket),
             [PacketId.HatRackInventory] = typeof(HatRackInventoryPacket),
-            [PacketId.NpcFish] = typeof(NpcFishPacket),
+            [PacketId.NpcFish] = typeof(NpcFish),
             [PacketId.PlateInfo] = typeof(PlateInfoPacket),
             [PacketId.PlayerLuck] = typeof(PlayerLuckPacket),
             [PacketId.PlayerDead] = typeof(PlayerDeadPacket),
