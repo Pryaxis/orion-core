@@ -68,43 +68,20 @@ namespace Orion.Core.Packets
         /// Writes the packet to the given <paramref name="span"/> in the specified <paramref name="context"/>.
         /// Returns the number of bytes written to the <paramref name="span"/>.
         /// </summary>
+        /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="packet">The packet.</param>
         /// <param name="span">The span to write to.</param>
         /// <param name="context">The packet context to use when writing.</param>
         /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null"/>.</exception>
-        public static int Write(this IPacket packet, Span<byte> span, PacketContext context)
+        public static int Write<TPacket>(this TPacket packet, Span<byte> span, PacketContext context)
+            where TPacket : IPacket
         {
             if (packet is null)
             {
                 throw new ArgumentNullException(nameof(packet));
             }
 
-            Debug.Assert(span.Length >= 3);
-
-            ref var header = ref MemoryMarshal.GetReference(span);
-
-            var packetLength = 3 + packet.WriteBody(span[3..], context);
-
-            // Write the packet header with no bounds checking since we already performed bounds checking.
-            Unsafe.WriteUnaligned(ref header, (ushort)packetLength);
-            Unsafe.WriteUnaligned(ref Unsafe.Add(ref header, 2), packet.Id);
-
-            return packetLength;
-        }
-
-        /// <summary>
-        /// Writes the packet to the given <paramref name="span"/> in the specified <paramref name="context"/>.
-        /// Returns the number of bytes written to the <paramref name="span"/>.
-        /// </summary>
-        /// <typeparam name="TPacket">The type of packet.</typeparam>
-        /// <param name="packet">The packet.</param>
-        /// <param name="span">The span to write to.</param>
-        /// <param name="context">The packet context to use when writing.</param>
-        /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
-        public static int Write<TPacket>(this TPacket packet, Span<byte> span, PacketContext context)
-            where TPacket : struct, IPacket
-        {
             Debug.Assert(span.Length >= 3);
 
             ref var header = ref MemoryMarshal.GetReference(span);

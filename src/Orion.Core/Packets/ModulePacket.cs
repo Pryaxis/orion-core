@@ -75,14 +75,7 @@ namespace Orion.Core.Packets
                 throw new InvalidOperationException("Module is null");
             }
 
-            Debug.Assert(span.Length >= 2);
-
-            ref var header = ref MemoryMarshal.GetReference(span);
-
-            // Write the module ID with no bounds checking since we need to perform bounds checking later anyways.
-            Unsafe.WriteUnaligned(ref header, _module.Id);
-
-            return 2 + _module.WriteBody(span[2..], context);
+            return _module.Write(span, context);
         }
     }
 }

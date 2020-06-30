@@ -31,5 +31,17 @@ namespace Orion.Core.Events.Packets
 
             Assert.Same(packet, evt.Packet);
         }
+
+        [Fact]
+        public void Packet_Set_Get()
+        {
+            var packet = Mock.Of<IPacket>();
+            var packet2 = Mock.Of<IPacket>();
+            var evt = new Mock<PacketEvent<IPacket>>(packet).Object;
+
+            evt.Packet = packet2;
+
+            Assert.Same(packet2, evt.Packet);
+        }
     }
 }

@@ -25,7 +25,8 @@ namespace Orion.Core.Packets
         [Fact]
         public void Write_NullPacket_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => IPacketExtensions.Write(null!, default, PacketContext.Server));
+            Assert.Throws<ArgumentNullException>(
+                () => IPacketExtensions.Write<IPacket>(null!, default, PacketContext.Server));
         }
 
         [Fact]
@@ -50,48 +51,7 @@ namespace Orion.Core.Packets
             Assert.Equal(new byte[] { 4, 0, 255, 0 }, bytes[..length]);
         }
 
-        [Fact]
-        public void Write_Struct_AsServer()
-        {
-            var packet = new TestStructPacket { Value = 42 };
-            var bytes = new byte[1000];
-
-            var length = packet.Write(bytes, PacketContext.Server);
-
-            Assert.Equal(new byte[] { 4, 0, 255, 42 }, bytes[..length]);
-        }
-
-        [Fact]
-        public void Write_Struct_AsClient()
-        {
-            var packet = new TestStructPacket { Value = 42 };
-            var bytes = new byte[1000];
-
-            var length = packet.Write(bytes, PacketContext.Client);
-
-            Assert.Equal(new byte[] { 4, 0, 255, 0 }, bytes[..length]);
-        }
-
         private sealed class TestPacket : IPacket
-        {
-            public byte Value { get; set; }
-
-            public PacketId Id => (PacketId)255;
-
-            public int ReadBody(Span<byte> span, PacketContext context)
-            {
-                Value = (byte)(span[0] + (context == PacketContext.Server ? 0 : 42));
-                return 1;
-            }
-
-            public int WriteBody(Span<byte> span, PacketContext context)
-            {
-                span[0] = (byte)(Value - (context == PacketContext.Server ? 0 : 42));
-                return 1;
-            }
-        }
-
-        private struct TestStructPacket : IPacket
         {
             public byte Value { get; set; }
 

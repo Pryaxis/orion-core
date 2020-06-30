@@ -25,7 +25,8 @@ namespace Orion.Core.Packets.DataStructures.Modules
         [Fact]
         public void Write_NullModule_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => IModuleExtensions.Write(null!, default, PacketContext.Server));
+            Assert.Throws<ArgumentNullException>(
+                () => IModuleExtensions.Write<IModule>(null!, default, PacketContext.Server));
         }
 
         [Fact]
@@ -50,48 +51,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
             Assert.Equal(new byte[] { 255, 255, 0 }, bytes[..length]);
         }
 
-        [Fact]
-        public void Write_Struct_AsServer()
-        {
-            var module = new TestStructModule { Value = 42 };
-            var bytes = new byte[1000];
-
-            var length = module.Write(bytes, PacketContext.Server);
-
-            Assert.Equal(new byte[] { 255, 255, 42 }, bytes[..length]);
-        }
-
-        [Fact]
-        public void Write_Struct_AsClient()
-        {
-            var module = new TestStructModule { Value = 42 };
-            var bytes = new byte[1000];
-
-            var length = module.Write(bytes, PacketContext.Client);
-
-            Assert.Equal(new byte[] { 255, 255, 0 }, bytes[..length]);
-        }
-
         private sealed class TestModule : IModule
-        {
-            public byte Value { get; set; }
-
-            public ModuleId Id => (ModuleId)65535;
-
-            public int ReadBody(Span<byte> span, PacketContext context)
-            {
-                Value = (byte)(span[0] + (context == PacketContext.Server ? 0 : 42));
-                return 1;
-            }
-
-            public int WriteBody(Span<byte> span, PacketContext context)
-            {
-                span[0] = (byte)(Value - (context == PacketContext.Server ? 0 : 42));
-                return 1;
-            }
-        }
-
-        private struct TestStructModule : IModule
         {
             public byte Value { get; set; }
 

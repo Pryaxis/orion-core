@@ -66,27 +66,7 @@ namespace Orion.Core.Players
         /// <param name="players">The player service.</param>
         /// <param name="packet">The packet to broadcast.</param>
         /// <exception cref="ArgumentNullException"><paramref name="players"/> is <see langword="null"/>.</exception>
-        public static void BroadcastPacket(this IPlayerService players, IPacket packet)
-        {
-            if (players is null)
-            {
-                throw new ArgumentNullException(nameof(players));
-            }
-
-            for (var i = 0; i < players.Count; ++i)
-            {
-                players[i].SendPacket(packet);
-            }
-        }
-
-        /// <summary>
-        /// Broadcasts the given <paramref name="packet"/> to all active players.
-        /// </summary>
-        /// <param name="players">The player service.</param>
-        /// <param name="packet">The packet to broadcast.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="players"/> is <see langword="null"/>.</exception>
-        public static void BroadcastPacket<TPacket>(this IPlayerService players, TPacket packet)
-            where TPacket : struct, IPacket
+        public static void BroadcastPacket<TPacket>(this IPlayerService players, TPacket packet) where TPacket : IPacket
         {
             if (players is null)
             {
