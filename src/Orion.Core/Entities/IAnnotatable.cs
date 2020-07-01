@@ -84,9 +84,6 @@ namespace Orion.Core.Entities
     /// Represents an annotatable object. Provides the base class for implementations of interfaces derived from
     /// <see cref="IAnnotatable"/>.
     /// </summary>
-    /// <remarks>
-    /// This class is thread-safe.
-    /// </remarks>
     public class AnnotatableObject : IAnnotatable
     {
         private readonly object _lock = new object();
@@ -103,17 +100,15 @@ namespace Orion.Core.Entities
 
             lock (_lock)
             {
-                if (!_annotations.TryGetValue(key, out var value))
+                if (!_annotations.TryGetValue(key, out var annotation))
                 {
-                    value = initializer is null ? default : initializer();
-                    _annotations[key] = value;
+                    annotation = initializer is null ? default : initializer();
+                    _annotations[key] = annotation;
                 }
 
-                Debug.Assert(value is TAnnotation);
-                return (TAnnotation)value;
+                Debug.Assert(annotation is TAnnotation);
+                return (TAnnotation)annotation;
             }
-
-            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

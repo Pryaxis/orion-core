@@ -50,15 +50,15 @@ namespace Orion.Core.Events.World.Tiles
         }
 
         /// <summary>
-        /// Gets the block ID.
+        /// Gets the block ID being placed.
         /// </summary>
-        /// <value>The block ID.</value>
+        /// <value>The block ID being placed.</value>
         public BlockId Id { get; }
 
         /// <summary>
-        /// Gets the block style.
+        /// Gets the block style being placed.
         /// </summary>
-        /// <value>The block style.</value>
+        /// <value>The block style being placed.</value>
         public int Style { get; }
 
         /// <summary>

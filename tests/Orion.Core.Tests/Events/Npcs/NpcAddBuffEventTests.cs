@@ -24,7 +24,7 @@ using Xunit;
 
 namespace Orion.Core.Events.Npcs
 {
-    public class NpcBuffEventTests
+    public class NpcAddBuffEventTests
     {
         [Fact]
         public void Ctor_NullNpc_ThrowsArgumentNullException()
@@ -32,7 +32,7 @@ namespace Orion.Core.Events.Npcs
             var player = Mock.Of<IPlayer>();
             var buff = new Buff(BuffId.Poisoned, 60);
 
-            Assert.Throws<ArgumentNullException>(() => new NpcBuffEvent(null!, player, buff));
+            Assert.Throws<ArgumentNullException>(() => new NpcAddBuffEvent(null!, player, buff));
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace Orion.Core.Events.Npcs
             var npc = Mock.Of<INpc>();
             var buff = new Buff(BuffId.Poisoned, 60);
 
-            Assert.Throws<ArgumentNullException>(() => new NpcBuffEvent(npc, null!, buff));
+            Assert.Throws<ArgumentNullException>(() => new NpcAddBuffEvent(npc, null!, buff));
         }
 
         [Fact]
@@ -50,7 +50,7 @@ namespace Orion.Core.Events.Npcs
             var npc = Mock.Of<INpc>();
             var player = Mock.Of<IPlayer>();
             var buff = new Buff(BuffId.Poisoned, 60);
-            var evt = new NpcBuffEvent(npc, player, buff);
+            var evt = new NpcAddBuffEvent(npc, player, buff);
 
             Assert.Same(player, evt.Player);
         }
@@ -61,7 +61,7 @@ namespace Orion.Core.Events.Npcs
             var npc = Mock.Of<INpc>();
             var player = Mock.Of<IPlayer>();
             var buff = new Buff(BuffId.Poisoned, 60);
-            var evt = new NpcBuffEvent(npc, player, buff);
+            var evt = new NpcAddBuffEvent(npc, player, buff);
 
             Assert.Equal(buff, evt.Buff);
         }

@@ -23,37 +23,37 @@ using Orion.Core.Players;
 namespace Orion.Core.Events.Npcs
 {
     /// <summary>
-    /// An event that occurs when an NPC is being buffed. This event can be canceled.
+    /// An event that occurs when a buff is being added to an NPC. This event can be canceled.
     /// </summary>
-    [Event("npc-buff")]
-    public sealed class NpcBuffEvent : NpcEvent
+    [Event("npc-add-buff")]
+    public sealed class NpcAddBuffEvent : NpcEvent
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NpcBuffEvent"/> class with the specified
+        /// Initializes a new instance of the <see cref="NpcAddBuffEvent"/> class with the specified
         /// <paramref name="npc"/>, <paramref name="player"/>, and <paramref name="buff"/>.
         /// </summary>
         /// <param name="npc">The NPC being buffed.</param>
-        /// <param name="player">The player buffing the NPC.</param>
-        /// <param name="buff">The buff to buff the NPC with.</param>
+        /// <param name="player">The player adding the buff to the NPC.</param>
+        /// <param name="buff">The buff being added to the NPC.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="npc"/> or <paramref name="player"/> are <see langword="null"/>.
         /// </exception>
-        public NpcBuffEvent(INpc npc, IPlayer player, Buff buff) : base(npc)
+        public NpcAddBuffEvent(INpc npc, IPlayer player, Buff buff) : base(npc)
         {
             Player = player ?? throw new ArgumentNullException(nameof(player));
             Buff = buff;
         }
 
         /// <summary>
-        /// Gets the player buffing the NPC.
+        /// Gets the player adding the buff to the NPC.
         /// </summary>
-        /// <value>The player buffing the NPC.</value>
+        /// <value>The player adding the buff to the NPC.</value>
         public IPlayer Player { get; }
 
         /// <summary>
-        /// Gets the buff to buff the NPC with.
+        /// Gets the buff being added to the NPC.
         /// </summary>
-        /// <value>The buff to buff the NPC with.</value>
+        /// <value>The buff being added to the NPC.</value>
         public Buff Buff { get; }
     }
 }

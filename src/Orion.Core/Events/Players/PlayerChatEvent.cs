@@ -32,7 +32,7 @@ namespace Orion.Core.Events.Players
         /// </summary>
         /// <param name="player">The player chatting.</param>
         /// <param name="command">The command that the player used.</param>
-        /// <param name="message">The messag that the player sent.</param>
+        /// <param name="message">The message that the player sent.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/>, <paramref name="command"/>, or <paramref name="message"/> are
         /// <see langword="null"/>.

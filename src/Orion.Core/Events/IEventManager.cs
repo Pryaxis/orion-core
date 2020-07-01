@@ -115,7 +115,7 @@ namespace Orion.Core.Events
         /// <paramref name="obj"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
         public static void RegisterHandlers(this IEventManager eventManager, object obj, ILogger log) =>
-            InvokeHandlers(eventManager, obj, log, _registerHandler, _registerAsyncHandler);
+            DoHandlers(eventManager, obj, log, _registerHandler, _registerAsyncHandler);
 
         /// <summary>
         /// Deregisters all of the instance methods marked with <see cref="EventHandlerAttribute"/> as event handlers in
@@ -128,7 +128,7 @@ namespace Orion.Core.Events
         /// <paramref name="obj"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
         public static void DeregisterHandlers(this IEventManager eventManager, object obj, ILogger log) =>
-            InvokeHandlers(eventManager, obj, log, _deregisterHandler, _deregisterAsyncHandler);
+            DoHandlers(eventManager, obj, log, _deregisterHandler, _deregisterAsyncHandler);
 
         /// <summary>
         /// Forwards the given <paramref name="evt"/> as <paramref name="newEvt"/>.
@@ -172,7 +172,7 @@ namespace Orion.Core.Events
             }
         }
 
-        private static void InvokeHandlers(
+        private static void DoHandlers(
             IEventManager eventManager, object obj, ILogger log, MethodInfo method, MethodInfo asyncMethod)
         {
             if (eventManager is null)

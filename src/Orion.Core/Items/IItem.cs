@@ -51,7 +51,13 @@ namespace Orion.Core.Items
         /// Gets or sets the item's damage.
         /// </summary>
         /// <value>The item's damage.</value>
-        public int Damage { get; set; }
+        public short Damage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item's use time: i.e., the number of ticks before which the item can be used again.
+        /// </summary>
+        /// <value>The item's use time.</value>
+        public short UseTime { get; set; }
 
         /// <summary>
         /// Sets the item's <paramref name="id"/>. This will update the item accordingly. 

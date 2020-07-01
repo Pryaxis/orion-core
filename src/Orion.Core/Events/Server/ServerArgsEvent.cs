@@ -28,8 +28,8 @@ namespace Orion.Core.Events.Server
     [Event("server-args", IsCancelable = false)]
     public sealed class ServerArgsEvent : Event
     {
-        private readonly ISet<string> _flags = new HashSet<string>();
-        private readonly IDictionary<string, string> _values = new Dictionary<string, string>();
+        private readonly HashSet<string> _flags = new HashSet<string>();
+        private readonly Dictionary<string, string> _values = new Dictionary<string, string>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServerArgsEvent"/> with the specified <paramref name="args"/>.
