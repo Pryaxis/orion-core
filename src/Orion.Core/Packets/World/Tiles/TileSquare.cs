@@ -208,6 +208,7 @@ namespace Orion.Core.Packets.World.Tiles
             var hasWallColor = tile.WallColor != PaintColor.None;
 
             ref var header = ref Unsafe.As<byte, ushort>(ref span.At(0));
+            header = 0;
             var index = 2;
 
             if (tile.IsBlockActive)   /* */ header |= IsBlockActiveMask;
