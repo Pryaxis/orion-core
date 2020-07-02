@@ -40,7 +40,7 @@ namespace Orion.Core.Events.World.Tiles
         /// <param name="liquidAmount">The tile's liquid amount.</param>
         /// <param name="liquid">The tile's liquid.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
-        public TileLiquidEvent(IWorld world, IPlayer? player, int x, int y, byte liquidAmount, Liquid liquid)
+        public TileLiquidEvent(IWorld world, IPlayer? player, int x, int y, byte liquidAmount, LiquidType liquid)
             : base(world, player, x, y)
         {
             LiquidAmount = liquidAmount;
@@ -57,6 +57,6 @@ namespace Orion.Core.Events.World.Tiles
         /// Gets the tile's liquid.
         /// </summary>
         /// <value>The tile's liquid.</value>
-        public Liquid Liquid { get; }
+        public LiquidType Liquid { get; }
     }
 }

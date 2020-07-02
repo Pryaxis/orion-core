@@ -200,13 +200,13 @@ namespace Orion.Core.World.Tiles
         }
 
         [Fact]
-        public void Liquid_Set_Get()
+        public void LiquidType_Set_Get()
         {
             var tile = new Tile();
 
-            tile.Liquid = Liquid.Honey;
+            tile.LiquidType = LiquidType.Honey;
 
-            Assert.Equal(Liquid.Honey, tile.Liquid);
+            Assert.Equal(LiquidType.Honey, tile.LiquidType);
         }
 
         [Fact]

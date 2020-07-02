@@ -54,21 +54,21 @@ namespace Orion.Core.World.Tiles
         private const uint ShouldSkipLiquidMask /* */ = 0b_00100000_00000000_00000000_00000000;
 
         /// <summary>
-        /// Gets or sets the block ID.
+        /// Gets or sets the tile's block ID.
         /// </summary>
-        /// <value>The block ID.</value>
+        /// <value>The tile's block ID.</value>
         [field: FieldOffset(0)] public BlockId BlockId { get; set; }
 
         /// <summary>
-        /// Gets or sets the wall ID.
+        /// Gets or sets the tile's wall ID.
         /// </summary>
-        /// <value>The wall ID.</value>
+        /// <value>The tile's wall ID.</value>
         [field: FieldOffset(2)] public WallId WallId { get; set; }
 
         /// <summary>
-        /// Gets or sets the liquid amount.
+        /// Gets or sets the tile's liquid amount.
         /// </summary>
-        /// <value>The liquid amount.</value>
+        /// <value>The tile's liquid amount.</value>
         [field: FieldOffset(4)] public byte LiquidAmount { get; set; }
 
         /// <summary>
@@ -90,9 +90,9 @@ namespace Orion.Core.World.Tiles
         [field: FieldOffset(9)] public uint Header { get; set; }
 
         /// <summary>
-        /// Gets or sets the block color.
+        /// Gets or sets the block's color.
         /// </summary>
-        /// <value>The block color.</value>
+        /// <value>The block's color.</value>
         public PaintColor BlockColor
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -173,9 +173,9 @@ namespace Orion.Core.World.Tiles
         }
 
         /// <summary>
-        /// Gets or sets the slope.
+        /// Gets or sets the block's slope.
         /// </summary>
-        /// <value>The slope.</value>
+        /// <value>The block's slope.</value>
         public Slope Slope
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -186,9 +186,9 @@ namespace Orion.Core.World.Tiles
         }
 
         /// <summary>
-        /// Gets or sets the wall color.
+        /// Gets or sets the wall's color.
         /// </summary>
-        /// <value>The wall color.</value>
+        /// <value>The wall's color.</value>
         public PaintColor WallColor
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -199,13 +199,13 @@ namespace Orion.Core.World.Tiles
         }
 
         /// <summary>
-        /// Gets or sets the liquid.
+        /// Gets or sets the tile's liquid type.
         /// </summary>
-        /// <value>The liquid.</value>
-        public Liquid Liquid
+        /// <value>The tile's liquid type.</value>
+        public LiquidType LiquidType
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (Liquid)((Header & LiquidMask) >> LiquidShift);
+            readonly get => (LiquidType)((Header & LiquidMask) >> LiquidShift);
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => Header = (Header & ~LiquidMask) | (((uint)value << LiquidShift) & LiquidMask);

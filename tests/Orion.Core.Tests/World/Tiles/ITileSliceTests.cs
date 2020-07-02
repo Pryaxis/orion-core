@@ -34,7 +34,7 @@ namespace Orion.Core.World.Tiles
         [Theory]
         [InlineData(-1)]
         [InlineData(10)]
-        public void Slice_OutOfRangeStartX_ThrowsArgumentOutOfRangeException(int startX)
+        public void Slice_StartXOutOfRange_ThrowsArgumentOutOfRangeException(int startX)
         {
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 10 && t.Height == 10);
 
@@ -44,7 +44,7 @@ namespace Orion.Core.World.Tiles
         [Theory]
         [InlineData(-1)]
         [InlineData(10)]
-        public void Slice_OutOfRangeStartY_ThrowsArgumentOutOfRangeException(int startY)
+        public void Slice_StartYOutOfRange_ThrowsArgumentOutOfRangeException(int startY)
         {
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 10 && t.Height == 10);
 
@@ -54,7 +54,7 @@ namespace Orion.Core.World.Tiles
         [Theory]
         [InlineData(-1)]
         [InlineData(6)]
-        public void Slice_OutOfRangeWidth_ThrowsArgumentOutOfRangeException(int width)
+        public void Slice_WidthOutOfRange_ThrowsArgumentOutOfRangeException(int width)
         {
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 10 && t.Height == 10);
 
@@ -64,7 +64,7 @@ namespace Orion.Core.World.Tiles
         [Theory]
         [InlineData(-1)]
         [InlineData(6)]
-        public void Slice_OutOfRangeHeight_ThrowsArgumentOutOfRangeException(int height)
+        public void Slice_HeightOutOfRange_ThrowsArgumentOutOfRangeException(int height)
         {
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 10 && t.Height == 10);
 

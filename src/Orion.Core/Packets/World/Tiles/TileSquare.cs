@@ -193,7 +193,7 @@ namespace Orion.Core.Packets.World.Tiles
             if (hasLiquid)
             {
                 tile.LiquidAmount = span[index++];
-                tile.Liquid = (Liquid)span[index++];
+                tile.LiquidType = (LiquidType)span[index++];
             }
 
             return index;
@@ -259,7 +259,7 @@ namespace Orion.Core.Packets.World.Tiles
             if (hasLiquid)
             {
                 span[index++] = tile.LiquidAmount;
-                span[index++] = (byte)tile.Liquid;
+                span[index++] = (byte)tile.LiquidType;
 
                 header |= HasLiquidMask;
             }

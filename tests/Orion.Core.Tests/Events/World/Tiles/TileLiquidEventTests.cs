@@ -31,7 +31,7 @@ namespace Orion.Core.Events.World.Tiles
         {
             var player = Mock.Of<IPlayer>();
 
-            Assert.Throws<ArgumentNullException>(() => new TileLiquidEvent(null!, player, 256, 100, 255, Liquid.Honey));
+            Assert.Throws<ArgumentNullException>(() => new TileLiquidEvent(null!, player, 256, 100, 255, LiquidType.Honey));
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace Orion.Core.Events.World.Tiles
         {
             var world = Mock.Of<IWorld>();
             var player = Mock.Of<IPlayer>();
-            var evt = new TileLiquidEvent(world, player, 256, 100, 255, Liquid.Honey);
+            var evt = new TileLiquidEvent(world, player, 256, 100, 255, LiquidType.Honey);
 
             Assert.Equal(255, evt.LiquidAmount);
         }
@@ -49,9 +49,9 @@ namespace Orion.Core.Events.World.Tiles
         {
             var world = Mock.Of<IWorld>();
             var player = Mock.Of<IPlayer>();
-            var evt = new TileLiquidEvent(world, player, 256, 100, 255, Liquid.Honey);
+            var evt = new TileLiquidEvent(world, player, 256, 100, 255, LiquidType.Honey);
 
-            Assert.Equal(Liquid.Honey, evt.Liquid);
+            Assert.Equal(LiquidType.Honey, evt.Liquid);
         }
     }
 }

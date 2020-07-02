@@ -20,7 +20,7 @@ namespace Orion.Core.World.Tiles
     /// <summary>
     /// Specifies a liquid.
     /// </summary>
-    public enum Liquid : byte
+    public enum LiquidType : byte
     {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         Water = 0,
