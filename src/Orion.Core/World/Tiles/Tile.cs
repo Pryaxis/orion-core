@@ -17,6 +17,7 @@
 
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Destructurama.Attributed;
 
 namespace Orion.Core.World.Tiles
 {
@@ -96,6 +97,7 @@ namespace Orion.Core.World.Tiles
         /// Gets or sets the tile's header.
         /// </summary>
         /// <value>The tile's header.</value>
+        [NotLogged]
         [field: FieldOffset(9)] public uint Header { get; set; }
 
         /// <summary>

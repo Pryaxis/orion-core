@@ -139,6 +139,7 @@ namespace Orion.Core.World.Tiles
             public ref Tile this[int x, int y] => ref _tiles[_startX + x, _startY + y];
 
             public int Width { get; }
+
             public int Height { get; }
         }
     }

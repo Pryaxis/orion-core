@@ -19,6 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
+using Destructurama.Attributed;
 
 namespace Orion.Core.Items
 {
@@ -68,6 +69,7 @@ namespace Orion.Core.Items
         /// Gets a value indicating whether the item stack is empty.
         /// </summary>
         /// <value><see langword="true"/> if the item stack is empty; otherwise, <see langword="false"/>.</value>
+        [NotLogged]
         public bool IsEmpty => Id == ItemId.None || StackSize == 0;
 
         /// <inheritdoc/>

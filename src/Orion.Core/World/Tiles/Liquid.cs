@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using Destructurama.Attributed;
 
 namespace Orion.Core.World.Tiles
 {
@@ -58,6 +59,7 @@ namespace Orion.Core.World.Tiles
         /// Gets a value indicating whether the liquid is empty.
         /// </summary>
         /// <value><see langword="true"/> if the liquid is empty; otherwise, <see langword="false"/>.</value>
+        [NotLogged]
         public bool IsEmpty => Amount == 0;
 
         /// <inheritdoc/>

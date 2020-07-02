@@ -62,5 +62,18 @@ namespace Orion.Core.World
         /// </summary>
         /// <value>The world's difficulty.</value>
         public WorldDifficulty Difficulty { get; set; }
+
+        /// <summary>
+        /// Gets or sets the base NPC spawn rate. This is inversely proportional to the probability of an NPC spawning
+        /// every tick.
+        /// </summary>
+        /// <value>The base NPC spawn rate.</value>
+        public int BaseNpcSpawnRate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the base NPC spawn limit.
+        /// </summary>
+        /// <value>The base NPC spawn limit.</value>
+        public int BaseNpcSpawnLimit { get; set; }
     }
 }
