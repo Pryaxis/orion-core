@@ -25,9 +25,6 @@ namespace Orion.Core.Utils
     /// <summary>
     /// Represents a three byte component color.
     /// </summary>
-    /// <remarks>
-    /// This structure is sized to allow efficient passing.
-    /// </remarks>
     [StructLayout(LayoutKind.Explicit, Size = 4)]
     public readonly struct Color3 : IEquatable<Color3>
     {

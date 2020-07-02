@@ -25,6 +25,7 @@ namespace Orion.Core.Utils
         [Fact]
         public void Cctor()
         {
+            _ = Color3.Black;
             _ = Color3.White;
         }
 

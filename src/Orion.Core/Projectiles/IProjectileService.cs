@@ -43,9 +43,9 @@ namespace Orion.Core.Projectiles
         /// </summary>
         /// <param name="id">The projectile ID to spawn.</param>
         /// <param name="position">The position to spawn the projectile at.</param>
-        /// <param name="velocity">The projectile velocity.</param>
-        /// <param name="damage">The projectile damage.</param>
-        /// <param name="knockback">The projectile knockback.</param>
+        /// <param name="velocity">The projectile's velocity.</param>
+        /// <param name="damage">The projectile's damage.</param>
+        /// <param name="knockback">The projectile's knockback.</param>
         /// <returns>The resulting projectile.</returns>
         public IProjectile Spawn(ProjectileId id, Vector2f position, Vector2f velocity, int damage, float knockback);
     }
