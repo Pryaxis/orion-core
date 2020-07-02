@@ -49,26 +49,6 @@ namespace Orion.Core.Players
         }
 
         [Fact]
-        public void BroadcastPacket_Struct_NullPlayers_ThrowsArgumentNullException()
-        {
-            var packet = new TestStructPacket();
-
-            Assert.Throws<ArgumentNullException>(() => IPlayerServiceExtensions.BroadcastPacket(null!, packet));
-        }
-
-        [Fact]
-        public void BroadcastPacket_Struct()
-        {
-            var players = Mock.Of<IPlayerService>(p => p.Count == 1 && p[0] == Mock.Of<IPlayer>());
-            var packet = new TestStructPacket();
-
-            players.BroadcastPacket(packet);
-
-            Mock.Get(players[0])
-                .Verify(p => p.SendPacket(packet));
-        }
-
-        [Fact]
         public void BroadcastMessage_NullPlayers_ThrowsArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(
@@ -132,14 +112,6 @@ namespace Orion.Core.Players
             players.BroadcastTiles(123, 456, tiles);
 
             Mock.Get(players[0]).VerifyAll();
-        }
-
-        private struct TestStructPacket : IPacket
-        {
-            public PacketId Id => throw new NotImplementedException();
-
-            public int ReadBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
-            public int WriteBody(Span<byte> span, PacketContext context) => throw new NotImplementedException();
         }
     }
 }

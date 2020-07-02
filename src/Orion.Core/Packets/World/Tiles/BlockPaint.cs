@@ -17,6 +17,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Orion.Core.Utils;
 using Orion.Core.World.Tiles;
 
 namespace Orion.Core.Packets.World.Tiles

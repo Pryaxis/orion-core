@@ -19,6 +19,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Orion.Core.Items;
+using Orion.Core.Utils;
 
 namespace Orion.Core.Packets.DataStructures.TileEntities
 {

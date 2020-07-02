@@ -15,29 +15,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using Xunit;
 
-namespace Orion.Core.Packets
+namespace Orion.Core.Utils
 {
-    public class StructExtensionsTests
+    /// <summary>
+    /// Provides extensions for structures.
+    /// </summary>
+    internal static class StructExtensions
     {
-        [Fact]
-        public void AsByte()
-        {
-            var testStruct = new TestStruct();
-
-            Unsafe.WriteUnaligned(ref testStruct.AsByte(), 1234);
-
-            Assert.Equal(1234, testStruct.Value);
-        }
-
-        [StructLayout(LayoutKind.Explicit)]
-        private struct TestStruct
-        {
-            [FieldOffset(0)] public int Value;
-            [FieldOffset(4)] public int Value2;
-        }
+        /// <summary>
+        /// Reinterprets the value reference as a reference to a byte.
+        /// </summary>
+        /// <typeparam name="T">The type of value.</typeparam>
+        /// <param name="value">The value reference.</param>
+        /// <returns>The value reference as a reference to a byte.</returns>
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ref byte AsByte<T>(ref this T value) where T : struct => ref Unsafe.As<T, byte>(ref value);
     }
 }

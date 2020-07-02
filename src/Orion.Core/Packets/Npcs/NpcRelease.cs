@@ -18,6 +18,7 @@
 using System;
 using System.Runtime.InteropServices;
 using Orion.Core.Npcs;
+using Orion.Core.Utils;
 
 namespace Orion.Core.Packets.Npcs
 {

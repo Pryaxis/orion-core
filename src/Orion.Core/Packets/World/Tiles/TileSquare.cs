@@ -19,6 +19,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Orion.Core.Packets.DataStructures;
+using Orion.Core.Utils;
 using Orion.Core.World.Tiles;
 
 namespace Orion.Core.Packets.World.Tiles

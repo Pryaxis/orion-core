@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Xunit;
 
-namespace Orion.Core.Packets
+namespace Orion.Core.Utils
 {
     public class SpanExtensionsTests
     {

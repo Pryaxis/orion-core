@@ -106,7 +106,7 @@ namespace Orion.Core.Players
         /// Disconnects the player for the given <paramref name="reason"/>.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <param name="reason">The reason for the disconnect.</param>
+        /// <param name="reason">The disconnection reason.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="reason"/> are <see langword="null"/>.
         /// </exception>

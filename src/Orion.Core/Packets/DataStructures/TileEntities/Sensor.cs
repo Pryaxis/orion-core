@@ -17,6 +17,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Orion.Core.Utils;
 using Orion.Core.World.TileEntities;
 
 namespace Orion.Core.Packets.DataStructures.TileEntities

@@ -21,7 +21,7 @@ using Xunit;
 
 namespace Orion.Core.Entities
 {
-    // These tests depend on Terraria state: `IsDebuff`.
+    // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     public class BuffIdTests
     {

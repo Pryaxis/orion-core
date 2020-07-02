@@ -21,6 +21,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
+using Orion.Core.Utils;
 
 namespace Orion.Core.Packets.DataStructures
 {

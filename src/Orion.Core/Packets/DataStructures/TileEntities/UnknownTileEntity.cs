@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Orion.Core.Utils;
 
 namespace Orion.Core.Packets.DataStructures.TileEntities
 {

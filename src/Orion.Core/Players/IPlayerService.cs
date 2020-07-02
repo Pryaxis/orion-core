@@ -63,6 +63,7 @@ namespace Orion.Core.Players
         /// <summary>
         /// Broadcasts the given <paramref name="packet"/> to all active players.
         /// </summary>
+        /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="players">The player service.</param>
         /// <param name="packet">The packet to broadcast.</param>
         /// <exception cref="ArgumentNullException"><paramref name="players"/> is <see langword="null"/>.</exception>

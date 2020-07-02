@@ -22,10 +22,10 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Orion.Core.Packets
+namespace Orion.Core.Utils
 {
     /// <summary>
-    /// Provides extension for the <see cref="Span{T}"/> structure.
+    /// Provides extensions for the <see cref="Span{T}"/> structure.
     /// </summary>
     internal static class SpanExtensions
     {
@@ -116,7 +116,7 @@ namespace Orion.Core.Packets
             for (; index < 5; ++index)
             {
                 var b = span[index];
-                value |= (b & 0x7f) << (7 * index);
+                value |= (b & 0x7f) << 7 * index;
 
                 if (b < 0x80)
                 {
