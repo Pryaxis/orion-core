@@ -35,6 +35,18 @@ namespace Orion.Core.Projectiles
         public ProjectileId Id { get; }
 
         /// <summary>
+        /// Gets or sets the projectile's damage.
+        /// </summary>
+        /// <value>The projectile's damage.</value>
+        public int Damage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the projectile's knockback.
+        /// </summary>
+        /// <value>The projectile's knockback.</value>
+        public float Knockback { get; set; }
+
+        /// <summary>
         /// Gets the projectile's AI values.
         /// </summary>
         /// <value>The AI values.</value>
