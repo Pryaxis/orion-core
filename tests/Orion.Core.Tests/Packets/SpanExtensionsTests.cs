@@ -59,7 +59,7 @@ namespace Orion.Core.Packets
             Assert.Throws<ArgumentException>(() =>
             {
                 var span = bytes.AsSpan();
-                return span.Read(out string _);
+                return span.Read(out var _);
             });
         }
 
@@ -86,7 +86,7 @@ namespace Orion.Core.Packets
 
             var numBytes = span.Write(str);
 
-            Assert.Equal(numBytes, span.Read(out string str2));
+            Assert.Equal(numBytes, span.Read(out var str2));
 
             Assert.Equal(str, str2);
         }

@@ -141,7 +141,7 @@ namespace Orion.Core.Packets.DataStructures
 
             var numBytes = text.Write(span);
 
-            Assert.Equal(numBytes, NetworkText.Read(span, out NetworkText text2));
+            Assert.Equal(numBytes, NetworkText.Read(span, out var text2));
 
             Assert.Equal(text, text2);
         }

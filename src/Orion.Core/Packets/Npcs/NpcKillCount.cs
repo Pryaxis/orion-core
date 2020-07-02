@@ -34,7 +34,7 @@ namespace Orion.Core.Packets.Npcs
         /// </summary>
         /// <value>The NPC ID.</value>
         [field: FieldOffset(0)] public NpcId Id { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the NPC ID's kill count.
         /// </summary>
