@@ -25,7 +25,11 @@ namespace Orion.Core.Packets.World.Chests
     public class ChestNameTests
     {
         private readonly byte[] _serverBytes = { 9, 0, 69, 5, 0, 0, 1, 100, 0 };
-        private readonly byte[] _clientBytes = { 18, 0, 69, 5, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
+
+        private readonly byte[] _clientBytes =
+        {
+            18, 0, 69, 5, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97
+        };
 
         [Fact]
         public void ChestIndex_Set_Get()

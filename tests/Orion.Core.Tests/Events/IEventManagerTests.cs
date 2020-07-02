@@ -193,12 +193,12 @@ namespace Orion.Core.Events
         }
 
         [Event("test")]
-        private class TestEvent : Event
+        private sealed class TestEvent : Event
         {
             public int Value { get; set; }
         }
 
-        private class TestClass
+        private sealed class TestClass
         {
             [EventHandler("test")]
             public void OnTest(TestEvent evt) => evt.Value = 100;

@@ -59,7 +59,7 @@ namespace Orion.Core
             Assert.Same(log, extension.Log);
         }
 
-        public class TestOrionPlugin : OrionPlugin
+        public sealed class TestOrionPlugin : OrionPlugin
         {
             public TestOrionPlugin(IServer server, ILogger log) : base(server, log)
             {

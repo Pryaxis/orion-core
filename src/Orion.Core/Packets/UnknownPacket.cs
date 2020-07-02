@@ -22,7 +22,7 @@ namespace Orion.Core.Packets
     /// <summary>
     /// An unknown packet.
     /// </summary>
-    public class UnknownPacket : IPacket
+    public sealed class UnknownPacket : IPacket
     {
         private readonly byte[] _data;
 

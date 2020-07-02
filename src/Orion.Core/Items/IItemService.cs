@@ -37,12 +37,12 @@ namespace Orion.Core.Items
     public interface IItemService : IReadOnlyList<IItem>
     {
         /// <summary>
-        /// Spawns the given <paramref name="itemStack"/> at the specified <paramref name="position"/>. Returns the
-        /// resulting item.
+        /// Spawns the given <paramref name="item"/> at the specified <paramref name="position"/>. Returns the resulting
+        /// item.
         /// </summary>
-        /// <param name="itemStack">The item stack to spawn.</param>
+        /// <param name="item">The item to spawn.</param>
         /// <param name="position">The position to spawn the item at.</param>
         /// <returns>The resulting item.</returns>
-        public IItem Spawn(ItemStack itemStack, Vector2f position);
+        public IItem Spawn(ItemStack item, Vector2f position);
     }
 }

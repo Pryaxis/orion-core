@@ -184,7 +184,8 @@ namespace Orion.Core.Packets.DataStructures
         }
 
         /// <summary>
-        /// Reads a <see cref="NetworkText"/> instance from the given <paramref name="span"/>. Returns the number of bytes read.
+        /// Reads a <see cref="NetworkText"/> instance from the given <paramref name="span"/>. Returns the number of
+        /// bytes read.
         /// </summary>
         /// <param name="span">The span to read from.</param>
         /// <param name="value">The resulting <see cref="NetworkText"/> instance.</param>
