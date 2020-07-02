@@ -77,7 +77,9 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         protected override int WriteBody(Span<byte> span)
         {
             ref var flags = ref Unsafe.As<byte, Flags8>(ref span.At(0));
+            flags = default;
             ref var flags2 = ref Unsafe.As<byte, Flags8>(ref span.At(1));
+            flags2 = default;
             var length = 2;
 
             for (var i = 0; i < 8; ++i)
