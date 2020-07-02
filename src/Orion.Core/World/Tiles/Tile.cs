@@ -213,9 +213,9 @@ namespace Orion.Core.World.Tiles
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the tile has green wire.
+        /// Gets or sets a value indicating whether the tile has yellow wire.
         /// </summary>
-        /// <value><see langword="true"/> if the tile has green wire; otherwise, <see langword="false"/>.</value>
+        /// <value><see langword="true"/> if the tile has yellow wire; otherwise, <see langword="false"/>.</value>
         public bool HasYellowWire
         {
             readonly get => GetFlag(HasYellowWireMask);

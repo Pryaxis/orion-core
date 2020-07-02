@@ -18,7 +18,7 @@
 namespace Orion.Core.World.Tiles
 {
     /// <summary>
-    /// Specifies a block's shape.
+    /// Specifies a block shape.
     /// </summary>
     public enum BlockShape : byte
     {

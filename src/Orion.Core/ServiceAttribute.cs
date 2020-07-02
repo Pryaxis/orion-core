@@ -36,9 +36,9 @@ namespace Orion.Core
         }
 
         /// <summary>
-        /// Gets the service scope.
+        /// Gets the service's scope.
         /// </summary>
-        /// <value>The service scope.</value>
+        /// <value>The service's scope.</value>
         public ServiceScope Scope { get; }
     }
 

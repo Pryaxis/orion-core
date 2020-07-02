@@ -57,9 +57,9 @@ namespace Orion.Core
         }
 
         /// <summary>
-        /// Gets or sets the binding priority.
+        /// Gets or sets the binding's priority.
         /// </summary>
-        /// <value>The binding priority.</value>
+        /// <value>The binding's priority.</value>
         public BindingPriority Priority { get; set; } = BindingPriority.Normal;
     }
 
