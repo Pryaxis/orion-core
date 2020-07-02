@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Core.World.TileEntities
+namespace Orion.Core.Packets.DataStructures.TileEntities
 {
     /// <summary>
     /// Specifies a tile entity ID.

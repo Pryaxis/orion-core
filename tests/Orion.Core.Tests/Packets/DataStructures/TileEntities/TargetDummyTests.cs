@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics.CodeAnalysis;
-using Orion.Core.World.TileEntities;
 using Xunit;
 
 namespace Orion.Core.Packets.DataStructures.TileEntities

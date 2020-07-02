@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Orion.Core.World.TileEntities
+namespace Orion.Core.Packets.DataStructures.TileEntities
 {
     // These tests depend on Terraria state: `AllTileEntityIdsCovered`.
     [Collection("TerrariaTestsCollection")]

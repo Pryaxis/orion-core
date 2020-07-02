@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Orion.Core.World.TileEntities;
 
 namespace Orion.Core.Packets.DataStructures.TileEntities
 {

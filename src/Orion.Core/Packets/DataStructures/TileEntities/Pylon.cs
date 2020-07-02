@@ -17,7 +17,6 @@
 
 
 using System;
-using Orion.Core.World.TileEntities;
 
 namespace Orion.Core.Packets.DataStructures.TileEntities
 {

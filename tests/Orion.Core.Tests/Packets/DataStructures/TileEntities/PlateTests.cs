@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Orion.Core.Items;
-using Orion.Core.World.TileEntities;
 using Xunit;
 
 namespace Orion.Core.Packets.DataStructures.TileEntities
