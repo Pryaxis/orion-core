@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using Destructurama.Attributed;
 
 namespace Orion.Core.Entities
 {
@@ -85,18 +86,21 @@ namespace Orion.Core.Entities
         /// Gets the buff duration.
         /// </summary>
         /// <value>The buff duration.</value>
+        [NotLogged]
         public TimeSpan Duration => TimeSpan.FromSeconds(Ticks / 60.0);
 
         /// <summary>
         /// Gets a value indicating whether the buff is empty.
         /// </summary>
         /// <value><see langword="true"/> if the buff is empty; otherwise, <see langword="false"/>.</value>
+        [NotLogged]
         public bool IsEmpty => Id == BuffId.None || Ticks == 0;
 
         /// <summary>
         /// Gets a value indicating whether the buff is a debuff.
         /// </summary>
         /// <value><see langword="true"/> if the buff is a debuff; otherwise, <see langword="false"/>.</value>
+        [NotLogged]
         public bool IsDebuff => Id.IsDebuff();
 
         /// <inheritdoc/>
