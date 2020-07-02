@@ -44,16 +44,6 @@ namespace Orion.Core.World.Tiles
         }
 
         [Fact]
-        public void LiquidAmount_Set_Get()
-        {
-            var tile = new Tile();
-
-            tile.LiquidAmount = 255;
-
-            Assert.Equal(255, tile.LiquidAmount);
-        }
-
-        [Fact]
         public void Liquid_Set_Get()
         {
             var tile = new Tile();
@@ -83,6 +73,30 @@ namespace Orion.Core.World.Tiles
             Assert.Equal(5678, tile.BlockFrameY);
         }
 
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsBlockActive_Set_Get(bool value)
+        {
+            var tile = new Tile();
+
+            tile.IsBlockActive = value;
+
+            Assert.Equal(value, tile.IsBlockActive);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsBlockActuated_Set_Get(bool value)
+        {
+            var tile = new Tile();
+
+            tile.IsBlockActuated = value;
+
+            Assert.Equal(value, tile.IsBlockActuated);
+        }
+
         [Fact]
         public void BlockColor_Set_Get()
         {
@@ -94,97 +108,19 @@ namespace Orion.Core.World.Tiles
         }
 
         [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void IsBlockActive_Set_Get(bool isBlockActive)
+        [InlineData(BlockShape.Normal)]
+        [InlineData(BlockShape.Halved)]
+        [InlineData(BlockShape.TopRight)]
+        [InlineData(BlockShape.TopLeft)]
+        [InlineData(BlockShape.BottomRight)]
+        [InlineData(BlockShape.BottomLeft)]
+        public void BlockShape_Set_Get(BlockShape value)
         {
             var tile = new Tile();
 
-            tile.IsBlockActive = isBlockActive;
+            tile.BlockShape = value;
 
-            Assert.Equal(isBlockActive, tile.IsBlockActive);
-        }
-
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void IsBlockActuated_Set_Get(bool isBlockActuated)
-        {
-            var tile = new Tile();
-
-            tile.IsBlockActuated = isBlockActuated;
-
-            Assert.Equal(isBlockActuated, tile.IsBlockActuated);
-        }
-
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void HasRedWire_Set_Get(bool hasRedWire)
-        {
-            var tile = new Tile();
-
-            tile.HasRedWire = hasRedWire;
-
-            Assert.Equal(hasRedWire, tile.HasRedWire);
-        }
-
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void HasBlueWire_Set_Get(bool hasBlueWire)
-        {
-            var tile = new Tile();
-
-            tile.HasBlueWire = hasBlueWire;
-
-            Assert.Equal(hasBlueWire, tile.HasBlueWire);
-        }
-
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void HasGreenWire_Set_Get(bool hasGreenWire)
-        {
-            var tile = new Tile();
-
-            tile.HasGreenWire = hasGreenWire;
-
-            Assert.Equal(hasGreenWire, tile.HasGreenWire);
-        }
-
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void IsBlockHalved_Set_Get(bool isBlockHalved)
-        {
-            var tile = new Tile();
-
-            tile.IsBlockHalved = isBlockHalved;
-
-            Assert.Equal(isBlockHalved, tile.IsBlockHalved);
-        }
-
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void HasActuator_Set_Get(bool hasActuator)
-        {
-            var tile = new Tile();
-
-            tile.HasActuator = hasActuator;
-
-            Assert.Equal(hasActuator, tile.HasActuator);
-        }
-
-        [Fact]
-        public void Slope_Set_Get()
-        {
-            var tile = new Tile();
-
-            tile.Slope = Slope.TopLeft;
-
-            Assert.Equal(Slope.TopLeft, tile.Slope);
+            Assert.Equal(value, tile.BlockShape);
         }
 
         [Fact]
@@ -200,57 +136,61 @@ namespace Orion.Core.World.Tiles
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void HasYellowWire_Set_Get(bool hasYellowWire)
+        public void HasRedWire_Set_Get(bool value)
         {
             var tile = new Tile();
 
-            tile.HasYellowWire = hasYellowWire;
+            tile.HasRedWire = value;
 
-            Assert.Equal(hasYellowWire, tile.HasYellowWire);
-        }
-
-        [Fact]
-        public void LiquidType_Set_Get()
-        {
-            var tile = new Tile();
-
-            tile.LiquidType = LiquidType.Honey;
-
-            Assert.Equal(LiquidType.Honey, tile.LiquidType);
-        }
-
-        [Fact]
-        public void BlockFrameNumber_Set_Get()
-        {
-            var tile = new Tile();
-
-            tile.BlockFrameNumber = 7;
-
-            Assert.Equal(7, tile.BlockFrameNumber);
+            Assert.Equal(value, tile.HasRedWire);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsCheckingLiquid_Set_Get(bool isCheckingLiquid)
+        public void HasBlueWire_Set_Get(bool value)
         {
             var tile = new Tile();
 
-            tile.IsCheckingLiquid = isCheckingLiquid;
+            tile.HasBlueWire = value;
 
-            Assert.Equal(isCheckingLiquid, tile.IsCheckingLiquid);
+            Assert.Equal(value, tile.HasBlueWire);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void ShouldSkipLiquid_Set_Get(bool shouldSkipLiquid)
+        public void HasGreenWire_Set_Get(bool value)
         {
             var tile = new Tile();
 
-            tile.ShouldSkipLiquid = shouldSkipLiquid;
+            tile.HasGreenWire = value;
 
-            Assert.Equal(shouldSkipLiquid, tile.ShouldSkipLiquid);
+            Assert.Equal(value, tile.HasGreenWire);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void HasYellowWire_Set_Get(bool value)
+        {
+            var tile = new Tile();
+
+            tile.HasYellowWire = value;
+
+            Assert.Equal(value, tile.HasYellowWire);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void HasActuator_Set_Get(bool value)
+        {
+            var tile = new Tile();
+
+            tile.HasActuator = value;
+
+            Assert.Equal(value, tile.HasActuator);
         }
     }
 }

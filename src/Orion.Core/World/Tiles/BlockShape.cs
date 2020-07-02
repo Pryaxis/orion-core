@@ -18,16 +18,17 @@
 namespace Orion.Core.World.Tiles
 {
     /// <summary>
-    /// Specifies a block's slope.
+    /// Specifies a block's shape.
     /// </summary>
-    public enum Slope : byte
+    public enum BlockShape : byte
     {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        None = 0,
-        TopRight = 1,
-        TopLeft = 2,
-        BottomRight = 3,
-        BottomLeft = 4
+        Normal = 0,
+        Halved = 1,
+        TopRight = 2,
+        TopLeft = 3,
+        BottomRight = 4,
+        BottomLeft = 5
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

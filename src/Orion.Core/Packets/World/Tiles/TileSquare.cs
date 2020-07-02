@@ -148,24 +148,19 @@ namespace Orion.Core.Packets.World.Tiles
             var index = 2;
 
             tile.IsBlockActive        /* */ = (header & IsBlockActiveMask) != 0;
-            var hasWall               /* */ = (header & HasWallMask) != 0;
-            var hasLiquid             /* */ = (header & HasLiquidMask) != 0;
             tile.HasRedWire           /* */ = (header & HasRedWireMask) != 0;
-            tile.IsBlockHalved        /* */ = (header & IsBlockHalvedMask) != 0;
             tile.HasActuator          /* */ = (header & HasActuatorMask) != 0;
             tile.IsBlockActuated      /* */ = (header & IsBlockActuatedMask) != 0;
             tile.HasBlueWire          /* */ = (header & HasBlueWireMask) != 0;
             tile.HasGreenWire         /* */ = (header & HasGreenWireMask) != 0;
-            var hasBlockColor         /* */ = (header & HasBlockColorMask) != 0;
-            var hasWallColor          /* */ = (header & HasWallColorMask) != 0;
             tile.HasYellowWire        /* */ = (header & HasYellowWireMask) != 0;
 
-            if (hasBlockColor)
+            if ((header & HasBlockColorMask) != 0)
             {
                 tile.BlockColor = (PaintColor)span[index++];
             }
 
-            if (hasWallColor)
+            if ((header & HasWallColorMask) != 0)
             {
                 tile.WallColor = (PaintColor)span[index++];
             }
@@ -181,19 +176,29 @@ namespace Orion.Core.Packets.World.Tiles
                     index += 4;
                 }
 
-                tile.Slope = (Slope)((header & SlopeMask) >> SlopeShift);
+                if ((header & IsBlockHalvedMask) != 0)
+                {
+                    tile.BlockShape = BlockShape.Halved;
+                }
+                else
+                {
+                    var slope = header & SlopeMask;
+                    if (slope > 0)
+                    {
+                        tile.BlockShape = (BlockShape)((slope >> SlopeShift) + 1);
+                    }
+                }
             }
 
-            if (hasWall)
+            if ((header & HasWallMask) != 0)
             {
                 tile.WallId = Unsafe.ReadUnaligned<WallId>(ref span[index]);
                 index += 2;
             }
 
-            if (hasLiquid)
+            if ((header & HasLiquidMask) != 0)
             {
-                tile.LiquidAmount = span[index++];
-                tile.LiquidType = (LiquidType)span[index++];
+                tile.Liquid = new Liquid(amount: span[index++], type: (LiquidType)span[index++]);
             }
 
             return index;
@@ -202,32 +207,26 @@ namespace Orion.Core.Packets.World.Tiles
         // TODO: look into optimizing this if bottleneck?
         private int WriteTile(Span<byte> span, ref Tile tile)
         {
-            var hasWall = tile.WallId != WallId.None;
-            var hasLiquid = tile.LiquidAmount != 0;
-            var hasBlockColor = tile.BlockColor != PaintColor.None;
-            var hasWallColor = tile.WallColor != PaintColor.None;
-
             ref var header = ref Unsafe.As<byte, ushort>(ref span.At(0));
             header = 0;
             var index = 2;
 
             if (tile.IsBlockActive)   /* */ header |= IsBlockActiveMask;
             if (tile.HasRedWire)      /* */ header |= HasRedWireMask;
-            if (tile.IsBlockHalved)   /* */ header |= IsBlockHalvedMask;
             if (tile.HasActuator)     /* */ header |= HasActuatorMask;
             if (tile.IsBlockActuated) /* */ header |= IsBlockActuatedMask;
             if (tile.HasBlueWire)     /* */ header |= HasBlueWireMask;
             if (tile.HasGreenWire)    /* */ header |= HasGreenWireMask;
             if (tile.HasYellowWire)   /* */ header |= HasYellowWireMask;
 
-            if (hasBlockColor)
+            if (tile.BlockColor != PaintColor.None)
             {
                 span[index++] = (byte)tile.BlockColor;
 
                 header |= HasBlockColorMask;
             }
 
-            if (hasWallColor)
+            if (tile.WallColor != PaintColor.None)
             {
                 span[index++] = (byte)tile.WallColor;
 
@@ -245,10 +244,20 @@ namespace Orion.Core.Packets.World.Tiles
                     index += 4;
                 }
 
-                header |= (ushort)((int)(tile.Slope) << SlopeShift);
+                if (tile.BlockShape == BlockShape.Halved)
+                {
+                    header |= IsBlockHalvedMask;
+                }
+                else
+                {
+                    if (tile.BlockShape != BlockShape.Normal)
+                    {
+                        header |= (ushort)((int)(tile.BlockShape - 1) << SlopeShift);
+                    }
+                }
             }
 
-            if (hasWall)
+            if (tile.WallId != WallId.None)
             {
                 Unsafe.WriteUnaligned(ref span[index], tile.WallId);
                 index += 2;
@@ -256,10 +265,11 @@ namespace Orion.Core.Packets.World.Tiles
                 header |= HasWallMask;
             }
 
-            if (hasLiquid)
+            if (!tile.Liquid.IsEmpty)
             {
-                span[index++] = tile.LiquidAmount;
-                span[index++] = (byte)tile.LiquidType;
+                var liquid = tile.Liquid;
+                span[index++] = liquid.Amount;
+                span[index++] = (byte)liquid.Type;
 
                 header |= HasLiquidMask;
             }

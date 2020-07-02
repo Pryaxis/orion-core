@@ -172,7 +172,7 @@ namespace Orion.Core.Packets.World.Tiles
         {
             var packet = new TileModify { Modification = TileModify.TileModification.BreakBlock };
 
-            Assert.Throws<InvalidOperationException>(() => packet.Slope);
+            Assert.Throws<InvalidOperationException>(() => packet.BlockShape);
         }
 
         [Fact]
@@ -180,19 +180,19 @@ namespace Orion.Core.Packets.World.Tiles
         {
             var packet = new TileModify { Modification = TileModify.TileModification.BreakBlock };
 
-            Assert.Throws<InvalidOperationException>(() => packet.Slope = Slope.TopRight);
+            Assert.Throws<InvalidOperationException>(() => packet.BlockShape = BlockShape.TopRight);
         }
 
         [Theory]
         [InlineData(TileModify.TileModification.SlopeBlock)]
         [InlineData(TileModify.TileModification.SlopeAndHammerBlock)]
-        public void Slope_Set_Get(TileModify.TileModification modification)
+        public void BlockShape_Set_Get(TileModify.TileModification modification)
         {
             var packet = new TileModify { Modification = modification };
 
-            packet.Slope = Slope.TopRight;
+            packet.BlockShape = BlockShape.TopRight;
 
-            Assert.Equal(Slope.TopRight, packet.Slope);
+            Assert.Equal(BlockShape.TopRight, packet.BlockShape);
         }
 
         [Fact]
@@ -416,7 +416,7 @@ namespace Orion.Core.Packets.World.Tiles
             Assert.Equal(TileModify.TileModification.SlopeBlock, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
-            Assert.Equal(Slope.TopRight, packet.Slope);
+            Assert.Equal(BlockShape.TopRight, packet.BlockShape);
         }
 
         [Fact]
@@ -511,7 +511,7 @@ namespace Orion.Core.Packets.World.Tiles
             Assert.Equal(TileModify.TileModification.SlopeAndHammerBlock, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
-            Assert.Equal(Slope.TopRight, packet.Slope);
+            Assert.Equal(BlockShape.TopRight, packet.BlockShape);
         }
     }
 }

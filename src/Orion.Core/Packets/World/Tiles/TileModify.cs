@@ -143,14 +143,14 @@ namespace Orion.Core.Packets.World.Tiles
         }
 
         /// <summary>
-        /// Gets or sets the slope. <i>This is only applicable if <see cref="Modification"/> involves sloping a
+        /// Gets or sets the block shape. <i>This is only applicable if <see cref="Modification"/> involves sloping a
         /// block!</i>
         /// </summary>
         /// <value>The slope.</value>
         /// <exception cref="InvalidOperationException">
         /// <see cref="Modification"/> does not involve sloping a block.
         /// </exception>
-        public Slope Slope
+        public BlockShape BlockShape
         {
             get
             {
@@ -159,7 +159,7 @@ namespace Orion.Core.Packets.World.Tiles
                     throw new InvalidOperationException("Modification does not involve sloping a block");
                 }
 
-                return (Slope)_data;
+                return _data > 0 ? (BlockShape)(_data + 1) : BlockShape.Normal;
             }
 
             set
@@ -169,7 +169,10 @@ namespace Orion.Core.Packets.World.Tiles
                     throw new InvalidOperationException("Modification does not involve sloping a block");
                 }
 
-                _data = (ushort)value;
+                if (value != BlockShape.Normal)
+                {
+                    _data = (ushort)(value - 1);
+                }
             }
         }
 

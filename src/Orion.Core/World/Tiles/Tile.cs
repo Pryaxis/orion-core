@@ -33,8 +33,7 @@ namespace Orion.Core.World.Tiles
         private const int BlockColorShift = 0;
         private const int SlopeShift = 12;
         private const int WallColorShift = 16;
-        private const int LiquidShift = 21;
-        private const int BlockFrameNumberShift = 24;
+        private const int LiquidTypeShift = 21;
 
         // The masks for the tile header.
         private const uint BlockColorMask /*       */ = 0b_00000000_00000000_00000000_00011111;
@@ -47,11 +46,8 @@ namespace Orion.Core.World.Tiles
         private const uint HasActuatorMask /*      */ = 0b_00000000_00000000_00001000_00000000;
         private const uint SlopeMask /*            */ = 0b_00000000_00000000_01110000_00000000;
         private const uint WallColorMask /*        */ = 0b_00000000_00011111_00000000_00000000;
-        private const uint LiquidMask /*           */ = 0b_00000000_01100000_00000000_00000000;
+        private const uint LiquidTypeMask /*       */ = 0b_00000000_01100000_00000000_00000000;
         private const uint HasYellowWireMask /*    */ = 0b_00000000_10000000_00000000_00000000;
-        private const uint BlockFrameNumberMask /* */ = 0b_00001111_00000000_00000000_00000000;
-        private const uint IsCheckingLiquidMask /* */ = 0b_00010000_00000000_00000000_00000000;
-        private const uint ShouldSkipLiquidMask /* */ = 0b_00100000_00000000_00000000_00000000;
 
         [FieldOffset(4)] private byte _liquidAmount;
 
@@ -68,22 +64,18 @@ namespace Orion.Core.World.Tiles
         [field: FieldOffset(2)] public WallId WallId { get; set; }
 
         /// <summary>
-        /// Gets or sets the tile's liquid amount.
-        /// </summary>
-        /// <value>The tile's liquid amount.</value>
-        [field: FieldOffset(4)] public byte LiquidAmount { get; set; }
-
-        /// <summary>
         /// Gets or sets the tile's liquid.
         /// </summary>
         /// <value>The tile's liquid.</value>
         public Liquid Liquid
         {
-            get => new Liquid(LiquidType, _liquidAmount);
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => new Liquid((LiquidType)((Header & LiquidTypeMask) >> LiquidTypeShift), _liquidAmount);
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                LiquidType = value.Type;
+                Header = (Header & ~LiquidTypeMask) | (((uint)value.Type << LiquidTypeShift) & LiquidTypeMask);
                 _liquidAmount = value.Amount;
             }
         }
@@ -107,19 +99,6 @@ namespace Orion.Core.World.Tiles
         [field: FieldOffset(9)] public uint Header { get; set; }
 
         /// <summary>
-        /// Gets or sets the block's color.
-        /// </summary>
-        /// <value>The block's color.</value>
-        public PaintColor BlockColor
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (PaintColor)((Header & BlockColorMask) >> BlockColorShift);
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => Header = (Header & ~BlockColorMask) | (((uint)value << BlockColorShift) & BlockColorMask);
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the block is active.
         /// </summary>
         /// <value><see langword="true"/> if the block is active; otherwise, <see langword="false"/>.</value>
@@ -137,6 +116,70 @@ namespace Orion.Core.World.Tiles
         {
             readonly get => GetFlag(IsBlockActuatedMask);
             set => SetFlag(IsBlockActuatedMask, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the block's color.
+        /// </summary>
+        /// <value>The block's color.</value>
+        public PaintColor BlockColor
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get => (PaintColor)((Header & BlockColorMask) >> BlockColorShift);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => Header = (Header & ~BlockColorMask) | (((uint)value << BlockColorShift) & BlockColorMask);
+        }
+
+        /// <summary>
+        /// Gets or sets the block's shape.
+        /// </summary>
+        /// <value>The block's shape.</value>
+        public BlockShape BlockShape
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                if (GetFlag(IsBlockHalvedMask))
+                {
+                    return BlockShape.Halved;
+                }
+
+                var slope = Header & SlopeMask;
+                return slope > 0 ? (BlockShape)((slope >> SlopeShift) + 1) : BlockShape.Normal;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                Header &= ~(IsBlockHalvedMask | SlopeMask);
+
+                if (value == BlockShape.Normal)
+                {
+                    return;
+                }
+                else if (value == BlockShape.Halved)
+                {
+                    Header |= IsBlockHalvedMask;
+                }
+                else
+                {
+                    Header = (Header & ~SlopeMask) | ((uint)(value - 1) << SlopeShift & SlopeMask);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the wall's color.
+        /// </summary>
+        /// <value>The wall's color.</value>
+        public PaintColor WallColor
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get => (PaintColor)((Header & WallColorMask) >> WallColorShift);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => Header = (Header & ~WallColorMask) | (((uint)value << WallColorShift) & WallColorMask);
         }
 
         /// <summary>
@@ -170,13 +213,13 @@ namespace Orion.Core.World.Tiles
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the block is halved.
+        /// Gets or sets a value indicating whether the tile has green wire.
         /// </summary>
-        /// <value><see langword="true"/> if the block is halved; otherwise, <see langword="false"/>.</value>
-        public bool IsBlockHalved
+        /// <value><see langword="true"/> if the tile has green wire; otherwise, <see langword="false"/>.</value>
+        public bool HasYellowWire
         {
-            readonly get => GetFlag(IsBlockHalvedMask);
-            set => SetFlag(IsBlockHalvedMask, value);
+            readonly get => GetFlag(HasYellowWireMask);
+            set => SetFlag(HasYellowWireMask, value);
         }
 
         /// <summary>
@@ -189,92 +232,7 @@ namespace Orion.Core.World.Tiles
             set => SetFlag(HasActuatorMask, value);
         }
 
-        /// <summary>
-        /// Gets or sets the block's slope.
-        /// </summary>
-        /// <value>The block's slope.</value>
-        public Slope Slope
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (Slope)((Header & SlopeMask) >> SlopeShift);
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => Header = (Header & ~SlopeMask) | (((uint)value << SlopeShift) & SlopeMask);
-        }
-
-        /// <summary>
-        /// Gets or sets the wall's color.
-        /// </summary>
-        /// <value>The wall's color.</value>
-        public PaintColor WallColor
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (PaintColor)((Header & WallColorMask) >> WallColorShift);
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => Header = (Header & ~WallColorMask) | (((uint)value << WallColorShift) & WallColorMask);
-        }
-
-        /// <summary>
-        /// Gets or sets the tile's liquid type.
-        /// </summary>
-        /// <value>The tile's liquid type.</value>
-        public LiquidType LiquidType
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (LiquidType)((Header & LiquidMask) >> LiquidShift);
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => Header = (Header & ~LiquidMask) | (((uint)value << LiquidShift) & LiquidMask);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the tile has green wire.
-        /// </summary>
-        /// <value><see langword="true"/> if the tile has green wire; otherwise, <see langword="false"/>.</value>
-        public bool HasYellowWire
-        {
-            readonly get => GetFlag(HasYellowWireMask);
-            set => SetFlag(HasYellowWireMask, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the block's frame number.
-        /// </summary>
-        /// <value>The block's frame number.</value>
-        public byte BlockFrameNumber
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (byte)((Header & BlockFrameNumberMask) >> BlockFrameNumberShift);
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set
-            {
-                Header =
-                    (Header & ~BlockFrameNumberMask) | (((uint)value << BlockFrameNumberShift) & BlockFrameNumberMask);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the tile is checking liquid.
-        /// </summary>
-        /// <value><see langword="true"/> if the tile is checking liquid; otherwise, <see langword="false"/>.</value>
-        public bool IsCheckingLiquid
-        {
-            readonly get => GetFlag(IsCheckingLiquidMask);
-            set => SetFlag(IsCheckingLiquidMask, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the tile should skip liquids.
-        /// </summary>
-        /// <value><see langword="true"/> if the tile should skip liquids; otherwise, <see langword="false"/>.</value>
-        public bool ShouldSkipLiquid
-        {
-            readonly get => GetFlag(ShouldSkipLiquidMask);
-            set => SetFlag(ShouldSkipLiquidMask, value);
-        }
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private readonly bool GetFlag(uint mask) => (Header & mask) != 0;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
