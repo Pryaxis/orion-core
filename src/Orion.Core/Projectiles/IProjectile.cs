@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using Orion.Core.Entities;
 
 namespace Orion.Core.Projectiles
@@ -32,6 +33,12 @@ namespace Orion.Core.Projectiles
         /// </summary>
         /// <value>The projectile's ID.</value>
         public ProjectileId Id { get; }
+
+        /// <summary>
+        /// Gets the projectile's AI values.
+        /// </summary>
+        /// <value>The AI values.</value>
+        public Span<float> AiValues { get; }
 
         /// <summary>
         /// Sets the projectile's <paramref name="id"/>. This will update the projectile accordingly. 

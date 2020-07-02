@@ -19,7 +19,7 @@ using Xunit;
 
 namespace Orion.Launcher
 {
-    // These tests cannot be run in parallel, since they interact heavily with Terraria's static state.
+    // These tests cannot be run in parallel since they interact heavily with Terraria's static state.
     [CollectionDefinition("TerrariaTestsCollection", DisableParallelization = true)]
     public class TerrariaTestsCollection : ICollectionFixture<TerrariaTestsFixture>
     {
