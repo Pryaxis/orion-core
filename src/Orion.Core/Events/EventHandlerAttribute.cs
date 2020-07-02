@@ -71,32 +71,38 @@ namespace Orion.Core.Events
         /// <summary>
         /// Indicates that the event handler should have the highest priority.
         /// </summary>
-        Highest,
+        Highest = 10,
 
         /// <summary>
         /// Indicates that the event handler should have high priority.
         /// </summary>
-        High,
+        High = 20,
 
         /// <summary>
         /// Indicates that the event handler should have normal priority. This is the default priority.
         /// </summary>
-        Normal,
+        Normal = 30,
 
         /// <summary>
         /// Indicates that the event handler should have low priority.
         /// </summary>
-        Low,
+        Low = 40,
 
         /// <summary>
         /// Indicates that the event handler should have the lowest priority.
         /// </summary>
-        Lowest,
+        Lowest = 50,
 
         /// <summary>
         /// Indicates that the event handler should have the monitor priority. <i>The event handler should not alter the
         /// event!</i>
         /// </summary>
-        Monitor
+        Monitor = 100,
+
+        /// <summary>
+        /// Indicates that the event handler is a sink. <i>The event handler should be authoritative for taking action
+        /// on the event!</i>
+        /// </summary>
+        Sink = int.MaxValue
     }
 }
