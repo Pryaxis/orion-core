@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Orion.Core.Utils;
 
 namespace Orion.Core.Packets.DataStructures.TileEntities
 {
@@ -82,17 +83,16 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
 
             // Write the tile entity header with no bounds checking since we need to perform bounds checking later
             // anyways.
-            ref var header = ref MemoryMarshal.GetReference(span);
+            Unsafe.WriteUnaligned(ref span.At(0), Id);
 
-            Unsafe.WriteUnaligned(ref header, Id);
             if (includeIndex)
             {
-                Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref header, 1), ref _bytes, 8);
+                Unsafe.CopyBlockUnaligned(ref span.At(1), ref _bytes, 8);
                 return 9 + WriteBody(span[9..]);
             }
             else
             {
-                Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref header, 1), ref _bytes2, 4);
+                Unsafe.CopyBlockUnaligned(ref span.At(1), ref _bytes2, 4);
                 return 5 + WriteBody(span[5..]);
             }
         }
@@ -133,19 +133,18 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
 
             // Read the tile entity header with no bounds checking since we need to perform bounds checking later
             // anyways.
-            ref var header = ref MemoryMarshal.GetReference(span);
+            var id = Unsafe.ReadUnaligned<TileEntityId>(ref span.At(0));
 
-            var id = Unsafe.ReadUnaligned<TileEntityId>(ref header);
             if (includeIndex)
             {
                 tileEntity = _ctors.TryGetValue(id, out var ctor) ? ctor() : new UnknownTileEntity(span.Length - 9, id);
-                Unsafe.CopyBlockUnaligned(ref tileEntity._bytes, ref Unsafe.Add(ref header, 1), 8);
+                Unsafe.CopyBlockUnaligned(ref tileEntity._bytes, ref span.At(1), 8);
                 return 9 + tileEntity.ReadBody(span[9..]);
             }
             else
             {
                 tileEntity = _ctors.TryGetValue(id, out var ctor) ? ctor() : new UnknownTileEntity(span.Length - 5, id);
-                Unsafe.CopyBlockUnaligned(ref tileEntity._bytes2, ref Unsafe.Add(ref header, 1), 4);
+                Unsafe.CopyBlockUnaligned(ref tileEntity._bytes2, ref span.At(1), 4);
                 return 5 + tileEntity.ReadBody(span[5..]);
             }
         }

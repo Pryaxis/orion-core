@@ -19,6 +19,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Orion.Core.Utils;
 
 namespace Orion.Core.Packets
 {
@@ -84,13 +85,11 @@ namespace Orion.Core.Packets
 
             Debug.Assert(span.Length >= 3);
 
-            ref var header = ref MemoryMarshal.GetReference(span);
-
             var packetLength = 3 + packet.WriteBody(span[3..], context);
 
             // Write the packet header with no bounds checking since we already performed bounds checking.
-            Unsafe.WriteUnaligned(ref header, (ushort)packetLength);
-            Unsafe.WriteUnaligned(ref Unsafe.Add(ref header, 2), packet.Id);
+            Unsafe.WriteUnaligned(ref span.At(0), (ushort)packetLength);
+            Unsafe.WriteUnaligned(ref span.At(2), packet.Id);
 
             return packetLength;
         }

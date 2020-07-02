@@ -19,6 +19,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Orion.Core.Utils;
 
 namespace Orion.Core.Packets.DataStructures.Modules
 {
@@ -84,10 +85,8 @@ namespace Orion.Core.Packets.DataStructures.Modules
 
             Debug.Assert(span.Length >= 2);
 
-            ref var header = ref MemoryMarshal.GetReference(span);
-
             // Write the module ID with no bounds checking since we need to perform bounds checking later anyways.
-            Unsafe.WriteUnaligned(ref header, module.Id);
+            Unsafe.WriteUnaligned(ref span.At(0), module.Id);
 
             return 2 + module.WriteBody(span[2..], context);
         }

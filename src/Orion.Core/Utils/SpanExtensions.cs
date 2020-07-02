@@ -58,7 +58,7 @@ namespace Orion.Core.Utils
         {
             Debug.Assert(length > 0);
 
-            Unsafe.CopyBlockUnaligned(ref destination, ref MemoryMarshal.GetReference(span), (uint)length);
+            Unsafe.CopyBlockUnaligned(ref destination, ref span.At(0), (uint)length);
             return length;
         }
 
@@ -88,7 +88,7 @@ namespace Orion.Core.Utils
         {
             Debug.Assert(length > 0);
 
-            Unsafe.CopyBlockUnaligned(ref MemoryMarshal.GetReference(span), ref source, (uint)length);
+            Unsafe.CopyBlockUnaligned(ref span.At(0), ref source, (uint)length);
             return length;
         }
 

@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Orion.Core.Packets.DataStructures.Modules;
+using Orion.Core.Utils;
 
 namespace Orion.Core.Packets
 {
@@ -52,11 +53,8 @@ namespace Orion.Core.Packets
             {
                 Debug.Assert(span.Length >= 2);
 
-                ref var header = ref MemoryMarshal.GetReference(span);
-
-                // Read the module ID with no bounds checking since we need to perform bounds checking later
-                // anyways.
-                var moduleId = Unsafe.ReadUnaligned<ModuleId>(ref header);
+                // Read the module ID with no bounds checking since we need to perform bounds checking later anyways.
+                var moduleId = Unsafe.ReadUnaligned<ModuleId>(ref span.At(0));
 
                 _module = (TModule)(object)new UnknownModule(span.Length - 2, moduleId);
             }
