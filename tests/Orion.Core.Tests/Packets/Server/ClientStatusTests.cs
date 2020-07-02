@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Orion.Core.Packets.DataStructures;
 using Xunit;
@@ -46,6 +47,14 @@ namespace Orion.Core.Packets.Server
             var packet = new ClientStatus();
 
             Assert.Equal(NetworkText.Empty, packet.StatusText);
+        }
+
+        [Fact]
+        public void StatusText_SetNullValue_ThrowsArgumentNullException()
+        {
+            var packet = new ClientStatus();
+
+            Assert.Throws<ArgumentNullException>(() => packet.StatusText = null!);
         }
 
         [Fact]

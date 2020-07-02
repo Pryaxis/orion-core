@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Orion.Core.Players;
 using Orion.Core.Utils;
@@ -66,6 +67,14 @@ namespace Orion.Core.Packets.Players
             var packet = new PlayerCharacter();
 
             Assert.Equal(string.Empty, packet.Name);
+        }
+
+        [Fact]
+        public void Name_SetNullValue_ThrowsArgumentNullException()
+        {
+            var packet = new PlayerCharacter();
+
+            Assert.Throws<ArgumentNullException>(() => packet.Name = null!);
         }
 
         [Fact]
