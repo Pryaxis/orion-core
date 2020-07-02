@@ -53,6 +53,8 @@ namespace Orion.Core.World.Tiles
         private const uint IsCheckingLiquidMask /* */ = 0b_00010000_00000000_00000000_00000000;
         private const uint ShouldSkipLiquidMask /* */ = 0b_00100000_00000000_00000000_00000000;
 
+        [FieldOffset(4)] private byte _liquidAmount;
+
         /// <summary>
         /// Gets or sets the tile's block ID.
         /// </summary>
@@ -70,6 +72,21 @@ namespace Orion.Core.World.Tiles
         /// </summary>
         /// <value>The tile's liquid amount.</value>
         [field: FieldOffset(4)] public byte LiquidAmount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tile's liquid.
+        /// </summary>
+        /// <value>The tile's liquid.</value>
+        public Liquid Liquid
+        {
+            get => new Liquid(LiquidType, _liquidAmount);
+
+            set
+            {
+                LiquidType = value.Type;
+                _liquidAmount = value.Amount;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the block's X frame.

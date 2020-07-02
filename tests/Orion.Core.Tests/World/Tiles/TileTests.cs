@@ -54,6 +54,16 @@ namespace Orion.Core.World.Tiles
         }
 
         [Fact]
+        public void Liquid_Set_Get()
+        {
+            var tile = new Tile();
+
+            tile.Liquid = new Liquid(LiquidType.Water, 123);
+
+            Assert.Equal(new Liquid(LiquidType.Water, 123), tile.Liquid);
+        }
+
+        [Fact]
         public void BlockFrameX_Set_Get()
         {
             var tile = new Tile();
