@@ -28,8 +28,16 @@ namespace Orion.Core.Packets.World.Tiles
     {
         private readonly byte[] _bytes =
         {
-            41, 0, 20, 3, 0, 100, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 4, 0, 1, 0, 2, 0, 4, 0, 1, 0, 8, 0, 255, 1, 0, 4, 1,
-            0, 8, 1, 240, 131, 0, 0
+            41, 0, 20, 3, 0, 100, 0, 0, 1,
+            0, 0,
+            1, 0, 1, 0,
+            1, 0, 4, 0, 1, 0, 2, 0,
+            4, 0, 1, 0,
+            8, 0, 255, 1,
+            0, 4, 1,
+            0, 8, 1,
+            241, 131, 1, 0,
+            1, 16, 1, 0
         };
 
         private readonly byte[] _extraDataBytes = { 12, 0, 20, 1, 128, 1, 100, 0, 0, 1, 0, 0 };
@@ -39,9 +47,9 @@ namespace Orion.Core.Packets.World.Tiles
         {
             var packet = new TileSquare();
 
-            packet.X = 2206;
+            packet.X = 100;
 
-            Assert.Equal(2206, packet.X);
+            Assert.Equal(100, packet.X);
         }
 
         [Fact]
@@ -49,9 +57,9 @@ namespace Orion.Core.Packets.World.Tiles
         {
             var packet = new TileSquare();
 
-            packet.Y = 312;
+            packet.Y = 256;
 
-            Assert.Equal(312, packet.Y);
+            Assert.Equal(256, packet.Y);
         }
 
         [Fact]
