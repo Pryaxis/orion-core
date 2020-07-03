@@ -18,7 +18,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Moq;
-using Orion.Core.World.Tiles;
+using Orion.Core.World;
 using Xunit;
 
 namespace Orion.Core.Packets.World.Tiles

@@ -18,7 +18,6 @@
 using System;
 using Moq;
 using Serilog;
-using Serilog.Core;
 using Xunit;
 
 namespace Orion.Core
@@ -28,7 +27,9 @@ namespace Orion.Core
         [Fact]
         public void Ctor_NullServer_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new TestOrionPlugin(null!, Logger.None));
+            var log = Mock.Of<ILogger>();
+
+            Assert.Throws<ArgumentNullException>(() => new TestOrionPlugin(null!, log));
         }
 
         [Fact]

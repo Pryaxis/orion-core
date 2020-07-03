@@ -21,7 +21,7 @@ using Moq;
 using Orion.Core.Packets.DataStructures;
 using Xunit;
 
-namespace Orion.Core.World.Tiles
+namespace Orion.Core.World
 {
     public class ITileSliceTests
     {

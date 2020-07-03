@@ -19,7 +19,6 @@ using System;
 using Destructurama.Attributed;
 using Orion.Core.Players;
 using Orion.Core.World;
-using Orion.Core.World.Tiles;
 
 namespace Orion.Core.Events.World.Tiles
 {

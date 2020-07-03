@@ -20,7 +20,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Moq;
 using Serilog;
-using Serilog.Core;
 using Xunit;
 
 namespace Orion.Core.Events
@@ -78,17 +77,20 @@ namespace Orion.Core.Events
         [Fact]
         public void DeregisterHandlers_NullEventManager_ThrowsArgumentNullException()
         {
+            var log = Mock.Of<ILogger>();
+
             Assert.Throws<ArgumentNullException>(
-                () => IEventManagerExtensions.DeregisterHandlers(null!, new object(), Logger.None));
+                () => IEventManagerExtensions.DeregisterHandlers(null!, new object(), log));
         }
 
         [Fact]
         public void DeregisterHandlers_NullObj_ThrowsArgumentNullException()
         {
             var eventManager = Mock.Of<IEventManager>();
+            var log = Mock.Of<ILogger>();
 
             Assert.Throws<ArgumentNullException>(
-                () => IEventManagerExtensions.DeregisterHandlers(eventManager, null!, Logger.None));
+                () => IEventManagerExtensions.DeregisterHandlers(eventManager, null!, log));
         }
 
         [Fact]

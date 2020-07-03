@@ -104,7 +104,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         /// <param name="span">The span to read from.</param>
         /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
         /// <remarks>
-        /// Implementations may not perform any bounds checking on <paramref name="span"/>.
+        /// Implementations might not perform bounds checking on the <paramref name="span"/>.
         /// </remarks>
         protected abstract int ReadBody(Span<byte> span);
 
@@ -115,7 +115,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
         /// <param name="span">The span to write to.</param>
         /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
         /// <remarks>
-        /// Implementations may not perform any bounds checking on <paramref name="span"/>.
+        /// Implementations might not perform bounds checking on the <paramref name="span"/>.
         /// </remarks>
         protected abstract int WriteBody(Span<byte> span);
 

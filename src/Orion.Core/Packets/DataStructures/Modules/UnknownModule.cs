@@ -52,7 +52,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
         /// Gets the module's data.
         /// </summary>
         /// <value>The module's data.</value>
-        public unsafe Span<byte> Data => _data;
+        public Span<byte> Data => _data;
 
         int IModule.ReadBody(Span<byte> span, PacketContext context) =>
             _data.Length == 0 ? 0 : span.Read(ref _data[0], _data.Length);

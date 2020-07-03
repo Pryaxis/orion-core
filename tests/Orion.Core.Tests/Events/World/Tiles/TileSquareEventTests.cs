@@ -19,7 +19,6 @@ using System;
 using Moq;
 using Orion.Core.Players;
 using Orion.Core.World;
-using Orion.Core.World.Tiles;
 using Xunit;
 
 namespace Orion.Core.Events.World.Tiles

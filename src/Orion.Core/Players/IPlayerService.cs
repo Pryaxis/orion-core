@@ -24,7 +24,7 @@ using Orion.Core.Packets.DataStructures;
 using Orion.Core.Packets.Server;
 using Orion.Core.Packets.World.Tiles;
 using Orion.Core.Utils;
-using Orion.Core.World.Tiles;
+using Orion.Core.World;
 
 namespace Orion.Core.Players
 {

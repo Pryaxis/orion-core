@@ -19,8 +19,9 @@ using System;
 using System.Diagnostics;
 using Orion.Core.Packets.World.Tiles;
 using Orion.Core.Players;
+using Orion.Core.World.Tiles;
 
-namespace Orion.Core.World.Tiles
+namespace Orion.Core.World
 {
     /// <summary>
     /// Represents a two-dimensional slice of tiles.
@@ -124,8 +125,8 @@ namespace Orion.Core.World.Tiles
             public NestedTileSlice(ITileSlice tiles, int startX, int startY, int width, int height)
             {
                 Debug.Assert(tiles != null);
-                Debug.Assert(startX >= 0 && startX + width <= tiles.Width);
-                Debug.Assert(startY >= 0 && startY + height <= tiles.Height);
+                Debug.Assert(0 <= startX && startX + width <= tiles.Width);
+                Debug.Assert(0 <= startY && startY + height <= tiles.Height);
                 Debug.Assert(width > 0);
                 Debug.Assert(height > 0);
 
