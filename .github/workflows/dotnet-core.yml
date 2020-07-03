@@ -12,8 +12,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@master
+      - name: Check out orion-core repository
+        uses: actions/checkout@v2
       - name: Set up .NET core
         uses: actions/setup-dotnet@v1
         with:
@@ -31,15 +31,15 @@ jobs:
           file: tests/Orion.Core.Tests/coverage.opencover.xml
       - name: Build artifacts
         run: |
-          dotnet publish -c Release src/Orion.Core/Orion.Core.csproj
           dotnet publish -c Debug src/Orion.Core/Orion.Core.csproj
-      - name: Publish artifacts (Release)
-        uses: actions/upload-artifact@master
-        with:
-          name: Orion.Core (Release)
-          path: src/Orion.Core/bin/Release/netstandard2.1/publish
+          dotnet publish -c Release src/Orion.Core/Orion.Core.csproj
       - name: Publish artifacts (Debug)
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v2
         with:
           name: Orion.Core (Debug)
           path: src/Orion.Core/bin/Debug/netstandard2.1/publish
+      - name: Publish artifacts (Release)
+        uses: actions/upload-artifact@v2
+        with:
+          name: Orion.Core (Release)
+          path: src/Orion.Core/bin/Release/netstandard2.1/publish
