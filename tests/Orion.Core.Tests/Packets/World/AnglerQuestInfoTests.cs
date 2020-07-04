@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics.CodeAnalysis;
+using Orion.Core.World;
 using Xunit;
 
 namespace Orion.Core.Packets.World
@@ -30,9 +31,9 @@ namespace Orion.Core.Packets.World
         {
             var packet = new AnglerQuestInfo();
 
-            packet.Quest = 10;
+            packet.Quest = AnglerQuest.Fishotron;
 
-            Assert.Equal(10, packet.Quest);
+            Assert.Equal(AnglerQuest.Fishotron, packet.Quest);
         }
 
         [Fact]

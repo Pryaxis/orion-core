@@ -18,24 +18,23 @@
 using System;
 using System.Runtime.InteropServices;
 using Orion.Core.Utils;
+using Orion.Core.World;
 
 namespace Orion.Core.Packets.World
 {
     /// <summary>
-    /// A packet sent from the server to the client to set the current angler quest's information.
+    /// A packet sent from the server to the client to set the angler quest's information.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 2)]
     public struct AnglerQuestInfo : IPacket
     {
         [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
-        // TODO: potentially enum-ify this.
-
         /// <summary>
         /// Gets or sets the angler quest.
         /// </summary>
         /// <value>The angler quest.</value>
-        [field: FieldOffset(0)] public byte Quest { get; set; }
+        [field: FieldOffset(0)] public AnglerQuest Quest { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the angler quest is completed.
