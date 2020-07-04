@@ -46,13 +46,13 @@ namespace Orion.Core.Packets.World.Tiles
         /// Gets or sets the tile's liquid amount. This ranges from <c>0</c> to <c>255</c>.
         /// </summary>
         /// <value>The tile's liquid amount.</value>
-        [field: FieldOffset(4)] public byte LiquidAmount { get; set; }
+        [field: FieldOffset(4)] public byte Amount { get; set; }
 
         /// <summary>
         /// Gets or sets the tile's liquid type.
         /// </summary>
         /// <value>The tile's liquid type.</value>
-        [field: FieldOffset(5)] public LiquidType LiquidType { get; set; }
+        [field: FieldOffset(5)] public LiquidType Type { get; set; }
 
         PacketId IPacket.Id => PacketId.TileLiquid;
 

@@ -25,7 +25,7 @@ namespace Orion.Core.Packets.World.TileEntities
     /// <summary>
     /// A packet sent to set a mannequin's inventory.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 11)]
+    [StructLayout(LayoutKind.Explicit, Size = 12)]
     public struct MannequinInventory : IPacket
     {
         [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.

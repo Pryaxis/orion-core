@@ -51,8 +51,8 @@ namespace Orion.Core.Packets.World.Chests
         [field: FieldOffset(4)] public short Y { get; set; }
 
         /// <summary>
-        /// Gets or sets the chest's name. This is only applicable if read in <see cref="PacketContext.Client"/> or
-        /// written in <see cref="PacketContext.Server"/>.
+        /// Gets or sets the chest's name. <i>This is only applicable if read in <see cref="PacketContext.Client"/> or
+        /// written in <see cref="PacketContext.Server"/>!</i>
         /// </summary>
         /// <value>The chest's name.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>

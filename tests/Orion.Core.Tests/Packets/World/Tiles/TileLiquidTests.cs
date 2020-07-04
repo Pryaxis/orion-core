@@ -47,23 +47,23 @@ namespace Orion.Core.Packets.World.Tiles
         }
 
         [Fact]
-        public void LiquidAmount_Set_Get()
+        public void Amount_Set_Get()
         {
             var packet = new TileLiquid();
 
-            packet.LiquidAmount = 255;
+            packet.Amount = 255;
 
-            Assert.Equal(255, packet.LiquidAmount);
+            Assert.Equal(255, packet.Amount);
         }
 
         [Fact]
-        public void LiquidType_Set_Get()
+        public void Type_Set_Get()
         {
             var packet = new TileLiquid();
 
-            packet.LiquidType = LiquidType.Honey;
+            packet.Type = LiquidType.Honey;
 
-            Assert.Equal(LiquidType.Honey, packet.LiquidType);
+            Assert.Equal(LiquidType.Honey, packet.Type);
         }
 
         [Fact]
@@ -73,8 +73,8 @@ namespace Orion.Core.Packets.World.Tiles
 
             Assert.Equal(256, packet.X);
             Assert.Equal(100, packet.Y);
-            Assert.Equal(255, packet.LiquidAmount);
-            Assert.Equal(LiquidType.Honey, packet.LiquidType);
+            Assert.Equal(255, packet.Amount);
+            Assert.Equal(LiquidType.Honey, packet.Type);
         }
     }
 }
