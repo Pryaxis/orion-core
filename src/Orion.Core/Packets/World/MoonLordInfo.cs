@@ -33,7 +33,7 @@ namespace Orion.Core.Packets.World
         /// Gets or sets the number of ticks before Moon Lord spawns.
         /// </summary>
         /// <value>The number of ticks before Moon Lord spawns.</value>
-        [field: FieldOffset(0)] public int TicksBeforeSpawn { get; set; }
+        [field: FieldOffset(0)] public int SpawnTicks { get; set; }
 
         PacketId IPacket.Id => PacketId.MoonLordInfo;
 

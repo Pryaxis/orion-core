@@ -26,13 +26,13 @@ namespace Orion.Core.Packets.World
         private readonly byte[] _bytes = { 7, 0, 103, 16, 14, 0, 0 };
 
         [Fact]
-        public void TicksBeforeSpawn_Set_Get()
+        public void SpawnTicks_Set_Get()
         {
             var packet = new MoonLordInfo();
 
-            packet.TicksBeforeSpawn = 3600;
+            packet.SpawnTicks = 3600;
 
-            Assert.Equal(3600, packet.TicksBeforeSpawn);
+            Assert.Equal(3600, packet.SpawnTicks);
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace Orion.Core.Packets.World
         {
             var packet = TestUtils.ReadPacket<MoonLordInfo>(_bytes, PacketContext.Server);
 
-            Assert.Equal(3600, packet.TicksBeforeSpawn);
+            Assert.Equal(3600, packet.SpawnTicks);
         }
     }
 }
