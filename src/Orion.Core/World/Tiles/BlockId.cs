@@ -657,7 +657,7 @@ namespace Orion.Core.World.Tiles
     /// </summary>
     public static class BlockIdExtensions
     {
-        private static readonly ISet<BlockId> _frames = new HashSet<BlockId> {
+        private static readonly HashSet<BlockId> _frames = new HashSet<BlockId> {
             BlockId.ShortGrassPlants,
             BlockId.Torches,
             BlockId.Trees,

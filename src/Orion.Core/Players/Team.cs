@@ -62,7 +62,7 @@ namespace Orion.Core.Players
     /// </summary>
     public static class TeamExtensions
     {
-        private static readonly IDictionary<Team, Color3> _colors = new Dictionary<Team, Color3>
+        private static readonly Dictionary<Team, Color3> _colors = new Dictionary<Team, Color3>
         {
             [Team.None] = Color3.White,
             [Team.Red] = new Color3(0xda, 0x3b, 0x3b),

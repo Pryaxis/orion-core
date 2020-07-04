@@ -46,8 +46,8 @@ namespace Orion.Core.Packets
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
-            // `UnknownModule` is a special case, since we need to always reconstruct it in case the `ModulePacket<>`
-            // instance is being reused.
+            // `UnknownModule` is a special case, since we need to always reconstruct it in case the `Module<>` instance
+            // is being reused.
             if (typeof(TModule) == typeof(UnknownModule))
             {
                 Debug.Assert(span.Length >= 2);

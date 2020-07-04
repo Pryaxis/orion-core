@@ -51,16 +51,22 @@ namespace Orion.Core.World
         public string Name { get; }
 
         /// <summary>
+        /// Gets or sets the world's difficulty.
+        /// </summary>
+        /// <value>The world's difficulty.</value>
+        public WorldDifficulty Difficulty { get; set; }
+
+        /// <summary>
         /// Gets or sets the world's evil.
         /// </summary>
         /// <value>The world's evil.</value>
         public WorldEvil Evil { get; set; }
 
         /// <summary>
-        /// Gets or sets the world's difficulty.
+        /// Gets or sets the world's angler quest.
         /// </summary>
-        /// <value>The world's difficulty.</value>
-        public WorldDifficulty Difficulty { get; set; }
+        /// <value>The world's angler quest.</value>
+        public AnglerQuest AnglerQuest { get; set; }
 
         /// <summary>
         /// Gets or sets the base NPC spawn rate. This is inversely proportional to the probability of an NPC spawning

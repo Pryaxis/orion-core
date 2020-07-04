@@ -30,7 +30,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
     [StructLayout(LayoutKind.Explicit, Size = 8)]
     public abstract class SerializableTileEntity
     {
-        private static readonly IDictionary<TileEntityId, Func<SerializableTileEntity>> _ctors =
+        private static readonly Dictionary<TileEntityId, Func<SerializableTileEntity>> _ctors =
             new Dictionary<TileEntityId, Func<SerializableTileEntity>>
             {
                 [TileEntityId.TargetDummy] = () => new TargetDummy(),

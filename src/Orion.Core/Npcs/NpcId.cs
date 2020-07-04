@@ -757,7 +757,7 @@ namespace Orion.Core.Npcs
     /// </summary>
     public static class NpcIdExtensions
     {
-        private static readonly ISet<NpcId> _catchables = new HashSet<NpcId> {
+        private static readonly HashSet<NpcId> _catchables = new HashSet<NpcId> {
             NpcId.Bunny,
             NpcId.Goldfish,
             NpcId.Bird,

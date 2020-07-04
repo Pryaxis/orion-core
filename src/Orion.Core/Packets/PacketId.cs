@@ -119,7 +119,7 @@ namespace Orion.Core.Packets
     /// </summary>
     public static class PacketIdExtensions
     {
-        private static readonly IDictionary<PacketId, Type> _types = new Dictionary<PacketId, Type>
+        private static readonly Dictionary<PacketId, Type> _types = new Dictionary<PacketId, Type>
         {
             [PacketId.ClientConnect] = typeof(ClientConnect),
             [PacketId.ClientDisconnect] = typeof(ClientDisconnect),

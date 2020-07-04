@@ -357,7 +357,7 @@ namespace Orion.Core.Entities
     /// </summary>
     public static class BuffIdExtensions
     {
-        private static readonly ISet<BuffId> _debuffs = new HashSet<BuffId> {
+        private static readonly HashSet<BuffId> _debuffs = new HashSet<BuffId> {
             BuffId.Poisoned,
             BuffId.PotionSickness,
             BuffId.Darkness,

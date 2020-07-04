@@ -87,7 +87,7 @@ namespace Orion.Core.Entities
     public class AnnotatableObject : IAnnotatable
     {
         private readonly object _lock = new object();
-        private readonly IDictionary<object, object?> _annotations = new Dictionary<object, object?>();
+        private readonly Dictionary<object, object?> _annotations = new Dictionary<object, object?>();
 
         /// <inheritdoc/>
         public TAnnotation GetAnnotation<TAnnotation>(

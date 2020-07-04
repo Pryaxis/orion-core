@@ -24,7 +24,7 @@ namespace Orion.Core.Packets
 {
     public class PacketIdTests
     {
-        private static readonly ISet<Type> _excludedTypes =
+        private readonly HashSet<Type> _excludedTypes =
             new HashSet<Type> { typeof(ModulePacket<>), typeof(UnknownPacket), typeof(IPacket) };
 
         [Fact]

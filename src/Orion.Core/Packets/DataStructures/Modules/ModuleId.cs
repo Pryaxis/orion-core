@@ -37,7 +37,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
     /// </summary>
     public static class ModuleIdExtensions
     {
-        private static readonly IDictionary<ModuleId, Type> _types = new Dictionary<ModuleId, Type>
+        private static readonly Dictionary<ModuleId, Type> _types = new Dictionary<ModuleId, Type>
         {
             [ModuleId.Chat] = typeof(Chat),
             [ModuleId.Ping] = typeof(Ping)
