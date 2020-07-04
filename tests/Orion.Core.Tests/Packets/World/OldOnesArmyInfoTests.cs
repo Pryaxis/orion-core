@@ -26,13 +26,13 @@ namespace Orion.Core.Packets.World
         private readonly byte[] _bytes = { 7, 0, 116, 16, 14, 0, 0 };
 
         [Fact]
-        public void TicksBeforeNextWave_Set_Get()
+        public void NextWaveTicks_Set_Get()
         {
             var packet = new OldOnesArmyInfo();
 
-            packet.TicksBeforeNextWave = 3600;
+            packet.NextWaveTicks = 3600;
 
-            Assert.Equal(3600, packet.TicksBeforeNextWave);
+            Assert.Equal(3600, packet.NextWaveTicks);
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace Orion.Core.Packets.World
         {
             var packet = TestUtils.ReadPacket<OldOnesArmyInfo>(_bytes, PacketContext.Server);
 
-            Assert.Equal(3600, packet.TicksBeforeNextWave);
+            Assert.Equal(3600, packet.NextWaveTicks);
         }
     }
 }

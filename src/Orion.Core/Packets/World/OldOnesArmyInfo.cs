@@ -33,7 +33,7 @@ namespace Orion.Core.Packets.World
         /// Gets or sets the number of ticks before the next wave.
         /// </summary>
         /// <value>The number of ticks before the next wave.</value>
-        [field: FieldOffset(0)] public int TicksBeforeNextWave { get; set; }
+        [field: FieldOffset(0)] public int NextWaveTicks { get; set; }
 
         PacketId IPacket.Id => PacketId.OldOnesArmyInfo;
 

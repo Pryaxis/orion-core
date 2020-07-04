@@ -20,7 +20,7 @@ using System;
 namespace Orion.Core.Packets.World
 {
     /// <summary>
-    /// A packet sent from the client to the server to complete the current angler quest.
+    /// A packet sent from the client to the server to complete the angler quest.
     /// </summary>
     public struct AnglerQuestComplete : IPacket
     {
