@@ -27,6 +27,7 @@ namespace Orion.Core.Packets.Players
         PacketId IPacket.Id => PacketId.PlayerJoin;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => 0;
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => 0;
     }
 }

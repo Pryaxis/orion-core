@@ -50,6 +50,7 @@ namespace Orion.Core.Packets.Misc
         PacketId IPacket.Id => PacketId.CombatNumber;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 15);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 15);
     }
 }

@@ -45,6 +45,7 @@ namespace Orion.Core.Packets.World
         PacketId IPacket.Id => PacketId.AnglerQuestInfo;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 2);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 2);
     }
 }

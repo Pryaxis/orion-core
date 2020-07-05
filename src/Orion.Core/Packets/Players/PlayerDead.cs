@@ -38,6 +38,7 @@ namespace Orion.Core.Packets.Players
         PacketId IPacket.Id => PacketId.PlayerDead;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 1);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 1);
     }
 }

@@ -43,6 +43,7 @@ namespace Orion.Core.Packets.Server
         PacketId IPacket.Id => PacketId.ClientUuid;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(out _uuid);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(Uuid);
     }
 }

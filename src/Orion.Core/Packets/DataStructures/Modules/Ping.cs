@@ -38,6 +38,7 @@ namespace Orion.Core.Packets.DataStructures.Modules
         ModuleId IModule.Id => ModuleId.Ping;
 
         int IModule.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 8);
+
         int IModule.WriteBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 8);
     }
 }

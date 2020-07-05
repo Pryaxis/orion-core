@@ -63,6 +63,7 @@ namespace Orion.Core.Packets.World.TileEntities
         PacketId IPacket.Id => PacketId.WeaponRackInfo;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 9);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 9);
     }
 }

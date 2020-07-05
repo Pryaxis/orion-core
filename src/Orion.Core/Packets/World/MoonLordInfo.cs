@@ -38,6 +38,7 @@ namespace Orion.Core.Packets.World
         PacketId IPacket.Id => PacketId.MoonLordInfo;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 4);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 4);
     }
 }

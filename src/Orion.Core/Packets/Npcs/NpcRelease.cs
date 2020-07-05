@@ -57,6 +57,7 @@ namespace Orion.Core.Packets.Npcs
         PacketId IPacket.Id => PacketId.NpcRelease;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 11);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 11);
     }
 }

@@ -51,6 +51,7 @@ namespace Orion.Core.Packets.Players
         PacketId IPacket.Id => PacketId.PlayerNebulaBuff;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 11);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 11);
     }
 }

@@ -64,6 +64,7 @@ namespace Orion.Core.Packets.Npcs
         PacketId IPacket.Id => PacketId.NpcDamage;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 10);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 10);
     }
 }

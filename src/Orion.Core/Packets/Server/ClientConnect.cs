@@ -42,6 +42,7 @@ namespace Orion.Core.Packets.Server
         PacketId IPacket.Id => PacketId.ClientConnect;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(out _version);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(Version);
     }
 }

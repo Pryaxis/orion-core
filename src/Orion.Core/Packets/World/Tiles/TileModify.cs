@@ -18,7 +18,6 @@
 using System;
 using System.Runtime.InteropServices;
 using Orion.Core.Utils;
-using Orion.Core.World.Tiles;
 
 namespace Orion.Core.Packets.World.Tiles
 {
@@ -63,6 +62,7 @@ namespace Orion.Core.Packets.World.Tiles
         PacketId IPacket.Id => PacketId.TileModify;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 8);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 8);
 
         /// <summary>

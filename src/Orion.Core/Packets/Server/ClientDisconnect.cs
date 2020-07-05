@@ -41,6 +41,7 @@ namespace Orion.Core.Packets.Server
         PacketId IPacket.Id => PacketId.ClientDisconnect;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => NetworkText.Read(span, out _reason);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => Reason.Write(span);
     }
 }

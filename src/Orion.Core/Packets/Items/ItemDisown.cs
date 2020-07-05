@@ -38,6 +38,7 @@ namespace Orion.Core.Packets.Items
         PacketId IPacket.Id => PacketId.ItemDisown;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 2);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 2);
     }
 }

@@ -27,6 +27,7 @@ namespace Orion.Core.Packets.World
         PacketId IPacket.Id => PacketId.AnglerQuestComplete;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => 0;
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => 0;
     }
 }

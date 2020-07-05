@@ -57,6 +57,7 @@ namespace Orion.Core.Packets.World.Tiles
         PacketId IPacket.Id => PacketId.TileLiquid;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 6);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 6);
     }
 }

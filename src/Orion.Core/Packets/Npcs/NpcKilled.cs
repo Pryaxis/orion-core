@@ -16,9 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 using Orion.Core.Npcs;
 using Orion.Core.Utils;
 
@@ -41,6 +39,7 @@ namespace Orion.Core.Packets.Npcs
         PacketId IPacket.Id => PacketId.NpcKilled;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 2);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 2);
     }
 }

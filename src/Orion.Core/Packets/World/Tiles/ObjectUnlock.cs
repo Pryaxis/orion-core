@@ -50,6 +50,7 @@ namespace Orion.Core.Packets.World.Tiles
         PacketId IPacket.Id => PacketId.ObjectUnlock;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 5);
+
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 5);
 
         /// <summary>
