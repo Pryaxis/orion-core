@@ -28,19 +28,11 @@ namespace Orion.Core.Packets.World.Tiles
     {
         private readonly byte[] _bytes =
         {
-            41, 0, 20, 3, 0, 100, 0, 0, 1,
-            0, 0,
-            1, 0, 1, 0,
-            1, 0, 4, 0, 1, 0, 2, 0,
-            4, 0, 1, 0,
-            8, 0, 255, 1,
-            0, 4, 1,
-            0, 8, 1,
-            241, 131, 1, 0,
-            1, 16, 1, 0
+            41, 0, 20, 3, 0, 100, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 4, 0, 1, 0, 2, 0, 4, 0, 1, 0, 8, 0, 255, 1, 0, 4, 1,
+            0, 8, 1, 241, 131, 1, 0, 1, 16, 1, 0
         };
 
-        private readonly byte[] _extraDataBytes = { 12, 0, 20, 1, 128, 1, 100, 0, 0, 1, 0, 0 };
+        private readonly byte[] _changeTypeBytes = { 12, 0, 20, 1, 128, 1, 100, 0, 0, 1, 0, 0 };
 
         [Fact]
         public void X_Set_Get()
@@ -80,7 +72,7 @@ namespace Orion.Core.Packets.World.Tiles
         }
 
         [Fact]
-        public void Tiles_SetNotSquareArray_ThrowsArgumentException()
+        public void Tiles_SetNotSquare_ThrowsArgumentException()
         {
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 2);
             var packet = new TileSquare();
@@ -111,9 +103,9 @@ namespace Orion.Core.Packets.World.Tiles
         }
 
         [Fact]
-        public void Read_ExtraData()
+        public void Read_ChangeType()
         {
-            var packet = TestUtils.ReadPacket<TileSquare>(_extraDataBytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<TileSquare>(_changeTypeBytes, PacketContext.Server);
 
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
