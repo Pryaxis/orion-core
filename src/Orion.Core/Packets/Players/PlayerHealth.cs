@@ -36,7 +36,7 @@ namespace Orion.Core.Packets.Players
         [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's health. A non-positve value indicates that the player is dead.
+        /// Gets or sets the player's health. A non-positive value indicates that the player is dead.
         /// </summary>
         /// <value>The player's health.</value>
         [field: FieldOffset(1)] public short Health { get; set; }

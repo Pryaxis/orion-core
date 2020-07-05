@@ -36,12 +36,12 @@ namespace Orion.Core.Packets.Players
         [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's minion position.
+        /// Gets or sets the minion's position.
         /// </summary>
-        /// <value>The player's minion position.</value>
+        /// <value>The minion's position.</value>
         [field: FieldOffset(1)] public Vector2f Position { get; set; }
 
-        PacketId IPacket.Id => PacketId.PlayerMinionPosition;
+        PacketId IPacket.Id => PacketId.MinionPosition;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 9);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 9);

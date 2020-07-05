@@ -41,7 +41,7 @@ namespace Orion.Core.Packets.Players
         /// <value>The minion target's NPC index.</value>
         [field: FieldOffset(1)] public short TargetIndex { get; set; }
 
-        PacketId IPacket.Id => PacketId.PlayerMinionTarget;
+        PacketId IPacket.Id => PacketId.MinionTarget;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 3);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 3);

@@ -48,7 +48,7 @@ namespace Orion.Core.Packets.Players
         [field: FieldOffset(5)] public float Torch { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's luck potion strength.
+        /// Gets or sets the player's luck potion strength. This ranges from <c>0</c> to <c>3</c>.
         /// </summary>
         /// <value>The player's luck potion strength.</value>
         [field: FieldOffset(9)] public byte PotionStrength { get; set; }
