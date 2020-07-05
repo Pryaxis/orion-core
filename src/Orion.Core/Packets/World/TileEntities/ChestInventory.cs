@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 using Orion.Core.Items;
 using Orion.Core.Utils;
 
-namespace Orion.Core.Packets.World.Chests
+namespace Orion.Core.Packets.World.TileEntities
 {
     /// <summary>
     /// A packet sent to set a chest's inventory.

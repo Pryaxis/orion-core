@@ -18,9 +18,9 @@
 using System;
 using Orion.Core.Items;
 using Orion.Core.Players;
-using Orion.Core.World.Chests;
+using Orion.Core.World.TileEntities;
 
-namespace Orion.Core.Events.World.Chests
+namespace Orion.Core.Events.World.TileEntities
 {
     /// <summary>
     /// An event that occurs when a player is modifying a chest's inventory. This event can be canceled.

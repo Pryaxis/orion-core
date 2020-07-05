@@ -15,24 +15,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
+using Moq;
 using Orion.Core.World.TileEntities;
+using Xunit;
 
-namespace Orion.Core.World.Signs
+namespace Orion.Core.Events.World.TileEntities
 {
-    /// <summary>
-    /// Represents a Terraria sign.
-    /// </summary>
-    /// <remarks>
-    /// Implementations are required to be thread-safe: i.e., each operation on the sign should be atomic.
-    /// </remarks>
-    public interface ISign : ITileEntity
+    public class ChestEventTests
     {
-        /// <summary>
-        /// Gets or sets the sign's text.
-        /// </summary>
-        /// <value>The sign's text.</value>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string Text { get; set; }
+        [Fact]
+        public void Chest_Get()
+        {
+            var chest = Mock.Of<IChest>();
+            var evt = new Mock<ChestEvent>(chest).Object;
+
+            Assert.Same(chest, evt.Chest);
+        }
     }
 }

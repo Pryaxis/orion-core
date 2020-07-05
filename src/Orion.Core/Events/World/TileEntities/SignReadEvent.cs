@@ -17,34 +17,34 @@
 
 using System;
 using Orion.Core.Players;
-using Orion.Core.World.Chests;
+using Orion.Core.World.TileEntities;
 
-namespace Orion.Core.Events.World.Chests
+namespace Orion.Core.Events.World.TileEntities
 {
     /// <summary>
-    /// An event that occurs when a player is opening a chest. This event can be canceled.
+    /// An event that occurs when a player is reading a sign. This event can be canceled.
     /// </summary>
-    [Event("chest-open")]
-    public sealed class ChestOpenEvent : ChestEvent
+    [Event("sign-read")]
+    public sealed class SignReadEvent : SignEvent
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChestOpenEvent"/> class with the specified
-        /// <paramref name="chest"/> and <paramref name="player"/>.
+        /// Initializes a new instance of the <see cref="SignReadEvent"/> class with the specified
+        /// <paramref name="sign"/> and <paramref name="player"/>.
         /// </summary>
-        /// <param name="chest">The chest being opened.</param>
-        /// <param name="player">The player opening the chest.</param>
+        /// <param name="sign">The sign being read.</param>
+        /// <param name="player">The player reading the sign.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="chest"/> or <paramref name="player"/> are <see langword="null"/>.
+        /// <paramref name="sign"/> or <paramref name="player"/> are <see langword="null"/>.
         /// </exception>
-        public ChestOpenEvent(IChest chest, IPlayer player) : base(chest)
+        public SignReadEvent(ISign sign, IPlayer player) : base(sign)
         {
             Player = player ?? throw new ArgumentNullException(nameof(player));
         }
 
         /// <summary>
-        /// Gets the player opening the chest.
+        /// Gets the player reading the sign.
         /// </summary>
-        /// <value>The player opening the chest.</value>
+        /// <value>The player reading the sign.</value>
         public IPlayer Player { get; }
     }
 }

@@ -19,29 +19,29 @@ using System;
 using System.Runtime.InteropServices;
 using Orion.Core.Utils;
 
-namespace Orion.Core.Packets.World.Chests
+namespace Orion.Core.Packets.World.TileEntities
 {
     /// <summary>
-    /// A packet sent from the client to the server to open a chest.
+    /// A packet sent from the client to the server to read a sign.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 4)]
-    public struct ChestOpen : IPacket
+    public struct SignRead : IPacket
     {
         [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
         /// <summary>
-        /// Gets or sets the chest's X coordinate.
+        /// Gets or sets the sign's X coordinate.
         /// </summary>
-        /// <value>The chest's X coordinate.</value>
+        /// <value>The sign's X coordinate.</value>
         [field: FieldOffset(0)] public short X { get; set; }
 
         /// <summary>
-        /// Gets or sets the chest's Y coordinate.
+        /// Gets or sets the sign's Y coordinate.
         /// </summary>
-        /// <value>The chest's Y coordinate.</value>
+        /// <value>The sign's Y coordinate.</value>
         [field: FieldOffset(2)] public short Y { get; set; }
 
-        PacketId IPacket.Id => PacketId.ChestOpen;
+        PacketId IPacket.Id => PacketId.SignRead;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 4);
 

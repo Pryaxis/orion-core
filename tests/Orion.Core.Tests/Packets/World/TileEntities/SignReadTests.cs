@@ -15,40 +15,43 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using Moq;
-using Orion.Core.Players;
-using Orion.Core.World.Signs;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Core.Events.World.Signs
+namespace Orion.Core.Packets.World.TileEntities
 {
-    public class SignReadEventTests
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
+    public class SignReadTests
     {
-        [Fact]
-        public void Ctor_NullSign_ThrowsArgumentNullException()
-        {
-            var player = Mock.Of<IPlayer>();
+        private readonly byte[] _bytes = { 7, 0, 46, 0, 1, 100, 0 };
 
-            Assert.Throws<ArgumentNullException>(() => new SignReadEvent(null!, player));
+        [Fact]
+        public void X_Set_Get()
+        {
+            var packet = new SignRead();
+
+            packet.X = 256;
+
+            Assert.Equal(256, packet.X);
         }
 
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException()
+        public void Y_Set_Get()
         {
-            var sign = Mock.Of<ISign>();
+            var packet = new SignRead();
 
-            Assert.Throws<ArgumentNullException>(() => new SignReadEvent(sign, null!));
+            packet.Y = 100;
+
+            Assert.Equal(100, packet.Y);
         }
 
         [Fact]
-        public void Player_Get()
+        public void Read()
         {
-            var sign = Mock.Of<ISign>();
-            var player = Mock.Of<IPlayer>();
-            var evt = new SignReadEvent(sign, player);
+            var packet = TestUtils.ReadPacket<SignRead>(_bytes, PacketContext.Server);
 
-            Assert.Same(player, evt.Player);
+            Assert.Equal(256, packet.X);
+            Assert.Equal(100, packet.Y);
         }
     }
 }

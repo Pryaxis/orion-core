@@ -16,9 +16,9 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using Orion.Core.Events.World.Chests;
+using Orion.Core.Events.World.TileEntities;
 
-namespace Orion.Core.World.Chests
+namespace Orion.Core.World.TileEntities
 {
     /// <summary>
     /// Represents a chest service. Provides access to chests and publishes chest-related events.

@@ -19,7 +19,7 @@ using System;
 using System.Runtime.InteropServices;
 using Orion.Core.Utils;
 
-namespace Orion.Core.Packets.World.Chests
+namespace Orion.Core.Packets.World.TileEntities
 {
     /// <summary>
     /// A packet sent from the client to the server to request a chest's name or from the server to the client to set a

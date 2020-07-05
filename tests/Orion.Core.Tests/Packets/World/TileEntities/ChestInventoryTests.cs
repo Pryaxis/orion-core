@@ -19,7 +19,7 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Core.Items;
 using Xunit;
 
-namespace Orion.Core.Packets.World.Chests
+namespace Orion.Core.Packets.World.TileEntities
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ChestInventoryTests

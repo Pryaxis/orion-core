@@ -15,32 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using Orion.Core.Items;
-using Orion.Core.Utils;
-using Orion.Core.World.TileEntities;
+using System.Collections.Generic;
+using Orion.Core.Events.World.TileEntities;
 
-namespace Orion.Core.World.Chests
+namespace Orion.Core.World.TileEntities
 {
     /// <summary>
-    /// Represents a Terraria chest.
+    /// Represents a sign service. Provides access to signs and publishes sign-related events.
     /// </summary>
     /// <remarks>
-    /// Implementations are required to be thread-safe: i.e., each operation on the chest should be atomic.
+    /// Implementations are required to be thread-safe.
+    /// 
+    /// The sign service is responsible for publishing the following sign-related events:
+    /// <list type="bullet">
+    /// <item><description><see cref="SignReadEvent"/></description></item>
+    /// </list>
     /// </remarks>
-    public interface IChest : ITileEntity
+    [Service(ServiceScope.Singleton)]
+    public interface ISignService : IReadOnlyList<ISign>
     {
-        /// <summary>
-        /// Gets or sets the chest's name.
-        /// </summary>
-        /// <value>The chest's name.</value>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets the chest's items.
-        /// </summary>
-        /// <value>The chest's items.</value>
-        public IArray<ItemStack> Items { get; }
     }
 }

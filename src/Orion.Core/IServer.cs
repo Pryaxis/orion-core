@@ -22,8 +22,7 @@ using Orion.Core.Npcs;
 using Orion.Core.Players;
 using Orion.Core.Projectiles;
 using Orion.Core.World;
-using Orion.Core.World.Chests;
-using Orion.Core.World.Signs;
+using Orion.Core.World.TileEntities;
 
 namespace Orion.Core
 {

@@ -19,10 +19,10 @@ using System;
 using Moq;
 using Orion.Core.Items;
 using Orion.Core.Players;
-using Orion.Core.World.Chests;
+using Orion.Core.World.TileEntities;
 using Xunit;
 
-namespace Orion.Core.Events.World.Chests
+namespace Orion.Core.Events.World.TileEntities
 {
     public class ChestInventoryEventTests
     {

@@ -16,29 +16,30 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Orion.Core.World.Signs;
+using Orion.Core.World.TileEntities;
 
-namespace Orion.Core.Events.World.Signs
+namespace Orion.Core.Events.World.TileEntities
 {
     /// <summary>
-    /// Provides the base class for a sign-related event.
+    /// Provides the base class for a chest-related event.
     /// </summary>
-    public abstract class SignEvent : Event
+    public abstract class ChestEvent : Event
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SignEvent"/> class with the specified <paramref name="sign"/>.
+        /// Initializes a new instance of the <see cref="ChestEvent"/> class with the specified
+        /// <paramref name="chest"/>.
         /// </summary>
-        /// <param name="sign">The sign involved in the event.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="sign"/> is <see langword="null"/>.</exception>
-        protected SignEvent(ISign sign)
+        /// <param name="chest">The chest involved in the event.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="chest"/> is <see langword="null"/>.</exception>
+        protected ChestEvent(IChest chest)
         {
-            Sign = sign ?? throw new ArgumentNullException(nameof(sign));
+            Chest = chest ?? throw new ArgumentNullException(nameof(chest));
         }
 
         /// <summary>
-        /// Gets the sign involved in the event.
+        /// Gets the chest involved in the event.
         /// </summary>
-        /// <value>The sign involved in the event.</value>
-        public ISign Sign { get; }
+        /// <value>The chest involved in the event.</value>
+        public IChest Chest { get; }
     }
 }

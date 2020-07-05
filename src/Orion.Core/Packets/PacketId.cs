@@ -24,8 +24,6 @@ using Orion.Core.Packets.Npcs;
 using Orion.Core.Packets.Players;
 using Orion.Core.Packets.Server;
 using Orion.Core.Packets.World;
-using Orion.Core.Packets.World.Chests;
-using Orion.Core.Packets.World.Signs;
 using Orion.Core.Packets.World.TileEntities;
 using Orion.Core.Packets.World.Tiles;
 

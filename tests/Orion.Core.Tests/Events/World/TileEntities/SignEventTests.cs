@@ -16,20 +16,20 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using Moq;
-using Orion.Core.World.Chests;
+using Orion.Core.World.TileEntities;
 using Xunit;
 
-namespace Orion.Core.Events.World.Chests
+namespace Orion.Core.Events.World.TileEntities
 {
-    public class ChestEventTests
+    public class SignEventTests
     {
         [Fact]
-        public void Chest_Get()
+        public void Sign_Get()
         {
-            var chest = Mock.Of<IChest>();
-            var evt = new Mock<ChestEvent>(chest).Object;
+            var sign = Mock.Of<ISign>();
+            var evt = new Mock<SignEvent>(sign).Object;
 
-            Assert.Same(chest, evt.Chest);
+            Assert.Same(sign, evt.Sign);
         }
     }
 }

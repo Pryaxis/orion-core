@@ -15,21 +15,40 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using Moq;
-using Orion.Core.World.Signs;
+using Orion.Core.Players;
+using Orion.Core.World.TileEntities;
 using Xunit;
 
-namespace Orion.Core.Events.World.Signs
+namespace Orion.Core.Events.World.TileEntities
 {
-    public class SignEventTests
+    public class SignReadEventTests
     {
         [Fact]
-        public void Sign_Get()
+        public void Ctor_NullSign_ThrowsArgumentNullException()
+        {
+            var player = Mock.Of<IPlayer>();
+
+            Assert.Throws<ArgumentNullException>(() => new SignReadEvent(null!, player));
+        }
+
+        [Fact]
+        public void Ctor_NullPlayer_ThrowsArgumentNullException()
         {
             var sign = Mock.Of<ISign>();
-            var evt = new Mock<SignEvent>(sign).Object;
 
-            Assert.Same(sign, evt.Sign);
+            Assert.Throws<ArgumentNullException>(() => new SignReadEvent(sign, null!));
+        }
+
+        [Fact]
+        public void Player_Get()
+        {
+            var sign = Mock.Of<ISign>();
+            var player = Mock.Of<IPlayer>();
+            var evt = new SignReadEvent(sign, player);
+
+            Assert.Same(player, evt.Player);
         }
     }
 }
