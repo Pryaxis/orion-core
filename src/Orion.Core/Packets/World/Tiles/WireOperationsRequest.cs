@@ -25,7 +25,7 @@ namespace Orion.Core.Packets.World.Tiles
     /// A packet sent from the client to the server to perform wire operations.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 12)]
-    public struct WireOperations : IPacket
+    public struct WireOperationsRequest : IPacket
     {
         [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
@@ -54,21 +54,21 @@ namespace Orion.Core.Packets.World.Tiles
         [field: FieldOffset(6)] public short EndY { get; set; }
 
         /// <summary>
-        /// Gets or sets the operation types.
+        /// Gets or sets the operations.
         /// </summary>
-        /// <value>The operation types.</value>
-        [field: FieldOffset(8)] public OperationTypes Types { get; set; }
+        /// <value>The operations.</value>
+        [field: FieldOffset(8)] public WireOperations Operations { get; set; }
 
-        PacketId IPacket.Id => PacketId.WireOperations;
+        PacketId IPacket.Id => PacketId.WireOperationsRequest;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 9);
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 9);
 
         /// <summary>
-        /// Specifies the operation types in a <see cref="Tiles.WireOperations"/>.
+        /// Specifies the wire operations in a <see cref="WireOperationsRequest"/>.
         /// </summary>
         [Flags]
-        public enum OperationTypes : byte
+        public enum WireOperations : byte
         {
             /// <summary>
             /// Indicates nothing.
