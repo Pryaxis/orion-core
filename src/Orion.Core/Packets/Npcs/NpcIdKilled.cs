@@ -23,10 +23,10 @@ using Orion.Core.Utils;
 namespace Orion.Core.Packets.Npcs
 {
     /// <summary>
-    /// A packet sent from the server to the client to set an NPC ID's kill count.
+    /// A packet sent from the server to the client to indicate that an NPC ID has been killed.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 8)]
-    public struct NpcKillCount : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 2)]
+    public struct NpcIdKilled : IPacket
     {
         [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
 
@@ -36,16 +36,10 @@ namespace Orion.Core.Packets.Npcs
         /// <value>The NPC ID.</value>
         [field: FieldOffset(0)] public NpcId Id { get; set; }
 
-        /// <summary>
-        /// Gets or sets the NPC ID's kill count.
-        /// </summary>
-        /// <value>The NPC ID's kill count.</value>
-        [field: FieldOffset(2)] public int KillCount { get; set; }
+        PacketId IPacket.Id => PacketId.NpcIdKilled;
 
-        PacketId IPacket.Id => PacketId.NpcKillCount;
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 2);
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 6);
-
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 6);
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 2);
     }
 }

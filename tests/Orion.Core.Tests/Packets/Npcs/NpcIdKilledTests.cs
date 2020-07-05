@@ -22,14 +22,14 @@ using Xunit;
 namespace Orion.Core.Packets.Npcs
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class NpcKilledTests
+    public class NpcIdKilledTests
     {
         private readonly byte[] _bytes = { 5, 0, 97, 1, 0 };
 
         [Fact]
         public void Id_Set_Get()
         {
-            var packet = new NpcKilled();
+            var packet = new NpcIdKilled();
 
             packet.Id = NpcId.BlueSlime;
 
@@ -39,7 +39,7 @@ namespace Orion.Core.Packets.Npcs
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<NpcKilled>(_bytes, PacketContext.Server);
+            var packet = TestUtils.ReadPacket<NpcIdKilled>(_bytes, PacketContext.Server);
 
             Assert.Equal(NpcId.BlueSlime, packet.Id);
         }

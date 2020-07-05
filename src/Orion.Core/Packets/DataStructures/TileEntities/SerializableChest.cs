@@ -24,7 +24,7 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
     /// <summary>
     /// Represents a serializable chest.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
+    [StructLayout(LayoutKind.Explicit, Size = 16)]
     public struct SerializableChest
     {
         [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
