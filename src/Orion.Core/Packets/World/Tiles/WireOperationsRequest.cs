@@ -101,7 +101,7 @@ namespace Orion.Core.Packets.World.Tiles
             Actuator = 16,
 
             /// <summary>
-            /// Indicates that components should be removed.
+            /// Indicates that wiring should be removed.
             /// </summary>
             Remove = 32
         }

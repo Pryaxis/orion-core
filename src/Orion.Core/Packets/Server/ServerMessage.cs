@@ -23,19 +23,19 @@ using Orion.Core.Utils;
 namespace Orion.Core.Packets.Server
 {
     /// <summary>
-    /// A packet sent from the server to the client to show chat.
+    /// A packet sent from the server to the client to show a message.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 16)]
-    public struct ServerChat : IPacket
+    public struct ServerMessage : IPacket
     {
         [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
         [FieldOffset(3)] private byte _bytes2;  // Used to obtain an interior reference.
         [FieldOffset(8)] private NetworkText? _message;
 
         /// <summary>
-        /// Gets or sets the message color.
+        /// Gets or sets the message's color.
         /// </summary>
-        /// <value>The message color.</value>
+        /// <value>The message's color.</value>
         [field: FieldOffset(0)] public Color3 Color { get; set; }
 
         /// <summary>
@@ -50,12 +50,12 @@ namespace Orion.Core.Packets.Server
         }
 
         /// <summary>
-        /// Gets or sets the line width. A value of <c>-1</c> indicates that the screen width should be used.
+        /// Gets or sets the message's line width. A value of <c>-1</c> indicates that the screen width should be used.
         /// </summary>
-        /// <value>The line width.</value>
+        /// <value>The message's line width.</value>
         [field: FieldOffset(3)] public short LineWidth { get; set; }
 
-        PacketId IPacket.Id => PacketId.ServerChat;
+        PacketId IPacket.Id => PacketId.ServerMessage;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
