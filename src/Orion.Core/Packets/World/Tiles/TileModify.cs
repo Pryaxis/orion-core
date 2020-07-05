@@ -29,8 +29,6 @@ namespace Orion.Core.Packets.World.Tiles
     public struct TileModify : IPacket
     {
         [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
-        [FieldOffset(5)] private ushort _data;
-        [FieldOffset(7)] private byte _data2;
 
         /// <summary>
         /// Gets or sets the modification.
@@ -51,166 +49,16 @@ namespace Orion.Core.Packets.World.Tiles
         [field: FieldOffset(3)] public short Y { get; set; }
 
         /// <summary>
-        /// Gets or sets the block ID. <i>This is only applicable if <see cref="Modification"/> involves placing a
-        /// block!</i>
+        /// Gets or sets the data.
         /// </summary>
-        /// <value>The block ID.</value>
-        /// <exception cref="InvalidOperationException">
-        /// <see cref="Modification"/> does not involve placing a block.
-        /// </exception>
-        public BlockId BlockId
-        {
-            get
-            {
-                if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock)
-                {
-                    throw new InvalidOperationException("Modification does not involve placing a block");
-                }
-
-                return (BlockId)_data;
-            }
-
-            set
-            {
-                if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock)
-                {
-                    throw new InvalidOperationException("Modification does not involve placing a block");
-                }
-
-                _data = (ushort)value;
-            }
-        }
+        /// <value>The data.</value>
+        [field: FieldOffset(5)] public ushort Data { get; set; }
 
         /// <summary>
-        /// Gets or sets the block style. <i>This is only applicable if <see cref="Modification"/> involves placing a
-        /// block!</i>
+        /// Gets or sets the second data.
         /// </summary>
-        /// <value>The block style.</value>
-        /// <exception cref="InvalidOperationException">
-        /// <see cref="Modification"/> does not involve placing a block.
-        /// </exception>
-        public byte BlockStyle
-        {
-            get
-            {
-                if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock)
-                {
-                    throw new InvalidOperationException("Modification does not involve placing a block");
-                }
-
-                return _data2;
-            }
-
-            set
-            {
-                if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock)
-                {
-                    throw new InvalidOperationException("Modification does not involve placing a block");
-                }
-
-                _data2 = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the wall ID. <i>This is only applicable if <see cref="Modification"/> involves placing a
-        /// wall!</i>
-        /// </summary>
-        /// <value>The wall ID.</value>
-        /// <exception cref="InvalidOperationException">
-        /// <see cref="Modification"/> does not involve placing a wall.
-        /// </exception>
-        public WallId WallId
-        {
-            get
-            {
-                if (Modification != TileModification.PlaceWall && Modification != TileModification.ReplaceWall)
-                {
-                    throw new InvalidOperationException("Modification does not involve placing a wall");
-                }
-
-                return (WallId)_data;
-            }
-
-            set
-            {
-                if (Modification != TileModification.PlaceWall && Modification != TileModification.ReplaceWall)
-                {
-                    throw new InvalidOperationException("Modification does not involve placing a wall");
-                }
-
-                _data = (ushort)value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the block shape. <i>This is only applicable if <see cref="Modification"/> involves sloping a
-        /// block!</i>
-        /// </summary>
-        /// <value>The slope.</value>
-        /// <exception cref="InvalidOperationException">
-        /// <see cref="Modification"/> does not involve sloping a block.
-        /// </exception>
-        public BlockShape BlockShape
-        {
-            get
-            {
-                if (Modification != TileModification.SlopeBlock && Modification != TileModification.SlopeAndHammerBlock)
-                {
-                    throw new InvalidOperationException("Modification does not involve sloping a block");
-                }
-
-                return _data > 0 ? (BlockShape)(_data + 1) : BlockShape.Normal;
-            }
-
-            set
-            {
-                if (Modification != TileModification.SlopeBlock && Modification != TileModification.SlopeAndHammerBlock)
-                {
-                    throw new InvalidOperationException("Modification does not involve sloping a block");
-                }
-
-                if (value != BlockShape.Normal)
-                {
-                    _data = (ushort)(value - 1);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the modification is a failure. <i>This is only applicable if
-        /// <see cref="Modification"/> involves breaking a block or wall!</i>
-        /// </summary>
-        /// <value><see langword="true"/> if the modification is a failure; otherwise, <see langword="false"/>.</value>
-        /// <exception cref="InvalidOperationException">
-        /// <see cref="Modification"/> does not involve breaking a block or wall.
-        /// </exception>
-        public bool IsFailure
-        {
-            get
-            {
-                if (Modification != TileModification.BreakBlock && Modification != TileModification.BreakWall &&
-                    Modification != TileModification.BreakBlockItemless &&
-                    Modification != TileModification.BreakBlockRequest)
-                {
-                    throw new InvalidOperationException("Modification does not involve breaking a block or wall");
-                }
-
-                return _data == 1;
-            }
-
-            set
-            {
-                if (Modification != TileModification.BreakBlock && Modification != TileModification.BreakWall &&
-                    Modification != TileModification.BreakBlockItemless &&
-                    Modification != TileModification.BreakBlockRequest)
-                {
-                    throw new InvalidOperationException("Modification does not involve breaking a block or wall");
-                }
-
-                _data = (ushort)(value ? 1 : 0);
-            }
-        }
+        /// <value>The second data.</value>
+        [field: FieldOffset(7)] public byte Data2 { get; set; }
 
         PacketId IPacket.Id => PacketId.TileModify;
 
