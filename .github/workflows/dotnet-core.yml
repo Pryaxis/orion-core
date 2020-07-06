@@ -8,16 +8,23 @@ on:
     paths-ignore:
       - 'docs/**'
 
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Check out orion-core repository
         uses: actions/checkout@v2
       - name: Set up .NET core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.300
+          dotnet-version: 3.1.301
       - name: Run tests (with code coverage)
         run: >
           dotnet test -f netcoreapp3.1 -c Release tests/Orion.Core.Tests/Orion.Core.Tests.csproj
@@ -25,20 +32,24 @@ jobs:
           /p:CoverletOutputFormat=opencover
           /p:ExcludeByAttribute=GeneratedCodeAttribute
       - name: Upload code coverage
+        if: matrix.os == 'ubuntu-latest'
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: tests/Orion.Core.Tests/coverage.opencover.xml
       - name: Build artifacts
+        if: matrix.os == 'ubuntu-latest'
         run: |
           dotnet publish -c Debug src/Orion.Core/Orion.Core.csproj
           dotnet publish -c Release src/Orion.Core/Orion.Core.csproj
       - name: Publish artifacts (Debug)
+        if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v2
         with:
           name: Orion.Core (Debug)
           path: src/Orion.Core/bin/Debug/netstandard2.1/publish
       - name: Publish artifacts (Release)
+        if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v2
         with:
           name: Orion.Core (Release)
