@@ -3328,7 +3328,7 @@ namespace Orion.Core.Items
         PurpleCounterweight = 3312,
         RedCounterweight = 3313,
         YellowCounterweight = 3314,
-        Formatc = 3315,
+        FormatC = 3315,
         Gradient = 3316,
         Valor = 3317,
         KingSlimeTreasureBag = 3318,
