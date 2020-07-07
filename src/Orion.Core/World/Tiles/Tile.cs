@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Destructurama.Attributed;
@@ -28,7 +29,7 @@ namespace Orion.Core.World.Tiles
     /// This structure is not thread-safe.
     /// </remarks>
     [StructLayout(LayoutKind.Explicit, Size = 13)]
-    public struct Tile
+    public struct Tile : IEquatable<Tile>
     {
         // The shifts for the tile header.
         private const int BlockColorShift = 0;
@@ -232,6 +233,33 @@ namespace Orion.Core.World.Tiles
         {
             readonly get => GetFlag(HasActuatorMask);
             set => SetFlag(HasActuatorMask, value);
+        }
+
+        /// <inheritdoc/>
+        public bool Equals(Tile other)
+        {
+            var mask = _liquidAmount == 0
+                ? 0b_00000000_11111111_11111111_11111111
+                : 0b_00000000_10011111_11111111_11111111;
+            if ((Header & mask) != (other.Header & mask))
+            {
+                return false;
+            }
+
+            if (IsBlockActive)
+            {
+                if (BlockId != other.BlockId)
+                {
+                    return false;
+                }
+
+                if (BlockId.HasFrames() && (BlockFrameX != other.BlockFrameX || BlockFrameY != other.BlockFrameY))
+                {
+                    return false;
+                }
+            }
+
+            return WallId == other.WallId && _liquidAmount == other._liquidAmount;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

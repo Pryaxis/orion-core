@@ -150,7 +150,7 @@ namespace Orion.Core.Packets.World.Tiles
         private int ReadTile(Span<byte> span, ref Tile tile)
         {
             ref var header = ref Unsafe.As<byte, ushort>(ref span.At(0));
-            var index = 2;
+            var length = 2;
 
             tile.HasRedWire /*      */ = (header & HasRedWireMask) != 0;
             tile.HasActuator /*     */ = (header & HasActuatorMask) != 0;
@@ -161,23 +161,22 @@ namespace Orion.Core.Packets.World.Tiles
 
             if ((header & HasBlockColorMask) != 0)
             {
-                tile.BlockColor = (PaintColor)span[index++];
+                tile.BlockColor = (PaintColor)span[length++];
             }
 
             if ((header & HasWallColorMask) != 0)
             {
-                tile.WallColor = (PaintColor)span[index++];
+                tile.WallColor = (PaintColor)span[length++];
             }
 
             if ((header & IsBlockActiveMask) != 0)
             {
-                tile.BlockId = Unsafe.ReadUnaligned<BlockId>(ref span[index]);
-                index += 2;
+                tile.BlockId = Unsafe.ReadUnaligned<BlockId>(ref span[length]);
+                length += 2;
 
                 if (tile.BlockId.HasFrames())
                 {
-                    Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref tile.AsByte(), 5), ref span[index], 4);
-                    index += 4;
+                    length += span[length..].Read(ref Unsafe.Add(ref tile.AsByte(), 5), 4);
                 }
 
                 if ((header & IsBlockHalvedMask) != 0)
@@ -198,16 +197,16 @@ namespace Orion.Core.Packets.World.Tiles
 
             if ((header & HasWallMask) != 0)
             {
-                tile.WallId = Unsafe.ReadUnaligned<WallId>(ref span[index]);
-                index += 2;
+                tile.WallId = Unsafe.ReadUnaligned<WallId>(ref span[length]);
+                length += 2;
             }
 
             if ((header & HasLiquidMask) != 0)
             {
-                tile.Liquid = new Liquid(amount: span[index++], type: (LiquidType)span[index++]);
+                tile.Liquid = new Liquid(amount: span[length++], type: (LiquidType)span[length++]);
             }
 
-            return index;
+            return length;
         }
 
         // TODO: look into optimizing this if bottleneck?
@@ -215,7 +214,7 @@ namespace Orion.Core.Packets.World.Tiles
         {
             ref var header = ref Unsafe.As<byte, ushort>(ref span.At(0));
             header = 0;
-            var index = 2;
+            var length = 2;
 
             if (tile.HasRedWire) /*      */ header |= HasRedWireMask;
             if (tile.HasActuator) /*     */ header |= HasActuatorMask;
@@ -226,27 +225,26 @@ namespace Orion.Core.Packets.World.Tiles
 
             if (tile.BlockColor != PaintColor.None)
             {
-                span[index++] = (byte)tile.BlockColor;
+                span[length++] = (byte)tile.BlockColor;
 
                 header |= HasBlockColorMask;
             }
 
             if (tile.WallColor != PaintColor.None)
             {
-                span[index++] = (byte)tile.WallColor;
+                span[length++] = (byte)tile.WallColor;
 
                 header |= HasWallColorMask;
             }
 
             if (tile.IsBlockActive)
             {
-                Unsafe.WriteUnaligned(ref span[index], tile.BlockId);
-                index += 2;
+                Unsafe.WriteUnaligned(ref span[length], tile.BlockId);
+                length += 2;
 
                 if (tile.BlockId.HasFrames())
                 {
-                    Unsafe.CopyBlockUnaligned(ref span[index], ref Unsafe.Add(ref tile.AsByte(), 5), 4);
-                    index += 4;
+                    length += span[length..].Write(ref Unsafe.Add(ref tile.AsByte(), 5), 4);
                 }
 
                 if (tile.BlockShape == BlockShape.Halved)
@@ -266,8 +264,8 @@ namespace Orion.Core.Packets.World.Tiles
 
             if (tile.WallId != WallId.None)
             {
-                Unsafe.WriteUnaligned(ref span[index], tile.WallId);
-                index += 2;
+                Unsafe.WriteUnaligned(ref span[length], tile.WallId);
+                length += 2;
 
                 header |= HasWallMask;
             }
@@ -275,13 +273,13 @@ namespace Orion.Core.Packets.World.Tiles
             if (!tile.Liquid.IsEmpty)
             {
                 var liquid = tile.Liquid;
-                span[index++] = liquid.Amount;
-                span[index++] = (byte)liquid.Type;
+                span[length++] = liquid.Amount;
+                span[length++] = (byte)liquid.Type;
 
                 header |= HasLiquidMask;
             }
 
-            return index;
+            return length;
         }
     }
 }
