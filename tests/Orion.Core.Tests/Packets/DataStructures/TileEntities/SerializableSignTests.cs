@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
@@ -53,6 +54,22 @@ namespace Orion.Core.Packets.DataStructures.TileEntities
             sign.Y = 100;
 
             Assert.Equal(100, sign.Y);
+        }
+
+        [Fact]
+        public void Name_GetNullValue()
+        {
+            var sign = new SerializableSign();
+
+            Assert.Equal(string.Empty, sign.Text);
+        }
+
+        [Fact]
+        public void Name_SetNullValue_ThrowsArgumentNullException()
+        {
+            var sign = new SerializableSign();
+
+            Assert.Throws<ArgumentNullException>(() => sign.Text = null!);
         }
 
         [Fact]

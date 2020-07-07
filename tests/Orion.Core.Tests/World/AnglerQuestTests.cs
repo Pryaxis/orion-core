@@ -40,5 +40,11 @@ namespace Orion.Core.World
                 Assert.Equal((Items.ItemId)Terraria.Main.anglerQuestItemNetIDs[i], ((AnglerQuest)i).ItemId());
             }
         }
+        
+        [Fact]
+        public void ItemId_InvalidAnglerQuest()
+        {
+            Assert.Equal(Items.ItemId.None, ((AnglerQuest)255).ItemId());
+        }
     }
 }
