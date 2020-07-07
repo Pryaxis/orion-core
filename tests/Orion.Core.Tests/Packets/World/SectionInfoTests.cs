@@ -161,6 +161,20 @@ namespace Orion.Core.Packets.World
         }
 
         [Fact]
+        public void Read_Empty()
+        {
+            var packet = TestUtils.ReadPacket<SectionInfo>(_emptyBytes, PacketContext.Server);
+
+            Assert.Equal(1600, packet.StartX);
+            Assert.Equal(0, packet.StartY);
+            Assert.Equal(200, packet.Tiles.Width);
+            Assert.Equal(150, packet.Tiles.Height);
+            Assert.Empty(packet.Chests);
+            Assert.Empty(packet.Signs);
+            Assert.Empty(packet.TileEntities);
+        }
+
+        [Fact]
         public void Read_Compressed()
         {
             var packet = TestUtils.ReadPacket<SectionInfo>(_compressedBytes, PacketContext.Server);
