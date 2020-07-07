@@ -73,30 +73,6 @@ namespace Orion.Core.World.Tiles
             Assert.Equal(5678, tile.BlockFrameY);
         }
 
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void IsBlockActive_Set_Get(bool value)
-        {
-            var tile = new Tile();
-
-            tile.IsBlockActive = value;
-
-            Assert.Equal(value, tile.IsBlockActive);
-        }
-
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void IsBlockActuated_Set_Get(bool value)
-        {
-            var tile = new Tile();
-
-            tile.IsBlockActuated = value;
-
-            Assert.Equal(value, tile.IsBlockActuated);
-        }
-
         [Fact]
         public void BlockColor_Set_Get()
         {
@@ -121,16 +97,6 @@ namespace Orion.Core.World.Tiles
             tile.BlockShape = value;
 
             Assert.Equal(value, tile.BlockShape);
-        }
-
-        [Fact]
-        public void WallColor_Set_Get()
-        {
-            var tile = new Tile();
-
-            tile.WallColor = PaintColor.Red;
-
-            Assert.Equal(PaintColor.Red, tile.WallColor);
         }
 
         [Theory]
@@ -191,6 +157,221 @@ namespace Orion.Core.World.Tiles
             tile.HasActuator = value;
 
             Assert.Equal(value, tile.HasActuator);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsBlockActuated_Set_Get(bool value)
+        {
+            var tile = new Tile();
+
+            tile.IsBlockActuated = value;
+
+            Assert.Equal(value, tile.IsBlockActuated);
+        }
+
+        [Fact]
+        public void WallColor_Set_Get()
+        {
+            var tile = new Tile();
+
+            tile.WallColor = PaintColor.Red;
+
+            Assert.Equal(PaintColor.Red, tile.WallColor);
+        }
+
+        [Fact]
+        public void Equals_BlockIdNotEqual_ReturnsFalse()
+        {
+            var tile = new Tile { BlockId = BlockId.None };
+            var tile2 = new Tile { BlockId = BlockId.Dirt };
+
+            Assert.False(tile.Equals((object)tile2));
+            Assert.False(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_WallIdNotEqual_ReturnsFalse()
+        {
+            var tile = new Tile { WallId = WallId.None };
+            var tile2 = new Tile { WallId = WallId.Stone };
+
+            Assert.False(tile.Equals((object)tile2));
+            Assert.False(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_LiquidNotEqual_ReturnsFalse()
+        {
+            var tile = new Tile { Liquid = new Liquid(LiquidType.Water, 255) };
+            var tile2 = new Tile { Liquid = new Liquid(LiquidType.Water, 127) };
+            var tile3 = new Tile { Liquid = new Liquid(LiquidType.Honey, 255) };
+
+            Assert.False(tile.Equals((object)tile2));
+            Assert.False(tile.Equals((object)tile3));
+            Assert.False(tile.Equals(tile2));
+            Assert.False(tile.Equals(tile3));
+        }
+
+        [Fact]
+        public void Equals_BlockFramesNotEqual_HasFrames_ReturnsFalse()
+        {
+            var tile = new Tile { BlockId = BlockId.Torches, BlockFrameX = 1, BlockFrameY = 1 };
+            var tile2 = new Tile { BlockId = BlockId.Torches, BlockFrameX = 2, BlockFrameY = 1 };
+            var tile3 = new Tile { BlockId = BlockId.Torches, BlockFrameX = 1, BlockFrameY = 2 };
+
+            Assert.False(tile.Equals((object)tile2));
+            Assert.False(tile.Equals((object)tile3));
+            Assert.False(tile.Equals(tile2));
+            Assert.False(tile.Equals(tile3));
+        }
+
+        [Fact]
+        public void Equals_BlockColorNotEqual_ReturnsFalse()
+        {
+            var tile = new Tile { BlockColor = PaintColor.Red };
+            var tile2 = new Tile { BlockColor = PaintColor.Blue };
+
+            Assert.False(tile.Equals((object)tile2));
+            Assert.False(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_BlockShapeNotEqual_ReturnsFalse()
+        {
+            var tile = new Tile { BlockShape = BlockShape.Normal };
+            var tile2 = new Tile { BlockShape = BlockShape.Halved };
+
+            Assert.False(tile.Equals((object)tile2));
+            Assert.False(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_HasRedWireNotEqual_ReturnsFalse()
+        {
+            var tile = new Tile { HasRedWire = false };
+            var tile2 = new Tile { HasRedWire = true };
+
+            Assert.False(tile.Equals((object)tile2));
+            Assert.False(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_HasBlueWireNotEqual_ReturnsFalse()
+        {
+            var tile = new Tile { HasBlueWire = false };
+            var tile2 = new Tile { HasBlueWire = true };
+
+            Assert.False(tile.Equals((object)tile2));
+            Assert.False(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_HasGreenWireNotEqual_ReturnsFalse()
+        {
+            var tile = new Tile { HasGreenWire = false };
+            var tile2 = new Tile { HasGreenWire = true };
+
+            Assert.False(tile.Equals((object)tile2));
+            Assert.False(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_HasYellowWireNotEqual_ReturnsFalse()
+        {
+            var tile = new Tile { HasYellowWire = false };
+            var tile2 = new Tile { HasYellowWire = true };
+
+            Assert.False(tile.Equals((object)tile2));
+            Assert.False(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_HasActuatorNotEqual_ReturnsFalse()
+        {
+            var tile = new Tile { HasActuator = false };
+            var tile2 = new Tile { HasActuator = true };
+
+            Assert.False(tile.Equals((object)tile2));
+            Assert.False(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_IsBlockActuatedNotEqual_ReturnsFalse()
+        {
+            var tile = new Tile { IsBlockActuated = false };
+            var tile2 = new Tile { IsBlockActuated = true };
+
+            Assert.False(tile.Equals((object)tile2));
+            Assert.False(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_WallColorNotEqual_ReturnsFalse()
+        {
+            var tile = new Tile { WallColor = PaintColor.Red };
+            var tile2 = new Tile { WallColor = PaintColor.Blue };
+
+            Assert.False(tile.Equals((object)tile2));
+            Assert.False(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_HasFrames_ReturnsTrue()
+        {
+            var tile = new Tile { BlockId = BlockId.Torches, BlockFrameX = 1, BlockFrameY = 2 };
+            var tile2 = new Tile { BlockId = BlockId.Torches, BlockFrameX = 1, BlockFrameY = 2 };
+
+            Assert.True(tile.Equals((object)tile2));
+            Assert.True(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_DoesNotHaveFrames_ReturnsTrue()
+        {
+            var tile = new Tile { BlockId = BlockId.Stone, BlockFrameX = 1, BlockFrameY = 2 };
+            var tile2 = new Tile { BlockId = BlockId.Stone, BlockFrameX = 2, BlockFrameY = 2 };
+
+            Assert.True(tile.Equals((object)tile2));
+            Assert.True(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_NoLiquid_ReturnsTrue()
+        {
+            var tile = new Tile { Liquid = new Liquid(LiquidType.Water, 0) };
+            var tile2 = new Tile { Liquid = new Liquid(LiquidType.Lava, 0) };
+
+            Assert.True(tile.Equals((object)tile2));
+            Assert.True(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void GetHashCode_Equals_HasFrames_AreEqual()
+        {
+            var tile = new Tile { BlockId = BlockId.Torches, BlockFrameX = 1, BlockFrameY = 2 };
+            var tile2 = new Tile { BlockId = BlockId.Torches, BlockFrameX = 1, BlockFrameY = 2 };
+
+            Assert.Equal(tile.GetHashCode(), tile2.GetHashCode());
+        }
+
+        [Fact]
+        public void GetHashCode_Equals_DoesNotHaveFrames_AreEqual()
+        {
+            var tile = new Tile { BlockId = BlockId.Stone, BlockFrameX = 1, BlockFrameY = 2 };
+            var tile2 = new Tile { BlockId = BlockId.Stone, BlockFrameX = 2, BlockFrameY = 2 };
+
+            Assert.Equal(tile.GetHashCode(), tile2.GetHashCode());
+        }
+
+        [Fact]
+        public void GetHashCode_Equals_NoLiquid_AreEqual()
+        {
+            var tile = new Tile { Liquid = new Liquid(LiquidType.Water, 0) };
+            var tile2 = new Tile { Liquid = new Liquid(LiquidType.Lava, 0) };
+
+            Assert.Equal(tile.GetHashCode(), tile2.GetHashCode());
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Orion.Core.Packets.World
 
         // The masks for the tile headers.
         private const byte HasHeader2Mask /*      */ = 0b_00000001;
-        private const byte IsBlockActiveMask /*   */ = 0b_00000010;
+        private const byte HasBlockMask /*        */ = 0b_00000010;
         private const byte HasWallMask /*         */ = 0b_00000100;
         private const byte LiquidTypeMask /*      */ = 0b_00011000;
         private const byte BlockIdTwoBytesMask /* */ = 0b_00100000;
@@ -366,16 +366,16 @@ namespace Orion.Core.Packets.World
             tile.IsBlockActuated /* */ = (header3 & IsBlockActuatedMask) != 0;
             tile.HasYellowWire /*   */ = (header3 & HasYellowWireMask) != 0;
 
-            if ((header & IsBlockActiveMask) != 0)
+            if ((header & HasBlockMask) != 0)
             {
                 if ((header & BlockIdTwoBytesMask) != 0)
                 {
-                    tile.BlockId = Unsafe.ReadUnaligned<BlockId>(ref span.At(length));
+                    tile.BlockId = Unsafe.ReadUnaligned<BlockId>(ref span.At(length)) + 1;
                     length += 2;
                 }
                 else
                 {
-                    tile.BlockId = (BlockId)span.At(length++);
+                    tile.BlockId = (BlockId)span.At(length++) + 1;
                 }
 
                 if (tile.BlockId.HasFrames())
@@ -388,8 +388,6 @@ namespace Orion.Core.Packets.World
                 {
                     tile.BlockColor = (PaintColor)span.At(length++);
                 }
-
-                tile.IsBlockActive = true;
             }
 
             if ((header & HasWallMask) != 0)
@@ -450,18 +448,19 @@ namespace Orion.Core.Packets.World
             if (tile.IsBlockActuated) /* */ header3 |= IsBlockActuatedMask;
             if (tile.HasYellowWire) /*   */ header3 |= HasYellowWireMask;
 
-            if (tile.IsBlockActive)
+            if (tile.BlockId != BlockId.None)
             {
-                if ((ushort)tile.BlockId > byte.MaxValue)
+                // Offset the block ID by 1 since we need to transmit Terraria bytes.
+                if ((ushort)(tile.BlockId - 1) > byte.MaxValue)
                 {
-                    Unsafe.WriteUnaligned(ref buffer.At(endIndex), tile.BlockId);
+                    Unsafe.WriteUnaligned(ref buffer.At(endIndex), tile.BlockId - 1);
                     endIndex += 2;
 
                     header |= BlockIdTwoBytesMask;
                 }
                 else
                 {
-                    buffer.At(endIndex++) = (byte)tile.BlockId;
+                    buffer.At(endIndex++) = (byte)(tile.BlockId - 1);
                 }
 
                 if (tile.BlockId.HasFrames())
@@ -477,7 +476,7 @@ namespace Orion.Core.Packets.World
                     header3 |= HasBlockColorMask;
                 }
 
-                header |= IsBlockActiveMask;
+                header |= HasBlockMask;
             }
 
             if (tile.WallId != WallId.None)

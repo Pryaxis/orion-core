@@ -35,7 +35,7 @@ namespace Orion.Core.Packets.World.Tiles
         private const int SlopeShift = 12;
 
         // The masks for the tile header.
-        private const ushort IsBlockActiveMask /*   */ = 0b_00000000_00000001;
+        private const ushort HasBlockMask /*        */ = 0b_00000000_00000001;
         private const ushort HasWallMask /*         */ = 0b_00000000_00000100;
         private const ushort HasLiquidMask /*       */ = 0b_00000000_00001000;
         private const ushort HasRedWireMask /*      */ = 0b_00000000_00010000;
@@ -169,9 +169,9 @@ namespace Orion.Core.Packets.World.Tiles
                 tile.WallColor = (PaintColor)span[length++];
             }
 
-            if ((header & IsBlockActiveMask) != 0)
+            if ((header & HasBlockMask) != 0)
             {
-                tile.BlockId = Unsafe.ReadUnaligned<BlockId>(ref span[length]);
+                tile.BlockId = Unsafe.ReadUnaligned<BlockId>(ref span[length]) + 1;
                 length += 2;
 
                 if (tile.BlockId.HasFrames())
@@ -191,8 +191,6 @@ namespace Orion.Core.Packets.World.Tiles
                         tile.BlockShape = (BlockShape)((slope >> SlopeShift) + 1);
                     }
                 }
-
-                tile.IsBlockActive = true;
             }
 
             if ((header & HasWallMask) != 0)
@@ -237,9 +235,9 @@ namespace Orion.Core.Packets.World.Tiles
                 header |= HasWallColorMask;
             }
 
-            if (tile.IsBlockActive)
+            if (tile.BlockId != BlockId.None)
             {
-                Unsafe.WriteUnaligned(ref span[length], tile.BlockId);
+                Unsafe.WriteUnaligned(ref span[length], tile.BlockId - 1);
                 length += 2;
 
                 if (tile.BlockId.HasFrames())
@@ -259,7 +257,7 @@ namespace Orion.Core.Packets.World.Tiles
                     }
                 }
 
-                header |= IsBlockActiveMask;
+                header |= HasBlockMask;
             }
 
             if (tile.WallId != WallId.None)

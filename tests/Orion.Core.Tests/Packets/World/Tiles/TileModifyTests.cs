@@ -132,7 +132,7 @@ namespace Orion.Core.Packets.World.Tiles
             Assert.Equal(TileModify.TileModification.PlaceBlock, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
-            Assert.Equal(BlockId.Torches, (BlockId)packet.Data);
+            Assert.Equal(BlockId.Torches, (BlockId)(packet.Data + 1));
             Assert.Equal(1, packet.Data2);
         }
 
@@ -361,7 +361,7 @@ namespace Orion.Core.Packets.World.Tiles
             Assert.Equal(TileModify.TileModification.ReplaceBlock, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
-            Assert.Equal(BlockId.Stone, (BlockId)packet.Data);
+            Assert.Equal(BlockId.Stone, (BlockId)(packet.Data + 1));
             Assert.Equal(0, packet.Data2);
         }
 

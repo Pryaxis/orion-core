@@ -28,7 +28,8 @@ namespace Orion.Core.World.Tiles
         [Fact]
         public void AllBlockIdsCovered()
         {
-            var maxId = Enum.GetValues(typeof(BlockId)).Cast<BlockId>().Max();
+            // Subtract by 1 since all of the block IDs are offset by 1.
+            var maxId = Enum.GetValues(typeof(BlockId)).Cast<BlockId>().Max() - 1;
             Assert.Equal((BlockId)(Terraria.ID.TileID.Count - 1), maxId);
         }
 
@@ -37,7 +38,8 @@ namespace Orion.Core.World.Tiles
         {
             for (var i = 0; i < Terraria.ID.TileID.Count; ++i)
             {
-                Assert.Equal(Terraria.Main.tileFrameImportant[i], ((BlockId)i).HasFrames());
+                // Add by 1 since all of the block IDs are offset by 1.
+                Assert.Equal(Terraria.Main.tileFrameImportant[i], ((BlockId)(i + 1)).HasFrames());
             }
         }
     }

@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Destructurama.Attributed;
@@ -28,30 +29,34 @@ namespace Orion.Core.World.Tiles
     /// <remarks>
     /// This structure is not thread-safe.
     /// </remarks>
-    [StructLayout(LayoutKind.Explicit, Size = 13)]
+    [DebuggerStepThrough]
+    [StructLayout(LayoutKind.Explicit, Size = 12)]
     public struct Tile : IEquatable<Tile>
     {
-        // The shifts for the tile header.
         private const int BlockColorShift = 0;
-        private const int SlopeShift = 12;
-        private const int WallColorShift = 16;
-        private const int LiquidTypeShift = 21;
+        private const int BlockShapeShift = 5;
 
-        // The masks for the tile header.
-        private const uint BlockColorMask /*       */ = 0b_00000000_00000000_00000000_00011111;
-        private const uint IsBlockActiveMask /*    */ = 0b_00000000_00000000_00000000_00100000;
-        private const uint IsBlockActuatedMask /*  */ = 0b_00000000_00000000_00000000_01000000;
-        private const uint HasRedWireMask /*       */ = 0b_00000000_00000000_00000000_10000000;
-        private const uint HasBlueWireMask /*      */ = 0b_00000000_00000000_00000001_00000000;
-        private const uint HasGreenWireMask /*     */ = 0b_00000000_00000000_00000010_00000000;
-        private const uint IsBlockHalvedMask /*    */ = 0b_00000000_00000000_00000100_00000000;
-        private const uint HasActuatorMask /*      */ = 0b_00000000_00000000_00001000_00000000;
-        private const uint SlopeMask /*            */ = 0b_00000000_00000000_01110000_00000000;
-        private const uint WallColorMask /*        */ = 0b_00000000_00011111_00000000_00000000;
-        private const uint LiquidTypeMask /*       */ = 0b_00000000_01100000_00000000_00000000;
-        private const uint HasYellowWireMask /*    */ = 0b_00000000_10000000_00000000_00000000;
+        private const int LiquidTypeShift = 6;
 
+        private const int WallColorShift = 0;
+
+        private const byte BlockColorMask /*      */ = 0b_00011111;
+        private const byte BlockShapeMask /*      */ = 0b_11100000;
+
+        private const byte HasRedWireMask /*      */ = 0b_00000001;
+        private const byte HasBlueWireMask /*     */ = 0b_00000010;
+        private const byte HasGreenWireMask /*    */ = 0b_00000100;
+        private const byte HasYellowWireMask /*   */ = 0b_00001000;
+        private const byte HasActuatorMask /*     */ = 0b_00010000;
+        private const byte IsBlockActuatedMask /* */ = 0b_00100000;
+        private const byte LiquidTypeMask /*      */ = 0b_11000000;
+
+        private const byte WallColorMask /*       */ = 0b_00011111;
+
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference.
+        [FieldOffset(2)] private ushort _wallId;
         [FieldOffset(4)] private byte _liquidAmount;
+        [FieldOffset(8)] private byte _bytes2;  // Used to obtain an interior reference.
 
         /// <summary>
         /// Gets or sets the tile's block ID.
@@ -63,7 +68,22 @@ namespace Orion.Core.World.Tiles
         /// Gets or sets the tile's wall ID.
         /// </summary>
         /// <value>The tile's wall ID.</value>
-        [field: FieldOffset(2)] public WallId WallId { get; set; }
+        public WallId WallId
+        {
+            // We purposefully ignore the top bit of the wall ID, to allow a bit of state to be stored there for other
+            // purposes. This cuts down on the usable number of wall IDs by a factor of two, but it should be fine.
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get => (WallId)(_wallId & 0x7fff);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                Debug.Assert((ushort)value <= 0x7fff);
+
+                _wallId = (ushort)((_wallId & 0x8000) | (ushort)value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the tile's liquid.
@@ -72,12 +92,14 @@ namespace Orion.Core.World.Tiles
         public Liquid Liquid
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => new Liquid((LiquidType)((Header & LiquidTypeMask) >> LiquidTypeShift), _liquidAmount);
+            readonly get => new Liquid((LiquidType)((Header2 & LiquidTypeMask) >> LiquidTypeShift), _liquidAmount);
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                Header = (Header & ~LiquidTypeMask) | (((uint)value.Type << LiquidTypeShift) & LiquidTypeMask);
+                Debug.Assert((byte)value.Type <= 0x03);
+
+                Header2 = (byte)((Header2 & ~LiquidTypeMask) | ((byte)value.Type << LiquidTypeShift));
                 _liquidAmount = value.Amount;
             }
         }
@@ -95,31 +117,28 @@ namespace Orion.Core.World.Tiles
         [field: FieldOffset(7)] public short BlockFrameY { get; set; }
 
         /// <summary>
-        /// Gets or sets the tile's header.
+        /// Gets or sets the tile's first header.
         /// </summary>
-        /// <value>The tile's header.</value>
+        /// <value>The tile's first header.</value>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         [NotLogged]
-        [field: FieldOffset(9)] public uint Header { get; set; }
+        [field: FieldOffset(9)] public byte Header { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the block is active.
+        /// Gets or sets the tile's second header.
         /// </summary>
-        /// <value><see langword="true"/> if the block is active; otherwise, <see langword="false"/>.</value>
-        public bool IsBlockActive
-        {
-            readonly get => GetFlag(IsBlockActiveMask);
-            set => SetFlag(IsBlockActiveMask, value);
-        }
+        /// <value>The tile's second header.</value>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [NotLogged]
+        [field: FieldOffset(10)] public byte Header2 { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the block is actuated.
+        /// Gets or sets the tile's third header.
         /// </summary>
-        /// <value><see langword="true"/> if the block is actuated; otherwise, <see langword="false"/>.</value>
-        public bool IsBlockActuated
-        {
-            readonly get => GetFlag(IsBlockActuatedMask);
-            set => SetFlag(IsBlockActuatedMask, value);
-        }
+        /// <value>The tile's third header.</value>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [NotLogged]
+        [field: FieldOffset(11)] public byte Header3 { get; set; }
 
         /// <summary>
         /// Gets or sets the block's color.
@@ -131,7 +150,12 @@ namespace Orion.Core.World.Tiles
             readonly get => (PaintColor)((Header & BlockColorMask) >> BlockColorShift);
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => Header = (Header & ~BlockColorMask) | (((uint)value << BlockColorShift) & BlockColorMask);
+            set
+            {
+                Debug.Assert((byte)value <= 0x1f);
+
+                Header = (byte)((Header & ~BlockColorMask) | ((byte)value << BlockColorShift));
+            }
         }
 
         /// <summary>
@@ -141,35 +165,75 @@ namespace Orion.Core.World.Tiles
         public BlockShape BlockShape
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get
-            {
-                if (GetFlag(IsBlockHalvedMask))
-                {
-                    return BlockShape.Halved;
-                }
-
-                var slope = Header & SlopeMask;
-                return slope > 0 ? (BlockShape)((slope >> SlopeShift) + 1) : BlockShape.Normal;
-            }
+            readonly get => (BlockShape)((Header & BlockShapeMask) >> BlockShapeShift);
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                Header &= ~(IsBlockHalvedMask | SlopeMask);
+                Debug.Assert((byte)value <= 0x07);
 
-                if (value == BlockShape.Normal)
-                {
-                    return;
-                }
-                else if (value == BlockShape.Halved)
-                {
-                    Header |= IsBlockHalvedMask;
-                }
-                else
-                {
-                    Header = (Header & ~SlopeMask) | ((uint)(value - 1) << SlopeShift & SlopeMask);
-                }
+                Header = (byte)((Header & ~BlockShapeMask) | ((byte)value << BlockShapeShift));
             }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the tile has red wire.
+        /// </summary>
+        /// <value><see langword="true"/> if the tile has red wire; otherwise, <see langword="false"/>.</value>
+        public bool HasRedWire
+        {
+            readonly get => GetWiringFlag(HasRedWireMask);
+            set => SetWiringFlag(HasRedWireMask, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the tile has blue wire.
+        /// </summary>
+        /// <value><see langword="true"/> if the tile has blue wire; otherwise, <see langword="false"/>.</value>
+        public bool HasBlueWire
+        {
+            readonly get => GetWiringFlag(HasBlueWireMask);
+            set => SetWiringFlag(HasBlueWireMask, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the tile has green wire.
+        /// </summary>
+        /// <value><see langword="true"/> if the tile has green wire; otherwise, <see langword="false"/>.</value>
+        public bool HasGreenWire
+        {
+            readonly get => GetWiringFlag(HasGreenWireMask);
+            set => SetWiringFlag(HasGreenWireMask, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the tile has yellow wire.
+        /// </summary>
+        /// <value><see langword="true"/> if the tile has yellow wire; otherwise, <see langword="false"/>.</value>
+        public bool HasYellowWire
+        {
+            readonly get => GetWiringFlag(HasYellowWireMask);
+            set => SetWiringFlag(HasYellowWireMask, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the tile has an actuator.
+        /// </summary>
+        /// <value><see langword="true"/> if the tile has an actuator; otherwise, <see langword="false"/>.</value>
+        public bool HasActuator
+        {
+            readonly get => GetWiringFlag(HasActuatorMask);
+            set => SetWiringFlag(HasActuatorMask, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the block is actuated.
+        /// </summary>
+        /// <value><see langword="true"/> if the block is actuated; otherwise, <see langword="false"/>.</value>
+        public bool IsBlockActuated
+        {
+            readonly get => GetWiringFlag(IsBlockActuatedMask);
+            set => SetWiringFlag(IsBlockActuatedMask, value);
         }
 
         /// <summary>
@@ -179,102 +243,94 @@ namespace Orion.Core.World.Tiles
         public PaintColor WallColor
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => (PaintColor)((Header & WallColorMask) >> WallColorShift);
+            readonly get => (PaintColor)((Header3 & WallColorMask) >> WallColorShift);
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => Header = (Header & ~WallColorMask) | (((uint)value << WallColorShift) & WallColorMask);
+            set
+            {
+                Debug.Assert((byte)value <= 0x1f);
+
+                Header3 = (byte)((Header3 & ~WallColorMask) | ((byte)value << WallColorShift));
+            }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the tile has red wire.
-        /// </summary>
-        /// <value><see langword="true"/> if the tile has red wire; otherwise, <see langword="false"/>.</value>
-        public bool HasRedWire
-        {
-            readonly get => GetFlag(HasRedWireMask);
-            set => SetFlag(HasRedWireMask, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the tile has blue wire.
-        /// </summary>
-        /// <value><see langword="true"/> if the tile has blue wire; otherwise, <see langword="false"/>.</value>
-        public bool HasBlueWire
-        {
-            readonly get => GetFlag(HasBlueWireMask);
-            set => SetFlag(HasBlueWireMask, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the tile has green wire.
-        /// </summary>
-        /// <value><see langword="true"/> if the tile has green wire; otherwise, <see langword="false"/>.</value>
-        public bool HasGreenWire
-        {
-            readonly get => GetFlag(HasGreenWireMask);
-            set => SetFlag(HasGreenWireMask, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the tile has yellow wire.
-        /// </summary>
-        /// <value><see langword="true"/> if the tile has yellow wire; otherwise, <see langword="false"/>.</value>
-        public bool HasYellowWire
-        {
-            readonly get => GetFlag(HasYellowWireMask);
-            set => SetFlag(HasYellowWireMask, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the tile has an actuator.
-        /// </summary>
-        /// <value><see langword="true"/> if the tile has an actuator; otherwise, <see langword="false"/>.</value>
-        public bool HasActuator
-        {
-            readonly get => GetFlag(HasActuatorMask);
-            set => SetFlag(HasActuatorMask, value);
-        }
+        /// <inheritdoc/>
+        public override bool Equals(object? obj) => obj is Tile other && Equals(other);
 
         /// <inheritdoc/>
         public bool Equals(Tile other)
         {
-            var mask = _liquidAmount == 0
-                ? 0b_00000000_11111111_11111111_11111111
-                : 0b_00000000_10011111_11111111_11111111;
-            if ((Header & mask) != (other.Header & mask))
+            var hasFrames = BlockId.HasFrames();
+
+            // Two tiles are compared by checking the tiles' bytes directly. The first set of 8 bytes are checked,
+            // followed by the second set of 4 bytes.
+            //
+            // The first set of 8 bytes are:
+            // | yyyyyyyy | xxxxxxxx | xxxxxxxx | llllllll | ?wwwwwww | wwwwwwww | ?bbbbbbb | bbbbbbbb |
+
+            var mask = hasFrames
+                ? 0b_11111111_11111111_11111111_11111111_01111111_11111111_01111111_11111111UL
+                : 0b_00000000_00000000_00000000_11111111_01111111_11111111_01111111_11111111UL;
+            if ((Unsafe.As<byte, ulong>(ref _bytes) & mask) != (Unsafe.As<byte, ulong>(ref other._bytes) & mask))
             {
                 return false;
             }
 
-            if (IsBlockActive)
-            {
-                if (BlockId != other.BlockId)
-                {
-                    return false;
-                }
+            // The second set of 4 bytes are:
+            // | ???hhhhh | hhhhhhhh | hhhhhhhh | yyyyyyyy |
+            //
+            // Note that the liquid type should not be checked if the liquid amount is 0.
 
-                if (BlockId.HasFrames() && (BlockFrameX != other.BlockFrameX || BlockFrameY != other.BlockFrameY))
-                {
-                    return false;
-                }
+            var mask2 = hasFrames
+                ? 0b_00011111_11111111_11111111_11111111U
+                : 0b_00011111_11111111_11111111_00000000U;
+            if (_liquidAmount == 0)
+            {
+                mask2 &= 0b_11111111_00111111_11111111_11111111U;
             }
 
-            return WallId == other.WallId && _liquidAmount == other._liquidAmount;
+            return (Unsafe.As<byte, uint>(ref _bytes2) & mask2) == (Unsafe.As<byte, uint>(ref other._bytes2) & mask2);
+        }
+
+        /// <summary>
+        /// Returns the hash code of the tile.
+        /// </summary>
+        /// <returns>The hash code of the tile.</returns>
+        public override int GetHashCode()
+        {
+            var hasFrames = BlockId.HasFrames();
+
+            // The hash code is calculated similarly as above.
+
+            var mask = hasFrames
+                ? 0b_11111111_11111111_11111111_11111111_01111111_11111111_01111111_11111111UL
+                : 0b_00000000_00000000_00000000_11111111_01111111_11111111_01111111_11111111UL;
+
+            var mask2 = hasFrames
+                ? 0b_00011111_11111111_11111111_11111111U
+                : 0b_00011111_11111111_11111111_00000000U;
+            if (_liquidAmount == 0)
+            {
+                mask2 &= 0b_11111111_00111111_11111111_11111111U;
+            }
+
+            return HashCode.Combine(
+                Unsafe.As<byte, ulong>(ref _bytes) & mask, Unsafe.As<byte, uint>(ref _bytes2) & mask2);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private readonly bool GetFlag(uint mask) => (Header & mask) != 0;
+        private readonly bool GetWiringFlag(byte mask) => (Header2 & mask) != 0;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void SetFlag(uint mask, bool value)
+        private void SetWiringFlag(byte mask, bool value)
         {
             if (value)
             {
-                Header |= mask;
+                Header2 |= mask;
             }
             else
             {
-                Header &= ~mask;
+                Header2 &= (byte)~mask;
             }
         }
     }
