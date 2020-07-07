@@ -146,28 +146,25 @@ namespace Orion.Core.Packets.World
 
         unsafe int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
+            span.At(0) = 1;
+
             var pool = ArrayPool<byte>.Shared;
             var buffer = pool.Rent(524288);  // 524288 should be long enough for a compression buffer.
 
             try
             {
                 var decompressedLength = Write(buffer);
-                var compressedLength = 0;
 
                 fixed (byte* spanBytes = span[1..])
                 {
                     using var outputStream =
                         new UnmanagedMemoryStream(spanBytes, span.Length - 1, span.Length - 1, FileAccess.Write);
-                    var deflateStream = new DeflateStream(outputStream, CompressionMode.Compress, true);
+                    var deflateStream = new DeflateStream(outputStream, CompressionLevel.Fastest, true);
                     deflateStream.Write(buffer, 0, decompressedLength);
                     deflateStream.Close();
 
-                    compressedLength = (int)outputStream.Position;
+                    return (int)outputStream.Position;
                 }
-
-                var useCompressed = compressedLength < decompressedLength;
-                span.At(0) = (byte)(useCompressed ? 1 : 0);
-                return 1 + (useCompressed ? compressedLength : span[1..].Write(ref buffer[0], decompressedLength));
             }
             finally
             {

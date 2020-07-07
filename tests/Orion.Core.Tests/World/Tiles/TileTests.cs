@@ -180,6 +180,14 @@ namespace Orion.Core.World.Tiles
 
             Assert.Equal(PaintColor.Red, tile.WallColor);
         }
+        
+        [Fact]
+        public void Equals_WrongType_ReturnsFalse()
+        {
+            var tile = new Tile();
+
+            Assert.False(tile.Equals(0));
+        }
 
         [Fact]
         public void Equals_BlockIdNotEqual_ReturnsFalse()

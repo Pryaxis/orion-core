@@ -71,11 +71,6 @@ namespace Orion.Core.Packets.World
             0, 0, 0, 255, 255, 3
         };
 
-        private readonly byte[] _emptyBytes =
-        {
-            19, 0, 10, 0, 64, 6, 0, 0, 0, 0, 0, 0, 200, 0, 150, 0, 128, 47, 117, 0, 0, 0, 0, 0, 0
-        };
-
         [Fact]
         public void StartX_Set_Get()
         {
@@ -158,20 +153,6 @@ namespace Orion.Core.Packets.World
             Assert.Single(packet.Chests);
             Assert.Single(packet.Signs);
             Assert.Single(packet.TileEntities);
-        }
-
-        [Fact]
-        public void Read_Empty()
-        {
-            var packet = TestUtils.ReadPacket<SectionInfo>(_emptyBytes, PacketContext.Server);
-
-            Assert.Equal(1600, packet.StartX);
-            Assert.Equal(0, packet.StartY);
-            Assert.Equal(200, packet.Tiles.Width);
-            Assert.Equal(150, packet.Tiles.Height);
-            Assert.Empty(packet.Chests);
-            Assert.Empty(packet.Signs);
-            Assert.Empty(packet.TileEntities);
         }
 
         [Fact]
