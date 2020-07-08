@@ -356,6 +356,16 @@ namespace Orion.Core.World.Tiles
         }
 
         [Fact]
+        public void Equals_HasLiquid_ReturnsTrue()
+        {
+            var tile = new Tile { Liquid = new Liquid(LiquidType.Water, 255) };
+            var tile2 = new Tile { Liquid = new Liquid(LiquidType.Water, 255) };
+
+            Assert.True(tile.Equals((object)tile2));
+            Assert.True(tile.Equals(tile2));
+        }
+
+        [Fact]
         public void GetHashCode_Equals_HasFrames_AreEqual()
         {
             var tile = new Tile { BlockId = BlockId.Torches, BlockFrameX = 1, BlockFrameY = 2 };
@@ -378,6 +388,15 @@ namespace Orion.Core.World.Tiles
         {
             var tile = new Tile { Liquid = new Liquid(LiquidType.Water, 0) };
             var tile2 = new Tile { Liquid = new Liquid(LiquidType.Lava, 0) };
+
+            Assert.Equal(tile.GetHashCode(), tile2.GetHashCode());
+        }
+
+        [Fact]
+        public void GetHashCode_Equals_HasLiquid_AreEqual()
+        {
+            var tile = new Tile { Liquid = new Liquid(LiquidType.Water, 255) };
+            var tile2 = new Tile { Liquid = new Liquid(LiquidType.Water, 255) };
 
             Assert.Equal(tile.GetHashCode(), tile2.GetHashCode());
         }
