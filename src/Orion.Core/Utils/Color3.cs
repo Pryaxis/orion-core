@@ -17,7 +17,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 
 namespace Orion.Core.Utils
@@ -72,25 +71,22 @@ namespace Orion.Core.Utils
         }
 
         /// <inheritdoc/>
-        [Pure]
         public override bool Equals(object? obj) => obj is Color3 other && Equals(other);
 
         /// <inheritdoc/>
-        [Pure]
         public bool Equals(Color3 other) => R == other.R && G == other.G && B == other.B;
 
         /// <summary>
         /// Returns the hash code of the color.
         /// </summary>
         /// <returns>The hash code of the color.</returns>
-        [Pure]
         public override int GetHashCode() => HashCode.Combine(R, G, B);
 
         /// <summary>
         /// Returns a string representation of the color.
         /// </summary>
         /// <returns>A string representation of the color.</returns>
-        [Pure, ExcludeFromCodeCoverage]
+        [ExcludeFromCodeCoverage]
         public override string ToString() => $"{R:x2}{G:x2}{B:x2}";
 
         /// <summary>
@@ -102,7 +98,6 @@ namespace Orion.Core.Utils
         /// <see langword="true"/> if <paramref name="left"/> is equal to <paramref name="right"/>; otherwise,
         /// <see langword="false"/>.
         /// </returns>
-        [Pure]
         public static bool operator ==(Color3 left, Color3 right) => left.Equals(right);
 
         /// <summary>
@@ -114,7 +109,6 @@ namespace Orion.Core.Utils
         /// <see langword="true"/> if <paramref name="left"/> is not equal to <paramref name="right"/>; otherwise,
         /// <see langword="false"/>.
         /// </returns>
-        [Pure]
         public static bool operator !=(Color3 left, Color3 right) => !(left == right);
     }
 }

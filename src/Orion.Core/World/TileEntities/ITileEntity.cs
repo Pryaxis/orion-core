@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.Contracts;
 using Orion.Core.Entities;
 
 namespace Orion.Core.World.TileEntities
@@ -93,7 +92,6 @@ namespace Orion.Core.World.TileEntities
         /// <see langword="true"/> if the tile entity is concrete; otherwise, <see langword="false"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="tileEntity"/> is <see langword="null"/>.</exception>
-        [Pure]
         public static bool IsConcrete(this ITileEntity tileEntity)
         {
             if (tileEntity is null)

@@ -17,7 +17,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -37,7 +36,7 @@ namespace Orion.Core.Utils
         /// <param name="span">The span.</param>
         /// <param name="index">The index.</param>
         /// <returns>A reference to the element at the given <paramref name="index"/>.</returns>
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ref T At<T>(this Span<T> span, int index)
         {
             Debug.Assert(index >= 0 && index < span.Length);

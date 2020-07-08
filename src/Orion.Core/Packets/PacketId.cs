@@ -17,7 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using Orion.Core.Packets.Items;
 using Orion.Core.Packets.Misc;
 using Orion.Core.Packets.Npcs;
@@ -202,7 +201,6 @@ namespace Orion.Core.Packets
         /// </summary>
         /// <param name="id">The packet ID.</param>
         /// <returns>The corresponding type for the packet ID.</returns>
-        [Pure]
         public static Type Type(this PacketId id) =>
             _types.TryGetValue(id, out var type) ? type : typeof(UnknownPacket);
     }

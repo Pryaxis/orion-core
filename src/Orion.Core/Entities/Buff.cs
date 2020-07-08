@@ -17,7 +17,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using Destructurama.Attributed;
 
 namespace Orion.Core.Entities
@@ -107,25 +106,22 @@ namespace Orion.Core.Entities
         public bool IsDebuff => Id.IsDebuff();
 
         /// <inheritdoc/>
-        [Pure]
         public override bool Equals(object? obj) => obj is Buff other && Equals(other);
 
         /// <inheritdoc/>
-        [Pure]
         public bool Equals(Buff other) => Id == other.Id && Duration == other.Duration;
 
         /// <summary>
         /// Returns the hash code of the buff.
         /// </summary>
         /// <returns>The hash code of the buff.</returns>
-        [Pure]
         public override int GetHashCode() => HashCode.Combine(Id, Duration);
 
         /// <summary>
         /// Returns a string representation of the buff.
         /// </summary>
         /// <returns>A string representation of the buff.</returns>
-        [Pure, ExcludeFromCodeCoverage]
+        [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Id} for {Duration:mm:ss}";
 
         /// <summary>
@@ -137,7 +133,6 @@ namespace Orion.Core.Entities
         /// <see langword="true"/> if <paramref name="left"/> is equal to <paramref name="right"/>; otherwise,
         /// <see langword="false"/>.
         /// </returns>
-        [Pure]
         public static bool operator ==(Buff left, Buff right) => left.Equals(right);
 
         /// <summary>
@@ -149,7 +144,6 @@ namespace Orion.Core.Entities
         /// <see langword="true"/> if <paramref name="left"/> is not equal to <paramref name="right"/>; otherwise,
         /// <see langword="false"/>.
         /// </returns>
-        [Pure]
         public static bool operator !=(Buff left, Buff right) => !(left == right);
     }
 }

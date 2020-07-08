@@ -17,7 +17,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 using Destructurama.Attributed;
 
@@ -73,25 +72,22 @@ namespace Orion.Core.Items
         public bool IsEmpty => Id == ItemId.None || StackSize == 0;
 
         /// <inheritdoc/>
-        [Pure]
         public override bool Equals(object? obj) => obj is ItemStack other && Equals(other);
 
         /// <inheritdoc/>
-        [Pure]
         public bool Equals(ItemStack other) => Id == other.Id && StackSize == other.StackSize && Prefix == other.Prefix;
 
         /// <summary>
         /// Returns the hash code of the item stack.
         /// </summary>
         /// <returns>The hash code of the item stack.</returns>
-        [Pure]
         public override int GetHashCode() => HashCode.Combine(Id, StackSize, Prefix);
 
         /// <summary>
         /// Returns a string representation of the item stack.
         /// </summary>
         /// <returns>A string representation of the item stack.</returns>
-        [Pure, ExcludeFromCodeCoverage]
+        [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Id} x{StackSize} ({Prefix})";
 
         /// <summary>
@@ -116,7 +112,6 @@ namespace Orion.Core.Items
         /// <see langword="true"/> if <paramref name="left"/> is equal to <paramref name="right"/>; otherwise,
         /// <see langword="false"/>.
         /// </returns>
-        [Pure]
         public static bool operator ==(ItemStack left, ItemStack right) => left.Equals(right);
 
         /// <summary>
@@ -128,7 +123,6 @@ namespace Orion.Core.Items
         /// <see langword="true"/> if <paramref name="left"/> is not equal to <paramref name="right"/>; otherwise,
         /// <see langword="false"/>.
         /// </returns>
-        [Pure]
         public static bool operator !=(ItemStack left, ItemStack right) => !(left == right);
     }
 }

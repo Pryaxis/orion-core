@@ -18,7 +18,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using Orion.Core.Utils;
@@ -99,11 +98,9 @@ namespace Orion.Core.Packets.DataStructures
         public IReadOnlyList<NetworkText> Substitutions { get; }
 
         /// <inheritdoc/>
-        [Pure]
         public override bool Equals(object? obj) => obj is NetworkText other && Equals(other);
 
         /// <inheritdoc/>
-        [Pure]
         public bool Equals(NetworkText? other)
         {
             if (other is null)
@@ -131,7 +128,6 @@ namespace Orion.Core.Packets.DataStructures
         /// Returns the hash code of the network text.
         /// </summary>
         /// <returns>The hash code of the network text.</returns>
-        [Pure]
         public override int GetHashCode()
         {
             var hashCode = new HashCode();
@@ -149,7 +145,7 @@ namespace Orion.Core.Packets.DataStructures
         /// Returns a string representation of the network text.
         /// </summary>
         /// <returns>A string representation of the network text.</returns>
-        [Pure, ExcludeFromCodeCoverage]
+        [ExcludeFromCodeCoverage]
         public override string ToString() => Mode switch
         {
             NetworkTextMode.Literal => Format,
@@ -218,7 +214,6 @@ namespace Orion.Core.Packets.DataStructures
         /// </summary>
         /// <param name="text">The text.</param>
         /// <exception cref="ArgumentNullException"><paramref name="text"/> is <see langword="null"/>.</exception>
-        [Pure]
         public static implicit operator NetworkText(string text) =>
             new NetworkText(NetworkTextMode.Literal, text, Array.Empty<NetworkText>());
 
@@ -231,7 +226,6 @@ namespace Orion.Core.Packets.DataStructures
         /// <see langword="true"/> if <paramref name="left"/> is equal to <paramref name="right"/>; otherwise,
         /// <see langword="false"/>.
         /// </returns>
-        [Pure]
         public static bool operator ==(NetworkText? left, NetworkText? right) =>
             left is null ? right is null : left.Equals(right);
 
@@ -244,7 +238,6 @@ namespace Orion.Core.Packets.DataStructures
         /// <see langword="true"/> if <paramref name="left"/> is not equal to <paramref name="right"/>; otherwise,
         /// <see langword="false"/>.
         /// </returns>
-        [Pure]
         public static bool operator !=(NetworkText? left, NetworkText? right) => !(left == right);
     }
 

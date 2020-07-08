@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace Orion.Core.Entities
 {
@@ -420,7 +419,6 @@ namespace Orion.Core.Entities
         /// </summary>
         /// <param name="id">The buff ID.</param>
         /// <returns><see langword="true"/> if the buff ID is a debuff; otherwise, <see langword="false"/>.</returns>
-        [Pure]
         public static bool IsDebuff(this BuffId id) => _debuffs.Contains(id);
     }
 }

@@ -17,7 +17,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 
 namespace Orion.Core.Utils
@@ -56,25 +55,22 @@ namespace Orion.Core.Utils
         }
 
         /// <inheritdoc/>
-        [Pure]
         public override bool Equals(object? obj) => obj is Vector2f vector && Equals(vector);
 
         /// <inheritdoc/>
-        [Pure]
         public bool Equals(Vector2f other) => X == other.X && Y == other.Y;
 
         /// <summary>
         /// Returns the hash code of the vector.
         /// </summary>
         /// <returns>The hash code of the vector.</returns>
-        [Pure]
         public override int GetHashCode() => HashCode.Combine(X, Y);
 
         /// <summary>
         /// Returns a string representation of the vector.
         /// </summary>
         /// <returns>A string representation of the vector.</returns>
-        [Pure, ExcludeFromCodeCoverage]
+        [ExcludeFromCodeCoverage]
         public override string ToString() => $"({X}, {Y})";
 
         /// <summary>
@@ -97,7 +93,6 @@ namespace Orion.Core.Utils
         /// <see langword="true"/> if <paramref name="left"/> is equal to <paramref name="right"/>; otherwise,
         /// <see langword="false"/>.
         /// </returns>
-        [Pure]
         public static bool operator ==(Vector2f left, Vector2f right) => left.Equals(right);
 
         /// <summary>
@@ -109,7 +104,6 @@ namespace Orion.Core.Utils
         /// <see langword="true"/> if <paramref name="left"/> is not equal to <paramref name="right"/>; otherwise,
         /// <see langword="false"/>.
         /// </returns>
-        [Pure]
         public static bool operator !=(Vector2f left, Vector2f right) => !(left == right);
 
         /// <summary>
@@ -118,7 +112,6 @@ namespace Orion.Core.Utils
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
         /// <returns>The sum of <paramref name="left"/> and <paramref name="right"/>.</returns>
-        [Pure]
         public static Vector2f operator +(Vector2f left, Vector2f right) =>
             new Vector2f(left.X + right.X, left.Y + right.Y);
 
@@ -128,7 +121,6 @@ namespace Orion.Core.Utils
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
         /// <returns>The difference of <paramref name="left"/> and <paramref name="right"/>.</returns>
-        [Pure]
         public static Vector2f operator -(Vector2f left, Vector2f right) =>
             new Vector2f(left.X - right.X, left.Y - right.Y);
 
@@ -138,7 +130,6 @@ namespace Orion.Core.Utils
         /// <param name="f">The factor.</param>
         /// <param name="vector">The vector.</param>
         /// <returns>The muliplication of <paramref name="vector"/> by <paramref name="f"/>.</returns>
-        [Pure]
         public static Vector2f operator *(float f, Vector2f vector) => new Vector2f(f * vector.X, f * vector.Y);
 
         /// <summary>
@@ -147,7 +138,6 @@ namespace Orion.Core.Utils
         /// <param name="vector">The vector.</param>
         /// <param name="f">The factor.</param>
         /// <returns>The division of <paramref name="vector"/> by <paramref name="f"/>.</returns>
-        [Pure]
         public static Vector2f operator /(Vector2f vector, float f) => new Vector2f(vector.X / f, vector.Y / f);
     }
 }

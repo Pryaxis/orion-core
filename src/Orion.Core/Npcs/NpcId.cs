@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace Orion.Core.Npcs
 {
@@ -851,7 +850,6 @@ namespace Orion.Core.Npcs
         /// <returns>
         /// <see langword="true"/> if the NPC <paramref name="id"/> is catchable; otherwise, <see langword="false"/>.
         /// </returns>
-        [Pure]
         public static bool IsCatchable(this NpcId id) => _catchables.Contains(id);
     }
 }

@@ -17,7 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace Orion.Core.Packets.DataStructures.Modules
 {
@@ -48,7 +47,6 @@ namespace Orion.Core.Packets.DataStructures.Modules
         /// </summary>
         /// <param name="id">The module ID.</param>
         /// <returns>The corresponding type for the module ID.</returns>
-        [Pure]
         public static Type Type(this ModuleId id) =>
             _types.TryGetValue(id, out var type) ? type : typeof(UnknownModule);
     }

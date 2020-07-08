@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.Contracts;
 using Orion.Core.Entities;
 
 namespace Orion.Core.Items
@@ -83,7 +82,6 @@ namespace Orion.Core.Items
         /// <param name="item">The item.</param>
         /// <returns>The item as an item stack instance.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
-        [Pure]
         public static ItemStack AsItemStack(this IItem item)
         {
             if (item is null)

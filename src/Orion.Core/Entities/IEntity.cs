@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.Contracts;
 using Orion.Core.Utils;
 
 namespace Orion.Core.Entities
@@ -108,7 +107,6 @@ namespace Orion.Core.Entities
         /// <param name="entity">The entity.</param>
         /// <returns><see langword="true"/> if the entity is concrete; otherwise, <see langword="false"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="entity"/> is <see langword="null"/>.</exception>
-        [Pure]
         public static bool IsConcrete(this IEntity entity)
         {
             if (entity is null)

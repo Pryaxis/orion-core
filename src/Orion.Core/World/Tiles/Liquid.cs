@@ -17,7 +17,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using Destructurama.Attributed;
 
 namespace Orion.Core.World.Tiles
@@ -63,25 +62,22 @@ namespace Orion.Core.World.Tiles
         public bool IsEmpty => Amount == 0;
 
         /// <inheritdoc/>
-        [Pure]
         public override bool Equals(object? obj) => obj is Liquid other && Equals(other);
 
         /// <inheritdoc/>
-        [Pure]
         public bool Equals(Liquid other) => IsEmpty ? other.IsEmpty : (Type == other.Type && Amount == other.Amount);
 
         /// <summary>
         /// Returns the hash code of the liquid.
         /// </summary>
         /// <returns>The hash code of the liquid.</returns>
-        [Pure]
         public override int GetHashCode() => IsEmpty ? 0 : HashCode.Combine(Type, Amount);
 
         /// <summary>
         /// Returns a string representation of the liquid.
         /// </summary>
         /// <returns>A string representation of the liquid.</returns>
-        [Pure, ExcludeFromCodeCoverage]
+        [ExcludeFromCodeCoverage]
         public override string ToString() => IsEmpty ? "<none>" : $"{Type} x{Amount}";
 
         /// <summary>
@@ -93,7 +89,6 @@ namespace Orion.Core.World.Tiles
         /// <see langword="true"/> if <paramref name="left"/> is equal to <paramref name="right"/>; otherwise,
         /// <see langword="false"/>.
         /// </returns>
-        [Pure]
         public static bool operator ==(Liquid left, Liquid right) => left.Equals(right);
 
         /// <summary>
@@ -105,7 +100,6 @@ namespace Orion.Core.World.Tiles
         /// <see langword="true"/> if <paramref name="left"/> is not equal to <paramref name="right"/>; otherwise,
         /// <see langword="false"/>.
         /// </returns>
-        [Pure]
         public static bool operator !=(Liquid left, Liquid right) => !(left == right);
     }
 }

@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace Orion.Core.World.Tiles
 {
@@ -1020,7 +1019,6 @@ namespace Orion.Core.World.Tiles
         /// </summary>
         /// <param name="id">The block ID.</param>
         /// <returns><see langword="true"/> if the block ID has frames; otherwise, <see langword="false"/>.</returns>
-        [Pure]
         public static bool HasFrames(this BlockId id) => _frames.Contains(id);
     }
 }

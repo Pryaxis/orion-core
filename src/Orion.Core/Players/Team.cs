@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using Orion.Core.Utils;
 
 namespace Orion.Core.Players
@@ -77,7 +76,6 @@ namespace Orion.Core.Players
         /// </summary>
         /// <param name="team">The team.</param>
         /// <returns>The team's color.</returns>
-        [Pure]
         public static Color3 Color(this Team team) => _colors.TryGetValue(team, out var color) ? color : default;
     }
 }

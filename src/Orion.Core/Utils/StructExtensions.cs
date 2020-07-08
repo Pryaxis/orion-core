@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
 namespace Orion.Core.Utils
@@ -31,7 +30,7 @@ namespace Orion.Core.Utils
         /// <typeparam name="T">The type of value.</typeparam>
         /// <param name="value">The value reference.</param>
         /// <returns>The value reference as a reference to a byte.</returns>
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ref byte AsByte<T>(ref this T value) where T : struct => ref Unsafe.As<T, byte>(ref value);
     }
 }
