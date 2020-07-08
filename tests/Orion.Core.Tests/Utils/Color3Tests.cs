@@ -64,20 +64,41 @@ namespace Orion.Core.Utils
         }
 
         [Fact]
-        public void Equals_ReturnsFalse()
+        public void Equals_WrongType_ReturnsFalse()
+        {
+            var color = new Color3(255, 255, 255);
+
+            Assert.False(color.Equals(1));
+        }
+
+        [Fact]
+        public void Equals_RNotEqual_ReturnsFalse()
+        {
+            var color = new Color3(255, 255, 255);
+            var color2 = new Color3(0, 255, 255);
+
+            Assert.False(color.Equals((object)color2));
+            Assert.False(color.Equals(color2));
+        }
+
+        [Fact]
+        public void Equals_GNotEqual_ReturnsFalse()
+        {
+            var color = new Color3(255, 255, 255);
+            var color2 = new Color3(255, 0, 255);
+
+            Assert.False(color.Equals((object)color2));
+            Assert.False(color.Equals(color2));
+        }
+
+        [Fact]
+        public void Equals_BNotEqual_ReturnsFalse()
         {
             var color = new Color3(255, 255, 255);
             var color2 = new Color3(255, 255, 0);
-            var color3 = new Color3(255, 0, 255);
-            var color4 = new Color3(0, 255, 255);
 
-            Assert.False(color.Equals(1));
             Assert.False(color.Equals((object)color2));
-            Assert.False(color.Equals((object)color3));
-            Assert.False(color.Equals((object)color4));
             Assert.False(color.Equals(color2));
-            Assert.False(color.Equals(color3));
-            Assert.False(color.Equals(color4));
         }
 
         [Fact]

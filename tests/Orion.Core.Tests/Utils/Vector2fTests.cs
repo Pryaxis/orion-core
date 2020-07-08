@@ -56,17 +56,31 @@ namespace Orion.Core.Utils
         }
 
         [Fact]
-        public void Equals_ReturnsFalse()
+        public void Equals_WrongType_ReturnsFalse()
+        {
+            var vector = new Vector2f(1.23f, 4.56f);
+
+            Assert.False(vector.Equals(0));
+        }
+
+        [Fact]
+        public void Equals_XNotEqual_ReturnsFalse()
+        {
+            var vector = new Vector2f(1.23f, 4.56f);
+            var vector2 = new Vector2f(0, 4.56f);
+
+            Assert.False(vector.Equals((object)vector2));
+            Assert.False(vector.Equals(vector2));
+        }
+
+        [Fact]
+        public void Equals_YNotEqual_ReturnsFalse()
         {
             var vector = new Vector2f(1.23f, 4.56f);
             var vector2 = new Vector2f(1.23f, 0);
-            var vector3 = new Vector2f(0, 0);
 
-            Assert.False(vector.Equals(1));
             Assert.False(vector.Equals((object)vector2));
-            Assert.False(vector.Equals((object)vector3));
             Assert.False(vector.Equals(vector2));
-            Assert.False(vector.Equals(vector3));
         }
 
         [Fact]

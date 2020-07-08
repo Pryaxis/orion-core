@@ -180,7 +180,47 @@ namespace Orion.Core.World.Tiles
 
             Assert.Equal(PaintColor.Red, tile.WallColor);
         }
-        
+
+        [Fact]
+        public void Equals_HasFrames_ReturnsTrue()
+        {
+            var tile = new Tile { BlockId = BlockId.Torches, BlockFrameX = 1, BlockFrameY = 2 };
+            var tile2 = new Tile { BlockId = BlockId.Torches, BlockFrameX = 1, BlockFrameY = 2 };
+
+            Assert.True(tile.Equals((object)tile2));
+            Assert.True(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_DoesNotHaveFrames_ReturnsTrue()
+        {
+            var tile = new Tile { BlockId = BlockId.Stone, BlockFrameX = 1, BlockFrameY = 2 };
+            var tile2 = new Tile { BlockId = BlockId.Stone, BlockFrameX = 2, BlockFrameY = 2 };
+
+            Assert.True(tile.Equals((object)tile2));
+            Assert.True(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_NoLiquid_ReturnsTrue()
+        {
+            var tile = new Tile { Liquid = new Liquid(LiquidType.Water, 0) };
+            var tile2 = new Tile { Liquid = new Liquid(LiquidType.Lava, 0) };
+
+            Assert.True(tile.Equals((object)tile2));
+            Assert.True(tile.Equals(tile2));
+        }
+
+        [Fact]
+        public void Equals_HasLiquid_ReturnsTrue()
+        {
+            var tile = new Tile { Liquid = new Liquid(LiquidType.Water, 255) };
+            var tile2 = new Tile { Liquid = new Liquid(LiquidType.Water, 255) };
+
+            Assert.True(tile.Equals((object)tile2));
+            Assert.True(tile.Equals(tile2));
+        }
+
         [Fact]
         public void Equals_WrongType_ReturnsFalse()
         {
@@ -323,46 +363,6 @@ namespace Orion.Core.World.Tiles
 
             Assert.False(tile.Equals((object)tile2));
             Assert.False(tile.Equals(tile2));
-        }
-
-        [Fact]
-        public void Equals_HasFrames_ReturnsTrue()
-        {
-            var tile = new Tile { BlockId = BlockId.Torches, BlockFrameX = 1, BlockFrameY = 2 };
-            var tile2 = new Tile { BlockId = BlockId.Torches, BlockFrameX = 1, BlockFrameY = 2 };
-
-            Assert.True(tile.Equals((object)tile2));
-            Assert.True(tile.Equals(tile2));
-        }
-
-        [Fact]
-        public void Equals_DoesNotHaveFrames_ReturnsTrue()
-        {
-            var tile = new Tile { BlockId = BlockId.Stone, BlockFrameX = 1, BlockFrameY = 2 };
-            var tile2 = new Tile { BlockId = BlockId.Stone, BlockFrameX = 2, BlockFrameY = 2 };
-
-            Assert.True(tile.Equals((object)tile2));
-            Assert.True(tile.Equals(tile2));
-        }
-
-        [Fact]
-        public void Equals_NoLiquid_ReturnsTrue()
-        {
-            var tile = new Tile { Liquid = new Liquid(LiquidType.Water, 0) };
-            var tile2 = new Tile { Liquid = new Liquid(LiquidType.Lava, 0) };
-
-            Assert.True(tile.Equals((object)tile2));
-            Assert.True(tile.Equals(tile2));
-        }
-
-        [Fact]
-        public void Equals_HasLiquid_ReturnsTrue()
-        {
-            var tile = new Tile { Liquid = new Liquid(LiquidType.Water, 255) };
-            var tile2 = new Tile { Liquid = new Liquid(LiquidType.Water, 255) };
-
-            Assert.True(tile.Equals((object)tile2));
-            Assert.True(tile.Equals(tile2));
         }
 
         [Fact]

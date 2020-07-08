@@ -104,17 +104,31 @@ namespace Orion.Core.Entities
         }
 
         [Fact]
-        public void Equals_ReturnsFalse()
+        public void Equals_WrongType_ReturnsFalse()
+        {
+            var buff = new Buff(BuffId.ObsidianSkin, 28800);
+
+            Assert.False(buff.Equals(0));
+        }
+
+        [Fact]
+        public void Equals_IdNotEqual_ReturnsFalse()
+        {
+            var buff = new Buff(BuffId.ObsidianSkin, 28800);
+            var buff2 = new Buff(BuffId.Poisoned, 28800);
+
+            Assert.False(buff.Equals((object)buff2));
+            Assert.False(buff.Equals(buff2));
+        }
+
+        [Fact]
+        public void Equals_TicksNotEqual_ReturnsFalse()
         {
             var buff = new Buff(BuffId.ObsidianSkin, 28800);
             var buff2 = new Buff(BuffId.ObsidianSkin, 25200);
-            var buff3 = new Buff(BuffId.Poisoned, 28800);
 
-            Assert.False(buff.Equals(1));
             Assert.False(buff.Equals((object)buff2));
-            Assert.False(buff.Equals((object)buff3));
             Assert.False(buff.Equals(buff2));
-            Assert.False(buff.Equals(buff3));
         }
 
         [Fact]

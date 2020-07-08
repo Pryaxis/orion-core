@@ -93,20 +93,33 @@ namespace Orion.Core.Packets.DataStructures
         }
 
         [Fact]
-        public void Equals_ReturnsFalse()
+        public void Equals_WrongType_ReturnsFalse()
+        {
+            NetworkText text = "test";
+
+            Assert.False(text.Equals(1));
+        }
+        
+        [Fact]
+        public void Equals_Null_ReturnsFalse()
+        {
+            NetworkText text = "test";
+
+            Assert.False(text.Equals(null));
+        }
+
+        [Fact]
+        public void Equals_FormatNotEqual_ReturnsFalse()
         {
             NetworkText text = "test";
             NetworkText text2 = "test2";
 
             Assert.False(text.Equals(text2));
             Assert.False(text.Equals((object)text2));
-            Assert.False(text.Equals(1234));
-            Assert.False(text.Equals((object?)null!));
-            Assert.False(text!.Equals(null!));
         }
 
         [Fact]
-        public void Equals_SubstitutionsDifferent_ReturnsFalse()
+        public void Equals_SubstitutionsNotEqual_ReturnsFalse()
         {
             var text = new NetworkText(NetworkTextMode.Formatted, "test {0}", "test");
             var text2 = new NetworkText(NetworkTextMode.Formatted, "test {0}", "test2");
@@ -122,16 +135,6 @@ namespace Orion.Core.Packets.DataStructures
             Assert.Equal(text.GetHashCode(), text.GetHashCode());
         }
 
-        [Fact]
-        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
-        public void op_Implicit_NullText_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                NetworkText text = (string)null!;
-            });
-        }
-
         [Theory]
         [MemberData(nameof(NetworkTexts))]
         public void RoundTrip(NetworkText text)
@@ -144,6 +147,16 @@ namespace Orion.Core.Packets.DataStructures
             Assert.Equal(numBytes, NetworkText.Read(span, out var text2));
 
             Assert.Equal(text, text2);
+        }
+
+        [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
+        public void op_Implicit_NullText_ThrowsArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                NetworkText text = (string)null!;
+            });
         }
 
         [Fact]
