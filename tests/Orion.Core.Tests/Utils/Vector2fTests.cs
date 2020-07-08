@@ -23,9 +23,9 @@ namespace Orion.Core.Utils
     public class Vector2fTests
     {
         [Fact]
-        public void Cctor()
+        public void Zero_Get()
         {
-            _ = Vector2f.Zero;
+            Assert.Equal(default, Vector2f.Zero);
         }
 
         [Fact]

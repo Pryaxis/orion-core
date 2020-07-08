@@ -31,7 +31,7 @@ namespace Orion.Core.Utils
         /// Gets the zero vector.
         /// </summary>
         /// <value>The zero vector.</value>
-        public static Vector2f Zero { get; } = new Vector2f(0, 0);
+        public static Vector2f Zero => default;
 
         /// <summary>
         /// Gets the X component.

@@ -23,6 +23,30 @@ namespace Orion.Core.World.Tiles
     public class LiquidTests
     {
         [Fact]
+        public void None_Get()
+        {
+            Assert.Equal(default, Liquid.None);
+        }
+
+        [Fact]
+        public void Water_Get()
+        {
+            Assert.Equal(new Liquid(LiquidType.Water, 255), Liquid.Water);
+        }
+
+        [Fact]
+        public void Lava_Get()
+        {
+            Assert.Equal(new Liquid(LiquidType.Lava, 255), Liquid.Lava);
+        }
+
+        [Fact]
+        public void Honey_Get()
+        {
+            Assert.Equal(new Liquid(LiquidType.Honey, 255), Liquid.Honey);
+        }
+        
+        [Fact]
         public void Type_Get()
         {
             var liquid = new Liquid(LiquidType.Water, 100);

@@ -31,6 +31,30 @@ namespace Orion.Core.World.Tiles
     public readonly struct Liquid : IEquatable<Liquid>
     {
         /// <summary>
+        /// Gets an empty liquid.
+        /// </summary>
+        /// <value>An empty liquid.</value>
+        public static Liquid None => default;
+
+        /// <summary>
+        /// Gets a full block of water.
+        /// </summary>
+        /// <value>A full block of water.</value>
+        public static Liquid Water => new Liquid(LiquidType.Water, 255);
+
+        /// <summary>
+        /// Gets a full block of lava.
+        /// </summary>
+        /// <value>A full block of lava.</value>
+        public static Liquid Lava => new Liquid(LiquidType.Lava, 255);
+
+        /// <summary>
+        /// Gets a full block of honey.
+        /// </summary>
+        /// <value>A full block of honey.</value>
+        public static Liquid Honey => new Liquid(LiquidType.Honey, 255);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Liquid"/> structure with the specified liquid
         /// <paramref name="type"/> and <paramref name="amount"/>.
         /// </summary>

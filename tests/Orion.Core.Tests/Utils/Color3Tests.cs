@@ -23,10 +23,15 @@ namespace Orion.Core.Utils
     public class Color3Tests
     {
         [Fact]
-        public void Cctor()
+        public void Black_Get()
         {
-            _ = Color3.Black;
-            _ = Color3.White;
+            Assert.Equal(new Color3(0, 0, 0), Color3.Black);
+        }
+
+        [Fact]
+        public void White_Get()
+        {
+            Assert.Equal(new Color3(255, 255, 255), Color3.White);
         }
 
         [Fact]
