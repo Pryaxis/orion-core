@@ -17,6 +17,7 @@
 
 using System;
 using Orion.Core.Entities;
+using Orion.Core.Items;
 using Orion.Core.Packets;
 using Orion.Core.Packets.DataStructures;
 using Orion.Core.Packets.Server;
@@ -39,6 +40,12 @@ namespace Orion.Core.Players
         /// </summary>
         /// <value>The player's character.</value>
         public ICharacter Character { get; }
+
+        /// <summary>
+        /// Gets the player's buffs.
+        /// </summary>
+        /// <value>The player's buffs.</value>
+        public IArray<Buff> Buffs { get; }
 
         /// <summary>
         /// Gets or sets the player's health.
@@ -65,10 +72,10 @@ namespace Orion.Core.Players
         public int MaxMana { get; set; }
 
         /// <summary>
-        /// Gets the player's buffs.
+        /// Gets the player's inventory.
         /// </summary>
-        /// <value>The player's buffs.</value>
-        public IArray<Buff> Buffs { get; }
+        /// <value>The player's inventory.</value>
+        public IArray<ItemStack> Inventory { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the player is in PvP.
