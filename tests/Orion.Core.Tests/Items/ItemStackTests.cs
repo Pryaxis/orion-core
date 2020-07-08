@@ -75,20 +75,51 @@ namespace Orion.Core.Items
         }
 
         [Fact]
-        public void Equals_ReturnsFalse()
+        public void Equals_AreEmpty_ReturnsTrue()
+        {
+            var itemStack = new ItemStack(ItemId.None, ItemPrefix.Unreal, 123);
+            var itemStack2 = new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 0);
+
+            Assert.True(itemStack.Equals((object)itemStack2));
+            Assert.True(itemStack.Equals(itemStack2));
+        }
+
+        [Fact]
+        public void Equals_WrongType_ReturnsFalse()
+        {
+            var itemStack = new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1);
+
+            Assert.False(itemStack.Equals(0));
+        }
+
+        [Fact]
+        public void Equals_ItemIdDifferent_ReturnsFalse()
+        {
+            var itemStack = new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1);
+            var itemStack2 = new ItemStack(ItemId.DirtBlock, ItemPrefix.Unreal, 1);
+
+            Assert.False(itemStack.Equals((object)itemStack2));
+            Assert.False(itemStack.Equals(itemStack2));
+        }
+
+        [Fact]
+        public void Equals_PrefixDifferent_ReturnsFalse()
         {
             var itemStack = new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1);
             var itemStack2 = new ItemStack(ItemId.Sdmg, ItemPrefix.None, 1);
-            var itemStack3 = new ItemStack(ItemId.Sdmg, ItemPrefix.None, 2);
-            var itemStack4 = new ItemStack(ItemId.DirtBlock, ItemPrefix.None, 999);
 
-            Assert.False(itemStack.Equals(1));
             Assert.False(itemStack.Equals((object)itemStack2));
-            Assert.False(itemStack.Equals((object)itemStack3));
-            Assert.False(itemStack.Equals((object)itemStack4));
             Assert.False(itemStack.Equals(itemStack2));
-            Assert.False(itemStack.Equals(itemStack3));
-            Assert.False(itemStack.Equals(itemStack4));
+        }
+
+        [Fact]
+        public void Equals_StackSizeDifferent_ReturnsFalse()
+        {
+            var itemStack = new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1);
+            var itemStack2 = new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 2);
+
+            Assert.False(itemStack.Equals((object)itemStack2));
+            Assert.False(itemStack.Equals(itemStack2));
         }
 
         [Fact]
@@ -96,6 +127,15 @@ namespace Orion.Core.Items
         {
             var itemStack = new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1);
             var itemStack2 = new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1);
+
+            Assert.Equal(itemStack.GetHashCode(), itemStack2.GetHashCode());
+        }
+
+        [Fact]
+        public void GetHashCode_Equals_AreEmpty_AreEqual()
+        {
+            var itemStack = new ItemStack(ItemId.None, ItemPrefix.Unreal, 123);
+            var itemStack2 = new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 0);
 
             Assert.Equal(itemStack.GetHashCode(), itemStack2.GetHashCode());
         }

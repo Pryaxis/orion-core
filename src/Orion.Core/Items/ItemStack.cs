@@ -75,20 +75,21 @@ namespace Orion.Core.Items
         public override bool Equals(object? obj) => obj is ItemStack other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ItemStack other) => Id == other.Id && StackSize == other.StackSize && Prefix == other.Prefix;
+        public bool Equals(ItemStack other) =>
+            IsEmpty ? other.IsEmpty : (Id == other.Id && Prefix == other.Prefix && StackSize == other.StackSize);
 
         /// <summary>
         /// Returns the hash code of the item stack.
         /// </summary>
         /// <returns>The hash code of the item stack.</returns>
-        public override int GetHashCode() => HashCode.Combine(Id, StackSize, Prefix);
+        public override int GetHashCode() => IsEmpty ? 0 : HashCode.Combine(Id, StackSize, Prefix);
 
         /// <summary>
         /// Returns a string representation of the item stack.
         /// </summary>
         /// <returns>A string representation of the item stack.</returns>
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Id} x{StackSize} ({Prefix})";
+        public override string ToString() => IsEmpty ? "<none>" : $"{Id} x{StackSize} ({Prefix})";
 
         /// <summary>
         /// Deconstructs the item stack.

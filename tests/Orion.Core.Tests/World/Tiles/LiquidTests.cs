@@ -59,27 +59,47 @@ namespace Orion.Core.World.Tiles
         {
             var liquid = new Liquid(LiquidType.Water, 255);
             var liquid2 = new Liquid(LiquidType.Water, 255);
-            var liquid3 = new Liquid(LiquidType.Water, 0);
-            var liquid4 = new Liquid(LiquidType.Lava, 0);
 
             Assert.True(liquid.Equals((object)liquid2));
-            Assert.True(liquid3.Equals((object)liquid4));
             Assert.True(liquid.Equals(liquid2));
-            Assert.True(liquid3.Equals(liquid4));
         }
 
         [Fact]
-        public void Equals_ReturnsFalse()
+        public void Equals_AreEmpty_ReturnsTrue()
+        {
+            var liquid = new Liquid(LiquidType.Water, 0);
+            var liquid2 = new Liquid(LiquidType.Lava, 0);
+
+            Assert.True(liquid.Equals((object)liquid2));
+            Assert.True(liquid.Equals(liquid2));
+        }
+
+        [Fact]
+        public void Equals_WrongType_ReturnsFalse()
+        {
+            var liquid = new Liquid(LiquidType.Water, 255);
+
+            Assert.False(liquid.Equals(0));
+        }
+
+        [Fact]
+        public void Equals_DifferentType_ReturnsFalse()
+        {
+            var liquid = new Liquid(LiquidType.Water, 255);
+            var liquid2 = new Liquid(LiquidType.Lava, 255);
+
+            Assert.False(liquid.Equals((object)liquid2));
+            Assert.False(liquid.Equals(liquid2));
+        }
+
+        [Fact]
+        public void Equals_DifferentAmount_ReturnsFalse()
         {
             var liquid = new Liquid(LiquidType.Water, 255);
             var liquid2 = new Liquid(LiquidType.Water, 100);
-            var liquid3 = new Liquid(LiquidType.Lava, 255);
 
-            Assert.False(liquid.Equals(1));
             Assert.False(liquid.Equals((object)liquid2));
-            Assert.False(liquid.Equals((object)liquid3));
             Assert.False(liquid.Equals(liquid2));
-            Assert.False(liquid.Equals(liquid3));
         }
 
         [Fact]
@@ -87,11 +107,17 @@ namespace Orion.Core.World.Tiles
         {
             var liquid = new Liquid(LiquidType.Water, 255);
             var liquid2 = new Liquid(LiquidType.Water, 255);
-            var liquid3 = new Liquid(LiquidType.Water, 0);
-            var liquid4 = new Liquid(LiquidType.Lava, 0);
 
             Assert.Equal(liquid.GetHashCode(), liquid2.GetHashCode());
-            Assert.Equal(liquid3.GetHashCode(), liquid4.GetHashCode());
+        }
+
+        [Fact]
+        public void GetHashCode_Equals_AreEmpty_AreEqual()
+        {
+            var liquid = new Liquid(LiquidType.Water, 0);
+            var liquid2 = new Liquid(LiquidType.Lava, 0);
+
+            Assert.Equal(liquid.GetHashCode(), liquid2.GetHashCode());
         }
 
         [Fact]
