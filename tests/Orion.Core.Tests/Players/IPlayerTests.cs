@@ -17,6 +17,8 @@
 
 using System;
 using Moq;
+using Orion.Core.Items;
+using Orion.Core.Packets.Players;
 using Orion.Core.Packets.Server;
 using Orion.Core.Packets.World.Tiles;
 using Orion.Core.Utils;
@@ -78,6 +80,31 @@ namespace Orion.Core.Players
             player.SendMessage("test", Color3.White);
 
             Mock.Get(player).VerifyAll();
+        }
+
+        [Fact]
+        public void SendInventory_NullPlayer_ThrowsArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => IPlayerExtensions.SendInventory(null!, 33));
+        }
+
+        [Fact]
+        public void SendInventory()
+        {
+            var player = Mock.Of<IPlayer>(p => p.Index == 5 && p.Inventory == Mock.Of<IArray<ItemStack>>());
+            Mock.Get(player)
+                .Setup(p => p.SendPacket(
+                    It.Is<PlayerInventory>(
+                        p => p.PlayerIndex == 5 && p.Slot == 33 && p.StackSize == 1 && p.Prefix == ItemPrefix.Unreal &&
+                            p.Id == ItemId.Sdmg)));
+            Mock.Get(player.Inventory)
+                .Setup(i => i[33])
+                .Returns(new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1));
+
+            player.SendInventory(33);
+
+            Mock.Get(player).VerifyAll();
+            Mock.Get(player.Inventory).VerifyAll();
         }
 
         [Fact]

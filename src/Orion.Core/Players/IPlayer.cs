@@ -20,6 +20,7 @@ using Orion.Core.Entities;
 using Orion.Core.Items;
 using Orion.Core.Packets;
 using Orion.Core.Packets.DataStructures;
+using Orion.Core.Packets.Players;
 using Orion.Core.Packets.Server;
 using Orion.Core.Packets.World.Tiles;
 using Orion.Core.Utils;
@@ -155,6 +156,32 @@ namespace Orion.Core.Players
             }
 
             var packet = new ServerMessage { Color = color, Message = message, LineWidth = -1 };
+            player.SendPacket(packet);
+        }
+
+        /// <summary>
+        /// Sends the given inventory <paramref name="slot"/> to the player.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        /// <param name="slot">The inventory slot to send.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
+        public static void SendInventory(this IPlayer player, int slot)
+        {
+            if (player is null)
+            {
+                throw new ArgumentNullException(nameof(player));
+            }
+
+            var item = player.Inventory[slot];
+
+            var packet = new PlayerInventory
+            {
+                PlayerIndex = (byte)player.Index,
+                Slot = (short)slot,
+                StackSize = item.StackSize,
+                Prefix = item.Prefix,
+                Id = item.Id
+            };
             player.SendPacket(packet);
         }
 
