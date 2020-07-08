@@ -27,13 +27,15 @@ namespace Orion.Core.World
     /// Represents a two-dimensional slice of tiles.
     /// </summary>
     /// <remarks>
-    /// Implementations are required to be thread-safe.
-    /// 
+    /// <para>Implementations are required to be thread-safe.</para>
+    /// <para>
     /// A tile slice can be used to efficiently pass tiles by reference in, e.g., a <see cref="TileSquare"/>
     /// instance or the <see cref="IPlayerExtensions.SendTiles(IPlayer, int, int, ITileSlice)"/> extension method.
-    /// 
+    /// </para>
+    /// <para>
     /// The <see cref="ITileSliceExtensions.Slice(ITileSlice, int, int, int, int)"/> extension method allows zero-copy
     /// subslices to be obtained.
+    /// </para>
     /// </remarks>
     public interface ITileSlice
     {

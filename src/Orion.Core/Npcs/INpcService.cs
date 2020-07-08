@@ -25,8 +25,8 @@ namespace Orion.Core.Npcs
     /// Represents an NPC service. Provides access to NPCs and publishes NPC-related events.
     /// </summary>
     /// <remarks>
-    /// Implementations are required to be thread-safe.
-    /// 
+    /// <para>Implementations are required to be thread-safe.</para>
+    /// <para>
     /// The NPC service is responsible for publishing the following NPC-related events:
     /// <list type="bullet">
     /// <item><description><see cref="NpcDefaultsEvent"/></description></item>
@@ -38,6 +38,7 @@ namespace Orion.Core.Npcs
     /// <item><description><see cref="NpcCatchEvent"/></description></item>
     /// <item><description><see cref="NpcFishEvent"/></description></item>
     /// </list>
+    /// </para>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
     public interface INpcService : IReadOnlyList<INpc>

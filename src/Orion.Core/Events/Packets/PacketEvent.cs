@@ -32,7 +32,7 @@ namespace Orion.Core.Events.Packets
         /// </summary>
         /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null"/>.</exception>
-        public PacketEvent(TPacket packet)
+        protected PacketEvent(TPacket packet)
         {
             Packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }

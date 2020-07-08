@@ -25,13 +25,14 @@ namespace Orion.Core.Items
     /// Represents an item service. Provides access to items and publishes item-related events.
     /// </summary>
     /// <remarks>
-    /// Implementations are required to be thread-safe.
-    /// 
+    /// <para>Implementations are required to be thread-safe.</para>
+    /// <para>
     /// The item service is responsible for publishing the following item-related events:
     /// <list type="bullet">
     /// <item><description><see cref="ItemDefaultsEvent"/></description></item>
     /// <item><description><see cref="ItemTickEvent"/></description></item>
     /// </list>
+    /// </para>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
     public interface IItemService : IReadOnlyList<IItem>

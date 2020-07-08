@@ -201,7 +201,9 @@ namespace Orion.Core.Packets.World.Tiles
 
             if ((header & HasLiquidMask) != 0)
             {
-                tile.Liquid = new Liquid(amount: span.At(length++), type: (LiquidType)span.At(length++));
+                var type = (LiquidType)span.At(length++);
+                var amount = span.At(length++);
+                tile.Liquid = new Liquid(type, amount);
             }
 
             return length;

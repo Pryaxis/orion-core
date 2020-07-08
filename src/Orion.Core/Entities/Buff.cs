@@ -26,11 +26,14 @@ namespace Orion.Core.Entities
     /// Represents a buff.
     /// </summary>
     /// <remarks>
+    /// <para>
     /// A buff is a positive (or negative, in the case of a debuff) status effect which can be applied to players and
     /// NPCs. See <a href="https://terraria.gamepedia.com/Buffs">here</a> for more information on buffs.
-    /// 
+    /// </para>
+    /// <para>
     /// Each buff consists of a <see cref="BuffId"/>, which specifies the type of buff, along with a duration indicating
     /// the amount of time remaining on the buff.
+    /// </para>
     /// </remarks>
     public readonly struct Buff : IEquatable<Buff>
     {

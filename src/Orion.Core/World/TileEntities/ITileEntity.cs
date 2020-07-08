@@ -25,11 +25,12 @@ namespace Orion.Core.World.TileEntities
     /// Represents an annotatable Terraria tile entity.
     /// </summary>
     /// <remarks>
-    /// Implementations must be thread-safe.
-    /// 
+    /// <para>Implementations must be thread-safe.</para>
+    /// <para>
     /// Many Terraria tile-based objects are tile entities and have common properties such as position. Tile entities
     /// are annotatable, allowing consumers to easily attach custom state to them.
-    /// 
+    /// </para>
+    /// <para>
     /// There are three types of tile entities:
     /// <list type="number">
     /// <item>
@@ -44,9 +45,11 @@ namespace Orion.Core.World.TileEntities
     /// <description>Tile entities which are concrete <i>and</i> active: the entity exists in the world.</description>
     /// </item>
     /// </list>
-    /// 
+    /// </para>
+    /// <para>
     /// These types can be differentiated using the <see cref="ITileEntityExtensions.IsConcrete"/> extension method and
     /// the <see cref="IsActive"/> property.
+    /// </para>
     /// </remarks>
     public interface ITileEntity : IAnnotatable
     {

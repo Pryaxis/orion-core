@@ -24,12 +24,13 @@ namespace Orion.Core.World.TileEntities
     /// Represents a sign service. Provides access to signs and publishes sign-related events.
     /// </summary>
     /// <remarks>
-    /// Implementations are required to be thread-safe.
-    /// 
+    /// <para>Implementations are required to be thread-safe.</para>
+    /// <para>
     /// The sign service is responsible for publishing the following sign-related events:
     /// <list type="bullet">
     /// <item><description><see cref="SignReadEvent"/></description></item>
     /// </list>
+    /// </para>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
     public interface ISignService : IReadOnlyList<ISign>

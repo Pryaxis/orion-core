@@ -32,8 +32,8 @@ namespace Orion.Core.Players
     /// Represents a player service. Provides access to players and publishes packet and player-related events.
     /// </summary>
     /// <remarks>
-    /// Implementations are required to be thread-safe.
-    /// 
+    /// <para>Implementations are required to be thread-safe.</para>
+    /// <para>
     /// The player service is responsible for publishing the following packet and player-related events:
     /// <list type="bullet">
     /// <item><description><see cref="PacketReceiveEvent{TPacket}"/></description></item>
@@ -49,6 +49,7 @@ namespace Orion.Core.Players
     /// <item><description><see cref="PlayerUuidEvent"/></description></item>
     /// <item><description><see cref="PlayerChatEvent"/></description></item>
     /// </list>
+    /// </para>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
     public interface IPlayerService : IReadOnlyList<IPlayer>

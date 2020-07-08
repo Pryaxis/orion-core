@@ -97,10 +97,13 @@ namespace Orion.Core.Events
     {
         private static readonly MethodInfo _registerHandler =
             typeof(IEventManager).GetMethod(nameof(IEventManager.RegisterHandler))!;
+
         private static readonly MethodInfo _registerAsyncHandler =
             typeof(IEventManager).GetMethod(nameof(IEventManager.RegisterAsyncHandler))!;
+
         private static readonly MethodInfo _deregisterHandler =
             typeof(IEventManager).GetMethod(nameof(IEventManager.DeregisterHandler))!;
+
         private static readonly MethodInfo _deregisterAsyncHandler =
             typeof(IEventManager).GetMethod(nameof(IEventManager.DeregisterAsyncHandler))!;
 

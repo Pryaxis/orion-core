@@ -30,8 +30,8 @@ namespace Orion.Core
     /// Represents the server. Provides access to Orion services and publishes server-related events.
     /// </summary>
     /// <remarks>
-    /// Implementations must be thread-safe.
-    /// 
+    /// <para>Implementations must be thread-safe.</para>
+    /// <para>
     /// The server is responsible for publishing the following server-related events:
     /// <list type="bullet">
     /// <item><description><see cref="ServerInitializeEvent"/></description></item>
@@ -39,6 +39,7 @@ namespace Orion.Core
     /// <item><description><see cref="ServerTickEvent"/></description></item>
     /// <item><description><see cref="ServerCommandEvent"/></description></item>
     /// </list>
+    /// </para>
     /// </remarks>
     public interface IServer
     {

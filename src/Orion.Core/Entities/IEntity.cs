@@ -25,15 +25,17 @@ namespace Orion.Core.Entities
     /// Represents an annotatable Terraria entity.
     /// </summary>
     /// <remarks>
-    /// Implementations must be thread-safe.
-    /// 
+    /// <para>Implementations must be thread-safe.</para>
+    /// <para>
     /// Many Terraria objects are entities and have common properties such as position, velocity, etc. Entities are
     /// annotatable, allowing consumers to easily attach custom state to them.
-    /// 
+    /// </para>
+    /// <para>
     /// Technically, an entity might actually refer to an entity <i>slot</i>, as entity objects are reused for entities
     /// which occupy the same index in the world. This means that certain state, such as annotations, may be left over
     /// from the previous entity.
-    /// 
+    /// </para>
+    /// <para>
     /// There are three types of entities:
     /// <list type="number">
     /// <item>
@@ -48,9 +50,11 @@ namespace Orion.Core.Entities
     /// <description>Entities which are concrete <i>and</i> active: the entity exists in the world.</description>
     /// </item>
     /// </list>
-    /// 
+    /// </para>
+    /// <para>
     /// These types can be differentiated using the <see cref="IEntityExtensions.IsConcrete"/> extension method and the
     /// <see cref="IsActive"/> property.
+    /// </para>
     /// </remarks>
     public interface IEntity : IAnnotatable
     {

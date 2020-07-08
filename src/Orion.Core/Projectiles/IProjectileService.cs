@@ -25,13 +25,14 @@ namespace Orion.Core.Projectiles
     /// Represents a projectile service. Provides access to projectiles and publishes projectile-related events.
     /// </summary>
     /// <remarks>
-    /// Implementations are required to be thread-safe.
-    /// 
+    /// <para>Implementations are required to be thread-safe.</para>
+    /// <para>
     /// The projectile service is responsible for publishing the following projectile-related events:
     /// <list type="bullet">
     /// <item><description><see cref="ProjectileDefaultsEvent"/></description></item>
     /// <item><description><see cref="ProjectileTickEvent"/></description></item>
     /// </list>
+    /// </para>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
     public interface IProjectileService : IReadOnlyList<IProjectile>

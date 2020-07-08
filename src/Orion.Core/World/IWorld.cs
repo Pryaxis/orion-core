@@ -24,8 +24,8 @@ namespace Orion.Core.World
     /// Represents a world. Provides access to the tiles and publishes world and tile-related events.
     /// </summary>
     /// <remarks>
-    /// Implementations are required to be thread-safe.
-    /// 
+    /// <para>Implementations are required to be thread-safe.</para>
+    /// <para>
     /// The world is responsible for publishing the following world and tile-related events:
     /// <list type="bullet">
     /// <item><description><see cref="WorldLoadedEvent"/></description></item>
@@ -40,6 +40,7 @@ namespace Orion.Core.World
     /// <item><description><see cref="BlockPaintEvent"/></description></item>
     /// <item><description><see cref="WallPaintEvent"/></description></item>
     /// </list>
+    /// </para>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
     public interface IWorld : ITileSlice

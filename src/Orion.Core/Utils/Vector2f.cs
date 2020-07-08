@@ -144,8 +144,8 @@ namespace Orion.Core.Utils
         /// <summary>
         /// Returns the division of <paramref name="vector"/> by <paramref name="f"/>.
         /// </summary>
-        /// <param name="f">The factor.</param>
         /// <param name="vector">The vector.</param>
+        /// <param name="f">The factor.</param>
         /// <returns>The division of <paramref name="vector"/> by <paramref name="f"/>.</returns>
         [Pure]
         public static Vector2f operator /(Vector2f vector, float f) => new Vector2f(vector.X / f, vector.Y / f);
