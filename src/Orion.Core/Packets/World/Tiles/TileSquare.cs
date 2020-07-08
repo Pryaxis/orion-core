@@ -175,7 +175,7 @@ namespace Orion.Core.Packets.World.Tiles
 
                 if (tile.BlockId.HasFrames())
                 {
-                    Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref tile.AsByte(), 5), ref span.At(length), 4);
+                    Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref tile.AsByte(), 4), ref span.At(length), 4);
                     length += 4;
                 }
 
@@ -201,8 +201,8 @@ namespace Orion.Core.Packets.World.Tiles
 
             if ((header & HasLiquidMask) != 0)
             {
-                var type = (LiquidType)span.At(length++);
                 var amount = span.At(length++);
+                var type = (LiquidType)span.At(length++);
                 tile.Liquid = new Liquid(type, amount);
             }
 
@@ -243,7 +243,7 @@ namespace Orion.Core.Packets.World.Tiles
 
                 if (tile.BlockId.HasFrames())
                 {
-                    Unsafe.CopyBlockUnaligned(ref span.At(length), ref Unsafe.Add(ref tile.AsByte(), 5), 4);
+                    Unsafe.CopyBlockUnaligned(ref span.At(length), ref Unsafe.Add(ref tile.AsByte(), 4), 4);
                     length += 4;
                 }
 

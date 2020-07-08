@@ -99,7 +99,7 @@ namespace Orion.Core.Packets.DataStructures
 
             Assert.False(text.Equals(1));
         }
-        
+
         [Fact]
         public void Equals_Null_ReturnsFalse()
         {

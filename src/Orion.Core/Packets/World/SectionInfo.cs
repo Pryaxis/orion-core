@@ -377,7 +377,7 @@ namespace Orion.Core.Packets.World
 
                 if (tile.BlockId.HasFrames())
                 {
-                    Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref tile.AsByte(), 5), ref span.At(length), 4);
+                    Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref tile.AsByte(), 4), ref span.At(length), 4);
                     length += 4;
                 }
 
@@ -400,8 +400,9 @@ namespace Orion.Core.Packets.World
             var liquidType = header & LiquidTypeMask;
             if (liquidType != 0)
             {
-                // Terraria uses 0 to indicate no liquid, so this needs to be accounted for.
-                tile.Liquid = new Liquid((LiquidType)((liquidType >> LiquidTypeShift) - 1), span.At(length++));
+                var type = (LiquidType)((liquidType >> LiquidTypeShift) - 1);
+                var amount = span.At(length++);
+                tile.Liquid = new Liquid(type, amount);
             }
 
             if ((header3 & WallIdTwoBytesMask) != 0)
@@ -462,7 +463,7 @@ namespace Orion.Core.Packets.World
 
                 if (tile.BlockId.HasFrames())
                 {
-                    Unsafe.CopyBlockUnaligned(ref buffer.At(endIndex), ref Unsafe.Add(ref tile.AsByte(), 5), 4);
+                    Unsafe.CopyBlockUnaligned(ref buffer.At(endIndex), ref Unsafe.Add(ref tile.AsByte(), 4), 4);
                     endIndex += 4;
                 }
 
@@ -493,7 +494,6 @@ namespace Orion.Core.Packets.World
             var liquid = tile.Liquid;
             if (liquid.Amount != 0)
             {
-                // Terraria uses 0 to indicate no liquid, so this needs to be accounted for.
                 header |= (byte)((byte)(liquid.Type + 1) << LiquidTypeShift);
                 buffer.At(endIndex++) = liquid.Amount;
             }
