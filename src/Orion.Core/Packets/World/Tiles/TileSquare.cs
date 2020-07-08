@@ -146,7 +146,6 @@ namespace Orion.Core.Packets.World.Tiles
             return length;
         }
 
-        // TODO: look into optimizing this if bottleneck?
         private int ReadTile(Span<byte> span, ref Tile tile)
         {
             ref var header = ref Unsafe.As<byte, ushort>(ref span.At(0));
@@ -161,22 +160,23 @@ namespace Orion.Core.Packets.World.Tiles
 
             if ((header & HasBlockColorMask) != 0)
             {
-                tile.BlockColor = (PaintColor)span[length++];
+                tile.BlockColor = (PaintColor)span.At(length++);
             }
 
             if ((header & HasWallColorMask) != 0)
             {
-                tile.WallColor = (PaintColor)span[length++];
+                tile.WallColor = (PaintColor)span.At(length++);
             }
 
             if ((header & HasBlockMask) != 0)
             {
-                tile.BlockId = Unsafe.ReadUnaligned<BlockId>(ref span[length]) + 1;
+                tile.BlockId = Unsafe.ReadUnaligned<BlockId>(ref span.At(length)) + 1;
                 length += 2;
 
                 if (tile.BlockId.HasFrames())
                 {
-                    length += span[length..].Read(ref Unsafe.Add(ref tile.AsByte(), 5), 4);
+                    Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref tile.AsByte(), 5), ref span.At(length), 4);
+                    length += 4;
                 }
 
                 if ((header & IsBlockHalvedMask) != 0)
@@ -195,19 +195,18 @@ namespace Orion.Core.Packets.World.Tiles
 
             if ((header & HasWallMask) != 0)
             {
-                tile.WallId = Unsafe.ReadUnaligned<WallId>(ref span[length]);
+                tile.WallId = Unsafe.ReadUnaligned<WallId>(ref span.At(length));
                 length += 2;
             }
 
             if ((header & HasLiquidMask) != 0)
             {
-                tile.Liquid = new Liquid(amount: span[length++], type: (LiquidType)span[length++]);
+                tile.Liquid = new Liquid(amount: span.At(length++), type: (LiquidType)span.At(length++));
             }
 
             return length;
         }
 
-        // TODO: look into optimizing this if bottleneck?
         private int WriteTile(Span<byte> span, ref Tile tile)
         {
             ref var header = ref Unsafe.As<byte, ushort>(ref span.At(0));
@@ -223,26 +222,27 @@ namespace Orion.Core.Packets.World.Tiles
 
             if (tile.BlockColor != PaintColor.None)
             {
-                span[length++] = (byte)tile.BlockColor;
+                span.At(length++) = (byte)tile.BlockColor;
 
                 header |= HasBlockColorMask;
             }
 
             if (tile.WallColor != PaintColor.None)
             {
-                span[length++] = (byte)tile.WallColor;
+                span.At(length++) = (byte)tile.WallColor;
 
                 header |= HasWallColorMask;
             }
 
             if (tile.BlockId != BlockId.None)
             {
-                Unsafe.WriteUnaligned(ref span[length], tile.BlockId - 1);
+                Unsafe.WriteUnaligned(ref span.At(length), tile.BlockId - 1);
                 length += 2;
 
                 if (tile.BlockId.HasFrames())
                 {
-                    length += span[length..].Write(ref Unsafe.Add(ref tile.AsByte(), 5), 4);
+                    Unsafe.CopyBlockUnaligned(ref span.At(length), ref Unsafe.Add(ref tile.AsByte(), 5), 4);
+                    length += 4;
                 }
 
                 if (tile.BlockShape == BlockShape.Halved)
@@ -262,7 +262,7 @@ namespace Orion.Core.Packets.World.Tiles
 
             if (tile.WallId != WallId.None)
             {
-                Unsafe.WriteUnaligned(ref span[length], tile.WallId);
+                Unsafe.WriteUnaligned(ref span.At(length), tile.WallId);
                 length += 2;
 
                 header |= HasWallMask;
@@ -271,8 +271,8 @@ namespace Orion.Core.Packets.World.Tiles
             if (!tile.Liquid.IsEmpty)
             {
                 var liquid = tile.Liquid;
-                span[length++] = liquid.Amount;
-                span[length++] = (byte)liquid.Type;
+                span.At(length++) = liquid.Amount;
+                span.At(length++) = (byte)liquid.Type;
 
                 header |= HasLiquidMask;
             }

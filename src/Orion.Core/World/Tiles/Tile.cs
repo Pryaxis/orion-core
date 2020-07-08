@@ -232,7 +232,7 @@ namespace Orion.Core.World.Tiles
         public readonly bool Equals(Tile other)
         {
             // Two tiles are compared by checking the tiles' bytes directly. The first set of 8 bytes are checked,
-            // followed by the second set of 4 bytes.
+            // followed by the header.
             //
             // The first set of 8 bytes are:
             // | yyyyyyyy | yyyyyyyy | xxxxxxxx | xxxxxxxx | ?wwwwwww | wwwwwwww | bbbbbbbb | bbbbbbbb |
@@ -240,12 +240,13 @@ namespace Orion.Core.World.Tiles
             var mask = BlockId.HasFrames()
                 ? 0b_11111111_11111111_11111111_11111111_01111111_11111111_11111111_11111111UL
                 : 0b_00000000_00000000_00000000_00000000_01111111_11111111_11111111_11111111UL;
+
             if (((_bytes ^ other._bytes) & mask) != 0)
             {
                 return false;
             }
 
-            // The second set of 4 bytes are:
+            // The header is:
             // | ???hhhhh | hhhhhhhh | hhhhhhhh | llllllll |
             //
             // Note that the liquid type should not be checked if the liquid amount is 0.
