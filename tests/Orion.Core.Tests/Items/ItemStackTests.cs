@@ -23,6 +23,12 @@ namespace Orion.Core.Items
     public class ItemStackTests
     {
         [Fact]
+        public void None_Get()
+        {
+            Assert.Equal(default, ItemStack.None);
+        }
+
+        [Fact]
         public void Id_Get()
         {
             var itemStack = new ItemStack(ItemId.Sdmg, ItemPrefix.Unreal, 1);
@@ -150,6 +156,15 @@ namespace Orion.Core.Items
             Assert.Equal(ItemId.Sdmg, id);
             Assert.Equal(ItemPrefix.Unreal, prefix);
             Assert.Equal(1, stackSize);
+        }
+
+        [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
+        public void op_Implicit()
+        {
+            ItemStack itemStack = ItemId.Sdmg;
+
+            Assert.Equal(new ItemStack(ItemId.Sdmg), itemStack);
         }
 
         [Fact]

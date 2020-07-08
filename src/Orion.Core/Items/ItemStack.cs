@@ -33,6 +33,12 @@ namespace Orion.Core.Items
     public readonly struct ItemStack : IEquatable<ItemStack>
     {
         /// <summary>
+        /// Gets an empty item stack.
+        /// </summary>
+        /// <value>An empty item stack.</value>
+        public static ItemStack None => default;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ItemStack"/> structure with the specified item
         /// <paramref name="id"/> and optional <paramref name="prefix"/> and <paramref name="stackSize"/>.
         /// </summary>
@@ -103,6 +109,12 @@ namespace Orion.Core.Items
             stackSize = StackSize;
             prefix = Prefix;
         }
+
+        /// <summary>
+        /// Converts the specified item <paramref name="id"/> into an <see cref="ItemStack"/> instance.
+        /// </summary>
+        /// <param name="id">The item ID.</param>
+        public static implicit operator ItemStack(ItemId id) => new ItemStack(id);
 
         /// <summary>
         /// Returns a value indicating whether <paramref name="left"/> and <paramref name="right"/> are equal.

@@ -210,7 +210,7 @@ namespace Orion.Core.Packets.DataStructures
         }
 
         /// <summary>
-        /// Returns a literal <see cref="NetworkText"/> instance with the specified <paramref name="text"/>.
+        /// Converts the specified <paramref name="text"/> into a <see cref="NetworkText"/> instance.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <exception cref="ArgumentNullException"><paramref name="text"/> is <see langword="null"/>.</exception>
