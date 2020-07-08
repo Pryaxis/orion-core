@@ -25,6 +25,16 @@ namespace Orion.Core.Packets.Players
     {
         private readonly byte[] _bytes = { 8, 0, 36, 5, 0, 0, 0, 0 };
 
+        [Fact]
+        public void PlayerIndex_Set_Get()
+        {
+            var packet = new PlayerZones();
+
+            packet.PlayerIndex = 5;
+
+            Assert.Equal(5, packet.PlayerIndex);
+        }
+
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
@@ -402,6 +412,7 @@ namespace Orion.Core.Packets.Players
         {
             var packet = TestUtils.ReadPacket<PlayerZones>(_bytes, PacketContext.Server);
 
+            Assert.Equal(5, packet.PlayerIndex);
             Assert.False(packet.Dungeon);
             Assert.False(packet.Corruption);
             Assert.False(packet.Hallow);
