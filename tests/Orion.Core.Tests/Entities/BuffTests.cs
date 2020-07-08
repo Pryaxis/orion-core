@@ -104,6 +104,16 @@ namespace Orion.Core.Entities
         }
 
         [Fact]
+        public void Equals_AreEmpty_ReturnsTrue()
+        {
+            var buff = new Buff(BuffId.ObsidianSkin, 0);
+            var buff2 = new Buff(BuffId.None, 28800);
+
+            Assert.True(buff.Equals((object)buff2));
+            Assert.True(buff.Equals(buff2));
+        }
+
+        [Fact]
         public void Equals_WrongType_ReturnsFalse()
         {
             var buff = new Buff(BuffId.ObsidianSkin, 28800);
@@ -136,6 +146,15 @@ namespace Orion.Core.Entities
         {
             var buff = new Buff(BuffId.ObsidianSkin, 28800);
             var buff2 = new Buff(BuffId.ObsidianSkin, 28800);
+
+            Assert.Equal(buff.GetHashCode(), buff2.GetHashCode());
+        }
+
+        [Fact]
+        public void GetHashCode_Equals_AreEmpty_AreEqual()
+        {
+            var buff = new Buff(BuffId.ObsidianSkin, 0);
+            var buff2 = new Buff(BuffId.None, 28800);
 
             Assert.Equal(buff.GetHashCode(), buff2.GetHashCode());
         }

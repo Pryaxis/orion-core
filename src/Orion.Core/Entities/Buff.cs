@@ -109,20 +109,20 @@ namespace Orion.Core.Entities
         public override bool Equals(object? obj) => obj is Buff other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Buff other) => Id == other.Id && Duration == other.Duration;
+        public bool Equals(Buff other) => IsEmpty ? other.IsEmpty : (Id == other.Id && Duration == other.Duration);
 
         /// <summary>
         /// Returns the hash code of the buff.
         /// </summary>
         /// <returns>The hash code of the buff.</returns>
-        public override int GetHashCode() => HashCode.Combine(Id, Duration);
+        public override int GetHashCode() => IsEmpty ? 0 : HashCode.Combine(Id, Duration);
 
         /// <summary>
         /// Returns a string representation of the buff.
         /// </summary>
         /// <returns>A string representation of the buff.</returns>
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Id} for {Duration:mm:ss}";
+        public override string ToString() => IsEmpty ? "<none>" : $"{Id} for {Duration:mm:ss}";
 
         /// <summary>
         /// Returns a value indicating whether <paramref name="left"/> is equal to <paramref name="right"/>.
