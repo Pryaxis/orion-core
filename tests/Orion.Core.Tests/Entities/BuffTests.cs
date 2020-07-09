@@ -24,6 +24,12 @@ namespace Orion.Core.Entities
     public class BuffTests
     {
         [Fact]
+        public void Buff_Get()
+        {
+            Assert.Equal(default, Buff.None);
+        }
+
+        [Fact]
         public void Ctor_NegativeTicks_ThrowsArgumentOutOfRangeException()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => new Buff(BuffId.ObsidianSkin, -28800));

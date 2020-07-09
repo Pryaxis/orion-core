@@ -37,6 +37,12 @@ namespace Orion.Core.Entities
     public readonly struct Buff : IEquatable<Buff>
     {
         /// <summary>
+        /// Gets an empty buff.
+        /// </summary>
+        /// <value>An empty buff.</value>
+        public static Buff None => default;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Buff"/> structure with the specified buff <paramref name="id"/>
         /// and <paramref name="ticks"/>.
         /// </summary>
