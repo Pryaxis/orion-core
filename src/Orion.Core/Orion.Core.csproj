@@ -2,21 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Nullable>enable</Nullable>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <Authors>orion-contributors</Authors>
     <RepositoryUrl>https://github.com/Pryaxis/orion-core</RepositoryUrl>
     <PackageProjectUrl>https://pryaxis.github.io/orion-core</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Description>Orion.Core provides the next generation of Terraria Server APIs.</Description>
-    <DocumentationFile>bin\$(Configuration)\Orion.xml</DocumentationFile>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>COPYING</PackageLicenseFile>
     <PackageTags>terraria;tshock;orion</PackageTags>
     <IncludeSource>true</IncludeSource>
