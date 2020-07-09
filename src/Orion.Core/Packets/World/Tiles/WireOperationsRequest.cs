@@ -22,7 +22,7 @@ using Orion.Core.Utils;
 namespace Orion.Core.Packets.World.Tiles
 {
     /// <summary>
-    /// A packet sent from the client to the server to perform wire operations.
+    /// A packet sent from the client to the server to request wire operations.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 12)]
     public struct WireOperationsRequest : IPacket
