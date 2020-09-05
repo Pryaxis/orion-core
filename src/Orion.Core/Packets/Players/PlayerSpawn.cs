@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 using Orion.Core.Utils;
 
 namespace Orion.Core.Packets.Players
@@ -32,7 +30,7 @@ namespace Orion.Core.Packets.Players
         /// <summary>
         /// Gets or sets the value that indicates how much time is left until the player respawns.
         /// </summary>
-        [field: FieldOffset(5)] public int TimeUntilRespawn{ get; set; }
+        [field: FieldOffset(5)] public int TimeUntilRespawn { get; set; }
 
         /// <summary>
         /// Gets or sets the spawn context.
@@ -41,15 +39,9 @@ namespace Orion.Core.Packets.Players
 
         PacketId IPacket.Id => PacketId.PlayerSpawn;
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context)
-        {
-            return span.Read(ref _bytes, 10);
-        }
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 10);
 
-        int IPacket.WriteBody(Span<byte> span, PacketContext context)
-        {
-            return span.Write(ref _bytes, 10);
-        }
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 10);
     }
 
     /// <summary>

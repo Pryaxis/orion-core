@@ -258,14 +258,8 @@ namespace Orion.Core.Packets.Players
 
         PacketId IPacket.Id => PacketId.PlayerInfo;
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context)
-        {
-            return span.Read(ref _bytes, 38);
-        }
+        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 38);
 
-        int IPacket.WriteBody(Span<byte> span, PacketContext context)
-        {
-            return span.Write(ref _bytes, 38);
-        }
+        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 38);
     }
 }
