@@ -57,7 +57,7 @@ namespace Orion.Core.Packets.Players
         {
             var packet = TestUtils.ReadPacket<PlayerSpawn>(_bytes, PacketContext.Server);
 
-            //Assert.Equal(5, packet.PlayerIndex);
+            Assert.Equal(5, packet.PlayerIndex);
             Assert.Equal(50, packet.SpawnX);
             Assert.Equal(100, packet.SpawnY);
             Assert.Equal(15, packet.TimeUntilRespawn);
