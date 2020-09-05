@@ -108,214 +108,256 @@ namespace Orion.Core.Packets.Players
             Assert.Equal(666.67F, packet.HomePositionY);
         }
 
-        [Fact]
-        public void IsControlUp_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsControlUp_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsControlUp = true;
+            packet.IsControlUp = value;
 
-            Assert.True(packet.IsControlUp);
+            Assert.Equal(value, packet.IsControlUp);
         }
 
-        [Fact]
-        public void IsControlDown_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsControlDown_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsControlDown = true;
+            packet.IsControlDown = value;
 
-            Assert.True(packet.IsControlDown);
+            Assert.Equal(value, packet.IsControlDown);
         }
 
-        [Fact]
-        public void IsControlLeft_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsControlLeft_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsControlLeft = true;
+            packet.IsControlLeft = value;
 
-            Assert.True(packet.IsControlLeft);
+            Assert.Equal(value, packet.IsControlLeft);
         }
 
-        [Fact]
-        public void IsControlRight_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsControlRight_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsControlRight = true;
+            packet.IsControlRight = value;
 
-            Assert.True(packet.IsControlRight);
+            Assert.Equal(value, packet.IsControlRight);
         }
 
-        [Fact]
-        public void IsControlJump_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsControlJump_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsControlJump = true;
+            packet.IsControlJump = value;
 
-            Assert.True(packet.IsControlJump);
+            Assert.Equal(value, packet.IsControlJump);
         }
 
-        [Fact]
-        public void IsControlUseItem_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsControlUseItem_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsControlUseItem = true;
+            packet.IsControlUseItem = value;
 
-            Assert.True(packet.IsControlUseItem);
+            Assert.Equal(value, packet.IsControlUseItem);
         }
 
-        [Fact]
-        public void IsSleeping_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsSleeping_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsSleeping = true;
+            packet.IsSleeping = value;
 
-            Assert.True(packet.IsSleeping);
+            Assert.Equal(value, packet.IsSleeping);
         }
 
-        [Fact]
-        public void IsPulleyEnabled_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsPulleyEnabled_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsPulleyEnabled = true;
+            packet.IsPulleyEnabled = value;
 
-            Assert.True(packet.IsPulleyEnabled);
+            Assert.Equal(value, packet.IsPulleyEnabled);
         }
 
-        [Fact]
-        public void IsDirectionRight_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsDirectionRight_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsDirectionRight = true;
+            packet.IsDirectionRight = value;
 
-            Assert.True(packet.IsDirectionRight);
+            Assert.Equal(value, packet.IsDirectionRight);
         }
 
-        [Fact]
-        public void ShouldUpdateVelocity_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ShouldUpdateVelocity_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.ShouldUpdateVelocity = true;
+            packet.ShouldUpdateVelocity = value;
 
-            Assert.True(packet.ShouldUpdateVelocity);
+            Assert.Equal(value, packet.ShouldUpdateVelocity);
         }
 
-        [Fact]
-        public void IsVortexStealthActive_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsVortexStealthActive_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsVortexStealthActive = true;
+            packet.IsVortexStealthActive = value;
 
-            Assert.True(packet.IsVortexStealthActive);
+            Assert.Equal(value, packet.IsVortexStealthActive);
         }
 
-        [Fact]
-        public void IsGravityInverted_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsGravityInverted_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsGravityInverted = true;
+            packet.IsGravityInverted = value;
 
-            Assert.True(packet.IsGravityInverted);
+            Assert.Equal(value, packet.IsGravityInverted);
         }
 
-        [Fact]
-        public void IsShieldRaised_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsShieldRaised_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsShieldRaised = true;
+            packet.IsShieldRaised = value;
 
-            Assert.True(packet.IsShieldRaised);
+            Assert.Equal(value, packet.IsShieldRaised);
         }
 
-        [Fact]
-        public void IsHoveringUp_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsHoveringUp_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsHoveringUp = true;
+            packet.IsHoveringUp = value;
 
-            Assert.True(packet.IsHoveringUp);
+            Assert.Equal(value, packet.IsHoveringUp);
         }
 
-        [Fact]
-        public void IsHoveringDown_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsHoveringDown_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsHoveringDown = true;
+            packet.IsHoveringDown = value;
 
-            Assert.True(packet.IsHoveringDown);
+            Assert.Equal(value, packet.IsHoveringDown);
         }
 
-        [Fact]
-        public void IsVoidVaultEnabled_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsVoidVaultEnabled_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsVoidVaultEnabled = true;
+            packet.IsVoidVaultEnabled = value;
 
-            Assert.True(packet.IsVoidVaultEnabled);
+            Assert.Equal(value, packet.IsVoidVaultEnabled);
         }
 
-        [Fact]
-        public void IsSitting_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsSitting_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsSitting = true;
+            packet.IsSitting = value;
 
-            Assert.True(packet.IsSitting);
+            Assert.Equal(value, packet.IsSitting);
         }
 
-        [Fact]
-        public void HasCompletedDD2Event_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void HasCompletedDD2Event_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.HasCompletedDD2Event = true;
+            packet.HasCompletedDD2Event = value;
 
-            Assert.True(packet.HasCompletedDD2Event);
+            Assert.Equal(value, packet.HasCompletedDD2Event);
         }
 
-        [Fact]
-        public void IsPettingAnimal_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsPettingAnimal_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsPettingAnimal = true;
+            packet.IsPettingAnimal = value;
 
-            Assert.True(packet.IsPettingAnimal);
+            Assert.Equal(value, packet.IsPettingAnimal);
         }
 
-        [Fact]
-        public void IsPettingSmallAnimal_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsPettingSmallAnimal_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.IsPettingSmallAnimal = true;
+            packet.IsPettingSmallAnimal = value;
 
-            Assert.True(packet.IsPettingSmallAnimal);
+            Assert.Equal(value, packet.IsPettingSmallAnimal);
         }
 
-        [Fact]
-        public void HasUsedPotionOfReturn_Set_Get()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void HasUsedPotionOfReturn_Set_Get(bool value)
         {
             var packet = new PlayerInfo();
 
-            packet.HasUsedPotionOfReturn = true;
+            packet.HasUsedPotionOfReturn = value;
 
-            Assert.True(packet.HasUsedPotionOfReturn);
+            Assert.Equal(value, packet.HasUsedPotionOfReturn);
         }
 
         [Fact]
