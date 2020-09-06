@@ -69,6 +69,7 @@ namespace Orion.Core.Packets
         PasswordRequest = 37,
         PasswordResponse = 38,
         ItemDisown = 39,
+        PlayerTownNpc = 40,
         PlayerMana = 42,
         PlayerManaEffect = 43,
         PlayerTeam = 45,
