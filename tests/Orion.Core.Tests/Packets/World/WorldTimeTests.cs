@@ -6,7 +6,7 @@ using Orion.Core.Packets;
 using Orion.Core.Packets.World;
 using Xunit;
 
-namespace Orion.Core.World
+namespace Orion.Core.Packets.World
 {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public sealed class WorldTimeTests
@@ -58,7 +58,7 @@ namespace Orion.Core.World
         [Fact]
         public void Read()
         {
-            var packet = TestUtils.ReadPacket<WorldTime>(_bytes, PacketContext.Client);
+            var packet = TestUtils.ReadPacket<WorldTime>(_bytes, PacketContext.Server);
 
             Assert.True(packet.IsDayTime);
             Assert.Equal(180, packet.Time);
