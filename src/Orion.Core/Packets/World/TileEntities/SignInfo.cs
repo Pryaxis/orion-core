@@ -48,6 +48,16 @@ namespace Orion.Core.Packets.World.TileEntities
             set => _text = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        // TODO: Requires deeper verification!
+        /// <summary>
+        /// Gets or sets a value indicating whether the sign is a tombstone.
+        /// </summary>
+        public bool IsTombstone
+        {
+            get => _flags[0];
+            set => _flags[0] = value;
+        }
+
         PacketId IPacket.Id => PacketId.SignInfo;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
