@@ -21,6 +21,7 @@ using Orion.Core.Packets.Items;
 using Orion.Core.Packets.Misc;
 using Orion.Core.Packets.Npcs;
 using Orion.Core.Packets.Players;
+using Orion.Core.Packets.Projectiles;
 using Orion.Core.Packets.Server;
 using Orion.Core.Packets.World;
 using Orion.Core.Packets.World.TileEntities;
@@ -57,6 +58,7 @@ namespace Orion.Core.Packets
         ItemOwn = 22,
         NpcInfo = 23,
         NpcDamage = 28,
+        ProjectileRemove = 29,
         PlayerPvp = 30,
         ChestOpen = 31,
         ChestInventory = 32,
@@ -152,6 +154,7 @@ namespace Orion.Core.Packets
             [PacketId.PlayerMana] = typeof(PlayerMana),
             [PacketId.PlayerManaEffect] = typeof(PlayerManaEffect),
             [PacketId.NpcDamage] = typeof(NpcDamage),
+            [PacketId.ProjectileRemove] = typeof(ProjectileRemove),
             [PacketId.PlayerPvp] = typeof(PlayerPvp),
             [PacketId.ChestOpen] = typeof(ChestOpen),
             [PacketId.ChestInventory] = typeof(ChestInventory),

@@ -12,7 +12,7 @@ namespace Orion.Core.Packets.World.Tiles
     [StructLayout(LayoutKind.Explicit, Size = 6)]
     public struct DoorToggle : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(0)] private byte _bytes; // Used to obtain an interior reference
 
         /// <summary>
         /// Gets or sets the toggle action.
