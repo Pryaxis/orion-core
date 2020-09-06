@@ -43,6 +43,7 @@ namespace Orion.Core.Packets.World.TileEntities
         public void Read()
         {
             var packet = TestUtils.ReadPacket<ChestInfo>(_bytes, PacketContext.Server);
+
             Assert.Equal(5, packet.ChestIndex);
             Assert.Equal(150, packet.X);
             Assert.Equal(200, packet.Y);

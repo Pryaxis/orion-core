@@ -9,9 +9,10 @@ using Orion.Core.Utils;
 namespace Orion.Core.Packets.World.TileEntities
 {
     /// <summary>
-    /// A packet sent to unblock occupied chests.
+    /// A packet sent to synchronize occupied chest indices across clients or even trigger a chest rename when sent from client to server.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 27, CharSet = CharSet.Auto)]
+    /// <remarks>This packet triggers a <see cref="ChestName"/> only when a valid <see cref="Name"/> is supplied.</remarks>
+    [StructLayout(LayoutKind.Explicit, Size = 27)]
     public struct ChestInfo : IPacket
     {
         [FieldOffset(0)] private byte _bytes; // Used to obtain an interior reference
