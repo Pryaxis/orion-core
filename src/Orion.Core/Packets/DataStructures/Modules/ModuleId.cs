@@ -27,7 +27,8 @@ namespace Orion.Core.Packets.DataStructures.Modules
     {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         Chat = 1,
-        Ping = 2
+        Ping = 2,
+        Pylon = 8
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
@@ -39,7 +40,8 @@ namespace Orion.Core.Packets.DataStructures.Modules
         private static readonly Dictionary<ModuleId, Type> _types = new Dictionary<ModuleId, Type>
         {
             [ModuleId.Chat] = typeof(Chat),
-            [ModuleId.Ping] = typeof(Ping)
+            [ModuleId.Ping] = typeof(Ping),
+            [ModuleId.Pylon] = typeof(Pylon)
         };
 
         /// <summary>
