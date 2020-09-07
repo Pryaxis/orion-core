@@ -29,7 +29,8 @@ namespace Orion.Core.Packets.DataStructures.Modules
         Chat = 1,
         Ping = 2,
         Ambience = 3,
-        Pylon = 8
+        Pylon = 8,
+        Particle = 9
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
@@ -43,7 +44,8 @@ namespace Orion.Core.Packets.DataStructures.Modules
             [ModuleId.Chat] = typeof(Chat),
             [ModuleId.Ping] = typeof(Ping),
             [ModuleId.Ambience] = typeof(Ambience),
-            [ModuleId.Pylon] = typeof(Pylon)
+            [ModuleId.Pylon] = typeof(Pylon),
+            [ModuleId.Particle] = typeof(Particle)
         };
 
         /// <summary>
