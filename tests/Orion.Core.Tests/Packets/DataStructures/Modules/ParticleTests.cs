@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
+using Orion.Core.Utils;
 using System.Text;
 using ReLogic.Content;
 using Xunit;
@@ -9,7 +9,10 @@ namespace Orion.Core.Packets.DataStructures.Modules
 {
     public sealed class ParticleTests
     {
-        private readonly byte[] _bytes = { 9, 0, 1, 0, 0, 128, 63, 0, 0, 0, 64, 0, 0, 160, 64, 0, 0, 32, 65, 0, 0, 0, 0, 10 };
+        private readonly byte[] _bytes =
+        {
+            9, 0, 1, 0, 0, 128, 63, 0, 0, 0, 64, 0, 0, 160, 64, 0, 0, 32, 65, 0, 0, 0, 0, 10
+        };
 
         [Theory]
         [InlineData(ParticleType.BlackLightningHit)]
@@ -29,9 +32,9 @@ namespace Orion.Core.Packets.DataStructures.Modules
         {
             var module = new Particle();
 
-            module.Position = new Vector2(123, 456);
+            module.Position = new Vector2f(123, 456);
 
-            Assert.Equal(new Vector2(123, 456), module.Position);
+            Assert.Equal(new Vector2f(123, 456), module.Position);
 
         }
 
@@ -40,9 +43,9 @@ namespace Orion.Core.Packets.DataStructures.Modules
         {
             var module = new Particle();
 
-            module.MovementVector = new Vector2(1, 0);
+            module.MovementVector = new Vector2f(1, 0);
 
-            Assert.Equal(new Vector2(1, 0), module.MovementVector);
+            Assert.Equal(new Vector2f(1, 0), module.MovementVector);
         }
 
         [Fact]
@@ -71,8 +74,8 @@ namespace Orion.Core.Packets.DataStructures.Modules
             var module = TestUtils.ReadModule<Particle>(_bytes, PacketContext.Server);
 
             Assert.Equal(ParticleType.FlameWaders, module.Type);
-            Assert.Equal(new Vector2(1, 2), module.Position);
-            Assert.Equal(new Vector2(5, 10), module.MovementVector);
+            Assert.Equal(new Vector2f(1, 2), module.Position);
+            Assert.Equal(new Vector2f(5, 10), module.MovementVector);
             Assert.Equal(0, module.ShaderIndex);
             Assert.Equal(10, module.PlayerIndex);
         }

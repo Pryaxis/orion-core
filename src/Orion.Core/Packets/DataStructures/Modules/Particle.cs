@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using Orion.Core.Utils;
@@ -23,12 +22,12 @@ namespace Orion.Core.Packets.DataStructures.Modules
         /// <summary>
         /// Gets or sets the world position.
         /// </summary>
-        [field: FieldOffset(1)] public Vector2 Position { get; set; }
+        [field: FieldOffset(1)] public Vector2f Position { get; set; }
 
         /// <summary>
         /// Gets or sets the movement vector.
         /// </summary>
-        [field: FieldOffset(9)] public Vector2 MovementVector { get; set; }
+        [field: FieldOffset(9)] public Vector2f MovementVector { get; set; }
 
         /// <summary>
         /// Gets or sets the shader index.
