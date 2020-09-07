@@ -30,7 +30,8 @@ namespace Orion.Core.Packets.World.Tiles
         [field: FieldOffset(3)] public short TileY { get; set; }
 
         /// <summary>
-        /// Gets or sets the direction. <see langword="false"/> indicates the left direction whereas <see langword="true"/> indicates the right direction (or whether the player is standing above a trapdoor with trapdoor actions).
+        /// Gets or sets the direction. <see langword="false"/> indicates the left direction whereas <see langword="true"/> 
+        /// indicates the right direction (or whether the player is standing above a trapdoor with trapdoor actions).
         /// </summary>
         /// <remarks>Used with <see cref="DoorAction.Open"/>, <see cref="DoorAction.TrapdoorOpen"/>, and <see cref="DoorAction.TrapdoorClose"/>.</remarks>
         [field: FieldOffset(5)] public bool IsRightDirectionOpen { get; set; }
