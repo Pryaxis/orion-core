@@ -250,7 +250,7 @@ namespace Orion.Core.Packets.World
         /// There are 4 variants of forest backgrounds. Terraria generates a random set of mountain and tree textures for each 
         /// variant depending on the selected style.
         /// </remarks>
-        [field: FieldOffset(98)] public byte Forest1Style { get; }
+        [field: FieldOffset(98)] public byte Forest1Style { get; set; }
 
         /// <summary>
         /// Gets or sets the style of the second forest variant.
@@ -259,7 +259,7 @@ namespace Orion.Core.Packets.World
         /// There are 4 variants of forest backgrounds. Terraria generates a random set of mountain and tree textures for each 
         /// variant depending on the selected style.
         /// </remarks>
-        [field: FieldOffset(99)] public byte Forest2Style { get; }
+        [field: FieldOffset(99)] public byte Forest2Style { get; set; }
 
         /// <summary>
         /// Gets or sets the style of the third forest variant.
@@ -268,7 +268,7 @@ namespace Orion.Core.Packets.World
         /// There are 4 variants of forest backgrounds. Terraria generates a random set of mountain and tree textures for each 
         /// variant depending on the selected style.
         /// </remarks>
-        [field: FieldOffset(100)] public byte Forest3Style { get; }
+        [field: FieldOffset(100)] public byte Forest3Style { get; set; }
 
         /// <summary>
         /// Gets or sets the style of the fourth forest variant.
@@ -277,7 +277,7 @@ namespace Orion.Core.Packets.World
         /// There are 4 variants of forest backgrounds. Terraria generates a random set of mountain and tree textures for each 
         /// variant depending on the selected style.
         /// </remarks>
-        [field: FieldOffset(101)] public byte Forest4Style { get; }
+        [field: FieldOffset(101)] public byte Forest4Style { get; set; }
 
         /// <summary>
         /// Gets or sets the X coordinate that marks the end of the first and the beginning of the second cave region.
@@ -316,7 +316,7 @@ namespace Orion.Core.Packets.World
         /// There are 4 variants of cave backgrounds. Terraria generates a random set of textures for each 
         /// variant depending on the selected style.
         /// </remarks>
-        [field: FieldOffset(114)] public byte Cave1Style { get; }
+        [field: FieldOffset(114)] public byte Cave1Style { get; set; }
 
         /// <summary>
         /// Gets or sets the style of the second cave variant.
@@ -325,7 +325,7 @@ namespace Orion.Core.Packets.World
         /// There are 4 variants of cave backgrounds. Terraria generates a random set of textures for each 
         /// variant depending on the selected style.
         /// </remarks>
-        [field: FieldOffset(115)] public byte Cave2Style { get; }
+        [field: FieldOffset(115)] public byte Cave2Style { get; set; }
 
         /// <summary>
         /// Gets or sets the style of the third cave variant.
@@ -334,7 +334,7 @@ namespace Orion.Core.Packets.World
         /// There are 4 variants of cave backgrounds. Terraria generates a random set of textures for each 
         /// variant depending on the selected style.
         /// </remarks>
-        [field: FieldOffset(116)] public byte Cave3Style { get; }
+        [field: FieldOffset(116)] public byte Cave3Style { get; set; }
 
         /// <summary>
         /// Gets or sets the style of the fourth cave variant.
@@ -343,7 +343,7 @@ namespace Orion.Core.Packets.World
         /// There are 4 variants of cave backgrounds. Terraria generates a random set of textures for each 
         /// variant depending on the selected style.
         /// </remarks>
-        [field: FieldOffset(117)] public byte Cave4Style { get; }
+        [field: FieldOffset(117)] public byte Cave4Style { get; set; }
 
         /// <summary>
         /// Gets the current style variation for each world area. Used for tree effects and background rendering.
