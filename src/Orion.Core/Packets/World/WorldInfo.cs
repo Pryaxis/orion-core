@@ -15,18 +15,18 @@ namespace Orion.Core.Packets.World
     [StructLayout(LayoutKind.Explicit)]
     public sealed class WorldInfo : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference
-        [FieldOffset(32)] private byte _bytes2; // Used to obtain an interior reference
+        [FieldOffset(0)] private readonly byte _bytes;  // Used to obtain an interior reference
+        [FieldOffset(32)] private readonly byte _bytes2; // Used to obtain an interior reference
         [FieldOffset(4)] private Flags8 _solarFlags;
         [FieldOffset(24)] private string? _worldName;
-        [FieldOffset(33)] private byte[] _uniqueIdBytes = new byte[16];
-        [FieldOffset(94)] private Flags8 _worldFlags;
-        [FieldOffset(95)] private Flags8 _worldFlags2;
-        [FieldOffset(96)] private Flags8 _worldFlags3;
-        [FieldOffset(97)] private Flags8 _worldFlags4;
-        [FieldOffset(98)] private Flags8 _worldFlags5;
-        [FieldOffset(99)] private Flags8 _worldFlags6;
-        [FieldOffset(100)] private Flags8 _worldFlags7;
+        [FieldOffset(40)] private byte[] _uniqueIdBytes = new byte[16];
+        [FieldOffset(134)] private Flags8 _worldFlags;
+        [FieldOffset(135)] private Flags8 _worldFlags2;
+        [FieldOffset(136)] private Flags8 _worldFlags3;
+        [FieldOffset(137)] private Flags8 _worldFlags4;
+        [FieldOffset(138)] private Flags8 _worldFlags5;
+        [FieldOffset(139)] private Flags8 _worldFlags6;
+        [FieldOffset(140)] private Flags8 _worldFlags7;
 
         /// <summary>
         /// Gets or sets the time of day.
@@ -90,13 +90,13 @@ namespace Orion.Core.Packets.World
         /// <summary>
         /// Gets or sets the world generation version.
         /// </summary>
-        [field: FieldOffset(33)] public ulong WorldGenerationVersion { get; set; }
+        [field: FieldOffset(56)] public ulong WorldGenerationVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the moon type. Used to identify the proper texture asset.
         /// </summary>
         /// <remarks>See "Notes" at https://terraria.gamepedia.com/Moon_phase for more details.</remarks>
-        [field: FieldOffset(41)] public byte MoonType { get; set; }
+        [field: FieldOffset(64)] public byte MoonType { get; set; }
 
         /// <summary>
         /// Gets or sets the first forest biome background style.
@@ -105,7 +105,7 @@ namespace Orion.Core.Packets.World
         /// There are 4 variants of forest backgrounds. Terraria generates a random set of mountain and tree textures for each 
         /// variant depending on the selected style.
         /// </remarks>
-        [field: FieldOffset(42)] public byte ForestBackgroundStyle { get; set; }
+        [field: FieldOffset(65)] public byte ForestBackgroundStyle { get; set; }
 
         /// <summary>
         /// Gets or sets the second forest biome background style.
@@ -114,7 +114,7 @@ namespace Orion.Core.Packets.World
         /// There are 4 variants of forest backgrounds. Terraria generates a random set of mountain and tree textures for each 
         /// variant depending on the selected style.
         /// </remarks>
-        [field: FieldOffset(43)] public byte ForestBackgroundStyle2 { get; set; }
+        [field: FieldOffset(66)] public byte ForestBackgroundStyle2 { get; set; }
 
         /// <summary>
         /// Gets or sets the third forest biome background style.
@@ -123,7 +123,7 @@ namespace Orion.Core.Packets.World
         /// There are 4 variants of forest backgrounds. Terraria generates a random set of mountain and tree textures for each 
         /// variant depending on the selected style.
         /// </remarks>
-        [field: FieldOffset(44)] public byte ForestBackgroundStyle3 { get; set; }
+        [field: FieldOffset(67)] public byte ForestBackgroundStyle3 { get; set; }
 
         /// <summary>
         /// Gets or sets the fourth forest biome background style.
@@ -132,77 +132,77 @@ namespace Orion.Core.Packets.World
         /// There are 4 variants of forest backgrounds. Terraria generates a random set of mountain and tree textures for each 
         /// variant depending on the selected style.
         /// </remarks>
-        [field: FieldOffset(45)] public byte ForestBackgroundStyle4 { get; set; }
+        [field: FieldOffset(68)] public byte ForestBackgroundStyle4 { get; set; }
 
         /// <summary>
         /// Gets or sets the corrupt biome's background style.
         /// </summary>
-        [field: FieldOffset(46)] public byte CorruptBackgroundStyle { get; set; }
+        [field: FieldOffset(69)] public byte CorruptBackgroundStyle { get; set; }
 
         /// <summary>
         /// Gets or sets the jungle biome's background style.
         /// </summary>
-        [field: FieldOffset(47)] public byte JungleBackgroundStyle { get; set; }
+        [field: FieldOffset(70)] public byte JungleBackgroundStyle { get; set; }
 
         /// <summary>
         /// Gets or sets the snow biome's background style.
         /// </summary>
-        [field: FieldOffset(48)] public byte SnowBackgroundStyle { get; set; }
+        [field: FieldOffset(71)] public byte SnowBackgroundStyle { get; set; }
 
         /// <summary>
         /// Gets or sets the hallow biome's background style.
         /// </summary>
-        [field: FieldOffset(49)] public byte HallowBackgroundStyle { get; set; }
+        [field: FieldOffset(72)] public byte HallowBackgroundStyle { get; set; }
 
         /// <summary>
         /// Gets or sets the crimson biome's background style.
         /// </summary>
-        [field: FieldOffset(50)] public byte CrimsonBackgroundStyle { get; set; }
+        [field: FieldOffset(73)] public byte CrimsonBackgroundStyle { get; set; }
 
         /// <summary>
         /// Gets or sets the desert biome's background style.
         /// </summary>
-        [field: FieldOffset(51)] public byte DesertBackgroundStyle { get; set; }
+        [field: FieldOffset(74)] public byte DesertBackgroundStyle { get; set; }
 
         /// <summary>
         /// Gets or sets the ocean biome's background style.
         /// </summary>
-        [field: FieldOffset(52)] public byte OceanBackgroundStyle { get; set; }
+        [field: FieldOffset(75)] public byte OceanBackgroundStyle { get; set; }
 
         /// <summary>
         /// Gets or sets the mushroom biome's background style.
         /// </summary>
-        [field: FieldOffset(53)] public byte MushroomBackgroundStyle { get; set; }
+        [field: FieldOffset(76)] public byte MushroomBackgroundStyle { get; set; }
 
         /// <summary>
         /// Gets or sets the underworld biome's background style.
         /// </summary>
-        [field: FieldOffset(54)] public byte UnderworldBackgroundStyle { get; set; }
+        [field: FieldOffset(77)] public byte UnderworldBackgroundStyle { get; set; }
 
         /// <summary>
         /// Gets or sets the underground ice background style.
         /// </summary>
-        [field: FieldOffset(55)] public byte UndergroundIceBackgroundStyle { get; set; }
+        [field: FieldOffset(78)] public byte UndergroundIceBackgroundStyle { get; set; }
 
         /// <summary>
         /// Gets or sets the underground jungle background style.
         /// </summary>
-        [field: FieldOffset(56)] public byte UndergroundJungleBackgroundStyle { get; set; }
+        [field: FieldOffset(79)] public byte UndergroundJungleBackgroundStyle { get; set; }
 
         /// <summary>
         /// Gets or sets the underground hell background style.
         /// </summary>
-        [field: FieldOffset(57)] public byte UndergroundHellBackgroundStyle { get; set; }
+        [field: FieldOffset(80)] public byte UndergroundHellBackgroundStyle { get; set; }
 
         /// <summary>
         /// Gets or sets the wind speed.
         /// </summary>
-        [field: FieldOffset(58)] public float WindSpeed { get; set; }
+        [field: FieldOffset(81)] public float WindSpeed { get; set; }
 
         /// <summary>
         /// Gets or sets the number of clouds.
         /// </summary>
-        [field: FieldOffset(62)] public byte NumberOfClouds { get; set; }
+        [field: FieldOffset(85)] public byte NumberOfClouds { get; set; }
 
         /// <summary>
         /// Gets or sets the world's globally unique identifier.
@@ -214,98 +214,196 @@ namespace Orion.Core.Packets.World
         }
 
         /// <summary>
-        /// Gets an array of coordinates that enclose the 4 forest regions.
+        /// Gets or sets the X coordinate that marks the end of the first and the beginning of the second forest region.
         /// </summary>
         /// <remarks>
         /// Terraria provides 4 variants of forest backgrounds. Each variant takes up a certain map area, thus creating a forest region.
-        /// This property is used to define at which coordinate one region ends and another begins. The game uses this information
-        /// to render the appropriate forest background based on the player's position (given they're in the right biome).
-        /// E.g, 0 &lt;= x &lt; <see cref="ForestRegionEdges"/>[0] represents Forest1, <see cref="ForestRegionEdges"/>[0] &lt;= x &lt; <see cref="ForestRegionEdges"/>[1] represents Forest2 etc.
+        /// The game renders the appropriate forest variant based on the region the player is in (given they're in the right biome).
+        /// 0 &lt;= x &lt; <see cref="Forest1Edge"/> represents the first region, thus the game draws the first variant.
         /// </remarks>
-        [field: FieldOffset(63)] public byte[] ForestRegionEdges { get; } = new byte[3];
+        [field: FieldOffset(86)] public int Forest1Edge { get; set; }
 
         /// <summary>
-        /// Gets an array of styles used for each forest variant.
+        /// Gets or sets the X coordinate that marks the end of the second and the beginning of the third forest region.
+        /// </summary>
+        /// <remarks>
+        /// Terraria provides 4 variants of forest backgrounds. Each variant takes up a certain map area, thus creating a forest region.
+        /// The game renders the appropriate forest variant based on the region the player is in (given they're in the right biome).
+        /// <see cref="Forest1Edge"/> &lt;= x &lt; <see cref="Forest2Edge"/> represents the second region, thus the game draws the second variant.
+        /// </remarks>
+        [field: FieldOffset(90)] public int Forest2Edge { get; set; }
+
+        /// <summary>
+        /// Gets or sets the X coordinate that marks the end of the third and the beginning of the fourth forest region.
+        /// </summary>
+        /// <remarks>
+        /// Terraria provides 4 variants of forest backgrounds. Each variant takes up a certain map area, thus creating a forest region.
+        /// The game renders the appropriate forest variant based on the region the player is in (given they're in the right biome).
+        /// <see cref="Forest2Edge"/> &lt;= x &lt; <see cref="Forest3Edge"/> represents the third region, thus the game draws the third variant.
+        /// </remarks>
+        [field: FieldOffset(94)] public int Forest3Edge { get; set; }
+
+        /// <summary>
+        /// Gets or sets the style of the first forest variant.
         /// </summary>
         /// <remarks>
         /// There are 4 variants of forest backgrounds. Terraria generates a random set of mountain and tree textures for each 
         /// variant depending on the selected style.
         /// </remarks>
-        [field: FieldOffset(66)] public byte[] ForestStyles { get; } = new byte[4];
+        [field: FieldOffset(98)] public byte Forest1Style { get; }
 
         /// <summary>
-        /// Gets an array of coordinates that encloses cave regions.
+        /// Gets or sets the style of the second forest variant.
         /// </summary>
         /// <remarks>
-        /// This property is used to define at which coordinate one region ends and another begins. The game uses this information
-        /// to render the appropriate cave background style based on the player's position (given they're in the right biome or not too deep underground).
+        /// There are 4 variants of forest backgrounds. Terraria generates a random set of mountain and tree textures for each 
+        /// variant depending on the selected style.
         /// </remarks>
-        [field: FieldOffset(70)] public byte[] CaveRegionEdges { get; } = new byte[3];
+        [field: FieldOffset(99)] public byte Forest2Style { get; }
 
         /// <summary>
-        /// Gets an array of styles used for caves.
+        /// Gets or sets the style of the third forest variant.
         /// </summary>
-        [field: FieldOffset(73)] public byte[] CaveBackgroundStyles { get; } = new byte[3];
+        /// <remarks>
+        /// There are 4 variants of forest backgrounds. Terraria generates a random set of mountain and tree textures for each 
+        /// variant depending on the selected style.
+        /// </remarks>
+        [field: FieldOffset(100)] public byte Forest3Style { get; }
+
+        /// <summary>
+        /// Gets or sets the style of the fourth forest variant.
+        /// </summary>
+        /// <remarks>
+        /// There are 4 variants of forest backgrounds. Terraria generates a random set of mountain and tree textures for each 
+        /// variant depending on the selected style.
+        /// </remarks>
+        [field: FieldOffset(101)] public byte Forest4Style { get; }
+
+        /// <summary>
+        /// Gets or sets the X coordinate that marks the end of the first and the beginning of the second cave region.
+        /// </summary>
+        /// <remarks>
+        /// Terraria provides 4 variants of cave backgrounds. Each variant takes up a certain map area, thus creating a cave region.
+        /// The game renders the appropriate cave variant based on the region the player is in.
+        /// 0 &lt;= x &lt; <see cref="Cave1Edge"/> represents the first region, thus the game draws the first variant.
+        /// </remarks>
+        [field: FieldOffset(102)] public int Cave1Edge { get; set; }
+
+        /// <summary>
+        /// Gets or sets the X coordinate that marks the end of the second and the beginning of the third cave region.
+        /// </summary>
+        /// <remarks>
+        /// Terraria provides 4 variants of cave backgrounds. Each variant takes up a certain map area, thus creating a cave region.
+        /// The game renders the appropriate cave variant based on the region the player is in.
+        /// <see cref="Cave1Edge"/> &lt;= x &lt; <see cref="Cave2Edge"/> represents the second region, thus the game draws the second variant.
+        /// </remarks>
+        [field: FieldOffset(106)] public int Cave2Edge { get; set; }
+
+        /// <summary>
+        /// Gets or sets the X coordinate that marks the end of the third and the beginning of the fourth cave region.
+        /// </summary>
+        /// <remarks>
+        /// Terraria provides 4 variants of cave backgrounds. Each variant takes up a certain map area, thus creating a cave region.
+        /// The game renders the appropriate cave variant based on the region the player is in.
+        /// <see cref="Cave2Edge"/> &lt;= x &lt; <see cref="Cave3Edge"/> represents the third region, thus the game draws the third variant.
+        /// </remarks>
+        [field: FieldOffset(110)] public int Cave3Edge { get; set; }
+
+        /// <summary>
+        /// Gets or sets the style of the first cave variant.
+        /// </summary>
+        /// <remarks>
+        /// There are 4 variants of cave backgrounds. Terraria generates a random set of textures for each 
+        /// variant depending on the selected style.
+        /// </remarks>
+        [field: FieldOffset(114)] public byte Cave1Style { get; }
+
+        /// <summary>
+        /// Gets or sets the style of the second cave variant.
+        /// </summary>
+        /// <remarks>
+        /// There are 4 variants of cave backgrounds. Terraria generates a random set of textures for each 
+        /// variant depending on the selected style.
+        /// </remarks>
+        [field: FieldOffset(115)] public byte Cave2Style { get; }
+
+        /// <summary>
+        /// Gets or sets the style of the third cave variant.
+        /// </summary>
+        /// <remarks>
+        /// There are 4 variants of cave backgrounds. Terraria generates a random set of textures for each 
+        /// variant depending on the selected style.
+        /// </remarks>
+        [field: FieldOffset(116)] public byte Cave3Style { get; }
+
+        /// <summary>
+        /// Gets or sets the style of the fourth cave variant.
+        /// </summary>
+        /// <remarks>
+        /// There are 4 variants of cave backgrounds. Terraria generates a random set of textures for each 
+        /// variant depending on the selected style.
+        /// </remarks>
+        [field: FieldOffset(117)] public byte Cave4Style { get; }
 
         /// <summary>
         /// Gets the current style variation for each world area. Used for tree effects and background rendering.
         /// </summary>
-        [field: FieldOffset(77)] public byte[] AreaStyleVariation { get; } = new byte[13];
+        [field: FieldOffset(120)] public byte[] AreaStyleVariation { get; } = new byte[13];
 
         /// <summary>
         /// Gets or sets the rain intensity. Values are [0, 1].
         /// </summary>
-        [field: FieldOffset(90)] public float RainIntensity { get; set; }
+        [field: FieldOffset(133)] public float RainIntensity { get; set; }
 
         /// <summary>
         /// Gets or sets the Copper tier.
         /// </summary>
-        [field: FieldOffset(101)] public short CopperTier { get; set; }
+        [field: FieldOffset(141)] public short CopperTier { get; set; }
 
         /// <summary>
         /// Gets or sets the Iron tier.
         /// </summary>
-        [field: FieldOffset(103)] public short IronTier { get; set; }
+        [field: FieldOffset(143)] public short IronTier { get; set; }
 
         /// <summary>
         /// Gets or sets the Silver tier.
         /// </summary>
-        [field: FieldOffset(105)] public short SilverTier { get; set; }
+        [field: FieldOffset(145)] public short SilverTier { get; set; }
 
         /// <summary>
         /// Gets or sets the Gold tier.
         /// </summary>
-        [field: FieldOffset(107)] public short GoldTier { get; set; }
+        [field: FieldOffset(147)] public short GoldTier { get; set; }
 
         /// <summary>
         /// Gets or sets the Cobalt tier.
         /// </summary>
-        [field: FieldOffset(109)] public short CobaltTier { get; set; }
+        [field: FieldOffset(149)] public short CobaltTier { get; set; }
 
         /// <summary>
         /// Gets or sets the Mythril tier.
         /// </summary>
-        [field: FieldOffset(111)] public short MythrilTier { get; set; }
+        [field: FieldOffset(151)] public short MythrilTier { get; set; }
 
         /// <summary>
         /// Gets or sets the Adamantite tier.
         /// </summary>
-        [field: FieldOffset(113)] public short AdamantiteTier { get; set; }
+        [field: FieldOffset(153)] public short AdamantiteTier { get; set; }
 
         /// <summary>
         /// Gets or sets the current invasion type.
         /// </summary>
-        [field: FieldOffset(115)] public sbyte InvasionType { get; set; }
+        [field: FieldOffset(155)] public sbyte InvasionType { get; set; }
 
         /// <summary>
         /// Gets or sets the lobby ID.
         /// </summary>
-        [field: FieldOffset(116)] public ulong LobbyId { get; set; }
+        [field: FieldOffset(156)] public ulong LobbyId { get; set; }
 
         /// <summary>
         /// Gets or sets the sandstorm severity.
         /// </summary>
-        [field: FieldOffset(118)] public float SandstormSeverity { get; set; }
+        [field: FieldOffset(164)] public float SandstormSeverity { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether it is currently day time.
