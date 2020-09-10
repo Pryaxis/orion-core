@@ -6,27 +6,30 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using Orion.Core.Packets.DataStructures;
+using Orion.Core.Utils;
 
 namespace Orion.Core.Packets.World
 {
     /// <summary>
     /// A packet sent from the server to clients to propagate world changes.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
+    [StructLayout(LayoutKind.Explicit, Size = 168)]
     public sealed class WorldInfo : IPacket
     {
-        [FieldOffset(0)] private readonly byte _bytes;  // Used to obtain an interior reference
-        [FieldOffset(32)] private readonly byte _bytes2; // Used to obtain an interior reference
+        [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference
+        [FieldOffset(32)] private byte _bytes2; // Used to obtain an interior reference
+        [FieldOffset(56)] private byte _bytes3;
+        [FieldOffset(133)] private byte _bytes4; // Used to obtain an interior reference
         [FieldOffset(4)] private Flags8 _solarFlags;
         [FieldOffset(24)] private string? _worldName;
         [FieldOffset(40)] private byte[] _uniqueIdBytes = new byte[16];
-        [FieldOffset(134)] private Flags8 _worldFlags;
-        [FieldOffset(135)] private Flags8 _worldFlags2;
-        [FieldOffset(136)] private Flags8 _worldFlags3;
-        [FieldOffset(137)] private Flags8 _worldFlags4;
-        [FieldOffset(138)] private Flags8 _worldFlags5;
-        [FieldOffset(139)] private Flags8 _worldFlags6;
-        [FieldOffset(140)] private Flags8 _worldFlags7;
+        [FieldOffset(137)] private Flags8 _worldFlags;
+        [FieldOffset(138)] private Flags8 _worldFlags2;
+        [FieldOffset(139)] private Flags8 _worldFlags3;
+        [FieldOffset(140)] private Flags8 _worldFlags4;
+        [FieldOffset(141)] private Flags8 _worldFlags5;
+        [FieldOffset(142)] private Flags8 _worldFlags6;
+        [FieldOffset(143)] private Flags8 _worldFlags7;
 
         /// <summary>
         /// Gets or sets the time of day.
@@ -207,8 +210,26 @@ namespace Orion.Core.Packets.World
         /// <summary>
         /// Gets or sets the world's globally unique identifier.
         /// </summary>
-        public Guid UniqueId
+        public unsafe Guid UniqueId
         {
+            //get
+            //{
+            //    fixed (byte* b = &_bytes3)
+            //    {
+            //        return new Guid(new ReadOnlySpan<byte>(b, 16));
+            //    }
+            //}
+            //set
+            //{
+            //    var bytes = value.ToByteArray();
+            //    fixed (byte* b = &_bytes3)
+            //    {
+            //        for (var i = 0; i < 16; ++i)
+            //        {
+            //            *(b + i) = bytes[i];
+            //        }
+            //    }
+            //}
             get => new Guid(_uniqueIdBytes);
             set => _uniqueIdBytes = value.ToByteArray();
         }
@@ -358,52 +379,52 @@ namespace Orion.Core.Packets.World
         /// <summary>
         /// Gets or sets the Copper tier.
         /// </summary>
-        [field: FieldOffset(141)] public short CopperTier { get; set; }
+        [field: FieldOffset(144)] public short CopperTier { get; set; }
 
         /// <summary>
         /// Gets or sets the Iron tier.
         /// </summary>
-        [field: FieldOffset(143)] public short IronTier { get; set; }
+        [field: FieldOffset(146)] public short IronTier { get; set; }
 
         /// <summary>
         /// Gets or sets the Silver tier.
         /// </summary>
-        [field: FieldOffset(145)] public short SilverTier { get; set; }
+        [field: FieldOffset(148)] public short SilverTier { get; set; }
 
         /// <summary>
         /// Gets or sets the Gold tier.
         /// </summary>
-        [field: FieldOffset(147)] public short GoldTier { get; set; }
+        [field: FieldOffset(150)] public short GoldTier { get; set; }
 
         /// <summary>
         /// Gets or sets the Cobalt tier.
         /// </summary>
-        [field: FieldOffset(149)] public short CobaltTier { get; set; }
+        [field: FieldOffset(152)] public short CobaltTier { get; set; }
 
         /// <summary>
         /// Gets or sets the Mythril tier.
         /// </summary>
-        [field: FieldOffset(151)] public short MythrilTier { get; set; }
+        [field: FieldOffset(154)] public short MythrilTier { get; set; }
 
         /// <summary>
         /// Gets or sets the Adamantite tier.
         /// </summary>
-        [field: FieldOffset(153)] public short AdamantiteTier { get; set; }
+        [field: FieldOffset(156)] public short AdamantiteTier { get; set; }
 
         /// <summary>
         /// Gets or sets the current invasion type.
         /// </summary>
-        [field: FieldOffset(155)] public sbyte InvasionType { get; set; }
+        [field: FieldOffset(158)] public sbyte InvasionType { get; set; }
 
         /// <summary>
         /// Gets or sets the lobby ID.
         /// </summary>
-        [field: FieldOffset(156)] public ulong LobbyId { get; set; }
+        [field: FieldOffset(159)] public ulong LobbyId { get; set; }
 
         /// <summary>
         /// Gets or sets the sandstorm severity.
         /// </summary>
-        [field: FieldOffset(164)] public float SandstormSeverity { get; set; }
+        [field: FieldOffset(167)] public float SandstormSeverity { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether it is currently day time.
@@ -929,14 +950,28 @@ namespace Orion.Core.Packets.World
 
         PacketId IPacket.Id => PacketId.WorldInfo;
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context)
+        unsafe int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
-            throw new NotImplementedException();
+            var length = span.Read(ref _bytes, 22);
+            length += span[length..].Read(out _worldName);
+            length += span[length..].Read(ref _bytes2, 1);
+            length += span[length..].Read(ref _uniqueIdBytes[0], 16);
+            length += span[length..].Read(ref _bytes3, 62);
+            length += span[length..].Read(ref AreaStyleVariation[0], 13);
+            length += span[length..].Read(ref _bytes4, 38);
+            return length;
         }
 
-        int IPacket.WriteBody(Span<byte> span, PacketContext context)
+        unsafe int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
-            throw new NotImplementedException();
+            var length = span.Write(ref _bytes, 22);
+            length += span[length..].Write(WorldName);
+            length += span[length..].Write(ref _bytes2, 1);
+            length += span[length..].Write(ref _uniqueIdBytes[0], 16);
+            length += span[length..].Write(ref _bytes3, 62);
+            length += span[length..].Write(ref AreaStyleVariation[0], 13);
+            length += span[length..].Write(ref _bytes4, 38);
+            return length;
         }
     }
 

@@ -1,13 +1,88 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Orion.Core.Events.Packets;
 using Orion.Core.Packets.Items;
+using ReLogic.Content;
 using Xunit;
 
 namespace Orion.Core.Packets.World
 {
     public sealed class WorldInfoTests
     {
+        private readonly byte[] _bytes =
+        {
+            167, // Packet length
+            0, // Ignored
+            7, // Packet ID
+            16, 14, 0, 0, // Time
+            1, // Solar flags byte
+            2, // Moon phase
+            0, 4, // Max tiles X
+            0, 4, // Max tiles Y
+            0, 2, // Spawn tile X
+            0, 2, // Spawn tile Y
+            100, 0, // World surface
+            200, 0, // Rock layer
+            50, 0, 0, 0, // World ID
+            10, 87, 111, 114, 108, 100, 32, 73, 110, 102, 111, // World name
+            0, // Gamemode
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, // GUID bytes
+            1, 0, 0, 0, 0, 0, 0, 0, // World gen version
+            5, // Moon type
+            1, // ForestBackgroundStyle
+            2,
+            3,
+            4, // ForestBackgroundStyle4
+            1,
+            2,
+            3,
+            4,
+            1,
+            2,
+            3,
+            4,
+            5,
+            1,
+            1,
+            1,
+            0, 0, 0, 64, // Wind speed
+            10, // Number of clouds
+            100, 0, 0, 0, // Forest1 edge
+            0, 1, 0, 0, // Forest2 edge
+            0, 0, 1, 0, // Forest3 edge,
+            1, // Forest1 style
+            2, // Forest2 style
+            3, // Forest3 style
+            4, // Forest4 style
+            0, 1, 0, 0, // Cave1 edge
+            0, 0, 1, 0, // Cave2 edge
+            0, 0, 0, 1, // Cave3 edge
+            1, // Cave1 style
+            4, // Cave2 style
+            5, // Cave3 style
+            6, // Cave4 style
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, // Area style variations
+            0, 0, 128, 63, // Rain intensity
+            13, // Flags1
+            31, // Flags2
+            2, // Flags3
+            128, // Flags4
+            0, // Flags5,
+            8, // Flags6
+            2, // Flags7
+            5, 0, // Copper Tier
+            4, 0, // Iron Tier
+            3, 0, // Silver Tier
+            2, 0, // Gold Tier
+            1, 0, // Cobalt Tier
+            2, 0, // Mythril Tier
+            1, 0, // Adamantite Tier
+            10, // Invasion type
+            57, 48, 0, 0, 0, 0, 0, 0, // Lobby ID
+            0, 0, 0, 0 // Sandstorm severity
+        };
+
         [Fact]
         public void Time_Set_Get()
         {
@@ -564,15 +639,15 @@ namespace Orion.Core.Packets.World
         [Fact]
         public void AreaStyleVariation_Set_Get()
         {
-            var packet = new WorldInfo();
+            //var packet = new WorldInfo();
 
-            packet.AreaStyleVariation[0] = 1;
-            packet.AreaStyleVariation[1] = 2;
-            packet.AreaStyleVariation[2] = 3;
+            //packet.AreaStyleVariation[0] = 1;
+            //packet.AreaStyleVariation[1] = 2;
+            //packet.AreaStyleVariation[2] = 3;
 
-            Assert.Equal(1, packet.AreaStyleVariation[0]);
-            Assert.Equal(2, packet.AreaStyleVariation[1]);
-            Assert.Equal(3, packet.AreaStyleVariation[2]);
+            //Assert.Equal(1, packet.AreaStyleVariation[0]);
+            //Assert.Equal(2, packet.AreaStyleVariation[1]);
+            //Assert.Equal(3, packet.AreaStyleVariation[2]);
         }
 
         [Fact]
@@ -1051,6 +1126,415 @@ namespace Orion.Core.Packets.World
             packet.IsThirdDD2InvasionDefeated = value;
 
             Assert.Equal(value, packet.IsThirdDD2InvasionDefeated);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void WasCombatBookUsed_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.WasCombatBookUsed = value;
+
+            Assert.Equal(value, packet.WasCombatBookUsed);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsManualLanternNight_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.IsManualLanternNight = value;
+
+            Assert.Equal(value, packet.IsManualLanternNight);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsSolarTowerDowned_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.IsSolarTowerDowned = value;
+
+            Assert.Equal(value, packet.IsSolarTowerDowned);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsVortexTowerDowned_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.IsVortexTowerDowned = value;
+
+            Assert.Equal(value, packet.IsVortexTowerDowned);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsNebulaTowerDowned_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.IsNebulaTowerDowned = value;
+
+            Assert.Equal(value, packet.IsNebulaTowerDowned);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsStardustTowerDowned_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.IsStardustTowerDowned = value;
+
+            Assert.Equal(value, packet.IsStardustTowerDowned);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ForceHalloweenForToday_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.ForceHalloweenForToday = value;
+
+            Assert.Equal(value, packet.ForceHalloweenForToday);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ForceChristmasForToday_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.ForceChristmasForToday = value;
+
+            Assert.Equal(value, packet.ForceChristmasForToday);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void WasCatBought_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.WasCatBought = value;
+
+            Assert.Equal(value, packet.WasCatBought);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void WasDogBought_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.WasDogBought = value;
+
+            Assert.Equal(value, packet.WasDogBought);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void WasBunnyBought_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.WasBunnyBought = value;
+
+            Assert.Equal(value, packet.WasBunnyBought);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsFreeCake_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.IsFreeCake = value;
+
+            Assert.Equal(value, packet.IsFreeCake);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsDrunkWorld_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.IsDrunkWorld = value;
+
+            Assert.Equal(value, packet.IsDrunkWorld);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsEmpressOfLightDefeated_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.IsEmpressOfLightDefeated = value;
+
+            Assert.Equal(value, packet.IsEmpressOfLightDefeated);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsQueenSlimeDefeated_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.IsQueenSlimeDefeated = value;
+
+            Assert.Equal(value, packet.IsQueenSlimeDefeated);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsForTheWorthyWorld_Set_Get(bool value)
+        {
+            var packet = new WorldInfo();
+
+            packet.IsForTheWorthyWorld = value;
+
+            Assert.Equal(value, packet.IsForTheWorthyWorld);
+        }
+
+
+        [Fact]
+        public void CopperTier_Set_Get()
+        {
+            var packet = new WorldInfo();
+
+            packet.CopperTier = 1;
+
+            Assert.Equal(1, packet.CopperTier);
+        }
+
+
+        [Fact]
+        public void IronTier_Set_Get()
+        {
+            var packet = new WorldInfo();
+
+            packet.IronTier = 2;
+
+            Assert.Equal(2, packet.IronTier);
+        }
+
+
+        [Fact]
+        public void SilverTier_Set_Get()
+        {
+            var packet = new WorldInfo();
+
+            packet.SilverTier = 3;
+
+            Assert.Equal(3, packet.SilverTier);
+        }
+
+
+        [Fact]
+        public void GoldTier_Set_Get()
+        {
+            var packet = new WorldInfo();
+
+            packet.GoldTier = 4;
+
+            Assert.Equal(4, packet.GoldTier);
+        }
+
+
+        [Fact]
+        public void CobaltTier_Set_Get()
+        {
+            var packet = new WorldInfo();
+
+            packet.CobaltTier = 5;
+
+            Assert.Equal(5, packet.CobaltTier);
+        }
+
+
+        [Fact]
+        public void MythrilTier_Set_Get()
+        {
+            var packet = new WorldInfo();
+
+            packet.MythrilTier = 6;
+
+            Assert.Equal(6, packet.MythrilTier);
+        }
+
+
+        [Fact]
+        public void AdamantiteTier_Set_Get()
+        {
+            var packet = new WorldInfo();
+
+            packet.AdamantiteTier = 7;
+
+            Assert.Equal(7, packet.AdamantiteTier);
+        }
+
+
+        [Fact]
+        public void InvasionType_Set_Get()
+        {
+            var packet = new WorldInfo();
+
+            packet.InvasionType = 10;
+
+            Assert.Equal(10, packet.InvasionType);
+        }
+
+
+        [Fact]
+        public void LobbyId_Set_Get()
+        {
+            var packet = new WorldInfo();
+
+            packet.LobbyId = 65535UL;
+
+            Assert.Equal(65535UL, packet.LobbyId);
+        }
+
+
+        [Fact]
+        public void SandstormSeverity_Set_Get()
+        {
+            var packet = new WorldInfo();
+
+            packet.SandstormSeverity = 5F;
+
+            Assert.Equal(5F, packet.SandstormSeverity);
+        }
+
+        [Fact]
+        public void Read()
+        {
+            var packet = TestUtils.ReadPacket<WorldInfo>(_bytes, PacketContext.Server);
+
+            Assert.Equal(3600, packet.Time);
+            Assert.True(packet.IsDayTime);
+            Assert.Equal(MoonPhase.HalfAtLeft, packet.MoonPhase);
+            Assert.Equal(1024, packet.MaxTilesX);
+            Assert.Equal(1024, packet.MaxTilesY);
+            Assert.Equal(512, packet.SpawnTileX);
+            Assert.Equal(512, packet.SpawnTileY);
+            Assert.Equal(100, packet.WorldSurface);
+            Assert.Equal(200, packet.RockLayer);
+            Assert.Equal(50, packet.WorldId);
+            Assert.Equal("World Info", packet.WorldName);
+            Assert.Equal(GameMode.Normal, packet.GameMode);
+            Assert.Equal(new Guid(new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, }), packet.UniqueId);
+            Assert.Equal(1UL, packet.WorldGenerationVersion);
+            Assert.Equal(5, packet.MoonType);
+            Assert.Equal(1, packet.ForestBackgroundStyle);
+            Assert.Equal(2, packet.ForestBackgroundStyle2);
+            Assert.Equal(3, packet.ForestBackgroundStyle3);
+            Assert.Equal(4, packet.ForestBackgroundStyle4);
+            Assert.Equal(1, packet.CorruptBackgroundStyle);
+            Assert.Equal(2, packet.JungleBackgroundStyle);
+            Assert.Equal(3, packet.SnowBackgroundStyle);
+            Assert.Equal(4, packet.HallowBackgroundStyle);
+            Assert.Equal(1, packet.CrimsonBackgroundStyle);
+            Assert.Equal(2, packet.DesertBackgroundStyle);
+            Assert.Equal(3, packet.OceanBackgroundStyle);
+            Assert.Equal(4, packet.MushroomBackgroundStyle);
+            Assert.Equal(5, packet.UnderworldBackgroundStyle);
+            Assert.Equal(1, packet.UndergroundIceBackgroundStyle);
+            Assert.Equal(1, packet.UndergroundJungleBackgroundStyle);
+            Assert.Equal(1, packet.UndergroundHellBackgroundStyle);
+            Assert.Equal(2F, packet.WindSpeed);
+            Assert.Equal(10, packet.NumberOfClouds);
+            Assert.Equal(100, packet.Forest1Edge);
+            Assert.Equal(256, packet.Forest2Edge);
+            Assert.Equal(65536, packet.Forest3Edge);
+            Assert.Equal(1, packet.Forest1Style);
+            Assert.Equal(2, packet.Forest2Style);
+            Assert.Equal(3, packet.Forest3Style);
+            Assert.Equal(4, packet.Forest4Style);
+            Assert.Equal(256, packet.Cave1Edge);
+            Assert.Equal(65536, packet.Cave2Edge);
+            Assert.Equal(16777216, packet.Cave3Edge);
+            Assert.Equal(1, packet.Cave1Style);
+            Assert.Equal(4, packet.Cave2Style);
+            Assert.Equal(5, packet.Cave3Style);
+            Assert.Equal(6, packet.Cave4Style);
+            Assert.Equal(new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }, packet.AreaStyleVariation);
+            Assert.Equal(1F, packet.RainIntensity);
+            Assert.True(packet.WasShadowOrbSmashed);
+            Assert.False(packet.IsEyeOfCthulhuDefeated);
+            Assert.True(packet.IsEowOrBrainOfCthulhuDefeated);
+            Assert.True(packet.IsSkeletronDefeated);
+            Assert.False(packet.IsHardmode);
+            Assert.False(packet.IsClownDefeated);
+            Assert.False(packet.ServerSideCharactersEnabled);
+            Assert.False(packet.IsPlanteraDefeated);
+            Assert.True(packet.IsDestroyerDefeated);
+            Assert.True(packet.IsMechanicalEyeDefeated);
+            Assert.True(packet.IsSkeletronPrimeDefeated);
+            Assert.True(packet.DownedAnyMechanicalBoss);
+            Assert.True(packet.IsCloudBackgroundActive);
+            Assert.False(packet.IsCrimson);
+            Assert.False(packet.IsPumpkinMoon);
+            Assert.False(packet.IsSnowMoon);
+            Assert.True(packet.FastForwardTime);
+            Assert.False(packet.IsRainingSlime);
+            Assert.False(packet.IsSlimeKingDefeated);
+            Assert.False(packet.IsQueenBeeDefeated);
+            Assert.False(packet.IsFishronDefeated);
+            Assert.False(packet.AreMartiansDefeated);
+            Assert.False(packet.AreCultistsDefeated);
+            Assert.False(packet.IsMoonLordDefeated);
+            Assert.False(packet.IsHalloweenKingDefeated);
+            Assert.False(packet.IsHalloweenTreeDefeated);
+            Assert.False(packet.IsChristmasQueenDefeated);
+            Assert.False(packet.IsChristmasSantankDefeated);
+            Assert.False(packet.IsChristmasTreeDefeated);
+            Assert.False(packet.IsGolemDefeated);
+            Assert.True(packet.IsManualBirthdayParty);
+            Assert.False(packet.ArePiratesDefeated);
+            Assert.False(packet.IsFrostMoonDefeated);
+            Assert.False(packet.AreGoblinsDefeated);
+            Assert.False(packet.IsSandstormHappening);
+            Assert.False(packet.IsDD2EventHappening);
+            Assert.False(packet.IsFirstDD2InvasionDefeated);
+            Assert.False(packet.IsSecondDD2InvasionDefeated);
+            Assert.False(packet.IsThirdDD2InvasionDefeated);
+            Assert.True(packet.IsVortexTowerDowned);
+            Assert.True(packet.WasDogBought);
+            Assert.Equal(5, packet.CopperTier);
+            Assert.Equal(4, packet.IronTier);
+            Assert.Equal(3, packet.SilverTier);
+            Assert.Equal(2, packet.GoldTier);
+            Assert.Equal(1, packet.CobaltTier);
+            Assert.Equal(2, packet.MythrilTier);
+            Assert.Equal(1, packet.AdamantiteTier);
+            Assert.Equal(10, packet.InvasionType);
+            Assert.Equal(12345UL, packet.LobbyId);
+            Assert.Equal(0, packet.SandstormSeverity);
         }
     }
 }
