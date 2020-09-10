@@ -40,6 +40,24 @@ namespace Orion.Core.Packets.World.TileEntities
         }
 
         [Fact]
+        public void Name_SetNullValue_ThrowsArgumentNullException()
+        {
+            var packet = new ChestInfo();
+
+            Assert.Throws<ArgumentNullException>(() => packet.Name = null!);
+        }
+
+        [Fact]
+        public void Name_Set_Get()
+        {
+            var packet = new ChestInfo();
+
+            packet.Name = "Chest";
+
+            Assert.Equal("Chest", packet.Name);
+        }
+
+        [Fact]
         public void Read()
         {
             var packet = TestUtils.ReadPacket<ChestInfo>(_bytes, PacketContext.Server);

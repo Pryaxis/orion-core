@@ -210,26 +210,8 @@ namespace Orion.Core.Packets.World
         /// <summary>
         /// Gets or sets the world's globally unique identifier.
         /// </summary>
-        public unsafe Guid UniqueId
+        public Guid UniqueId
         {
-            //get
-            //{
-            //    fixed (byte* b = &_bytes3)
-            //    {
-            //        return new Guid(new ReadOnlySpan<byte>(b, 16));
-            //    }
-            //}
-            //set
-            //{
-            //    var bytes = value.ToByteArray();
-            //    fixed (byte* b = &_bytes3)
-            //    {
-            //        for (var i = 0; i < 16; ++i)
-            //        {
-            //            *(b + i) = bytes[i];
-            //        }
-            //    }
-            //}
             get => new Guid(_uniqueIdBytes);
             set => _uniqueIdBytes = value.ToByteArray();
         }
@@ -950,7 +932,7 @@ namespace Orion.Core.Packets.World
 
         PacketId IPacket.Id => PacketId.WorldInfo;
 
-        unsafe int IPacket.ReadBody(Span<byte> span, PacketContext context)
+        int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
             var length = span.Read(ref _bytes, 22);
             length += span[length..].Read(out _worldName);
@@ -962,7 +944,7 @@ namespace Orion.Core.Packets.World
             return length;
         }
 
-        unsafe int IPacket.WriteBody(Span<byte> span, PacketContext context)
+        int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
             var length = span.Write(ref _bytes, 22);
             length += span[length..].Write(WorldName);

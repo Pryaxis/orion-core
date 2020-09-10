@@ -225,7 +225,7 @@ namespace Orion.Core.Packets.World
         {
             var packet = new WorldInfo();
 
-            Assert.Throws<ArgumentNullException>(() => packet.WorldName = null);
+            Assert.Throws<ArgumentNullException>(() => packet.WorldName = null!);
         }
 
 
@@ -639,15 +639,15 @@ namespace Orion.Core.Packets.World
         [Fact]
         public void AreaStyleVariation_Set_Get()
         {
-            //var packet = new WorldInfo();
+            var packet = new WorldInfo();
 
-            //packet.AreaStyleVariation[0] = 1;
-            //packet.AreaStyleVariation[1] = 2;
-            //packet.AreaStyleVariation[2] = 3;
+            packet.AreaStyleVariation[0] = 1;
+            packet.AreaStyleVariation[1] = 2;
+            packet.AreaStyleVariation[2] = 3;
 
-            //Assert.Equal(1, packet.AreaStyleVariation[0]);
-            //Assert.Equal(2, packet.AreaStyleVariation[1]);
-            //Assert.Equal(3, packet.AreaStyleVariation[2]);
+            Assert.Equal(1, packet.AreaStyleVariation[0]);
+            Assert.Equal(2, packet.AreaStyleVariation[1]);
+            Assert.Equal(3, packet.AreaStyleVariation[2]);
         }
 
         [Fact]

@@ -44,7 +44,7 @@ namespace Orion.Core.Packets.World.TileEntities
         {
             var packet = new SignInfo();
 
-            Assert.Throws<ArgumentNullException>(() => packet.Text = null);
+            Assert.Throws<ArgumentNullException>(() => packet.Text = null!);
         }
 
         [Fact]
@@ -55,6 +55,18 @@ namespace Orion.Core.Packets.World.TileEntities
             packet.Text = "test";
 
             Assert.Equal("test", packet.Text);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsTombstone_Set_Get(bool value)
+        {
+            var packet = new SignInfo();
+
+            packet.IsTombstone = value;
+
+            Assert.Equal(value, packet.IsTombstone);
         }
 
         [Fact]
