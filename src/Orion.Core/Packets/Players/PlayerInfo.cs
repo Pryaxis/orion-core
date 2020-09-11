@@ -12,6 +12,8 @@ namespace Orion.Core.Packets.Players
     public struct PlayerInfo : IPacket
     {
         [FieldOffset(0)] private byte _bytes;
+        [FieldOffset(14)] private byte _bytes2;
+        [FieldOffset(22)] private byte _bytes3;
         [FieldOffset(1)] private Flags8 _controlFlags;
         [FieldOffset(2)] private Flags8 _pulleyFlags;
         [FieldOffset(3)] private Flags8 _miscFlags;
@@ -258,8 +260,36 @@ namespace Orion.Core.Packets.Players
 
         PacketId IPacket.Id => PacketId.PlayerInfo;
 
-        int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 38);
+        int IPacket.ReadBody(Span<byte> span, PacketContext context)
+        {
+            var length = span.Read(ref _bytes, 14);
+            if (ShouldUpdateVelocity)
+            {
+                length += span[length..].Read(ref _bytes2, 8);
+            }
 
-        int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 38);
+            if (HasUsedPotionOfReturn)
+            {
+                length += span[length..].Read(ref _bytes3, 16);
+            }
+
+            return length;
+        }
+
+        int IPacket.WriteBody(Span<byte> span, PacketContext context)
+        {
+            var length = span.Write(ref _bytes, 14);
+            if (ShouldUpdateVelocity)
+            {
+                length += span[length..].Write(ref _bytes2, 8);
+            }
+
+            if (HasUsedPotionOfReturn)
+            {
+                length += span[length..].Write(ref _bytes3, 16);
+            }
+
+            return length;
+        }
     }
 }

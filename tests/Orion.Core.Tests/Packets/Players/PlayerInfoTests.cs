@@ -6,7 +6,10 @@ namespace Orion.Core.Packets.Players
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public sealed class PlayerInfoTests
     {
-        private readonly byte[] _bytes = { 38, 0, 13, 130, 0b_00011010, 0b00000010, 0b00011100, 0, 5, 121, 233, 246, 66, 254, 100, 228, 67, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 66, 0, 0, 22, 67, 0, 192, 10, 68, 225, 170, 38, 68 };
+        private readonly byte[] _bytes = 
+        { 
+            38, 0, 13, 130, 0b_00011010, 0b00000010, 0b01011100, 0, 5, 121, 233, 246, 66, 254, 100, 228, 67, 0, 0, 200, 66, 0, 0, 22, 67, 0, 192, 10, 68, 225, 170, 38, 68 
+        };
 
         [Fact]
         public void PlayerIndex_Set_Get()
@@ -390,7 +393,7 @@ namespace Orion.Core.Packets.Players
             Assert.True(packet.HasCompletedDD2Event);
             Assert.True(packet.IsPettingAnimal);
             Assert.False(packet.IsPettingSmallAnimal);
-            Assert.False(packet.HasUsedPotionOfReturn);
+            Assert.True(packet.HasUsedPotionOfReturn);
             Assert.False(packet.IsHoveringDown);
         }
     }
