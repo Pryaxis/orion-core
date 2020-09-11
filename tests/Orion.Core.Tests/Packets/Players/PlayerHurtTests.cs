@@ -8,7 +8,7 @@ namespace Orion.Core.Packets.Players
 {
     public sealed class PlayerHurtTests
     {
-        private readonly byte[] _bytes = { 21, 0, 117, 1, 97, 50, 0, 0, 4, 5, 2, 0, 3, 0, 4 };
+        private readonly byte[] _bytes = { 15, 0, 117, 1, 97, 50, 0, 0, 4, 5, 2, 0, 3, 0, 4 };
 
         [Fact]
         public void PlayerIndex_Set_Get()

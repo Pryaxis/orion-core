@@ -1,20 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 using Orion.Core.Packets.DataStructures;
 using Orion.Core.Utils;
 
 namespace Orion.Core.Packets.Players
 {
     /// <summary>
-    /// A packet sent to hurt a player.
+    /// A packet sent to kill a player.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 37)]
-    public struct PlayerHurt : IPacket
+    [StructLayout(LayoutKind.Explicit, Size = 36)]
+    public struct PlayerKill : IPacket
     {
         [FieldOffset(0)] private byte _bytes; // Used to obtain an interior reference
         [FieldOffset(32)] private byte _bytes2; // Used to obtain an interior reference
-        [FieldOffset(8)] private PlayerDeathReason _context;
-        [FieldOffset(35)] private Flags8 _flags;
+        [FieldOffset(8)] private PlayerDeathReason _deathReason;
 
         /// <summary>
         /// Gets or sets the player index.
@@ -22,12 +23,12 @@ namespace Orion.Core.Packets.Players
         [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the context.
+        /// Gets or sets the death reason.
         /// </summary>
-        public PlayerDeathReason Context
+        public PlayerDeathReason DeathReason
         {
-            get => _context;
-            set => _context = value;
+            get => _deathReason;
+            set => _deathReason = value;
         }
 
         /// <summary>
@@ -41,43 +42,25 @@ namespace Orion.Core.Packets.Players
         [field: FieldOffset(34)] public byte HitDirection { get; set; }
 
         /// <summary>
-        /// Gets or sets the cooldown counter.
+        /// Gets or sets a value indicating whether the player was killed via PvP.
         /// </summary>
-        [field: FieldOffset(36)] public sbyte CooldownCounter { get; set; }
+        [field: FieldOffset(35)] public bool IsPvP { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the hit is critical.
-        /// </summary>
-        public bool IsCritical
-        {
-            get => _flags[0];
-            set => _flags[0] = value;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether damage was done via PvP.
-        /// </summary>
-        public bool IsPvP
-        {
-            get => _flags[1];
-            set => _flags[1] = value;
-        }
-
-        PacketId IPacket.Id => PacketId.PlayerHurt;
+        PacketId IPacket.Id => PacketId.PlayerKill;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
             var length = span.Read(ref _bytes, 1);
-            length += PlayerDeathReason.Read(span[length..], out _context);
-            length += span[length..].Read(ref _bytes2, 5);
+            length += PlayerDeathReason.Read(span[length..], out _deathReason);
+            length += span[length..].Read(ref _bytes2, 4);
             return length;
         }
 
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
             var length = span.Write(ref _bytes, 1);
-            length += _context.Write(span[length..]);
-            length += span[length..].Write(ref _bytes2, 5);
+            length += _deathReason.Write(span[length..]);
+            length += span[length..].Write(ref _bytes2, 4);
             return length;
         }
     }

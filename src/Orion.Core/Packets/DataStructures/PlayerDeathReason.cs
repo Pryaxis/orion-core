@@ -208,7 +208,7 @@ namespace Orion.Core.Packets.DataStructures
 
             if (flags[5])
             {
-                // Kiled via PvP (Item type)
+                // Killed via PvP (Item type)
                 Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref playerDeathReason.AsByte(), 10), ref span.At(length), 2);
                 length += 2;
             }

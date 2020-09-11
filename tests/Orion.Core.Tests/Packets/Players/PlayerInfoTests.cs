@@ -1,5 +1,4 @@
-﻿using ReLogic.Content;
-using Xunit;
+﻿using Xunit;
 
 namespace Orion.Core.Packets.Players
 {
