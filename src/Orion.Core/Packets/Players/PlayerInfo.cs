@@ -11,9 +11,9 @@ namespace Orion.Core.Packets.Players
     [StructLayout(LayoutKind.Explicit, Size = 38)]
     public struct PlayerInfo : IPacket
     {
-        [FieldOffset(0)] private byte _bytes;
-        [FieldOffset(14)] private byte _bytes2;
-        [FieldOffset(22)] private byte _bytes3;
+        [FieldOffset(0)] private byte _bytes; // Used to obtain an interior reference
+        [FieldOffset(14)] private byte _bytes2; // Used to obtain an interior reference
+        [FieldOffset(22)] private byte _bytes3; // Used to obtain an interior reference
         [FieldOffset(1)] private Flags8 _controlFlags;
         [FieldOffset(2)] private Flags8 _pulleyFlags;
         [FieldOffset(3)] private Flags8 _miscFlags;
