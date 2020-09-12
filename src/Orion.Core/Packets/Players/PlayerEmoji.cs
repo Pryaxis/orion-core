@@ -24,13 +24,10 @@ namespace Orion.Core.Packets.Players
         /// Gets or sets the emoji ID.
         /// </summary>
         [field: FieldOffset(1)]
-        public byte EmojiId
-        {
-            get;
-            set;
-        }
+        public byte EmojiId { get; set; }
 
         PacketId IPacket.Id => PacketId.PlayerEmoji;
+
         int IPacket.ReadBody(Span<byte> span, PacketContext context) => span.Read(ref _bytes, 2);
 
         int IPacket.WriteBody(Span<byte> span, PacketContext context) => span.Write(ref _bytes, 2);
