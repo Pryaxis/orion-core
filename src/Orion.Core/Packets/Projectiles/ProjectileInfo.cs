@@ -10,7 +10,7 @@ using Orion.Core.Utils;
 namespace Orion.Core.Packets.Projectiles
 {
     /// <summary>
-    /// A packet sent to update projectiles.
+    /// A packet sent to update projectile information.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 42)]
     public struct ProjectileInfo : IPacket
@@ -18,10 +18,6 @@ namespace Orion.Core.Packets.Projectiles
         private const int MaxAi = 2;
 
         [FieldOffset(0)] private byte _bytes; // Used to obtain an interior reference
-        [FieldOffset(32)] private byte _bytes2; // Used to obtain an interiror reference
-        [FieldOffset(34)] private byte _bytes3; // Used to obtain an interiror reference
-        [FieldOffset(38)] private byte _bytes4; // Used to obtain an interiror reference
-        [FieldOffset(40)] private byte _bytes5; // Used to obtain an interiror reference
         [FieldOffset(21)] private Flags8 _flags;
         [FieldOffset(24)] private float[]? _ai;
 
@@ -97,28 +93,27 @@ namespace Orion.Core.Packets.Projectiles
                     continue;
                 }
 
-                Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref Unsafe.As<float, byte>(ref AdditionalInformation[0]), i * 4), ref span[length], 4);
-                length += 4;
+                length += span[length..].Read(ref Unsafe.Add(ref Unsafe.As<float, byte>(ref AdditionalInformation[0]), i * 4), 4);
             }
 
             if (_flags[4])
             {
-                length += span[length..].Read(ref _bytes2, 2);
+                length += span[length..].Read(ref Unsafe.Add(ref _bytes, 32), 2);
             }
 
             if (_flags[5])
             {
-                length += span[length..].Read(ref _bytes3, 4);
+                length += span[length..].Read(ref Unsafe.Add(ref _bytes, 34), 4);
             }
 
             if (_flags[6])
             {
-                length += span[length..].Read(ref _bytes4, 2);
+                length += span[length..].Read(ref Unsafe.Add(ref _bytes, 38), 2);
             }
 
             if (_flags[7])
             {
-                length += span[length..].Read(ref _bytes5, 2);
+                length += span[length..].Read(ref Unsafe.Add(ref _bytes, 40), 2);
             }
 
             return length;
@@ -127,38 +122,41 @@ namespace Orion.Core.Packets.Projectiles
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
             var length = span.Write(ref _bytes, 22);
-            var aiReference = Unsafe.As<float, byte>(ref AdditionalInformation[0]);
             for (var i = 0; i < AdditionalInformation.Length; ++i)
             {
-                if (!_flags[i])
+                if (AdditionalInformation[i] == 0)
                 {
                     continue;
                 }
 
-                Unsafe.CopyBlockUnaligned(ref span[length], ref Unsafe.Add(ref Unsafe.As<float, byte>(ref AdditionalInformation[0]), i * 4), 4);
-                length += 4;
+                length += span[length..].Write(ref Unsafe.Add(ref Unsafe.As<float, byte>(ref AdditionalInformation[0]), i * 4), 4);
             }
 
             if (Damage > 0)
             {
-                length += span[length..].Write(ref _bytes2, 2);
+                length += span[length..].Write(ref Unsafe.Add(ref _bytes, 32), 2);
+                _flags[4] = true;
             }
 
             if (Knockback > 0)
             {
-                length += span[length..].Write(ref _bytes3, 4);
+                length += span[length..].Write(ref Unsafe.Add(ref _bytes, 34), 4);
+                _flags[5] = true;
             }
 
             if (OriginalDamage > 0)
             {
-                length += span[length..].Write(ref _bytes4, 2);
+                length += span[length..].Write(ref Unsafe.Add(ref _bytes, 38), 2);
+                _flags[6] = true;
             }
 
             if (Uuid > 0)
             {
-                length += span[length..].Write(ref _bytes5, 2);
+                length += span[length..].Write(ref Unsafe.Add(ref _bytes, 40), 2);
+                _flags[7] = true;
             }
 
+            span[21..].Write(ref Unsafe.Add(ref _bytes, 21), 1);
             return length;
         }
     }

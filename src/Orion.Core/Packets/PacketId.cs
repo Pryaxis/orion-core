@@ -174,6 +174,7 @@ namespace Orion.Core.Packets
             [PacketId.DoorToggle] = typeof(DoorToggle),
             [PacketId.ItemInfo] = typeof(ItemInfo),
             [PacketId.ItemOwn] = typeof(ItemOwn),
+            [PacketId.NpcInfo] = typeof(NpcInfo),
             [PacketId.ProjectileInfo] = typeof(ProjectileInfo),
             [PacketId.PlayerMana] = typeof(PlayerMana),
             [PacketId.PlayerManaEffect] = typeof(PlayerManaEffect),
