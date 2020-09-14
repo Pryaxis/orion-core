@@ -22,7 +22,6 @@ namespace Orion.Core.Packets.Npcs
         [FieldOffset(23)] private Flags8 _flags2;
         [FieldOffset(24)] private float[] _ai;
         [FieldOffset(45)] private byte _lifeOccupiedBytes;
-        [FieldOffset(50)] private byte? _releaseOwnerIndex;
 
         /// <summary>
         /// Gets or sets the NPC index.
@@ -82,11 +81,7 @@ namespace Orion.Core.Packets.Npcs
         /// <summary>
         /// Gets or sets a catchable NPC's owner index.
         /// </summary>
-        public byte ReleaseOwnerIndex
-        {
-            get => _releaseOwnerIndex.HasValue ? _releaseOwnerIndex.Value : (byte) 255;
-            set => _releaseOwnerIndex = value;
-        }
+        [field: FieldOffset(50)] public byte ReleaseOwnerIndex { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the sprite is facing right.
@@ -207,11 +202,7 @@ namespace Orion.Core.Packets.Npcs
                 _flags[7] = false; // Indicates whether Health == NPC.maxLife
             }
 
-            if (ReleaseOwnerIndex != 255)
-            {
-                length += span[length..].Write(ref Unsafe.Add(ref _bytes, 50), 1);
-            }
-
+            length += span[length..].Write(ref Unsafe.Add(ref _bytes, 50), 1);
             span[22..].Write(ref Unsafe.Add(ref _bytes, 22), 2); // Overwrite the flags with accurate information
             return length;
         }

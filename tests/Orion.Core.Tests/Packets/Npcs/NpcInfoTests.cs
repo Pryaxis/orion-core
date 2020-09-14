@@ -14,6 +14,174 @@ namespace Orion.Core.Packets.Npcs
         };
 
         [Fact]
+        public void NpcIndex_Set_Get()
+        {
+            var packet = new NpcInfo();
+
+            packet.NpcIndex = 1;
+
+            Assert.Equal(1, packet.NpcIndex);
+        }
+
+        [Fact]
+        public void X_Set_Get()
+        {
+            var packet = new NpcInfo();
+
+            packet.X = 1;
+
+            Assert.Equal(1, packet.X);
+        }
+
+        [Fact]
+        public void Y_Set_Get()
+        {
+            var packet = new NpcInfo();
+
+            packet.Y = 1;
+
+            Assert.Equal(1, packet.Y);
+        }
+
+        [Fact]
+        public void VelocityX_Set_Get()
+        {
+            var packet = new NpcInfo();
+
+            packet.VelocityX = 1;
+
+            Assert.Equal(1, packet.VelocityX);
+        }
+
+        [Fact]
+        public void VelocityY_Set_Get()
+        {
+            var packet = new NpcInfo();
+
+            packet.VelocityY = 1;
+
+            Assert.Equal(1, packet.VelocityY);
+        }
+
+        [Fact]
+        public void TargetIndex_Set_Get()
+        {
+            var packet = new NpcInfo();
+
+            packet.TargetIndex = 1;
+
+            Assert.Equal(1, packet.TargetIndex);
+        }
+
+        [Fact]
+        public void AdditionalInformation_Set_Get()
+        {
+            var packet = new NpcInfo();
+
+            packet.AdditionalInformation[0] = 1F;
+
+            Assert.Equal(1F, packet.AdditionalInformation[0]);
+        }
+
+        [Fact]
+        public void NetId_Set_Get()
+        {
+            var packet = new NpcInfo();
+
+            packet.NetId = 1;
+
+            Assert.Equal(1, packet.NetId);
+        }
+
+        [Fact]
+        public void DifficultyScalingOverride_Set_Get()
+        {
+            var packet = new NpcInfo();
+
+            packet.DifficultyScalingOverride = 2;
+
+            Assert.Equal(2, packet.DifficultyScalingOverride);
+        }
+
+        [Fact]
+        public void StrengthMultiplierOverride_Set_Get()
+        {
+            var packet = new NpcInfo();
+
+            packet.StrengthMultiplierOverride = 2;
+
+            Assert.Equal(2, packet.StrengthMultiplierOverride);
+        }
+
+        [Fact]
+        public void Health_Set_Get()
+        {
+            var packet = new NpcInfo();
+
+            packet.Health = 100;
+
+            Assert.Equal(100, packet.Health);
+        }
+
+        [Fact]
+        public void ReleaseOwnerIndex_Set_Get()
+        {
+            var packet = new NpcInfo();
+
+            packet.ReleaseOwnerIndex = 1;
+
+            Assert.Equal(1, packet.ReleaseOwnerIndex);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsSpriteFacingRight_Set_Get(bool value)
+        {
+            var packet = new NpcInfo();
+
+            packet.IsSpriteFacingRight = value;
+
+            Assert.Equal(value, packet.IsSpriteFacingRight);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsMovingRight_Set_Get(bool value)
+        {
+            var packet = new NpcInfo();
+
+            packet.IsMovingRight = value;
+
+            Assert.Equal(value, packet.IsMovingRight);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsMovingDown_Set_Get(bool value)
+        {
+            var packet = new NpcInfo();
+
+            packet.IsMovingDown = value;
+
+            Assert.Equal(value, packet.IsMovingDown);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void SpawnedFromStatue_Set_Get(bool value)
+        {
+            var packet = new NpcInfo();
+
+            packet.SpawnedFromStatue = value;
+
+            Assert.Equal(value, packet.SpawnedFromStatue);
+        }
+
+        [Fact]
         public void Read()
         {
             var packet = TestUtils.ReadPacket<NpcInfo>(_bytes, PacketContext.Server);

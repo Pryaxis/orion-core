@@ -163,7 +163,7 @@ namespace Orion.Core.Packets.DataStructures
         /// <returns>The number of bytes read.</returns>
         public static int Read(Span<byte> span, out PlayerDeathReason playerDeathReason)
         {
-            playerDeathReason = new PlayerDeathReason() 
+            playerDeathReason = new PlayerDeathReason()
             { 
                 KillerIndex = -1, KillingNpcIndex = -1, KillingProjectileIndex = -1, CauseOfDeath = CauseOfDeath.None,
                 ProjectileType = -1, ItemType = -1, CustomDeathReason = string.Empty 
