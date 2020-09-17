@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Orion.Core.Packets.World
+namespace Orion.Core.Packets.World.Tiles
 {
     public sealed class BlockBreakingTests
     {

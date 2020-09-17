@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+﻿using Xunit;
 
-namespace Orion.Core.Packets.World
+namespace Orion.Core.Packets.World.Tiles
 {
     public sealed class ObjectPlaceTests
     {
