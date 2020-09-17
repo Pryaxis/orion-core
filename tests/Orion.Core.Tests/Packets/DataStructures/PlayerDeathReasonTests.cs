@@ -7,7 +7,7 @@ namespace Orion.Core.Packets.DataStructures
 {
     public sealed class PlayerDeathReasonTests
     {
-        private readonly byte[] _bytes = { 127, 1, 0, 2, 0, 3, 0, 4, 5, 0, 6, 0, 7 };
+        private readonly byte[] _bytes = { 255, 1, 0, 2, 0, 3, 0, 4, 5, 0, 6, 0, 7, 3, 65, 66, 67 };
 
         [Fact]
         public void KillerIndex_Set_Get()
@@ -110,8 +110,9 @@ namespace Orion.Core.Packets.DataStructures
             Assert.Equal(5, reason.ProjectileType);
             Assert.Equal(6, reason.ItemType);
             Assert.Equal(7, reason.ItemPrefix);
+            Assert.Equal("ABC", reason.CustomDeathReason);
 
-            var buffer = new byte[13];
+            var buffer = new byte[17];
 
             var length2 = reason.Write(buffer);
 

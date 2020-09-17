@@ -7,7 +7,8 @@ namespace Orion.Core.Packets.Players
     {
         private readonly byte[] _bytes = 
         { 
-            38, 0, 13, 130, 0b_00011010, 0b00000010, 0b01011100, 0, 5, 121, 233, 246, 66, 254, 100, 228, 67, 0, 0, 200, 66, 0, 0, 22, 67, 0, 192, 10, 68, 225, 170, 38, 68 
+            38, 0, 13, 130, 0b_00011010, 0b00000110, 0b01011100, 0, 5, 121, 233, 246, 66, 254, 100, 228, 67, 
+            0, 0, 0, 64, 0, 0, 0, 64, 0, 0, 200, 66, 0, 0, 22, 67, 0, 192, 10, 68, 225,170, 38, 68
         };
 
         [Fact]
@@ -371,6 +372,8 @@ namespace Orion.Core.Packets.Players
             Assert.Equal(5, packet.SelectedItemSlot);
             Assert.Equal(123.456F, packet.PositionX);
             Assert.Equal(456.789F, packet.PositionY);
+            Assert.Equal(2F, packet.VelocityX);
+            Assert.Equal(2F, packet.VelocityY);
             Assert.Equal(100F, packet.PotionOfReturnOriginX);
             Assert.Equal(150F, packet.PotionOfReturnOriginY);
             Assert.Equal(555F, packet.HomePositionX);
@@ -382,7 +385,7 @@ namespace Orion.Core.Packets.Players
             Assert.True(packet.IsControlJump);
             Assert.False(packet.IsPulleyEnabled);
             Assert.True(packet.IsDirectionRight);
-            Assert.False(packet.ShouldUpdateVelocity);
+            Assert.True(packet.ShouldUpdateVelocity);
             Assert.False(packet.IsVortexStealthActive);
             Assert.True(packet.IsGravityInverted);
             Assert.False(packet.IsShieldRaised);
