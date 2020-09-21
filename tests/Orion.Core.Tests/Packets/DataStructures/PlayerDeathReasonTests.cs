@@ -80,6 +80,14 @@ namespace Orion.Core.Packets.DataStructures
         }
 
         [Fact]
+        public void CustomDeathReason_GetNullValue()
+        {
+            var reason = new PlayerDeathReason();
+
+            Assert.Equal(string.Empty, reason.CustomDeathReason);
+        }
+
+        [Fact]
         public void CustomDeathReason_SetNullValue_ThrowsArgumentNullException()
         {
             var reason = new PlayerDeathReason();

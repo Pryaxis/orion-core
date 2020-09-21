@@ -40,6 +40,14 @@ namespace Orion.Core.Packets.World.TileEntities
         }
 
         [Fact]
+        public void Name_GetNullValue()
+        {
+            var packet = new ChestInfo();
+
+            Assert.Equal(string.Empty, packet.Name);
+        }
+
+        [Fact]
         public void Name_SetNullValue_ThrowsArgumentNullException()
         {
             var packet = new ChestInfo();

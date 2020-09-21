@@ -40,6 +40,14 @@ namespace Orion.Core.Packets.World.TileEntities
         }
 
         [Fact]
+        public void Text_GetNullValue()
+        {
+            var packet = new SignInfo();
+
+            Assert.Equal(string.Empty, packet.Text);
+        }
+
+        [Fact]
         public void Text_NullValue_ThrowsArgumentNullException()
         {
             var packet = new SignInfo();

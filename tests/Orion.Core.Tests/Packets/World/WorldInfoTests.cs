@@ -221,6 +221,14 @@ namespace Orion.Core.Packets.World
         }
 
         [Fact]
+        public void WorldName_GetNullValue()
+        {
+            var packet = new WorldInfo();
+
+            Assert.Equal(string.Empty, packet.WorldName);
+        }
+
+        [Fact]
         public void WorldName_NullValue_ThrowsArgumentNullException()
         {
             var packet = new WorldInfo();
