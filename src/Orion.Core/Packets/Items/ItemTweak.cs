@@ -31,6 +31,11 @@ namespace Orion.Core.Packets.Items
         {
             get
             {
+                if (_packedColor == uint.MaxValue)
+                {
+                    return null;
+                }
+
                 var r = (byte)(_packedColor >> 16);
                 var g = (byte)(_packedColor >> 8);
                 var b = (byte)_packedColor;
@@ -40,6 +45,7 @@ namespace Orion.Core.Packets.Items
             {
                 if (value is null)
                 {
+                    _packedColor = uint.MaxValue;
                     return;
                 }
 

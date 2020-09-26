@@ -22,6 +22,16 @@ namespace Orion.Core.Packets.Items
         }
 
         [Fact]
+        public void Color_SetNullValue()
+        {
+            var packet = new ItemTweak();
+
+            packet.Color = null;
+
+            Assert.Null(packet.Color);
+        }
+
+        [Fact]
         public void Color_Set_Get()
         {
             var packet = new ItemTweak();
