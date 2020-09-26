@@ -16,7 +16,7 @@ namespace Orion.Core.Packets.DataStructures
 
             reason.KillerIndex = 1;
 
-            Assert.Equal(1, reason.KillerIndex);
+            Assert.Equal(1, reason.KillerIndex.Value);
         }
 
         [Fact]
@@ -26,7 +26,7 @@ namespace Orion.Core.Packets.DataStructures
 
             reason.KillingNpcIndex = 1;
 
-            Assert.Equal(1, reason.KillingNpcIndex);
+            Assert.Equal(1, reason.KillingNpcIndex.Value);
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace Orion.Core.Packets.DataStructures
 
             reason.KillingProjectileIndex = 1;
 
-            Assert.Equal(1, reason.KillingProjectileIndex);
+            Assert.Equal(1, reason.KillingProjectileIndex.Value);
         }
 
         [Fact]
@@ -46,7 +46,7 @@ namespace Orion.Core.Packets.DataStructures
 
             reason.CauseOfDeath = CauseOfDeath.Burning;
 
-            Assert.Equal(CauseOfDeath.Burning, reason.CauseOfDeath);
+            Assert.Equal(CauseOfDeath.Burning, reason.CauseOfDeath.Value);
         }
 
         [Fact]
@@ -56,7 +56,7 @@ namespace Orion.Core.Packets.DataStructures
 
             reason.ProjectileType = 1;
 
-            Assert.Equal(1, reason.ProjectileType);
+            Assert.Equal(1, reason.ProjectileType.Value);
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace Orion.Core.Packets.DataStructures
 
             reason.ItemType = 1;
 
-            Assert.Equal(1, reason.ItemType);
+            Assert.Equal(1, reason.ItemType.Value);
         }
 
         [Fact]
@@ -76,7 +76,7 @@ namespace Orion.Core.Packets.DataStructures
 
             reason.ItemPrefix = 1;
 
-            Assert.Equal(1, reason.ItemPrefix);
+            Assert.Equal(1, reason.ItemPrefix.Value);
         }
 
         [Fact]
@@ -111,13 +111,13 @@ namespace Orion.Core.Packets.DataStructures
         {
             var length = PlayerDeathReason.Read(_bytes, out var reason);
 
-            Assert.Equal(1, reason.KillerIndex);
-            Assert.Equal(2, reason.KillingNpcIndex);
-            Assert.Equal(3, reason.KillingProjectileIndex);
-            Assert.Equal(CauseOfDeath.DemonAltar, reason.CauseOfDeath);
-            Assert.Equal(5, reason.ProjectileType);
-            Assert.Equal(6, reason.ItemType);
-            Assert.Equal(7, reason.ItemPrefix);
+            Assert.Equal(1, reason.KillerIndex!.Value);
+            Assert.Equal(2, reason.KillingNpcIndex!.Value);
+            Assert.Equal(3, reason.KillingProjectileIndex!.Value);
+            Assert.Equal(CauseOfDeath.DemonAltar, reason.CauseOfDeath!.Value);
+            Assert.Equal(5, reason.ProjectileType!.Value);
+            Assert.Equal(6, reason.ItemType!.Value);
+            Assert.Equal(7, reason.ItemPrefix!.Value);
             Assert.Equal("ABC", reason.CustomDeathReason);
 
             var buffer = new byte[17];

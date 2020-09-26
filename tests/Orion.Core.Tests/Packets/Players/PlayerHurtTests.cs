@@ -25,9 +25,9 @@ namespace Orion.Core.Packets.Players
         {
             var packet = new PlayerHurt();
 
-            packet.Context = new PlayerDeathReason(killingNpcIndex: 5);
+            packet.Context = new PlayerDeathReason() { KillingNpcIndex = 5 };
 
-            Assert.Equal(5, packet.Context.KillingNpcIndex);
+            Assert.Equal(5, packet.Context.KillingNpcIndex.Value);
         }
 
         [Fact]
@@ -91,9 +91,9 @@ namespace Orion.Core.Packets.Players
             var packet = TestUtils.ReadPacket<PlayerHurt>(_bytes, PacketContext.Server);
 
             Assert.Equal(1, packet.PlayerIndex);
-            Assert.Equal(50, packet.Context.KillerIndex);
-            Assert.Equal(1024, packet.Context.ItemType);
-            Assert.Equal(5, packet.Context.ItemPrefix);
+            Assert.Equal(50, packet.Context.KillerIndex!.Value);
+            Assert.Equal(1024, packet.Context.ItemType!.Value);
+            Assert.Equal(5, packet.Context.ItemPrefix!.Value);
             Assert.Equal(2, packet.Damage);
             Assert.Equal(3, packet.HitDirection);
             Assert.Equal(4, packet.CooldownCounter);

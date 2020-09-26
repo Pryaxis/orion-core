@@ -25,73 +25,45 @@ namespace Orion.Core.Packets.DataStructures
     /// <summary>
     /// Provides context surrounding a player death.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 24)]
     public struct PlayerDeathReason
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerDeathReason"/> structure with the specified properties.
-        /// </summary>
-        /// <param name="killerIndex">The killer index.</param>
-        /// <param name="killingNpcIndex">The killing NPC index.</param>
-        /// <param name="killingProjectileIndex">The killing projectile index.</param>
-        /// <param name="causeOfDeath">The cause of death when killed by "Other".</param>
-        /// <param name="projectileType">The projectile type.</param>
-        /// <param name="itemType">The item type.</param>
-        /// <param name="itemPrefix">The item prefix.</param>
-        /// <param name="customDeathReason">The custom death reason.</param>
-        public PlayerDeathReason(short killerIndex = -1, short killingNpcIndex = -1, short killingProjectileIndex = -1,
-            CauseOfDeath causeOfDeath = CauseOfDeath.None, short projectileType = short.MinValue,
-            short itemType = short.MinValue, byte itemPrefix = byte.MaxValue, string customDeathReason = "")
-        {
-            _flags = default;
-
-            KillerIndex = killerIndex;
-            KillingNpcIndex = killingNpcIndex;
-            KillingProjectileIndex = killingProjectileIndex;
-            CauseOfDeath = causeOfDeath;
-            ProjectileType = projectileType;
-            ItemType = itemType;
-            ItemPrefix = itemPrefix;
-            _customDeathReason = customDeathReason;
-        }
-
-        [FieldOffset(0)] private Flags8 _flags;
-        [FieldOffset(16)] private string? _customDeathReason;
+        private Flags8 _flags;
+        private string? _customDeathReason;
 
         /// <summary>
         /// Gets or sets the killer's index.
         /// </summary>
-        [field: FieldOffset(1)] public short KillerIndex { get; set; }
+        public short? KillerIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the killing NPC index.
         /// </summary>
-        [field: FieldOffset(3)] public short KillingNpcIndex { get; set; }
+        public short? KillingNpcIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the killing projectile index.
         /// </summary>
-        [field: FieldOffset(5)] public short KillingProjectileIndex { get; set; }
+        public short? KillingProjectileIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the cause of death when killed by "Other".
         /// </summary>
-        [field: FieldOffset(7)] public CauseOfDeath CauseOfDeath { get; set; }
+        public CauseOfDeath? CauseOfDeath { get; set; }
 
         /// <summary>
         /// Gets or sets the projectile type.
         /// </summary>
-        [field: FieldOffset(8)] public short ProjectileType { get; set; }
+        public short? ProjectileType { get; set; }
 
         /// <summary>
         /// Gets or sets the item type.
         /// </summary>
-        [field: FieldOffset(10)] public short ItemType { get; set; }
+        public short? ItemType { get; set; }
 
         /// <summary>
         /// Gets or sets the item prefix.
         /// </summary>
-        [field: FieldOffset(12)] public byte ItemPrefix { get; set; }
+        public byte? ItemPrefix { get; set; }
 
         /// <summary>
         /// Gets or sets the custom death reason.
@@ -110,62 +82,48 @@ namespace Orion.Core.Packets.DataStructures
         public int Write(Span<byte> span)
         {
             var length = 1;
-            if (KillerIndex != -1)
+            if (KillerIndex.HasValue)
             {
-                Unsafe.CopyBlockUnaligned(ref span.At(length), ref Unsafe.Add(ref this.AsByte(), 1), 2);
+                length += span[length..].Write(KillerIndex.Value);
                 _flags[0] = true;
-                length += 2;
             }
-
-            if (KillingNpcIndex != -1)
+            if (KillingNpcIndex.HasValue)
             {
-                Unsafe.CopyBlockUnaligned(ref span.At(length), ref Unsafe.Add(ref this.AsByte(), 3), 2);
+                length += span[length..].Write(KillingNpcIndex.Value);
                 _flags[1] = true;
-                length += 2;
             }
-
-            if (KillingProjectileIndex != -1)
+            if (KillingProjectileIndex.HasValue)
             {
-                Unsafe.CopyBlockUnaligned(ref span.At(length), ref Unsafe.Add(ref this.AsByte(), 5), 2);
+                length += span[length..].Write(KillingProjectileIndex.Value);
                 _flags[2] = true;
-                length += 2;
             }
-
-            if (CauseOfDeath != CauseOfDeath.None)
+            if (CauseOfDeath.HasValue)
             {
-                Unsafe.CopyBlockUnaligned(ref span.At(length), ref Unsafe.Add(ref this.AsByte(), 7), 1);
+                length += span[length..].Write(CauseOfDeath.Value);
                 _flags[3] = true;
-                length++;
             }
-
-            if (ProjectileType > 0)
+            if (ProjectileType.HasValue)
             {
-                Unsafe.CopyBlockUnaligned(ref span.At(length), ref Unsafe.Add(ref this.AsByte(), 8), 2);
+                length += span[length..].Write(ProjectileType.Value);
                 _flags[4] = true;
-                length += 2;
             }
-
-            if (ItemType > 0)
+            if (ItemType.HasValue)
             {
-                Unsafe.CopyBlockUnaligned(ref span.At(length), ref Unsafe.Add(ref this.AsByte(), 10), 2);
+                length += span[length..].Write(ItemType.Value);
                 _flags[5] = true;
-                length += 2;
             }
-
-            if (ItemPrefix < 85)
+            if (ItemPrefix.HasValue)
             {
-                Unsafe.CopyBlockUnaligned(ref span.At(length), ref Unsafe.Add(ref this.AsByte(), 12), 1);
+                length += span[length..].Write(ItemPrefix.Value);
                 _flags[6] = true;
-                length++;
             }
-
             if (!string.IsNullOrWhiteSpace(CustomDeathReason))
             {
                 length += span[length..].Write(CustomDeathReason);
                 _flags[7] = true;
             }
 
-            Unsafe.CopyBlockUnaligned(ref span.At(0), ref this.AsByte(), 1);
+            span[0] = Unsafe.As<Flags8, byte>(ref _flags);
             return length;
         }
 
@@ -177,60 +135,55 @@ namespace Orion.Core.Packets.DataStructures
         /// <returns>The number of bytes read.</returns>
         public static int Read(Span<byte> span, out PlayerDeathReason playerDeathReason)
         {
-            playerDeathReason = new PlayerDeathReason()
-            { 
-                KillerIndex = -1, KillingNpcIndex = -1, KillingProjectileIndex = -1, CauseOfDeath = CauseOfDeath.None,
-                ProjectileType = -1, ItemType = -1, CustomDeathReason = string.Empty 
-            };
-
+            playerDeathReason = new PlayerDeathReason();
             var length = 1;
             var flags = Unsafe.As<byte, Flags8>(ref span.At(0));
             if (flags[0])
             {
                 // Killed by a player
-                Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref playerDeathReason.AsByte(), 1), ref span.At(length), 2);
+                playerDeathReason.KillerIndex = MemoryMarshal.Read<short>(span[length..]);
                 length += 2;
             }
 
             if (flags[1])
             {
                 // Killed by an NPC
-                Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref playerDeathReason.AsByte(), 3), ref span.At(length), 2);
+                playerDeathReason.KillingNpcIndex = MemoryMarshal.Read<short>(span[length..]);
                 length += 2;
             }
 
             if (flags[2])
             {
                 // Killed by a projectile
-                Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref playerDeathReason.AsByte(), 5), ref span.At(length), 2);
+                playerDeathReason.KillingProjectileIndex = MemoryMarshal.Read<short>(span[length..]);
                 length += 2;
             }
 
             if (flags[3])
             {
                 // Killed via Other
-                Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref playerDeathReason.AsByte(), 7), ref span.At(length), 1);
+                playerDeathReason.CauseOfDeath = (CauseOfDeath) MemoryMarshal.Read<byte>(span[length..]);
                 length++;
             }
 
             if (flags[4])
             {
                 // Projectile type
-                Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref playerDeathReason.AsByte(), 8), ref span.At(length), 2);
+                playerDeathReason.ProjectileType = MemoryMarshal.Read<short>(span[length..]);
                 length += 2;
             }
 
             if (flags[5])
             {
                 // Killed via PvP (Item type)
-                Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref playerDeathReason.AsByte(), 10), ref span.At(length), 2);
+                playerDeathReason.ItemType = MemoryMarshal.Read<short>(span[length..]);
                 length += 2;
             }
 
             if (flags[6])
             {
                 // Killed via PvP (Item Prefix)
-                Unsafe.CopyBlockUnaligned(ref Unsafe.Add(ref playerDeathReason.AsByte(), 12), ref span.At(length), 1);
+                playerDeathReason.ItemPrefix = MemoryMarshal.Read<byte>(span[length..]);
                 length++;
             }
 

@@ -92,6 +92,20 @@ namespace Orion.Core.Utils
         }
 
         /// <summary>
+        /// Writes a value of type <typeparamref name="T"/> to the underlying <paramref name="span"/> and returns the number of bytes written.
+        /// </summary>
+        /// <typeparam name="T">The type of value to write.</typeparam>
+        /// <param name="span">The span to write to.</param>
+        /// <param name="value">The value to write.</param>
+        /// <returns>The number of bytes written.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static unsafe int Write<T>(this Span<byte> span, T value) where T : unmanaged
+        {
+            MemoryMarshal.Write(span, ref value);
+            return sizeof(T);
+        }
+
+        /// <summary>
         /// Writes a UTF8-encoded string to the <paramref name="span"/>. Returns the number of bytes written.
         /// </summary>
         /// <param name="span">The span to write to.</param>

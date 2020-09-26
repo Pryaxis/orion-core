@@ -25,10 +25,10 @@ namespace Orion.Core.Packets.Players
         {
             var packet = new PlayerKill();
 
-            packet.DeathReason = new PlayerDeathReason(killerIndex: 1, itemType: 2);
+            packet.DeathReason = new PlayerDeathReason() { KillerIndex = 1, ItemType = 2 };
 
-            Assert.Equal(1, packet.DeathReason.KillerIndex);
-            Assert.Equal(2, packet.DeathReason.ItemType);
+            Assert.Equal(1, packet.DeathReason.KillerIndex.Value);
+            Assert.Equal(2, packet.DeathReason.ItemType.Value);
         }
 
         [Fact]

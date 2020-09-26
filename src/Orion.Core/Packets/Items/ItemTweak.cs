@@ -199,41 +199,41 @@ namespace Orion.Core.Packets.Items
 
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
-            var length = Write(span, ItemIndex);
+            var length = span.Write(ItemIndex);
             var flagsOffset = length++;
             if (Color.HasValue)
             {
-                length += Write(span[length..], _packedColor);
+                length += span[length..].Write(_packedColor);
                 _flags[0] = true;
             }
             if (Damage.HasValue)
             {
-                length += Write(span[length..], Damage.Value);
+                length += span[length..].Write(Damage.Value);
                 _flags[1] = true;
             }
             if (Knockback.HasValue)
             {
-                length += Write(span[length..], Knockback.Value);
+                length += span[length..].Write(Knockback.Value);
                 _flags[2] = true;
             }
             if (AnimationTime.HasValue)
             {
-                length += Write(span[length..], AnimationTime.Value);
+                length += span[length..].Write(AnimationTime.Value);
                 _flags[3] = true;
             }
             if (UseTime.HasValue)
             {
-                length += Write(span[length..], UseTime.Value);
+                length += span[length..].Write(UseTime.Value);
                 _flags[4] = true;
             }
             if (ShootProjectileType.HasValue)
             {
-                length += Write(span[length..], ShootProjectileType.Value);
+                length += span[length..].Write(ShootProjectileType.Value);
                 _flags[5] = true;
             }
             if (ShootSpeed.HasValue)
             {
-                length += Write(span[length..], ShootSpeed.Value);
+                length += span[length..].Write(ShootSpeed.Value);
                 _flags[6] = true;
             }
             if (IncludeDimensionsAndAmmo == true)
@@ -243,32 +243,32 @@ namespace Orion.Core.Packets.Items
                 span[flagsOffset] = Unsafe.As<Flags8, byte>(ref _flags);
                 if (Width.HasValue)
                 {
-                    length += Write(span[length..], Width.Value);
+                    length += span[length..].Write(Width.Value);
                     _flags2[0] = true;
                 }
                 if (Height.HasValue)
                 {
-                    length += Write(span[length..], Height.Value);
+                    length += span[length..].Write(Height.Value);
                     _flags2[1] = true;
                 }
                 if (Scale.HasValue)
                 {
-                    length += Write(span[length..], Scale.Value);
+                    length += span[length..].Write(Scale.Value);
                     _flags2[2] = true;
                 }
                 if (AmmoType.HasValue)
                 {
-                    length += Write(span[length..], AmmoType.Value);
+                    length += span[length..].Write(AmmoType.Value);
                     _flags2[3] = true;
                 }
                 if (AmmoRequiredToUseItem.HasValue)
                 {
-                    length += Write(span[length..], AmmoRequiredToUseItem.Value);
+                    length += span[length..].Write(AmmoRequiredToUseItem.Value);
                     _flags2[4] = true;
                 }
                 if (NotRealAmmo.HasValue)
                 {
-                    length += Write(span[length..], NotRealAmmo.Value);
+                    length += span[length..].Write(NotRealAmmo.Value);
                     _flags2[5] = true;
                 }
 
@@ -276,12 +276,6 @@ namespace Orion.Core.Packets.Items
             }
 
             return length;
-        }
-
-        private static unsafe int Write<T>(Span<byte> span, T value) where T : unmanaged
-        {
-            MemoryMarshal.Write(span, ref value);
-            return sizeof(T);
         }
     }
 }
