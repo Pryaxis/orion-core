@@ -115,6 +115,7 @@ namespace Orion.Core.Packets
         PlayerQuickStack = 85,
         TileEntityInfo = 86,
         TileEntityPlace = 87,
+        ItemTweak = 88,
         ItemFrameInfo = 89,
         InstancedItemInfo = 90,
         NpcStealCoins = 92,
@@ -156,7 +157,7 @@ namespace Orion.Core.Packets
         PlayerDead = 135,
         NpcCavernMonsters = 136,
         NpcRemoveBuff = 137,
-        PlayerHost = 139
+        PlayerHost = 139,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
@@ -246,6 +247,7 @@ namespace Orion.Core.Packets
             [PacketId.PlayerQuickStack] = typeof(PlayerQuickStack),
             [PacketId.TileEntityInfo] = typeof(TileEntityInfo),
             [PacketId.TileEntityPlace] = typeof(TileEntityPlace),
+            [PacketId.ItemTweak] = typeof(ItemTweak),
             [PacketId.ItemFrameInfo] = typeof(ItemFrameInfo),
             [PacketId.InstancedItemInfo] = typeof(InstancedItemInfo),
             [PacketId.NpcStealCoins] = typeof(NpcStealCoins),
