@@ -5,6 +5,7 @@ using Xunit;
 
 namespace Orion.Core.Packets.World
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class PillarShieldStrengthsTests
     {
         private readonly byte[] _bytes = { 11, 0, 101, 1, 0, 2, 0, 3, 0, 4, 0 };

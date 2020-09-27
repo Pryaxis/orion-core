@@ -6,6 +6,7 @@ using Xunit;
 
 namespace Orion.Core.Packets.World.Tiles
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class TileAnimationTests
     {
         private readonly byte[] _bytes = { 11, 0, 77, 1, 0, 2, 0, 3, 0, 4, 0 };

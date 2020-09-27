@@ -5,6 +5,7 @@ using Xunit;
 
 namespace Orion.Core.Packets.Players
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class PlayerQuickStackTests
     {
         private readonly byte[] _bytes = { 4, 0, 85, 1 };

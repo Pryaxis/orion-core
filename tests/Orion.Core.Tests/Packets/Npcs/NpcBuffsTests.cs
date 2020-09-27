@@ -6,6 +6,7 @@ using Xunit;
 
 namespace Orion.Core.Packets.Npcs
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class NpcBuffsTests
     {
         private readonly byte[] _bytes = { 7, 0, 54, 5, 0, 1, 0, 60, 0, 2, 0, 70, 0, 3, 0, 80, 0, 4, 0, 90, 0, 5, 0, 120, 0 };

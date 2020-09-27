@@ -8,6 +8,7 @@ using Xunit;
 
 namespace Orion.Core.Packets.World
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class WorldInfoTests
     {
         private readonly byte[] _bytes =

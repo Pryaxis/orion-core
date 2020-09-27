@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Orion.Core.Utils;
+﻿using Orion.Core.Utils;
 using Xunit;
 
 namespace Orion.Core.Packets.Npcs
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class NpcStealCoinsTests
     {
         private readonly byte[] _bytes = { 19, 0, 92, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 64 };

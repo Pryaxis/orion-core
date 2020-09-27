@@ -5,6 +5,7 @@ using Xunit;
 
 namespace Orion.Core.Packets.World.TileEntities
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class ChestInfoTests
     {
         private readonly byte[] _bytes = { 20, 0, 33, 5, 0, 150, 0, 200, 0, 10, 84, 101, 115, 116, 32, 67, 104, 101, 115, 116 };

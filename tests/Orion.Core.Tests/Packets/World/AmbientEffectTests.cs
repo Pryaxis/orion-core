@@ -5,6 +5,7 @@ using Xunit;
 
 namespace Orion.Core.Packets.World
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class AmbientEffectTests
     {
         private readonly byte[] _bytes = { 15, 0, 112, 1, 2, 0, 0, 0, 3, 0, 0, 0, 4, 5, 0 };

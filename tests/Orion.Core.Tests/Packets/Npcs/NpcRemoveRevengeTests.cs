@@ -5,6 +5,7 @@ using Xunit;
 
 namespace Orion.Core.Packets.Npcs
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class NpcRemoveRevengeTests
     {
         private readonly byte[] _bytes = { 7, 0, 127, 1, 0, 0, 0 };

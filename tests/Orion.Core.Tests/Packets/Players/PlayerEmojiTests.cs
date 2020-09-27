@@ -6,6 +6,7 @@ using Xunit;
 
 namespace Orion.Core.Packets.Players
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class PlayerEmojiTests
     {
         private readonly byte[] _bytes = { 5, 0, 120, 4, 5 };

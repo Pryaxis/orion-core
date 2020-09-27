@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+﻿using Xunit;
 
 namespace Orion.Core.Packets.Players
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class PlayerAnglerQuestsTests
     {
         private readonly byte[] _bytes = { 12, 0, 76, 1, 2, 0, 0, 0, 3, 0, 0, 0 };

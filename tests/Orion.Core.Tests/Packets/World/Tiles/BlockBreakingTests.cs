@@ -5,6 +5,7 @@ using Xunit;
 
 namespace Orion.Core.Packets.World.Tiles
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class BlockBreakingTests
     {
         private readonly byte[] _bytes = { 9, 0, 125, 1, 2, 0, 3, 0, 4 };

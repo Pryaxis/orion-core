@@ -7,6 +7,7 @@ using Xunit;
 
 namespace Orion.Core.World
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class GolfBallTests
     {
         private readonly byte[] _bytes = { 12, 0, 128, 1, 2, 0, 3, 0, 4, 0, 5, 0 };

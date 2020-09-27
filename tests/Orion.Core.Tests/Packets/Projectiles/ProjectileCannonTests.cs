@@ -6,6 +6,7 @@ using Xunit;
 
 namespace Orion.Core.Packets.Projectiles
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class ProjectileCannonTests
     {
         private readonly byte[] _bytes = { 18, 0, 108, 1, 0, 0, 0, 0, 64, 3, 0, 4, 0, 5, 0, 6, 0, 7 };
