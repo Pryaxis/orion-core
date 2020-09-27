@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Orion.Core.Utils;
 using Xunit;
 
 namespace Orion.Core.Packets.Players
@@ -30,43 +31,23 @@ namespace Orion.Core.Packets.Players
         }
 
         [Fact]
-        public void X_Set_Get()
+        public void Position_Set_Get()
         {
             var packet = new PlayerPortal();
 
-            packet.X = 1;
+            packet.Position = new Vector2f(1.23F, 4.56F);
 
-            Assert.Equal(1, packet.X);
+            Assert.Equal(new Vector2f(1.23F, 4.56F), packet.Position);
         }
 
         [Fact]
-        public void Y_Set_Get()
+        public void Velocity_Set_Get()
         {
             var packet = new PlayerPortal();
 
-            packet.Y = 1;
+            packet.Velocity = new Vector2f(1.23F, 4.56F);
 
-            Assert.Equal(1, packet.Y);
-        }
-
-        [Fact]
-        public void VelocityX_Set_Get()
-        {
-            var packet = new PlayerPortal();
-
-            packet.VelocityX = 1;
-
-            Assert.Equal(1, packet.VelocityX);
-        }
-
-        [Fact]
-        public void VelocityY_Set_Get()
-        {
-            var packet = new PlayerPortal();
-
-            packet.VelocityY = 1;
-
-            Assert.Equal(1, packet.VelocityY);
+            Assert.Equal(new Vector2f(1.23F, 4.56F), packet.Velocity);
         }
 
         [Fact]
@@ -76,10 +57,8 @@ namespace Orion.Core.Packets.Players
 
             Assert.Equal(1, packet.PlayerIndex);
             Assert.Equal(2, packet.PortalColorIndex);
-            Assert.Equal(2, packet.X);
-            Assert.Equal(2, packet.Y);
-            Assert.Equal(2, packet.VelocityX);
-            Assert.Equal(2, packet.VelocityY);
+            Assert.Equal(new Vector2f(2, 2), packet.Position);
+            Assert.Equal(new Vector2f(2, 2), packet.Velocity);
         }
     }
 }

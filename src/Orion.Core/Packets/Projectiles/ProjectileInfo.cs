@@ -41,24 +41,14 @@ namespace Orion.Core.Packets.Projectiles
         [field: FieldOffset(0)] public short Identity { get; set; }
 
         /// <summary>
-        /// Gets or sets the X position.
+        /// Gets or sets the position.
         /// </summary>
-        [field: FieldOffset(2)] public float X { get; set; }
+        [field: FieldOffset(2)] public Vector2f Position { get; set; }
 
         /// <summary>
-        /// Gets or sets the Y position.
+        /// Gets or sets the velocity.
         /// </summary>
-        [field: FieldOffset(6)] public float Y { get; set; }
-
-        /// <summary>
-        /// Gets or sets the velocity X.
-        /// </summary>
-        [field: FieldOffset(10)] public float VelocityX { get; set; }
-
-        /// <summary>
-        /// Gets or sets the velocity Y.
-        /// </summary>
-        [field: FieldOffset(14)] public float VelocityY { get; set; }
+        [field: FieldOffset(10)] public Vector2f Velocity { get; set; }
 
         /// <summary>
         /// Gets or sets the owner index.

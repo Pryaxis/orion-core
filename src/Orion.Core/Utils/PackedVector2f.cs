@@ -55,9 +55,9 @@ namespace Orion.Core.Utils
         [StructLayout(LayoutKind.Explicit)]
         private struct Uif
         {
-            [FieldOffset(0)] public readonly float f;
-            [FieldOffset(0)] public readonly int i;
-            [FieldOffset(0)] public uint u;
+            [FieldOffset(0)] public readonly float F;
+            [FieldOffset(0)] public readonly int I;
+            [FieldOffset(0)] public uint U;
         }
 
         [ExcludeFromCodeCoverage]
@@ -143,8 +143,8 @@ namespace Orion.Core.Utils
                       (mantissa << 13);
             }
 
-            var uif = new Uif {u = rst};
-            return uif.f;
+            var uif = new Uif {U = rst};
+            return uif.F;
         }
     }
 }

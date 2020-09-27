@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Orion.Core.Utils;
 using Xunit;
 
 namespace Orion.Core.Packets.Npcs
@@ -30,23 +31,13 @@ namespace Orion.Core.Packets.Npcs
         }
 
         [Fact]
-        public void X_Set_Get()
+        public void MoneyPosition_Set_Get()
         {
             var packet = new NpcStealCoins();
 
-            packet.X = 1;
+            packet.MoneyPosition = new Vector2f(1.23F, 4.56F);
 
-            Assert.Equal(1, packet.X);
-        }
-
-        [Fact]
-        public void Y_Set_Get()
-        {
-            var packet = new NpcStealCoins();
-
-            packet.Y = 1;
-
-            Assert.Equal(1, packet.Y);
+            Assert.Equal(new Vector2f(1.23F, 4.56F), packet.MoneyPosition);
         }
 
         [Fact]
@@ -56,8 +47,7 @@ namespace Orion.Core.Packets.Npcs
 
             Assert.Equal(1, packet.NpcIndex);
             Assert.Equal(2, packet.Value);
-            Assert.Equal(2, packet.X);
-            Assert.Equal(2, packet.Y);
+            Assert.Equal(new Vector2f(2, 2), packet.MoneyPosition);
         }
     }
 }

@@ -40,14 +40,9 @@ namespace Orion.Core.Packets.Npcs
         [field: FieldOffset(4)] public int Value { get; set; }
 
         /// <summary>
-        /// Gets or sets the X position. Used to ping the money. 
+        /// Gets or sets the money position.
         /// </summary>
-        [field: FieldOffset(8)] public float X { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Y position. Used to ping the money.
-        /// </summary>
-        [field: FieldOffset(12)] public float Y { get; set; }
+        [field: FieldOffset(8)] public Vector2f MoneyPosition { get; set; }
 
         PacketId IPacket.Id => PacketId.NpcStealCoins;
 

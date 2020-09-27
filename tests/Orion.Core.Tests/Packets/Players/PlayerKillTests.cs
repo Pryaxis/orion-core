@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Orion.Core.Packets.DataStructures;
+﻿using Orion.Core.Packets.DataStructures;
 using Xunit;
 
 namespace Orion.Core.Packets.Players
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class PlayerKillTests
     {
         private readonly byte[] _bytes = { 10, 0, 118, 1, 8, 2, 0, 2, 0, 1 };

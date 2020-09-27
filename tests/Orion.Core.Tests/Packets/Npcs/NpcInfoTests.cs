@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Orion.Core.Utils;
 using Xunit;
 
 namespace Orion.Core.Packets.Npcs
@@ -24,43 +22,23 @@ namespace Orion.Core.Packets.Npcs
         }
 
         [Fact]
-        public void X_Set_Get()
+        public void Position_Set_Get()
         {
             var packet = new NpcInfo();
 
-            packet.X = 1;
+            packet.Position = new Vector2f(1.23F, 4.56F);
 
-            Assert.Equal(1, packet.X);
+            Assert.Equal(new Vector2f(1.23F, 4.56F), packet.Position);
         }
 
         [Fact]
-        public void Y_Set_Get()
+        public void Velocity_Set_Get()
         {
             var packet = new NpcInfo();
 
-            packet.Y = 1;
+            packet.Velocity = new Vector2f(1.23F, 4.56F);
 
-            Assert.Equal(1, packet.Y);
-        }
-
-        [Fact]
-        public void VelocityX_Set_Get()
-        {
-            var packet = new NpcInfo();
-
-            packet.VelocityX = 1;
-
-            Assert.Equal(1, packet.VelocityX);
-        }
-
-        [Fact]
-        public void VelocityY_Set_Get()
-        {
-            var packet = new NpcInfo();
-
-            packet.VelocityY = 1;
-
-            Assert.Equal(1, packet.VelocityY);
+            Assert.Equal(new Vector2f(1.23F, 4.56F), packet.Velocity);
         }
 
         [Fact]
@@ -187,10 +165,8 @@ namespace Orion.Core.Packets.Npcs
             var packet = TestUtils.ReadPacket<NpcInfo>(_bytes, PacketContext.Server);
 
             Assert.Equal(1, packet.NpcIndex);
-            Assert.Equal(2, packet.X);
-            Assert.Equal(3, packet.Y);
-            Assert.Equal(4, packet.VelocityX);
-            Assert.Equal(5, packet.VelocityY);
+            Assert.Equal(new Vector2f(2, 3), packet.Position);
+            Assert.Equal(new Vector2f(4, 5), packet.Velocity);
             Assert.Equal(7, packet.TargetIndex);
             Assert.Equal(1F, packet.AdditionalInformation[1]);
             Assert.Equal(8, packet.NetId);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Orion.Core.Utils;
 using Xunit;
 
 namespace Orion.Core.Packets.Projectiles
@@ -24,43 +25,23 @@ namespace Orion.Core.Packets.Projectiles
         }
 
         [Fact]
-        public void X_Set_Get()
+        public void Position_Set_Get()
         {
             var packet = new ProjectileInfo();
 
-            packet.X = 12345F;
+            packet.Position = new Vector2f(1.23F, 4.56F);
 
-            Assert.Equal(12345F, packet.X);
+            Assert.Equal(new Vector2f(1.23F, 4.56F), packet.Position);
         }
 
         [Fact]
-        public void Y_Set_Get()
+        public void Velocity_Set_Get()
         {
             var packet = new ProjectileInfo();
 
-            packet.Y = 67890F;
+            packet.Velocity = new Vector2f(1.23F, 4.56F);
 
-            Assert.Equal(67890F, packet.Y);
-        }
-
-        [Fact]
-        public void VelocityX_Set_Get()
-        {
-            var packet = new ProjectileInfo();
-
-            packet.VelocityX = 1;
-
-            Assert.Equal(1, packet.VelocityX);
-        }
-
-        [Fact]
-        public void VelocityY_Set_Get()
-        {
-            var packet = new ProjectileInfo();
-
-            packet.VelocityY = 1;
-
-            Assert.Equal(1, packet.VelocityY);
+            Assert.Equal(new Vector2f(1.23F, 4.56F), packet.Velocity);
         }
 
         [Fact]
@@ -141,10 +122,8 @@ namespace Orion.Core.Packets.Projectiles
             var packet = TestUtils.ReadPacket<ProjectileInfo>(_bytes, PacketContext.Server);
 
             Assert.Equal(1, packet.Identity);
-            Assert.Equal(2F, packet.X);
-            Assert.Equal(3F, packet.Y);
-            Assert.Equal(4F, packet.VelocityX);
-            Assert.Equal(5F, packet.VelocityY);
+            Assert.Equal(new Vector2f(2, 3), packet.Position);
+            Assert.Equal(new Vector2f(4, 5), packet.Velocity);
             Assert.Equal(6, packet.OwnerIndex);
             Assert.Equal(7, packet.Type);
             Assert.Equal(1F, packet.AdditionalInformation[0]);

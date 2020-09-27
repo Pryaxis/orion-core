@@ -5,6 +5,7 @@ using Xunit;
 
 namespace Orion.Core.Packets.DataStructures
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class SerializableNpcBuffTests
     {
         [Fact]

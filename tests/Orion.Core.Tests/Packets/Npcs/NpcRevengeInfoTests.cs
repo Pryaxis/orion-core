@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Orion.Core.Utils;
 using Xunit;
 
 namespace Orion.Core.Packets.Npcs
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class NpcRevengeInfoTests
     {
         private readonly byte[] _bytes = 
@@ -24,23 +26,13 @@ namespace Orion.Core.Packets.Npcs
         }
 
         [Fact]
-        public void X_Set_Get()
+        public void Position_Set_Get()
         {
             var packet = new NpcRevengeInfo();
 
-            packet.X = 1;
+            packet.Position = new Vector2f(1.23F, 4.56F);
 
-            Assert.Equal(1, packet.X);
-        }
-
-        [Fact]
-        public void Y_Set_Get()
-        {
-            var packet = new NpcRevengeInfo();
-
-            packet.Y = 1;
-
-            Assert.Equal(1, packet.Y);
+            Assert.Equal(new Vector2f(1.23F, 4.56F), packet.Position);
         }
 
         [Fact]
@@ -121,8 +113,7 @@ namespace Orion.Core.Packets.Npcs
             var packet = TestUtils.ReadPacket<NpcRevengeInfo>(_bytes, PacketContext.Server);
 
             Assert.Equal(1, packet.UniqueId);
-            Assert.Equal(2, packet.X);
-            Assert.Equal(3, packet.Y);
+            Assert.Equal(new Vector2f(2, 3), packet.Position);
             Assert.Equal(4, packet.NetId);
             Assert.Equal(5, packet.HealthPercentage);
             Assert.Equal(6, packet.NpcType);

@@ -43,24 +43,14 @@ namespace Orion.Core.Packets.Npcs
         [field: FieldOffset(0)] public int NpcIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the X position.
+        /// Gets or sets the position.
         /// </summary>
-        [field: FieldOffset(4)] public float X { get; set; }
+        [field: FieldOffset(4)] public Vector2f Position { get; set; }
 
         /// <summary>
-        /// Gets or sets the Y position.
+        /// Gets or sets the velocity.
         /// </summary>
-        [field: FieldOffset(8)] public float Y { get; set; }
-
-        /// <summary>
-        /// Gets or sets the X velocity.
-        /// </summary>
-        [field: FieldOffset(12)] public float VelocityX { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Y velocity.
-        /// </summary>
-        [field: FieldOffset(16)] public float VelocityY { get; set; }
+        [field: FieldOffset(12)] public Vector2f Velocity { get; set; }
 
         /// <summary>
         /// Gets or sets the targeted player.

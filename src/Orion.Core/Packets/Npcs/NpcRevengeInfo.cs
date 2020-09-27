@@ -35,14 +35,9 @@ namespace Orion.Core.Packets.Npcs
         [field: FieldOffset(0)] public int UniqueId { get; set; }
 
         /// <summary>
-        /// Gets or sets the X position.
+        /// Gets or sets the position.
         /// </summary>
-        [field: FieldOffset(4)] public float X { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Y position.
-        /// </summary>
-        [field: FieldOffset(8)] public float Y { get; set; }
+        [field: FieldOffset(4)] public Vector2f Position { get; set; }
 
         /// <summary>
         /// Gets or sets the NPC's net ID.

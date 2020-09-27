@@ -1,7 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Copyright (c) 2020 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Runtime.InteropServices;
-using System.Text;
 using Orion.Core.Utils;
 
 namespace Orion.Core.Packets.Players
@@ -25,24 +40,14 @@ namespace Orion.Core.Packets.Players
         [field: FieldOffset(1)] public short PortalColorIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the X position.
+        /// Gets or sets the position.
         /// </summary>
-        [field: FieldOffset(3)] public float X { get; set; }
+        [field: FieldOffset(3)] public Vector2f Position { get; set; }
 
         /// <summary>
-        /// Gets or sets the Y position.
+        /// Gets or sets the velocity.
         /// </summary>
-        [field: FieldOffset(7)] public float Y { get; set; }
-
-        /// <summary>
-        /// Gets or sets the horizontal velocity.
-        /// </summary>
-        [field: FieldOffset(11)] public float VelocityX { get; set; }
-
-        /// <summary>
-        /// Gets or sets the vertical velocity.
-        /// </summary>
-        [field: FieldOffset(15)] public float VelocityY { get; set; }
+        [field: FieldOffset(11)] public Vector2f Velocity { get; set; }
 
         PacketId IPacket.Id => PacketId.PlayerPortal;
 

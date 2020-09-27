@@ -5,6 +5,7 @@ using Xunit;
 
 namespace Orion.Core.Packets.DataStructures
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
     public sealed class PlayerDeathReasonTests
     {
         private readonly byte[] _bytes = { 255, 1, 0, 2, 0, 3, 0, 4, 5, 0, 6, 0, 7, 3, 65, 66, 67 };
