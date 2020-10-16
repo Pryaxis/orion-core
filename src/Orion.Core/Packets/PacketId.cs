@@ -161,6 +161,7 @@ namespace Orion.Core.Packets
         NpcCavernMonsters = 136,
         NpcRemoveBuff = 137,
         PlayerHost = 139,
+        CreditsRoll = 140,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
@@ -295,7 +296,8 @@ namespace Orion.Core.Packets
             [PacketId.PlayerDead] = typeof(PlayerDead),
             [PacketId.NpcCavernMonsters] = typeof(NpcCavernMonsters),
             [PacketId.NpcRemoveBuff] = typeof(NpcRemoveBuff),
-            [PacketId.PlayerHost] = typeof(PlayerHost)
+            [PacketId.PlayerHost] = typeof(PlayerHost),
+            [PacketId.CreditsRoll] = typeof(CreditsRoll)
         };
 
         /// <summary>
