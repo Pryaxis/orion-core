@@ -30,7 +30,7 @@ namespace Orion.Core.Packets.World
     {
         [FieldOffset(0)] private byte _bytes;  // Used to obtain an interior reference
         [FieldOffset(32)] private byte _bytes2; // Used to obtain an interior reference
-        [FieldOffset(56)] private byte _bytes3;
+        [FieldOffset(56)] private byte _bytes3; // Used to obtain an interior reference
         [FieldOffset(133)] private byte _bytes4; // Used to obtain an interior reference
         [FieldOffset(4)] private Flags8 _solarFlags;
         [FieldOffset(24)] private string? _worldName;

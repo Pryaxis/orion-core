@@ -18,6 +18,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Xml.Schema;
 using Orion.Core.Packets.DataStructures;
 using Orion.Core.Utils;
 
@@ -26,39 +27,37 @@ namespace Orion.Core.Packets.Projectiles
     /// <summary>
     /// A packet sent to update projectile information.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = 42)]
     public struct ProjectileInfo : IPacket
     {
         private const int MaxAi = 2;
 
-        [FieldOffset(0)] private byte _bytes; // Used to obtain an interior reference
-        [FieldOffset(21)] private Flags8 _flags;
-        [FieldOffset(24)] private float[]? _ai;
+        private Flags8 _flags;
+        private float[]? _ai;
 
         /// <summary>
         /// Gets or sets the identity, i.e, the projectile index.
         /// </summary>
-        [field: FieldOffset(0)] public short Identity { get; set; }
+        public short Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the position.
         /// </summary>
-        [field: FieldOffset(2)] public Vector2f Position { get; set; }
+        public Vector2f Position { get; set; }
 
         /// <summary>
         /// Gets or sets the velocity.
         /// </summary>
-        [field: FieldOffset(10)] public Vector2f Velocity { get; set; }
+        public Vector2f Velocity { get; set; }
 
         /// <summary>
         /// Gets or sets the owner index.
         /// </summary>
-        [field: FieldOffset(18)] public byte OwnerIndex { get; set; }
+        public byte OwnerIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the projectile type.
         /// </summary>
-        [field: FieldOffset(19)] public short Type { get; set; }
+        public short Type { get; set; }
 
         /// <summary>
         /// Gets additional information.
@@ -68,28 +67,34 @@ namespace Orion.Core.Packets.Projectiles
         /// <summary>
         /// Gets or sets the damage.
         /// </summary>
-        [field: FieldOffset(32)] public short Damage { get; set; }
+        public short Damage { get; set; }
 
         /// <summary>
         /// Gets or sets the knockback.
         /// </summary>
-        [field: FieldOffset(34)] public float Knockback { get; set; }
+        public float Knockback { get; set; }
 
         /// <summary>
         /// Gets or sets the original damage.
         /// </summary>
-        [field: FieldOffset(38)] public short OriginalDamage { get; set; }
+        public short OriginalDamage { get; set; }
 
         /// <summary>
         /// Gets or sets the UUID.
         /// </summary>
-        [field: FieldOffset(40)] public short Uuid { get; set; }
+        public short Uuid { get; set; }
 
         PacketId IPacket.Id => PacketId.ProjectileInfo;
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
-            var length = span.Read(ref _bytes, 22);
+            var length = 22;
+            Identity = span.Read<short>();
+            Position = span.Read<Vector2f>();
+            Velocity = span.Read<Vector2f>();
+            OwnerIndex = span.Read<byte>();
+            Type = span.Read<short>();
+            _flags = span.Read<Flags8>();
             for (var i = 0; i < AdditionalInformation.Length; ++i)
             {
                 if (!_flags[i])
@@ -97,27 +102,32 @@ namespace Orion.Core.Packets.Projectiles
                     continue;
                 }
 
-                length += span[length..].Read(ref Unsafe.Add(ref Unsafe.As<float, byte>(ref AdditionalInformation[0]), i * 4), 4);
+                AdditionalInformation[i] = span.Read<float>();
+                length += 4;
             }
 
             if (_flags[4])
             {
-                length += span[length..].Read(ref Unsafe.Add(ref _bytes, 32), 2);
+                Damage = span.Read<short>();
+                length += 2;
             }
 
             if (_flags[5])
             {
-                length += span[length..].Read(ref Unsafe.Add(ref _bytes, 34), 4);
+                Knockback = span.Read<float>();
+                length += 4;
             }
 
             if (_flags[6])
             {
-                length += span[length..].Read(ref Unsafe.Add(ref _bytes, 38), 2);
+                OriginalDamage = span.Read<short>();
+                length += 2;
             }
 
             if (_flags[7])
             {
-                length += span[length..].Read(ref Unsafe.Add(ref _bytes, 40), 2);
+                Uuid = span.Read<short>();
+                length += 2;
             }
 
             return length;
@@ -125,42 +135,49 @@ namespace Orion.Core.Packets.Projectiles
 
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
-            var length = span.Write(ref _bytes, 22);
+            var length = span.Write(Identity);
+            length += span[length..].Write(Position);
+            length += span[length..].Write(Velocity);
+            length += span[length..].Write(OwnerIndex);
+            length += span[length..].Write(Type);
+
+            var flagsOffset = length++;
             for (var i = 0; i < AdditionalInformation.Length; ++i)
             {
-                if (AdditionalInformation[i] == 0)
+                if (AdditionalInformation[i] <= 0)
                 {
                     continue;
                 }
 
-                length += span[length..].Write(ref Unsafe.Add(ref Unsafe.As<float, byte>(ref AdditionalInformation[0]), i * 4), 4);
+                _flags[i] = true;
+                length += span[length..].Write(AdditionalInformation[i]);
             }
 
             if (Damage > 0)
             {
-                length += span[length..].Write(ref Unsafe.Add(ref _bytes, 32), 2);
                 _flags[4] = true;
+                length += span[length..].Write(Damage);
             }
 
             if (Knockback > 0)
             {
-                length += span[length..].Write(ref Unsafe.Add(ref _bytes, 34), 4);
                 _flags[5] = true;
+                length += span[length..].Write(Knockback);
             }
 
             if (OriginalDamage > 0)
             {
-                length += span[length..].Write(ref Unsafe.Add(ref _bytes, 38), 2);
                 _flags[6] = true;
+                length += span[length..].Write(OriginalDamage);
             }
 
             if (Uuid > 0)
             {
-                length += span[length..].Write(ref Unsafe.Add(ref _bytes, 40), 2);
                 _flags[7] = true;
+                length += span[length..].Write(Uuid);
             }
 
-            span[21..].Write(ref Unsafe.Add(ref _bytes, 21), 1);
+            span[flagsOffset] = Unsafe.As<Flags8, byte>(ref _flags);
             return length;
         }
     }
