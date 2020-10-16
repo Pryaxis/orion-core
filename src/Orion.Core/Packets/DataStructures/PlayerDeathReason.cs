@@ -137,7 +137,7 @@ namespace Orion.Core.Packets.DataStructures
         {
             playerDeathReason = new PlayerDeathReason();
             var length = 1;
-            var flags = Unsafe.As<byte, Flags8>(ref span.At(0));
+            var flags = MemoryMarshal.Read<Flags8>(span);
             if (flags[0])
             {
                 // Killed by a player

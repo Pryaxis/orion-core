@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Orion.Core.Packets.DataStructures;
@@ -26,36 +27,32 @@ namespace Orion.Core.Packets.Npcs
     /// <summary>
     /// A packet sent to update NPC information.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
     public struct NpcInfo : IPacket
     {
         private const int MaxAi = 4;
-
-        [FieldOffset(0)] private byte _bytes; // Used to obtain an interior reference
-        [FieldOffset(22)] private Flags8 _flags;
-        [FieldOffset(23)] private Flags8 _flags2;
-        [FieldOffset(24)] private float[] _ai;
-        [FieldOffset(45)] private byte _lifeOccupiedBytes;
+        private Flags8 _flags;
+        private Flags8 _flags2;
+        private float[] _ai;
 
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
-        [field: FieldOffset(0)] public int NpcIndex { get; set; }
+        public int NpcIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the position.
         /// </summary>
-        [field: FieldOffset(4)] public Vector2f Position { get; set; }
+        public Vector2f Position { get; set; }
 
         /// <summary>
         /// Gets or sets the velocity.
         /// </summary>
-        [field: FieldOffset(12)] public Vector2f Velocity { get; set; }
+        public Vector2f Velocity { get; set; }
 
         /// <summary>
         /// Gets or sets the targeted player.
         /// </summary>
-        [field: FieldOffset(20)] public ushort TargetIndex { get; set; }
+        public ushort TargetIndex { get; set; }
 
         /// <summary>
         /// Gets additional information.
@@ -65,27 +62,27 @@ namespace Orion.Core.Packets.Npcs
         /// <summary>
         /// Gets or sets the NPC's net ID.
         /// </summary>
-        [field: FieldOffset(38)] public short NetId { get; set; }
+        public short NetId { get; set; }
 
         /// <summary>
         /// Gets or sets a value that defines how the NPC's difficulty scales with respect to player count changes.
         /// </summary>
-        [field: FieldOffset(40)] public byte DifficultyScalingOverride { get; set; }
+        public byte DifficultyScalingOverride { get; set; }
 
         /// <summary>
         /// Gets or sets the strength multiplier override.
         /// </summary>
-        [field: FieldOffset(41)] public float StrengthMultiplierOverride { get; set; }
+        public float StrengthMultiplierOverride { get; set; }
 
         /// <summary>
         /// Gets or sets the NPC's health.
         /// </summary>
-        [field: FieldOffset(46)] public int Health { get; set; }
+        public int Health { get; set; }
 
         /// <summary>
         /// Gets or sets a catchable NPC's owner index.
         /// </summary>
-        [field: FieldOffset(50)] public byte ReleaseOwnerIndex { get; set; }
+        public byte? ReleaseOwnerIndex { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the sprite is facing right.
@@ -127,7 +124,13 @@ namespace Orion.Core.Packets.Npcs
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
-            var length = span.Read(ref _bytes, 24);
+            var length = 24;
+            NpcIndex = span.Read<int>();
+            Position = span.Read<Vector2f>();
+            Velocity = span.Read<Vector2f>();
+            TargetIndex = span.Read<ushort>();
+            _flags = span.Read<Flags8>();
+            _flags2 = span.Read<Flags8>();
             for (var i = 0; i < AdditionalInformation.Length; ++i)
             {
                 if (!_flags[i + 2])
@@ -135,30 +138,41 @@ namespace Orion.Core.Packets.Npcs
                     continue;
                 }
 
-                length += span[length..].Read(ref Unsafe.Add(ref Unsafe.As<float, byte>(ref AdditionalInformation[0]), i * 4), 4);
+                AdditionalInformation[i] = span.Read<float>();
+                length += 4;
             }
 
-            length += span[length..].Read(ref Unsafe.Add(ref _bytes, 38), 2);
+            NetId = span.Read<short>();
+            length += 2;
 
-            if (_flags2[0])
+            if(_flags2[0])
             {
-                length += span[length..].Read(ref Unsafe.Add(ref _bytes, 40), 1);
+                DifficultyScalingOverride = span.Read<byte>();
+                ++length;
             }
-
             if (_flags2[2])
             {
-                length += span[length..].Read(ref Unsafe.Add(ref _bytes, 41), 4);
+                StrengthMultiplierOverride = span.Read<float>();
+                length += 4;
             }
-
             if (!_flags[7])
             {
-                length += span[length..].Read(ref _lifeOccupiedBytes, 1);
-                length += span[length..].Read(ref Unsafe.Add(ref _lifeOccupiedBytes, 1), _lifeOccupiedBytes);
+                var lifeBytes = span.Read<byte>();
+                Health = lifeBytes switch
+                {
+                    1 => span.Read<sbyte>(),
+                    2 => span.Read<short>(),
+                    4 => span.Read<int>(),
+                    _ => throw new ArgumentOutOfRangeException(nameof(lifeBytes))
+                };
+
+                length += lifeBytes + 1;
             }
 
-            if (length < span.Length) // ReleaseOwnerIndex
+            if (span.Length > 0)
             {
-                length += span[length..].Read(ref Unsafe.Add(ref _bytes, 50), 1);
+                ReleaseOwnerIndex = span.Read<byte>();
+                ++length;
             }
 
             return length;
@@ -166,48 +180,61 @@ namespace Orion.Core.Packets.Npcs
 
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
-            var length = span.Read(ref _bytes, 24);
+            var length = span.Write(NpcIndex);
+            length += span[length..].Write(Position);
+            length += span[length..].Write(Velocity);
+            length += span[length..].Write(TargetIndex);
+
+            span.Write(default(byte));
+            var flagsOffset = length++;
+
+            span.Write(default(byte));
+            var flags2Offset = length++;
+
             for (var i = 0; i < AdditionalInformation.Length; ++i)
             {
-                if (AdditionalInformation[i] == 0)
+                if (AdditionalInformation[i] <= 0)
                 {
                     continue;
                 }
 
-                length += span[length..].Write(ref Unsafe.Add(ref Unsafe.As<float, byte>(ref AdditionalInformation[0]), i * 4), 4);
                 _flags[i + 2] = true;
+                length += span[length..].Write(AdditionalInformation[i]);
             }
 
-            length += span[length..].Write(ref Unsafe.Add(ref _bytes, 38), 2);
+            length += span[length..].Write(NetId);
             if (DifficultyScalingOverride > 1)
             {
-                length += span[length..].Write(ref Unsafe.Add(ref _bytes, 40), 1);
-                _flags2[0] = true;
+                length += span[length..].Write(DifficultyScalingOverride);
             }
-
             if (StrengthMultiplierOverride != 0)
             {
-                length += span[length..].Write(ref Unsafe.Add(ref _bytes, 41), 4);
-                _flags2[2] = true;
+                length += span[length..].Write(StrengthMultiplierOverride);
             }
 
             _flags[7] = true;
             if (Health > 0)
             {
-                _lifeOccupiedBytes = Health switch
+                _flags[7] = false;
+                var lifeBytes = Health switch
                 {
                     var n when n > sbyte.MaxValue => sizeof(short),
                     var n when n > short.MaxValue => sizeof(int),
                     _ => sizeof(sbyte)
                 };
 
-                // Write the size as well as the actual health value
-                length += span[length..].Write(ref _lifeOccupiedBytes, 1 + _lifeOccupiedBytes);
-                _flags[7] = false; // Indicates whether Health == NPC.maxLife
+                span[(length++)..].Write((byte) lifeBytes);
+                span[length..].Write(Health);
+                length += lifeBytes;
             }
 
-            length += span[length..].Write(ref Unsafe.Add(ref _bytes, 50), 1);
-            span[22..].Write(ref Unsafe.Add(ref _bytes, 22), 2); // Overwrite the flags with accurate information
+            if (ReleaseOwnerIndex.HasValue)
+            {
+                length += span[length..].Write(ReleaseOwnerIndex.Value);
+            }
+
+            span[flagsOffset] = Unsafe.As<Flags8, byte>(ref _flags);
+            span[flags2Offset] = Unsafe.As<Flags8, byte>(ref _flags2);
             return length;
         }
     }

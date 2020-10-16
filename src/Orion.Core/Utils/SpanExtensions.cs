@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Xml.Schema;
 
 namespace Orion.Core.Utils
 {
@@ -62,6 +63,21 @@ namespace Orion.Core.Utils
         }
 
         /// <summary>
+        /// Reads a value of type <typeparamref name="T"/> from the specified span. Advances the span position by number of bytes read.
+        /// </summary>
+        /// <typeparam name="T">The type of value to read.</typeparam>
+        /// <param name="span">The span to read from.</param>
+        /// <returns>The read value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T Read<T>(this ref Span<byte> span) where T : unmanaged
+        {
+            var value = MemoryMarshal.Read<T>(span);
+            var bytesRead = Unsafe.SizeOf<T>();
+            span = span[bytesRead..];
+            return value;
+        }
+
+        /// <summary>
         /// Reads a UTF8-encoded string from the <paramref name="span"/>. Returns the number of bytes read.
         /// </summary>
         /// <param name="span">The span to read from.</param>
@@ -99,10 +115,10 @@ namespace Orion.Core.Utils
         /// <param name="value">The value to write.</param>
         /// <returns>The number of bytes written.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static unsafe int Write<T>(this Span<byte> span, T value) where T : unmanaged
+        public static int Write<T>(this Span<byte> span, T value) where T : struct
         {
             MemoryMarshal.Write(span, ref value);
-            return sizeof(T);
+            return Unsafe.SizeOf<T>();
         }
 
         /// <summary>

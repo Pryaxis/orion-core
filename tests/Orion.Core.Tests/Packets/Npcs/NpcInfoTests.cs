@@ -109,7 +109,7 @@ namespace Orion.Core.Packets.Npcs
 
             packet.ReleaseOwnerIndex = 1;
 
-            Assert.Equal(1, packet.ReleaseOwnerIndex);
+            Assert.Equal(1, packet.ReleaseOwnerIndex.Value);
         }
 
         [Theory]
@@ -174,7 +174,7 @@ namespace Orion.Core.Packets.Npcs
             Assert.Equal(9, packet.DifficultyScalingOverride);
             Assert.Equal(10F, packet.StrengthMultiplierOverride);
             Assert.Equal(1024, packet.Health);
-            Assert.Equal(5, packet.ReleaseOwnerIndex);
+            Assert.Equal(5, packet.ReleaseOwnerIndex.Value);
         }
     }
 }
