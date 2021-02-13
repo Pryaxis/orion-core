@@ -57,7 +57,7 @@ namespace Orion.Core.Packets.Npcs
         /// <summary>
         /// Gets additional information.
         /// </summary>
-        public float[] AdditionalInformation => _ai ??= new float[MaxAi];
+        public float[] AdditionalInformation => _ai;
 
         /// <summary>
         /// Gets or sets the NPC's net ID.

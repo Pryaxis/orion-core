@@ -86,6 +86,10 @@ namespace Orion.Core.Packets.World
                 case TeleportationType.PlayerToPlayer:
                     _flags[1] = true;
                     break;
+                default:
+                    _flags[0] = false;
+                    _flags[1] = false;
+                    break;
                 }
             }
         }
