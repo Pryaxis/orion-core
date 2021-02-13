@@ -60,8 +60,8 @@ namespace Orion.Core.Packets.World.TileEntities
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
-            var length = span.Read(ref _bytes, 6);
-            if (span[length] > 0 && span[length] <= 20)
+            var length = span.Read(ref _bytes, 7);
+            if (_nameLength > 0 && _nameLength <= 20)
             {
                 length += span[length..].Read(out _name);
             }
@@ -71,7 +71,7 @@ namespace Orion.Core.Packets.World.TileEntities
 
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
-            var length = span.Write(ref _bytes, 6);
+            var length = span.Write(ref _bytes, 7);
             if (Name.Length > 0 && Name.Length <= 20)
             {
                 length += span[length..].Write(Name);
