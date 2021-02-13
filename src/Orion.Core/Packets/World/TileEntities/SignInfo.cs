@@ -62,7 +62,6 @@ namespace Orion.Core.Packets.World.TileEntities
             set => _text = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        // TODO: Requires deeper verification!
         /// <summary>
         /// Gets or sets a value indicating whether the sign is a tombstone.
         /// </summary>
