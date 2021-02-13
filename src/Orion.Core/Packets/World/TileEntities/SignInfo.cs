@@ -36,17 +36,17 @@ namespace Orion.Core.Packets.World.TileEntities
         /// <summary>
         /// Gets or sets the sign index.
         /// </summary>
-        [field: FieldOffset(0)] public byte SignIndex { get; set; }
+        [field: FieldOffset(0)] public short SignIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the sign's X coordinate.
         /// </summary>
-        [field: FieldOffset(1)] public short X { get; set; }
+        [field: FieldOffset(2)] public short X { get; set; }
 
         /// <summary>
         /// Gets or sets the sign's Y coordinate.
         /// </summary>
-        [field: FieldOffset(3)] public short Y { get; set; }
+        [field: FieldOffset(4)] public short Y { get; set; }
 
         /// <summary>
         /// Gets or sets the player index.
@@ -76,7 +76,7 @@ namespace Orion.Core.Packets.World.TileEntities
 
         int IPacket.ReadBody(Span<byte> span, PacketContext context)
         {
-            var length = span.Read(ref _bytes, 5);
+            var length = span.Read(ref _bytes, 6);
             length += span[length..].Read(out _text);
             length += span[length..].Read(ref _bytes2, 2);
             return length;
@@ -84,7 +84,7 @@ namespace Orion.Core.Packets.World.TileEntities
 
         int IPacket.WriteBody(Span<byte> span, PacketContext context)
         {
-            var length = span.Write(ref _bytes, 5);
+            var length = span.Write(ref _bytes, 6);
             length += span[length..].Write(Text);
             length += span[length..].Write(ref _bytes2, 2);
             return length;
